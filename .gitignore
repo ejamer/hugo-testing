@@ -1,31 +1,20 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+# ======= FENB-1 =======
+# Hugo Build Output
+fenb-1/public/
+# Hugo Cache and Generated Assets
+fenb-1/resources/_gen/
+fenb-1/.hugo_build.lock
+fenb-1/hugo_stats.json
+# Local Environment / Tooling
+fenb-1/.DS_Store
+fenb-1/Thumbs.db
+fenb-1/dist/
+fenb-1/bin/
+# Editor temporary files (optional but recommended)
+*.swp
+*~
+# ^^^^^^^ FENB-1 ^^^^^^^
 
-# Test binary, built with `go test -c`
-*.test
-
-# Code coverage profiles and other test artifacts
-*.out
-coverage.*
-*.coverprofile
-profile.cov
-
-# Dependency directories (remove the comment below to include it)
-# vendor/
-
-# Go workspace file
-go.work
-go.work.sum
-
-# env file
-.env
 
 # Editor/IDE
 # .idea/

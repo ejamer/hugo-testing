@@ -59,7 +59,7 @@ main.pb7 { padding-bottom: 0 !important; }
 }
 
 .fenb-nav-inner {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0 1.5rem 0 0.25rem;
   display: flex;
@@ -89,7 +89,7 @@ main.pb7 { padding-bottom: 0 !important; }
   display: block;
   color: var(--text-body);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.25rem;
   font-weight: 600;
   padding: 0.45rem 0.8rem;
   border-radius: var(--radius-sm);
