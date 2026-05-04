@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fencing-Escrime NB</title>
+    <link>https://fencingnb.ca/</link>
+    <description>Recent content on Fencing-Escrime NB</description>
+    <generator>Hugo</generator>
+    <language>en-CA</language>
+    <lastBuildDate>Mon, 20 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://fencingnb.ca/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Provincial Championship Results — April 2026</title>
+      <link>https://fencingnb.ca/news/provincial-championship-results-2026/</link>
+      <pubDate>Mon, 20 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>https://fencingnb.ca/news/provincial-championship-results-2026/</guid>
+      <description>Athletes from across New Brunswick competed at the 2026 Provincial Championships held in Fredericton. Top finishers in all three weapons advance to national selection.</description>
+    </item>
+    <item>
+      <title>Three NB Athletes Selected for Canadian Championships</title>
+      <link>https://fencingnb.ca/news/nb-athletes-nationals-2026/</link>
+      <pubDate>Sun, 05 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>https://fencingnb.ca/news/nb-athletes-nationals-2026/</guid>
+      <description>Fencing New Brunswick is proud to announce that three athletes have qualified to represent the province at the 2026 Canadian Fencing Championships in Montreal.</description>
+    </item>
+    <item>
+      <title>Registration Now Open: Junior Development Camp</title>
+      <link>https://fencingnb.ca/news/summer-camp-registration-open/</link>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>https://fencingnb.ca/news/summer-camp-registration-open/</guid>
+      <description>Registration is now open for the 2026 Junior Development Camp, running June 6–7 in Moncton. Spots are limited — register early to secure your place.</description>
+    </item>
+    <item>
+      <title>New Club Joins the Federation: Dieppe Fencing Academy</title>
+      <link>https://fencingnb.ca/news/new-club-moncton/</link>
+      <pubDate>Sat, 28 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://fencingnb.ca/news/new-club-moncton/</guid>
+      <description>Fencing New Brunswick warmly welcomes the Dieppe Fencing Academy as its newest member club, bringing fencing to the Dieppe–Moncton region for the first time.</description>
+    </item>
+  </channel>
+</rss>

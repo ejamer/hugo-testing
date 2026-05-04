@@ -1,0 +1,92 @@
+baseURL = 'https://fencingnb.ca/'
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = false
+theme = 'ananke'
+
+[params]
+  custom_css = ["fenb.css"]
+  background_color_class = "bg-fenb-teal"
+
+  [params.ananke]
+    show_recent_posts = false
+
+# ── English ────────────────────────────────────────────────
+[languages.en]
+  locale       = 'en-CA'
+  languageName = 'English'
+  weight       = 1
+  title        = 'Fencing-Escrime NB'
+
+  [languages.en.params]
+    description = "Fencing-Escrime NB — New Brunswick's provincial sport organization for fencing."
+
+[[languages.en.menus.main]]
+  name = "Events"
+  url = "/events/"
+  weight = 1
+
+[[languages.en.menus.main]]
+  name = "News & Results"
+  url = "/news/"
+  weight = 2
+
+[[languages.en.menus.main]]
+  name = "Programs"
+  url = "/programs/"
+  weight = 3
+
+[[languages.en.menus.main]]
+  name = "Clubs"
+  url = "/clubs/"
+  weight = 4
+
+[[languages.en.menus.main]]
+  name = "About"
+  url = "/about/"
+  weight = 5
+
+[[languages.en.menus.main]]
+  name = "Join"
+  url = "/join/"
+  weight = 6
+
+# ── Français ───────────────────────────────────────────────
+[languages.fr]
+  locale       = 'fr-CA'
+  languageName = 'Français'
+  weight       = 2
+  title        = 'Escrime-Fencing NB'
+
+  [languages.fr.params]
+    description = "Escrime-Fencing NB — L'organisation sportive provinciale du Nouveau-Brunswick pour l'escrime."
+
+# French menu URLs omit the /fr/ prefix; relLangURL in the nav template adds it.
+[[languages.fr.menus.main]]
+  name = "Événements"
+  url = "/events/"
+  weight = 1
+
+[[languages.fr.menus.main]]
+  name = "Nouvelles et résultats"
+  url = "/news/"
+  weight = 2
+
+[[languages.fr.menus.main]]
+  name = "Programmes"
+  url = "/programs/"
+  weight = 3
+
+[[languages.fr.menus.main]]
+  name = "Clubs"
+  url = "/clubs/"
+  weight = 4
+
+[[languages.fr.menus.main]]
+  name = "À propos"
+  url = "/about/"
+  weight = 5
+
+[[languages.fr.menus.main]]
+  name = "Adhérer"
+  url = "/join/"
+  weight = 6

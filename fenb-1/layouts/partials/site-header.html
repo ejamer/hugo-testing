@@ -1,0 +1,71 @@
+<header class="fenb-nav-wrap">
+  <nav class="fenb-nav" role="navigation" id="fenb-nav">
+    <div class="fenb-nav-inner">
+      <a href="{{ .Site.Home.RelPermalink }}" class="fenb-nav-logo-link" aria-label="{{ .Site.Title }}">
+        <img src="/images/logo-color.svg" alt="{{ .Site.Title }}" class="fenb-nav-logo">
+      </a>
+      <div class="fenb-nav-links" id="fenb-nav-links">
+        {{ if .Site.Menus.main }}
+        <ul>
+          {{ range .Site.Menus.main }}
+          <li><a href="{{ .URL | relLangURL }}">{{ .Name }}</a></li>
+          {{ end }}
+        </ul>
+        {{ end }}
+        <div class="fenb-lang-switch">
+          {{- /*
+            If this page has a direct translation, link to it (preferred: keeps the reader
+            on the same content).  Otherwise fall back to the other language's home page.
+
+            Fallback: Language.BaseURL is an absolute URL (e.g. https://fencingnb.ca/fr/).
+            TrimPrefix strips the shared origin, leaving the relative path ("fr/"),
+            which we re-root to "/fr/".  We cannot use relLangURL here because that
+            function operates on the *current* language, not the iterated one.
+          */ -}}
+          {{- if .Translations }}
+            {{- range .Translations }}
+            <a href="{{ .RelPermalink }}" class="fenb-lang-btn" lang="{{ .Language.Lang }}" hreflang="{{ .Language.Lang }}">{{ .Language.LanguageName }}</a>
+            {{- end }}
+          {{- else }}
+            {{- range .Site.Languages }}
+              {{- if ne .Lang $.Site.Language.Lang }}
+              {{- $relPath := strings.TrimPrefix site.BaseURL .BaseURL }}
+              {{- $href := printf "/%s" $relPath }}
+              <a href="{{ $href }}" class="fenb-lang-btn" lang="{{ .Lang }}" hreflang="{{ .Lang }}">{{ .LanguageName }}</a>
+              {{- end }}
+            {{- end }}
+          {{- end }}
+        </div>
+      </div>
+      <button class="fenb-nav-toggle" id="fenb-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  {{ if not .IsHome }}
+  <div class="fenb-page-header">
+    <div class="fenb-container">
+      <h1 class="fenb-page-title">{{ .Title }}</h1>
+      {{ with .Params.description }}<p class="fenb-page-subtitle">{{ . }}</p>{{ end }}
+    </div>
+  </div>
+  {{ end }}
+</header>
+<script>
+  (function () {
+    const toggle = document.getElementById('fenb-nav-toggle');
+    const links  = document.getElementById('fenb-nav-links');
+    if (toggle && links) {
+      toggle.addEventListener('click', function () {
+        const open = links.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+    const nav = document.getElementById('fenb-nav');
+    if (nav) {
+      window.addEventListener('scroll', function () {
+        nav.classList.toggle('fenb-nav--scrolled', window.scrollY > 40);
+      }, { passive: true });
+    }
+  })();
+</script>

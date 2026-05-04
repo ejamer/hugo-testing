@@ -1,0 +1,783 @@
+/* ===================================================
+   Fencing New Brunswick — fenb.css
+   Brand: #006156 (teal) · #79242f (crimson)
+   =================================================== */
+
+:root {
+  --teal:          #006156;
+  --teal-dark:     #004840;
+  --teal-mid:      #005249;
+  --teal-light:    #007a6b;
+  --teal-pale:     #e6f2f0;
+  --crimson:       #79242f;
+  --crimson-dark:  #5e1c26;
+  --crimson-light: #943040;
+  --crimson-pale:  #f5e8ea;
+  --white:         #ffffff;
+  --off-white:     #f7f9f8;
+  --light-gray:    #eaeef0;
+  --text-dark:     #1a2420;
+  --text-body:     #2e3d3a;
+  --text-muted:    #6b7f7a;
+  --shadow-xs:     0 1px 4px rgba(0,0,0,0.07);
+  --shadow-sm:     0 2px 10px rgba(0,0,0,0.09);
+  --shadow-md:     0 6px 24px rgba(0,0,0,0.13);
+  --shadow-lg:     0 12px 48px rgba(0,0,0,0.18);
+  --radius:        14px;
+  --radius-sm:     8px;
+  --ease:          cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition:    0.22s var(--ease);
+}
+
+/* ── Reset / base ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Avenir', 'Nunito Sans', system-ui, -apple-system, sans-serif;
+  color: var(--text-body);
+  background: var(--white);
+}
+
+/* Keep ananke's <main> from adding bottom padding that fights our layout */
+main.pb7 { padding-bottom: 0 !important; }
+
+/* ── Nav ──────────────────────────────────────── */
+.fenb-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.fenb-nav {
+  background: var(--white);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  transition: box-shadow var(--transition);
+}
+
+.fenb-nav--scrolled {
+  box-shadow: 0 3px 20px rgba(0,0,0,0.15);
+}
+
+.fenb-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 0 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 126px;
+}
+
+.fenb-nav-logo-link { display: flex; align-items: center; flex-shrink: 0; }
+.fenb-nav-logo      { height: 122px; width: auto; }
+
+.fenb-nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.fenb-nav-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.fenb-nav-links a {
+  display: block;
+  color: var(--text-body);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.fenb-nav-links a:hover {
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+
+/* Last link ("Join") gets a crimson pill */
+.fenb-nav-links li:last-child a {
+  background: var(--crimson);
+  color: #fff;
+  padding: 0.4rem 1rem;
+  margin-left: 0.5rem;
+}
+.fenb-nav-links li:last-child a:hover {
+  background: var(--crimson-dark);
+  color: #fff;
+}
+
+/* Language switcher */
+.fenb-lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-left: 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--light-gray);
+}
+
+.fenb-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--light-gray);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.fenb-lang-btn:hover {
+  background: var(--teal-pale);
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+/* Hamburger */
+.fenb-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  width: 36px;
+}
+.fenb-nav-toggle span {
+  display: block;
+  height: 2px;
+  background: var(--text-body);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* ── Hero ─────────────────────────────────────── */
+.fenb-hero {
+  position: relative;
+  min-height: calc(100vh - 126px);
+  background: linear-gradient(150deg, var(--teal-dark) 0%, var(--teal) 55%, var(--teal-light) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Subtle diagonal grid pattern */
+.fenb-hero-bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,0.025) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.025) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.025) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.025) 75%);
+  background-size: 60px 60px;
+  background-position: 0 0, 0 30px, 30px -30px, -30px 0;
+  pointer-events: none;
+}
+
+/* Crimson glow accent bottom-right */
+.fenb-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  right: -80px;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(121,36,47,0.22) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.fenb-hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 3rem 1.5rem 5rem;
+  max-width: 760px;
+  width: 100%;
+  animation: heroFadeUp 0.9s var(--ease) both;
+}
+
+.fenb-hero-badge {
+  display: inline-block;
+  background: rgba(121,36,47,0.82);
+  color: rgba(255,255,255,0.95);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.38rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 2.5rem;
+}
+
+.fenb-hero-logo-wrap {
+  margin-bottom: 2rem;
+}
+
+.fenb-hero-logo-img {
+  height: clamp(70px, 14vw, 120px);
+  width: auto;
+  filter: drop-shadow(0 4px 24px rgba(0,0,0,0.25));
+}
+
+.fenb-hero-tagline {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: rgba(255,255,255,0.78);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  margin: 0 0 2.75rem;
+  font-style: italic;
+}
+
+.fenb-hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.fenb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.9rem;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.025em;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+  white-space: nowrap;
+}
+.fenb-btn:hover { transform: translateY(-2px); }
+
+.fenb-btn-crimson {
+  background: var(--crimson);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(121,36,47,0.38);
+}
+.fenb-btn-crimson:hover {
+  background: var(--crimson-dark);
+  box-shadow: 0 8px 28px rgba(121,36,47,0.48);
+  color: #fff;
+}
+
+.fenb-btn-outline {
+  background: transparent;
+  color: rgba(255,255,255,0.9);
+  border: 2px solid rgba(255,255,255,0.5);
+}
+.fenb-btn-outline:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.85);
+  color: #fff;
+}
+
+/* Scroll arrow */
+.fenb-hero-scroll {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.45);
+  animation: scrollBounce 2.2s ease-in-out infinite;
+  text-decoration: none;
+  display: flex;
+}
+.fenb-hero-scroll:hover { color: rgba(255,255,255,0.8); }
+
+/* ── Shared section styles ────────────────────── */
+.fenb-section {
+  padding: 5rem 1.5rem;
+}
+
+.fenb-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.fenb-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.fenb-section-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.35rem;
+}
+
+.fenb-section-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0;
+  line-height: 1.15;
+  position: relative;
+}
+.fenb-section-title::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 4px;
+  background: var(--teal);
+  border-radius: 2px;
+  margin-top: 0.6rem;
+}
+
+.fenb-see-all {
+  color: var(--teal);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+  white-space: nowrap;
+  margin-bottom: 0.25rem;
+}
+.fenb-see-all:hover {
+  color: var(--crimson);
+  border-color: var(--crimson);
+}
+
+/* ── Events section ───────────────────────────── */
+.fenb-events-section { background: var(--off-white); }
+
+.fenb-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+  gap: 1.25rem;
+}
+
+.fenb-event-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.fenb-event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Date badge sidebar */
+.fenb-event-date-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  padding: 1rem 0.5rem;
+  background: var(--teal);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* Category colour overrides for date badge */
+.fenb-event-card--training   .fenb-event-date-badge { background: #2d6a4f; }
+.fenb-event-card--national   .fenb-event-date-badge { background: #1a3a5c; }
+.fenb-event-card--provincial .fenb-event-date-badge { background: var(--crimson); }
+.fenb-event-card--clinic     .fenb-event-date-badge { background: #5a6a3a; }
+.fenb-event-card--meeting    .fenb-event-date-badge { background: #4a4a4a; }
+
+.fenb-event-day   { font-size: 1.75rem; font-weight: 800; line-height: 1; }
+.fenb-event-month {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.15rem;
+}
+.fenb-event-year  {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.65);
+  margin-top: 0.1rem;
+}
+
+.fenb-event-body {
+  padding: 1.2rem 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.fenb-event-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.fenb-event-date-range {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-style: italic;
+}
+
+.fenb-event-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+.fenb-event-meta svg { flex-shrink: 0; color: var(--teal); }
+
+/* Tags */
+.fenb-tag {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.62rem;
+  border-radius: 4px;
+  line-height: 1;
+}
+.fenb-tag--competition { background: var(--teal-pale);    color: var(--teal); }
+.fenb-tag--training    { background: #e7f2ec;             color: #2d6a4f; }
+.fenb-tag--national    { background: #e8eef5;             color: #1a3a5c; }
+.fenb-tag--provincial  { background: var(--crimson-pale); color: var(--crimson); }
+.fenb-tag--clinic      { background: #eef2e6;             color: #5a6a3a; }
+.fenb-tag--meeting     { background: #efefef;             color: #4a4a4a; }
+
+/* ── News section ─────────────────────────────── */
+.fenb-news-section { background: var(--white); }
+
+.fenb-news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.fenb-news-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--light-gray);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition), box-shadow var(--transition);
+  background: var(--white);
+}
+.fenb-news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Coloured top stripe */
+.fenb-news-card-top {
+  height: 6px;
+  background: linear-gradient(90deg, var(--teal) 0%, var(--teal-light) 100%);
+}
+.fenb-news-card-top--results      { background: linear-gradient(90deg, var(--teal), #2d9a7f); }
+.fenb-news-card-top--announcement { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
+.fenb-news-card-top--registration { background: linear-gradient(90deg, #2d6a4f, #3d9a6b); }
+.fenb-news-card-top--community    { background: linear-gradient(90deg, #1a3a5c, #2a5a8c); }
+
+.fenb-news-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.fenb-news-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.fenb-news-category {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--teal-pale);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+.fenb-news-card-meta time {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.fenb-news-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.35;
+  margin: 0 0 0.75rem;
+}
+.fenb-news-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.fenb-news-title a:hover { color: var(--teal); }
+
+.fenb-news-excerpt {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0 0 1.25rem;
+  flex: 1;
+}
+
+.fenb-read-more {
+  color: var(--teal);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition: color var(--transition), gap var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: auto;
+}
+.fenb-read-more:hover { color: var(--crimson); }
+
+/* ── 404 page ─────────────────────────────────── */
+.fenb-404 {
+  padding: 6rem 1.5rem;
+  text-align: center;
+}
+
+.fenb-404-inner {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fenb-404-code {
+  font-size: 7rem;
+  font-weight: 900;
+  color: var(--teal);
+  line-height: 1;
+  opacity: 0.15;
+}
+
+.fenb-404-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.fenb-404-message {
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.fenb-btn-teal {
+  background: var(--teal);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(0,97,86,0.3);
+}
+.fenb-btn-teal:hover {
+  background: var(--teal-dark);
+  box-shadow: 0 8px 28px rgba(0,97,86,0.4);
+  color: #fff;
+}
+
+/* ── Inner page header ────────────────────────── */
+.fenb-page-header {
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+  padding: 2.5rem 1.5rem;
+}
+
+.fenb-page-header .fenb-container { max-width: 1200px; margin: 0 auto; }
+
+.fenb-page-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.fenb-page-subtitle {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.78);
+  margin: 0.5rem 0 0;
+  font-weight: 300;
+}
+
+/* ── Programs / Quick Links ───────────────────── */
+.fenb-programs-section {
+  background: var(--teal-dark);
+  padding: 4.5rem 1.5rem;
+}
+
+.fenb-programs-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.fenb-program-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 2.25rem 1.75rem;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.fenb-program-card:hover {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.28);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  color: #fff;
+}
+
+.fenb-program-card--accent {
+  background: rgba(121,36,47,0.45);
+  border-color: rgba(121,36,47,0.6);
+}
+.fenb-program-card--accent:hover {
+  background: rgba(121,36,47,0.65);
+  border-color: rgba(121,36,47,0.85);
+}
+
+.fenb-program-icon {
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 0.25rem;
+}
+
+.fenb-program-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.fenb-program-card p {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.68);
+  margin: 0;
+  line-height: 1.55;
+}
+
+.fenb-program-cta {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  margin-top: auto;
+  padding-top: 0.75rem;
+  transition: color var(--transition);
+  letter-spacing: 0.03em;
+}
+.fenb-program-card:hover .fenb-program-cta { color: rgba(255,255,255,0.9); }
+
+/* ── Ananke background_color_class overrides ──── */
+.bg-fenb-teal    { background-color: var(--teal); }
+.bg-fenb-crimson { background-color: var(--crimson); }
+
+/* ── Animations ───────────────────────────────── */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0);    }
+  50%       { transform: translateX(-50%) translateY(9px); }
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 860px) {
+  .fenb-nav-links { display: none; }
+  .fenb-nav-links.is-open {
+    display: block;
+    position: absolute;
+    top: 126px;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--light-gray);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    padding: 0.75rem 0;
+    z-index: 199;
+  }
+  .fenb-nav-links.is-open ul  { flex-direction: column; gap: 0; }
+  .fenb-nav-links.is-open a   { border-radius: 0; padding: 0.85rem 1.5rem; color: var(--text-body); }
+  .fenb-nav-links.is-open li:last-child a {
+    margin: 0.5rem 1.5rem;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+  }
+  .fenb-nav-links.is-open .fenb-lang-switch {
+    margin: 0.75rem 1.5rem;
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid var(--light-gray);
+    padding-top: 0.75rem;
+  }
+  .fenb-nav-toggle { display: flex; }
+
+  .fenb-section-header { flex-direction: column; align-items: flex-start; }
+  .fenb-section-header .fenb-see-all { align-self: flex-start; }
+
+  .fenb-hero-content { padding-bottom: 4rem; }
+}
+
+@media (max-width: 600px) {
+  .fenb-section  { padding: 3.5rem 1rem; }
+  .fenb-programs-section { padding: 3rem 1rem; }
+  .fenb-events-grid { grid-template-columns: 1fr; }
+  .fenb-news-grid   { grid-template-columns: 1fr; }
+  .fenb-programs-grid { grid-template-columns: 1fr; }
+}

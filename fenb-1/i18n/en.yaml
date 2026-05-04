@@ -1,0 +1,57 @@
+# ── Hero ───────────────────────────────────────────────────
+hero_badge:    "New Brunswick Provincial Fencing Organization"
+hero_tagline:  "Building champions through the art of the blade"
+cta_events:    "View Upcoming Events"
+cta_about:     "About Fencing-Escrime NB"
+
+# ── Events section ─────────────────────────────────────────
+section_label_events:  "On the Calendar"
+section_title_events:  "Upcoming Events"
+view_all_events:       "View all events"
+
+# ── News section ───────────────────────────────────────────
+section_label_news:  "Stay Informed"
+section_title_news:  "Latest News & Results"
+view_all_news:       "View all news"
+read_more:           "Read more"
+
+# ── Programs section ───────────────────────────────────────
+program_clubs_title:   "Find a Club"
+program_clubs_desc:    "Locate a fencing club near you across New Brunswick"
+program_clubs_cta:     "Explore clubs"
+program_compete_title: "Compete"
+program_compete_desc:  "Register for provincial tournaments and sanctioned events"
+program_compete_cta:   "View calendar"
+program_dev_title:     "Athlete Development"
+program_dev_desc:      "Structured pathways for athletes at every stage of their journey"
+program_dev_cta:       "Learn more"
+program_join_title:    "Join & Register"
+program_join_desc:     "Register as an athlete, coach, or official with Fencing-Escrime NB"
+program_join_cta:      "Get started"
+
+# ── Event category labels (keys match the category field in data/events.yaml) ─
+competition: "Competition"
+training:    "Training Camp"
+national:    "National Event"
+provincial:  "NB Provincial"
+clinic:      "Clinic"
+meeting:     "FENB Meeting"
+
+# ── Month abbreviations (used for localized date display in event cards) ───────
+month_Jan: "Jan"
+month_Feb: "Feb"
+month_Mar: "Mar"
+month_Apr: "Apr"
+month_May: "May"
+month_Jun: "Jun"
+month_Jul: "Jul"
+month_Aug: "Aug"
+month_Sep: "Sep"
+month_Oct: "Oct"
+month_Nov: "Nov"
+month_Dec: "Dec"
+
+# ── 404 ────────────────────────────────────────────────────
+not_found_title:   "Page Not Found"
+not_found_message: "The page you're looking for doesn't exist or has been moved."
+back_home:         "Back to Home"

@@ -1,0 +1,57 @@
+# ── Héros ──────────────────────────────────────────────────
+hero_badge:    "Organisation sportive provinciale du Nouveau-Brunswick"
+hero_tagline:  "Former des champions par l'art de la lame"
+cta_events:    "Voir les événements à venir"
+cta_about:     "À propos d'Escrime-Fencing NB"
+
+# ── Section événements ─────────────────────────────────────
+section_label_events:  "Au calendrier"
+section_title_events:  "Événements à venir"
+view_all_events:       "Voir tous les événements"
+
+# ── Section nouvelles ──────────────────────────────────────
+section_label_news:  "Restez informé"
+section_title_news:  "Actualités et résultats"
+view_all_news:       "Voir toutes les nouvelles"
+read_more:           "Lire la suite"
+
+# ── Section programmes ─────────────────────────────────────
+program_clubs_title:   "Trouver un club"
+program_clubs_desc:    "Trouvez un club d'escrime près de chez vous au Nouveau-Brunswick"
+program_clubs_cta:     "Explorer les clubs"
+program_compete_title: "Compétitions"
+program_compete_desc:  "Inscrivez-vous aux tournois provinciaux et aux événements sanctionnés"
+program_compete_cta:   "Voir le calendrier"
+program_dev_title:     "Développement de l'athlète"
+program_dev_desc:      "Des parcours structurés pour les athlètes à chaque étape de leur développement"
+program_dev_cta:       "En savoir plus"
+program_join_title:    "Adhérer et s'inscrire"
+program_join_desc:     "Inscrivez-vous comme athlète, entraîneur ou officiel avec Escrime-Fencing NB"
+program_join_cta:      "Commencer"
+
+# ── Étiquettes de catégorie (clés correspondent au champ category dans data/events.yaml) ─
+competition: "Compétition"
+training:    "Camp d'entraînement"
+national:    "Événement national"
+provincial:  "Provincial NB"
+clinic:      "Clinique"
+meeting:     "Réunion FENB"
+
+# ── Abréviations des mois (pour l'affichage localisé des dates des événements) ─
+month_Jan: "janv."
+month_Feb: "févr."
+month_Mar: "mars"
+month_Apr: "avr."
+month_May: "mai"
+month_Jun: "juin"
+month_Jul: "juil."
+month_Aug: "août"
+month_Sep: "sept."
+month_Oct: "oct."
+month_Nov: "nov."
+month_Dec: "déc."
+
+# ── 404 ────────────────────────────────────────────────────
+not_found_title:   "Page introuvable"
+not_found_message: "La page que vous recherchez n'existe pas ou a été déplacée."
+back_home:         "Retour à l'accueil"

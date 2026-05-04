@@ -1,0 +1,14 @@
+{{ define "title" }}{{ i18n "not_found_title" }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<div class="fenb-404">
+  <div class="fenb-container">
+    <div class="fenb-404-inner">
+      <div class="fenb-404-code">404</div>
+      <h1 class="fenb-404-title">{{ i18n "not_found_title" }}</h1>
+      <p class="fenb-404-message">{{ i18n "not_found_message" }}</p>
+      <a href="{{ "/" | relLangURL }}" class="fenb-btn fenb-btn-teal">{{ i18n "back_home" }}</a>
+    </div>
+  </div>
+</div>
+{{ end }}
