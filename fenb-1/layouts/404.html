@@ -5,10 +5,55 @@
   <div class="fenb-container">
     <div class="fenb-404-inner">
       <div class="fenb-404-code">404</div>
-      <h1 class="fenb-404-title">{{ i18n "not_found_title" }}</h1>
-      <p class="fenb-404-message">{{ i18n "not_found_message" }}</p>
-      <a href="{{ "/" | relLangURL }}" class="fenb-btn fenb-btn-teal">{{ i18n "back_home" }}</a>
+      <h1 class="fenb-404-title" id="fenb-404-title">{{ i18n "not_found_title" }}</h1>
+      <p class="fenb-404-message" id="fenb-404-msg">{{ i18n "not_found_message" }}</p>
+      <a href="/" class="fenb-btn fenb-btn-teal" id="fenb-404-home">{{ i18n "back_home" }}</a>
     </div>
   </div>
 </div>
+
+<script>
+(function () {
+  if (window.location.pathname.indexOf('/fr/') !== 0) return;
+
+  // ── 404 page text (French) ─────────────────────────────
+  // Strings mirror i18n/fr.yaml — update both if changed.
+  document.getElementById('fenb-404-title').textContent = "Page introuvable";
+  document.getElementById('fenb-404-msg').textContent   = "La page que vous recherchez n’existe pas ou a été déplacée.";
+  var homeBtn = document.getElementById('fenb-404-home');
+  homeBtn.textContent = "Retour à l’accueil";
+  homeBtn.href = '/fr/';
+
+  // ── French nav labels (from Hugo's French menu) ────────
+  var frLabels = {
+    {{- range .Site.Sites -}}
+      {{- if eq .Language.Lang "fr" -}}
+        {{- range .Menus.main -}}
+          "{{ .URL }}": {{ .Name | jsonify | safeJS }},
+        {{- end -}}
+      {{- end -}}
+    {{- end }}
+  };
+
+  // ── Nav links: add /fr prefix + swap label text ────────
+  document.querySelectorAll('.fenb-nav-links a[href]').forEach(function (a) {
+    var href = a.getAttribute('href');
+    if (!href || href.charAt(0) !== '/' || href.indexOf('/fr') === 0) return;
+    a.setAttribute('href', '/fr' + href);
+    if (frLabels[href]) a.textContent = frLabels[href];
+  });
+
+  // ── Logo home link ─────────────────────────────────────
+  var logo = document.querySelector('.fenb-nav-logo-link');
+  if (logo) logo.setAttribute('href', '/fr/');
+
+  // ── Language switcher: flip to English home ────────────
+  document.querySelectorAll('.fenb-lang-btn').forEach(function (btn) {
+    btn.href        = '/';
+    btn.lang        = 'en';
+    btn.setAttribute('hreflang', 'en');
+    btn.textContent = 'English';
+  });
+})();
+</script>
 {{ end }}

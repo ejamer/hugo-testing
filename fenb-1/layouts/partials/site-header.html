@@ -24,14 +24,13 @@
           */ -}}
           {{- if .Translations }}
             {{- range .Translations }}
-            <a href="{{ .RelPermalink }}" class="fenb-lang-btn" lang="{{ .Language.Lang }}" hreflang="{{ .Language.Lang }}">{{ .Language.LanguageName }}</a>
+            <a href="{{ .RelPermalink }}" class="fenb-lang-btn" lang="{{ .Language.Lang }}" hreflang="{{ .Language.Lang }}">{{ .Language.Label }}</a>
             {{- end }}
           {{- else }}
             {{- range .Site.Languages }}
               {{- if ne .Lang $.Site.Language.Lang }}
-              {{- $relPath := strings.TrimPrefix site.BaseURL .BaseURL }}
-              {{- $href := printf "/%s" $relPath }}
-              <a href="{{ $href }}" class="fenb-lang-btn" lang="{{ .Lang }}" hreflang="{{ .Lang }}">{{ .LanguageName }}</a>
+              {{- $href := cond (eq .Lang "en") "/" (printf "/%s/" .Lang) }}
+              <a href="{{ $href }}" class="fenb-lang-btn" lang="{{ .Lang }}" hreflang="{{ .Lang }}">{{ .Label }}</a>
               {{- end }}
             {{- end }}
           {{- end }}
@@ -42,7 +41,7 @@
       </button>
     </div>
   </nav>
-  {{ if not .IsHome }}
+  {{ if and (not .IsHome) (not .Params.hide_page_header) }}
   <div class="fenb-page-header">
     <div class="fenb-container">
       <h1 class="fenb-page-title">{{ .Title }}</h1>
