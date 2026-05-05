@@ -122,9 +122,22 @@ Structured content (events, clubs) lives in `data/` as YAML. Layouts read it via
 **clubs.yaml** fields per club: `id`, `name`, `logo`, `email`, `website` (optional),
 `city`.
 
-**events.yaml** fields per event: `title`, `date`, `display_date`, `category`,
-`category_label`, `venue`, `location`. Categories with CSS/i18n support:
-`competition`, `training`, `national`, `provincial`, `clinic`, `meeting`.
+**events.yaml** fields per event:
+
+| Field | Required | Notes |
+|---|---|---|
+| `title` | ✅ | |
+| `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter only |
+| `display_date` | ✅ | Free-form string shown on the card. Use `"TBA"` or `"July 2026"` for uncertain dates |
+| `category` | ✅ | See categories below |
+| `category_label` | ✅ | Fallback label if i18n key missing |
+| `venue` | ✅ | Short venue name shown on card |
+| `location` | ✅ | City / province |
+| `description` | — | Optional. Not shown on homepage cards |
+| `details_url` | — | If set, a teal **Learn More →** badge appears on the card (opens in new tab) |
+| `registration_url` | — | If set, a crimson **Register Now →** badge appears on the card (opens in new tab) |
+
+Categories with CSS and i18n support: `competition`, `training`, `national`, `provincial`, `clinic`, `meeting`, `announcement`.
 
 ### CSS
 
@@ -177,15 +190,18 @@ Add an entry to `data/events.yaml`:
 
 ```yaml
 - title: "Event Name"
-  date: "2026-06-01"          # ISO — used for sorting/filtering
-  display_date: "June 1, 2026"
-  category: competition        # see categories above
+  date: "2026-06-01"              # ISO — sort/filter only; use first-of-month for uncertain dates
+  display_date: "June 1, 2026"    # free-form; use "TBA" or "June 2026" if date is uncertain
+  category: competition           # see categories above
   category_label: "Competition"
   venue: "Venue Name"
   location: "City, NB"
+  description: "Optional details not shown on homepage."
+  details_url: ""                 # URL for a Learn More badge; leave blank or omit if none
+  registration_url: ""            # URL for a Register Now badge; leave blank or omit if none
 ```
 
-The homepage automatically shows the next 4 events on or after today's date.
+The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today), falling back to the most recent past events if fewer than 4 are upcoming. When the season ends, add an off-season placeholder entry (category `announcement`) so the section stays populated through the summer gap.
 
 ### New club
 

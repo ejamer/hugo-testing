@@ -11,6 +11,8 @@ events:
     category: "training"
     category_label: "Training Camp"
     description: "High Performance and Provincial Team athletes."
+    details_url: ""
+    registration_url: ""
 
   - title: "Coach Clinic / Forum"
     date: "2025-09-07"
@@ -20,6 +22,8 @@ events:
     category: "clinic"
     category_label: "Clinic"
     description: "Annual coaches clinic and forum."
+    details_url: ""
+    registration_url: ""
 
   - title: "Fundy Open"
     date: "2025-09-13"
@@ -29,6 +33,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Open, U17, U13 divisions."
+    details_url: ""
+    registration_url: ""
 
   - title: "Terres Des Hommes"
     date: "2025-09-20"
@@ -38,6 +44,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Veteran, Senior, AAA, Junior."
+    details_url: ""
+    registration_url: ""
 
   - title: "CC #1 — Senior Nationals"
     date: "2025-09-26"
@@ -47,6 +55,8 @@ events:
     category: "national"
     category_label: "National Event"
     description: "Canadian Championships Circuit #1 — Senior, Junior, Cadet."
+    details_url: ""
+    registration_url: ""
 
   # ── October 2025 ────────────────────────────────────────
   - title: "HP / PT Training Camp"
@@ -57,6 +67,8 @@ events:
     category: "training"
     category_label: "Training Camp"
     description: "High Performance and Provincial Team athletes."
+    details_url: ""
+    registration_url: ""
 
   - title: "Québec Youth Circuit #1"
     date: "2025-10-25"
@@ -66,6 +78,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Youth division."
+    details_url: ""
+    registration_url: ""
 
   # ── November 2025 ───────────────────────────────────────
   - title: "UNB Maskerade"
@@ -75,6 +89,8 @@ events:
     venue: "University of New Brunswick"
     category: "competition"
     category_label: "Competition"
+    details_url: ""
+    registration_url: ""
 
   - title: "HP / PT Training Camp"
     date: "2025-11-01"
@@ -84,6 +100,8 @@ events:
     category: "training"
     category_label: "Training Camp"
     description: "High Performance athletes."
+    details_url: ""
+    registration_url: ""
 
   - title: "RMC Team Tournament"
     date: "2025-11-01"
@@ -93,6 +111,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Team competition."
+    details_url: ""
+    registration_url: ""
 
   - title: "Épées de l'Est"
     date: "2025-11-15"
@@ -102,6 +122,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Épée — all levels."
+    details_url: ""
+    registration_url: ""
 
   - title: "FENB Annual General Meeting"
     date: "2025-11-23"
@@ -111,6 +133,8 @@ events:
     category: "meeting"
     category_label: "FENB Meeting"
     description: "Annual General Meeting — all members welcome."
+    details_url: ""
+    registration_url: ""
 
   - title: "CC #2"
     date: "2025-11-29"
@@ -120,6 +144,8 @@ events:
     category: "national"
     category_label: "National Event"
     description: "Canadian Championships Circuit #2 — Senior, Junior, Cadet, U15."
+    details_url: ""
+    registration_url: ""
 
   # ── December 2025 ───────────────────────────────────────
   - title: "HP / PT Training Camp"
@@ -130,6 +156,8 @@ events:
     category: "training"
     category_label: "Training Camp"
     description: "High Performance and Provincial Team athletes."
+    details_url: ""
+    registration_url: ""
 
   - title: "Challenge La Glace et le Glaive"
     date: "2025-12-07"
@@ -139,6 +167,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Épée — all levels."
+    details_url: ""
+    registration_url: ""
 
   - title: "Québec Youth Circuit #2"
     date: "2025-12-13"
@@ -148,6 +178,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Youth division."
+    details_url: ""
+    registration_url: ""
 
   # ── January 2026 ────────────────────────────────────────
   - title: "Épées de l'Est"
@@ -158,6 +190,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Épée / Sabre — all levels."
+    details_url: ""
+    registration_url: ""
 
   - title: "Challenge Desjarlais"
     date: "2026-01-24"
@@ -167,6 +201,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Veteran, Senior, AAA, Junior."
+    details_url: ""
+    registration_url: ""
 
   - title: "HP / PT Training Camp"
     date: "2026-01-31"
@@ -176,6 +212,8 @@ events:
     category: "training"
     category_label: "Training Camp"
     description: "High Performance and Provincial Team athletes."
+    details_url: ""
+    registration_url: ""
 
   # ── February 2026 ───────────────────────────────────────
   - title: "Alfred Knappe Team Tournament"
@@ -186,6 +224,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Team Épée, Team Sabre, 3-weapon."
+    details_url: ""
+    registration_url: ""
 
   - title: "CC #3 — Junior / Cadet Nationals"
     date: "2026-02-20"
@@ -195,6 +235,8 @@ events:
     category: "national"
     category_label: "National Event"
     description: "Canadian Championships Circuit #3 — Junior, Cadet, U15, U13, Veteran."
+    details_url: ""
+    registration_url: ""
 
   - title: "Québec Youth Circuit #3"
     date: "2026-02-21"
@@ -204,6 +246,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Youth division."
+    details_url: ""
+    registration_url: ""
 
   - title: "Challenge Beausoleil-Broussard"
     date: "2026-02-22"
@@ -213,6 +257,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Youth Épée."
+    details_url: ""
+    registration_url: ""
 
   - title: "HP / PT Training Camp"
     date: "2026-02-28"
@@ -222,6 +268,8 @@ events:
     category: "training"
     category_label: "Training Camp"
     description: "High Performance and Provincial Team athletes."
+    details_url: ""
+    registration_url: ""
 
   # ── March 2026 ──────────────────────────────────────────
   - title: "Coupe de Printemps"
@@ -232,6 +280,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Veteran, Senior, AAA, Junior."
+    details_url: ""
+    registration_url: ""
 
   - title: "Épées de l'Est"
     date: "2026-03-28"
@@ -241,6 +291,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Épée / Sabre — all levels."
+    details_url: ""
+    registration_url: ""
 
   # ── April 2026 ──────────────────────────────────────────
   - title: "Sword Falls"
@@ -251,6 +303,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Youth division."
+    details_url: ""
+    registration_url: ""
 
   - title: "Québec Youth Circuit #4"
     date: "2026-04-11"
@@ -260,6 +314,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Youth division."
+    details_url: ""
+    registration_url: ""
 
   - title: "NB Provincials"
     date: "2026-04-25"
@@ -269,6 +325,8 @@ events:
     category: "provincial"
     category_label: "NB Provincial"
     description: "Open, Cadet."
+    details_url: ""
+    registration_url: ""
 
   # ── May 2026 ────────────────────────────────────────────
   - title: "HP / PT Training Camp"
@@ -279,6 +337,8 @@ events:
     category: "training"
     category_label: "Training Camp"
     description: "High Performance and Provincial Team athletes."
+    details_url: ""
+    registration_url: ""
 
   - title: "Québec Youth Provincials"
     date: "2026-05-09"
@@ -288,6 +348,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Youth division."
+    details_url: ""
+    registration_url: ""
 
   - title: "CC #4 — May Nationals"
     date: "2026-05-16"
@@ -297,6 +359,8 @@ events:
     category: "national"
     category_label: "National Event"
     description: "Canadian Championships Circuit #4 — Veteran, Senior, Junior, Cadet, U15, U13."
+    details_url: "https://fencing.ca/event/2026-may-nationals-quebec-city/"
+    registration_url: "https://2mev.com/#!/events/2026-may-national-championships-championnats-nationaux-de-mai-2026"
 
   # ── June 2026 ───────────────────────────────────────────
   - title: "OFA Provincial Championships"
@@ -306,6 +370,8 @@ events:
     venue: "TBA"
     category: "competition"
     category_label: "Competition"
+    details_url: ""
+    registration_url: "https://www.askfred.net/tournaments/f289d284-665d-45c0-8b56-2e01fd0c7769"
 
   - title: "Québec Provincial Championships"
     date: "2026-06-13"
@@ -315,6 +381,8 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Veteran, Senior, AAA, Junior."
+    details_url: ""
+    registration_url: ""
 
   - title: "East Coast Games — NB Youth Provincials"
     date: "2026-06-20"
@@ -324,3 +392,18 @@ events:
     category: "provincial"
     category_label: "NB Provincial"
     description: "U13, U11."
+    details_url: ""
+    registration_url: ""
+
+  # ── Summer 2026 (off-season placeholder) ───────────────
+  - title: "2026–27 Season Registration"
+    date: "2026-08-01"
+    display_date: "Opening Summer 2026"
+    location: "NB"
+    venue: "Watch fencingnb.ca"
+    category: "announcement"
+    category_label: "Announcement"
+    description: "Registration for the 2026–27 fencing season will open soon. Watch this page and our social channels for dates and details."
+    details_url: ""
+    registration_url: ""
+

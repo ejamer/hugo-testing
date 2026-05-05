@@ -525,6 +525,28 @@ main.pb7 { padding-bottom: 0 !important; }
   transform: translateY(-5px);
   box-shadow: var(--shadow-md);
 }
+.fenb-event-details-link {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--teal);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+.fenb-event-details-link:hover { text-decoration: underline; }
+.fenb-event-register-link {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--crimson);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+.fenb-event-register-link:hover { text-decoration: underline; }
 
 /* Date badge sidebar */
 .fenb-event-date-badge {
@@ -544,7 +566,8 @@ main.pb7 { padding-bottom: 0 !important; }
 .fenb-event-card--national   .fenb-event-date-badge { background: #1a3a5c; }
 .fenb-event-card--provincial .fenb-event-date-badge { background: var(--crimson); }
 .fenb-event-card--clinic     .fenb-event-date-badge { background: #5a6a3a; }
-.fenb-event-card--meeting    .fenb-event-date-badge { background: #4a4a4a; }
+.fenb-event-card--meeting        .fenb-event-date-badge { background: #4a4a4a; }
+.fenb-event-card--announcement   .fenb-event-date-badge { background: var(--teal); }
 
 .fenb-event-day   { font-size: 1.75rem; font-weight: 800; line-height: 1; }
 .fenb-event-month {
@@ -609,7 +632,8 @@ main.pb7 { padding-bottom: 0 !important; }
 .fenb-tag--national    { background: #e8eef5;             color: #1a3a5c; }
 .fenb-tag--provincial  { background: var(--crimson-pale); color: var(--crimson); }
 .fenb-tag--clinic      { background: #eef2e6;             color: #5a6a3a; }
-.fenb-tag--meeting     { background: #efefef;             color: #4a4a4a; }
+.fenb-tag--meeting        { background: #efefef;             color: #4a4a4a; }
+.fenb-tag--announcement   { background: var(--teal-pale);    color: var(--teal); }
 
 /* ── News section ─────────────────────────────── */
 .fenb-news-section { background: var(--white); }

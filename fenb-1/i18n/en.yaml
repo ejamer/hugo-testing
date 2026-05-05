@@ -35,7 +35,10 @@ training:    "Training Camp"
 national:    "National Event"
 provincial:  "NB Provincial"
 clinic:      "Clinic"
-meeting:     "FENB Meeting"
+meeting:      "FENB Meeting"
+announcement: "Announcement"
+event_details:   "Learn More"
+event_register:  "Register Now"
 
 # ── Month abbreviations (used for localized date display in event cards) ───────
 month_Jan: "Jan"

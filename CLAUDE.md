@@ -26,6 +26,16 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - Production build (required for search): `/snap/bin/hugo --environment production && npx pagefind --site public` from `fenb-1/`
 - For dev with search working: `/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk`
 
+## Post-mortem
+
+After completing a feature, ask the user whether a post-mortem is needed. A post-mortem covers:
+
+1. **What worked** — approaches that were right first time and worth repeating
+2. **What didn't** — missteps, reversals, or wasted implementation rounds, and why they happened
+3. **Docs** — whether `README.md` or `CLAUDE.md` need updating to reflect new conventions or schema changes
+
+Always get user approval on the proposed changes before editing any docs.
+
 ## Nav chrome changes
 
 Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.

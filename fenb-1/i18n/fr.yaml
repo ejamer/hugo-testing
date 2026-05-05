@@ -35,7 +35,10 @@ training:    "Camp d'entraînement"
 national:    "Événement national"
 provincial:  "Provincial NB"
 clinic:      "Clinique"
-meeting:     "Réunion FENB"
+meeting:      "Réunion FENB"
+announcement: "Annonce"
+event_details:   "En savoir plus"
+event_register:  "S'inscrire"
 
 # ── Abréviations des mois (pour l'affichage localisé des dates des événements) ─
 month_Jan: "janv."
