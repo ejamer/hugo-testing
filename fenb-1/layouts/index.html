@@ -7,8 +7,18 @@
   <div class="fenb-hero-bg-pattern"></div>
   <div class="fenb-hero-content">
     <span class="fenb-hero-badge">{{ i18n "hero_badge" }}</span>
-    <div class="fenb-hero-logo-wrap">
-      <img src="/images/logo-white.svg" alt="{{ .Site.Title }}" class="fenb-hero-logo-img">
+    <div class="fenb-hero-slider" id="fenb-hero-slider">
+      {{ range $i, $slide := hugo.Data.hero_slides.slides }}
+      <div class="fenb-hero-slide{{ if eq $i 0 }} is-active{{ end }}">
+        <img src="{{ $slide.src }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
+      </div>
+      {{ end }}
+      <button class="fenb-hero-slider-btn fenb-hero-slider-btn--prev" aria-label="Previous slide">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <button class="fenb-hero-slider-btn fenb-hero-slider-btn--next" aria-label="Next slide">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
     </div>
     <p class="fenb-hero-tagline">{{ i18n "hero_tagline" }}</p>
     <div class="fenb-hero-ctas">
@@ -135,5 +145,37 @@
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  var slider = document.getElementById('fenb-hero-slider');
+  if (!slider) return;
+  var slides = slider.querySelectorAll('.fenb-hero-slide');
+  if (slides.length < 2) return;
+  var current = 0;
+  var interval = 5000;
+  var timer;
+
+  function show(index) {
+    slides[current].classList.remove('is-active');
+    current = (index + slides.length) % slides.length;
+    slides[current].classList.add('is-active');
+  }
+
+  function advance() { show(current + 1); }
+
+  function startTimer() { timer = setInterval(advance, interval); }
+  function resetTimer() { clearInterval(timer); startTimer(); }
+
+  slider.querySelector('.fenb-hero-slider-btn--prev').addEventListener('click', function () {
+    show(current - 1); resetTimer();
+  });
+  slider.querySelector('.fenb-hero-slider-btn--next').addEventListener('click', function () {
+    show(current + 1); resetTimer();
+  });
+
+  startTimer();
+})();
+</script>
 
 {{ end }}
