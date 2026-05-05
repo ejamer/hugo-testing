@@ -25,6 +25,7 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - Dev server: run `/snap/bin/hugo server` from `fenb-1/`
 - Production build (required for search): `/snap/bin/hugo --environment production && npx pagefind --site public` from `fenb-1/`
 - For dev with search working: `/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk`
+- Hero elements wider than `.fenb-hero-content` (max-width ~760px) use a negative-margin breakout: `width: Xvw; margin: 0 calc((100% - Xvw) / 2)`. This centers the element on the viewport while leaving surrounding text content at its normal width.
 
 ## Post-mortem
 

@@ -39,7 +39,8 @@ hugo-testing/
     │   └── news/           News posts (EN only so far)
     ├── data/
     │   ├── events.yaml     2025–2026 event calendar (drives homepage cards)
-    │   └── clubs.yaml      Member club data (drives /clubs/ page)
+    │   ├── clubs.yaml      Member club data (drives /clubs/ page)
+    │   └── hero_slides.yaml  Hero carousel image list (drives homepage slider)
     ├── i18n/
     │   ├── en.yaml         English UI strings
     │   └── fr.yaml         French UI strings
@@ -54,7 +55,8 @@ hugo-testing/
         └── images/
             ├── logo-color.svg    Used on light backgrounds
             ├── logo-white.svg    Used on dark/teal backgrounds (hero, etc.)
-            └── clubs/            Member club logos (club-logo-{ID}.{ext})
+            ├── clubs/            Member club logos (club-logo-{ID}.{ext})
+            └── hero/             Hero carousel images (hero1.jpg … heroN.jpg)
 ```
 
 ---
@@ -215,6 +217,21 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
   website: "https://example.com"   # omit if none
   city: "City, NB"
 ```
+
+### Hero carousel images
+
+Drop replacement images into `static/images/hero/` and update `data/hero_slides.yaml`:
+
+```yaml
+slides:
+  - src: /images/hero/hero1.jpg
+    alt: "Alt text for accessibility"
+  - src: /images/hero/hero2.jpg
+    alt: ""
+```
+
+Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances
+every 5 seconds; prev/next arrows allow manual control.
 
 ### New section page
 
