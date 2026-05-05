@@ -23,3 +23,9 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
 - Custom CSS only — no inline styles for anything that will be reused; add classes to `fenb.css`
 - Dev server: run `/snap/bin/hugo server` from `fenb-1/`
+- Production build (required for search): `/snap/bin/hugo --environment production && npx pagefind --site public` from `fenb-1/`
+- For dev with search working: `/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk`
+
+## Nav chrome changes
+
+Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.

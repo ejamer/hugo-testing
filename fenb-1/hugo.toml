@@ -10,6 +10,12 @@ theme = 'ananke'
   [params.ananke]
     show_recent_posts = false
 
+  [params.ananke.social.follow]
+    networks = ["facebook"]
+
+  [params.ananke.social.facebook]
+    profilelink = "https://www.facebook.com/FencingEscrimeNB"
+
 # ── English ────────────────────────────────────────────────
 [languages.en]
   locale       = 'en-CA'

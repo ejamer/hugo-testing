@@ -49,7 +49,7 @@ hugo-testing/
     │   ├── clubs/
     │   │   └── list.html   Custom clubs page (grid + map + registration CTA)
     │   └── partials/
-    │       └── site-header.html  Sticky nav + language switcher (all pages)
+    │       └── site-header.html  Sticky nav, search overlay, language switcher (all pages)
     └── static/
         └── images/
             ├── logo-color.svg    Used on light backgrounds
@@ -64,14 +64,19 @@ hugo-testing/
 ```bash
 cd fenb-1
 
-# Start dev server with live reload
+# Dev server with live reload (search won't work — see note below)
 /snap/bin/hugo server
 
+# Dev server with search working (writes public/ to disk)
+/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk
+
 # Production build (output → fenb-1/public/)
-/snap/bin/hugo
+/snap/bin/hugo --environment production && npx pagefind --site public
 ```
 
 Hugo is installed via snap (`/snap/bin/hugo`). The site builds in ~100 ms.
+
+**Search index:** Pagefind runs as a post-build step (`npx pagefind --site public`) and writes its index to `public/pagefind/`. This directory is not tracked in git — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before the site is served.
 
 ---
 
