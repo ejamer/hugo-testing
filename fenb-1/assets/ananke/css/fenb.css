@@ -625,6 +625,163 @@ main.pb7 { padding-bottom: 0 !important; }
 .fenb-tag--meeting        { background: #efefef;             color: #4a4a4a; }
 .fenb-tag--announcement   { background: var(--teal-pale);    color: var(--teal); }
 
+/* ── Events calendar page ─────────────────────── */
+.fenb-events-cal-section { background: var(--white); }
+.fenb-events-cal-section .fenb-container { max-width: 960px; }
+
+.fenb-cal-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.fenb-cal-btn {
+  background: none;
+  border: 2px solid var(--teal);
+  color: var(--teal);
+  border-radius: 6px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--transition), color var(--transition);
+}
+.fenb-cal-btn:hover {
+  background: var(--teal);
+  color: #fff;
+}
+
+.fenb-cal-selectors {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.fenb-cal-select {
+  border: 1px solid var(--light-gray);
+  border-radius: 6px;
+  padding: 0.4rem 0.65rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  background: var(--white);
+  cursor: pointer;
+  appearance: auto;
+}
+
+.fenb-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: var(--light-gray);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.fenb-cal-weekday {
+  background: var(--teal);
+  color: #fff;
+  text-align: center;
+  padding: 0.55rem 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.fenb-cal-cell {
+  background: var(--white);
+  min-height: 100px;
+  padding: 0.4rem 0.35rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  overflow: hidden;
+}
+.fenb-cal-cell--empty { background: var(--off-white); }
+
+.fenb-cal-cell--today .fenb-cal-day-num {
+  background: var(--crimson);
+  color: #fff;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fenb-cal-cell--has-events:hover { background: var(--off-white); }
+.fenb-cal-cell--has-events:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: -2px;
+}
+
+.fenb-cal-day-num {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 22px;
+  min-width: 22px;
+  text-align: center;
+}
+
+.fenb-cal-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.fenb-cal-bar {
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1.35;
+  padding: 1px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.fenb-cal-bar--competition  { background: var(--teal); }
+.fenb-cal-bar--training     { background: #2d6a4f; }
+.fenb-cal-bar--national     { background: #1a3a5c; }
+.fenb-cal-bar--provincial   { background: var(--crimson); }
+.fenb-cal-bar--clinic       { background: #5a6a3a; }
+.fenb-cal-bar--meeting      { background: #4a4a4a; }
+.fenb-cal-bar--announcement { background: var(--teal); }
+
+.fenb-cal-no-events {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 2.5rem 0 1rem;
+}
+
+/* Pulse highlight when scrolled-to from a calendar cell click */
+@keyframes fenb-cal-highlight {
+  0%   { box-shadow: 0 0 0 0   rgba(0,97,86,0.5); }
+  50%  { box-shadow: 0 0 0 6px rgba(0,97,86,0.2); }
+  100% { box-shadow: var(--shadow-sm); }
+}
+.fenb-cal-card--highlight {
+  animation: fenb-cal-highlight 1.5s ease forwards;
+}
+
 /* ── News section ─────────────────────────────── */
 .fenb-news-section { background: var(--white); }
 

@@ -1,5 +1,7 @@
 # Fencing-Escrime NB — Website
 
+**[► View live site](https://ejamer.github.io/hugo-testing/)**
+
 Replacement for [fencingnb.ca](https://fencingnb.ca). Static site built with Hugo.
 Bilingual (English / French). Brand colours: `#006156` (teal) · `#79242f` (crimson).
 
@@ -64,24 +66,9 @@ hugo-testing/
 
 ---
 
-## Build & develop
+## Hosting, branches & local dev
 
-```bash
-cd fenb-1
-
-# Dev server with live reload (search won't work — see note below)
-/snap/bin/hugo server
-
-# Dev server with search working (writes public/ to disk)
-/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk
-
-# Production build (output → fenb-1/public/)
-/snap/bin/hugo --environment production && npx pagefind --site public
-```
-
-Hugo is installed via snap (`/snap/bin/hugo`). The site builds in ~100 ms.
-
-**Search index:** Pagefind runs as a post-build step (`npx pagefind --site public`) and writes its index to `public/pagefind/`. This directory is not tracked in git — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before the site is served.
+See **[DEVELOPMENT.md](DEVELOPMENT.md)** for the full workflow: branch strategy, local build commands, and GitHub Pages deployment.
 
 ---
 
@@ -92,7 +79,7 @@ Hugo is installed via snap (`/snap/bin/hugo`). The site builds in ~100 ms.
 | `/` | ✅ Built | Hero, upcoming events, latest news, quick-links section |
 | `/clubs/` | ✅ Built | Club grid, Google map, registration CTA |
 | `/news/` | ✅ Built | List + single-post layout. Articles have 3-col layout with Recent News sidebar, inline title, category-coloured divider. |
-| `/events/` | 🔲 Placeholder | Menu link exists; page not yet built |
+| `/events/` | ✅ Built | Calendar grid with month navigation, event list below. Data from `data/events.yaml`. |
 | `/programs/` | 🔲 Placeholder | Menu link exists; page not yet built |
 | `/about/` | 🔲 Placeholder | Menu link exists; page not yet built |
 | `/join/` | 🔲 Placeholder | Menu link exists; page not yet built |
@@ -134,6 +121,7 @@ Structured content (events, clubs) lives in `data/` as YAML. Layouts read it via
 | `title` | ✅ | |
 | `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter only |
 | `display_date` | ✅ | Free-form string shown on the card. Use `"TBA"` or `"July 2026"` for uncertain dates |
+| `end_date` | — | Optional. ISO `YYYY-MM-DD`. If set and greater than `date`, the calendar draws bars across the full range (inclusive). Leave blank or omit for single-day events. |
 | `category` | ✅ | See categories below |
 | `category_label` | ✅ | Fallback label if i18n key missing |
 | `venue` | ✅ | Short venue name shown on card |
