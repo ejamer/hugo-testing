@@ -50,6 +50,17 @@ Always get user approval on the proposed changes before editing any docs.
 
 Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.
 
+## Hugo `absURL` with leading slash
+
+`absURL` treats a leading `/` as **domain-root-relative** and ignores the base path. With `baseURL = "https://ejamer.github.io/hugo-testing/"`:
+
+- `"/pagefind/x.js" | absURL` → `https://ejamer.github.io/pagefind/x.js` ❌ (subpath lost)
+- `"pagefind/x.js" | absURL` → `https://ejamer.github.io/hugo-testing/pagefind/x.js` ✓
+
+Always omit the leading slash when using `absURL` for site-root-relative paths that must include the base path.
+
+This is especially important for paths embedded in `<script>` strings, where `canonifyURLs` does **not** apply post-processing.
+
 ## Hugo template `sort` syntax
 
 Pipe passes the value as the **last** argument, but `sort` expects the collection first — so `collection | sort "Key" "dir"` silently sorts the string `"Key"` instead of the collection. Always write it positionally: `sort .MyCollection "FieldName" "desc"`.
@@ -79,7 +90,7 @@ If a section's single pages should show the **section title** in the band instea
 
 ```yaml
 cascade:
-  - _target:
+  - target:
       kind: page
     page_header_uses_section: true
 ```

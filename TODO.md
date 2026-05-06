@@ -6,31 +6,9 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ## Search bar not loading correctly
 
-- [ ] **Search box missing** -  nothing loads where `<div id="fenb-search"></div>` is supposed to be.
-- [ ] **Console errors** - when the search button is clicked, the following errors appear:
-
-```
-hugo-testing/:4 
- GET https://ejamer.github.io/pagefind/pagefind-ui.css net::ERR_ABORTED 404 (Not Found)
-l	@	hugo-testing/:4
-(anonymous)	@	hugo-testing/:4
-hugo-testing/:4 
- GET https://ejamer.github.io/pagefind/pagefind-ui.js net::ERR_ABORTED 404 (Not Found)
-l	@	hugo-testing/:4
-(anonymous)	@	hugo-testing/:4
-```
-
-Claude assessment was:
-
-> This is the known pagefind/dev-server issue. You're running hugo server alone — pagefind files either haven't been generated yet, or the server isn't reading them from disk.
-> 
-> Run the full search-enabled dev command from fenb-1/:
-> 
-> `/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk`
-> 
-> The three steps matter in order: build the site, generate the pagefind index into public/pagefind/, then serve with --renderStaticToDisk so Hugo reads those files from disk rather than memory. Plain hugo server skips the index and serves public/ in-memory, which is why pagefind assets 404 or get the wrong MIME type.
-
-However, that didn't seem to fix the problem.
+- [x] **Search box missing / Console 404 errors** — two root causes fixed:
+  1. CI workflow never ran `npx pagefind`, so the index was never deployed. Added a "Build search index" step to `.github/workflows/hugo.yml`.
+  2. Pagefind asset paths in `site-header.html` used `/pagefind/pagefind-ui.js` (a JS string literal not processed by `canonifyURLs`). Hugo's `absURL` with a leading `/` treats the path as domain-root-relative and ignores the base path (`/hugo-testing/`). Fixed to `"pagefind/pagefind-ui.js" | absURL` (no leading slash), which correctly outputs `https://ejamer.github.io/hugo-testing/pagefind/pagefind-ui.js`.
 
 ## Clubs page
 
@@ -48,5 +26,5 @@ However, that didn't seem to fix the problem.
 
 ## Deprecation Issues
 
-- [ ] **Google maps** - check console when loading clubs page; multiple deprecation warnings that should be fixed
-- [ ] **hugo build warnings** - multiple deprecation warnings during hugo build process that should be fixed
+- [x] **Google maps** - fixed `allowfullscreen` → `allow="fullscreen"` on the clubs map iframe. Remaining console warnings (third-party cookies, google.maps.Marker) originate inside Google's own embed code and cannot be fixed from our side.
+- [x] **hugo build warnings** - fixed: `languageName` → `label` in hugo.toml, `_target` → `target` in news cascade, `.Site.Sites` → `hugo.Sites` in 404.html

@@ -22,7 +22,7 @@ theme = 'ananke'
 # ── English ────────────────────────────────────────────────
 [languages.en]
   locale       = 'en-CA'
-  languageName = 'English'
+  label        = 'English'
   weight       = 1
   title        = 'Fencing-Escrime NB'
 
@@ -62,7 +62,7 @@ theme = 'ananke'
 # ── Français ───────────────────────────────────────────────
 [languages.fr]
   locale       = 'fr-CA'
-  languageName = 'Français'
+  label        = 'Français'
   weight       = 2
   title        = 'Escrime-Fencing NB'
 
