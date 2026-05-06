@@ -800,6 +800,8 @@ main.pb7 { padding-bottom: 0 !important; }
   flex-direction: column;
   transition: transform var(--transition), box-shadow var(--transition);
   background: var(--white);
+  position: relative;
+  cursor: pointer;
 }
 .fenb-news-card:hover {
   transform: translateY(-5px);
@@ -871,7 +873,12 @@ main.pb7 { padding-bottom: 0 !important; }
   text-decoration: none;
   transition: color var(--transition);
 }
-.fenb-news-title a:hover { color: var(--teal); }
+.fenb-news-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.fenb-news-card:hover .fenb-news-title a { color: var(--teal); }
 
 .fenb-news-excerpt {
   font-size: 0.88rem;

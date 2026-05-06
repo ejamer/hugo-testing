@@ -6,8 +6,9 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 
 ## Reference files
 
-- **`README.md`** — authoritative reference for site structure, conventions, page status, and how to add content. Read it when starting work on a new section or when unsure about a pattern. Update the Pages table and any relevant sections when new pages are built or conventions change.
-- **`TODO.md`** — outstanding items that need follow-up.
+- **`README.md`** — site structure, file layout, and how to add/update each content type (news, events, clubs). Read it when starting work on a new section or when unsure about data schemas.
+- **`STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colour reference. Read it before implementing any new visual element or content type.
+- **`TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
 
 ## Outstanding TODOs
 
@@ -30,13 +31,10 @@ Production build: `/snap/bin/hugo --environment production && npx pagefind --sit
 
 ## Key conventions
 
-- Brand colours: `#006156` (teal) and `#79242f` (crimson) — defined as CSS vars in `fenb-1/assets/ananke/css/fenb.css`
-- All UI text goes through `i18n` — add keys to both `fenb-1/i18n/en.yaml` and `fenb-1/i18n/fr.yaml`
-- Every content page needs both an English (`_index.md`) and French (`_index.fr.md`) version so the language switcher links directly between them rather than falling back to the home page
+See **`STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, and page header band usage.
+
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
-- Custom CSS only — no inline styles for anything that will be reused; add classes to `fenb.css`
-- For dev with search working: `/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk` from `fenb-1/`
-- Hero elements wider than `.fenb-hero-content` (max-width ~760px) use a negative-margin breakout: `width: Xvw; margin: 0 calc((100% - Xvw) / 2)`. This centers the element on the viewport while leaving surrounding text content at its normal width.
+- **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see STYLE_GUIDE.md)
 
 ## Post-mortem
 
@@ -44,7 +42,7 @@ After completing a feature, ask the user whether a post-mortem is needed. A post
 
 1. **What worked** — approaches that were right first time and worth repeating
 2. **What didn't** — missteps, reversals, or wasted implementation rounds, and why they happened
-3. **Docs** — whether `README.md` or `CLAUDE.md` need updating to reflect new conventions or schema changes
+3. **Docs** — whether `README.md`, `STYLE_GUIDE.md`, or `CLAUDE.md` need updating to reflect new conventions or schema changes
 
 Always get user approval on the proposed changes before editing any docs.
 

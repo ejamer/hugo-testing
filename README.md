@@ -2,8 +2,7 @@
 
 **[► View live site](https://ejamer.github.io/hugo-testing/)**
 
-Replacement for [fencingnb.ca](https://fencingnb.ca). Static site built with Hugo.
-Bilingual (English / French). Brand colours: `#006156` (teal) · `#79242f` (crimson).
+Replacement for [fencingnb.ca](https://fencingnb.ca). Static site built with Hugo. Bilingual (English / French). Brand colours: `#006156` (teal) · `#79242f` (crimson).
 
 ---
 
@@ -20,29 +19,52 @@ Bilingual (English / French). Brand colours: `#006156` (teal) · `#79242f` (crim
 
 ---
 
+## Related docs
+
+| File | Covers |
+|------|--------|
+| [DEVELOPMENT.md](DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
+| [STYLE_GUIDE.md](STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
+| [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code |
+| [TODO.md](TODO.md) | Outstanding items |
+
+---
+
 ## Project layout
 
 ```
 hugo-testing/
 ├── CLAUDE.md              Process instructions for Claude
+├── DEVELOPMENT.md         Branch strategy and build commands
+├── STYLE_GUIDE.md         Brand, CSS, and content conventions
 ├── TODO.md                Outstanding items — keep current
-├── README.md              This file — reference for content and conventions
+├── plans/                 Design decisions and deferred plans
+├── README.md              This file
 └── fenb-1/                Hugo site root
     ├── hugo.toml           Site config, languages, nav menus
     ├── assets/
     │   └── ananke/css/
     │       └── fenb.css    All custom styles (bundled by Ananke)
-    ├── content/            Markdown pages (*.md = EN, *.fr.md = FR)
+    ├── content/            Section indexes: _index.md (EN) + _index.fr.md (FR)
+    │   │                   Article files: {name}.en.md (EN) + {name}.fr.md (FR)
     │   ├── _index.md       Homepage (EN)
     │   ├── _index.fr.md    Homepage (FR)
     │   ├── clubs/
-    │   │   ├── _index.md   Clubs list page (EN)
-    │   │   └── _index.fr.md  Clubs list page (FR)
-    │   └── news/           News posts (EN only so far)
+    │   │   ├── _index.md      Clubs list page (EN)
+    │   │   └── _index.fr.md   Clubs list page (FR)
+    │   └── news/
+    │       ├── _index.md      News section (EN)
+    │       ├── _index.fr.md   News section (FR)
+    │       └── 2026/          One subfolder per calendar year
+    │           ├── _index.md
+    │           ├── _index.fr.md
+    │           ├── apr-05-nb-athletes-nationals.en.md
+    │           └── apr-05-nb-athletes-nationals.fr.md
     ├── data/
-    │   ├── events.yaml     2025–2026 event calendar (drives homepage cards)
-    │   ├── clubs.yaml      Member club data (drives /clubs/ page)
-    │   └── hero_slides.yaml  Hero carousel image list (drives homepage slider)
+    │   ├── events.yaml        Current season's event calendar (drives homepage + /events/)
+    │   ├── events_archive/    Past seasons — moved here at season rollover (see plans/)
+    │   ├── clubs.yaml         Member club data (drives /clubs/ page)
+    │   └── hero_slides.yaml   Hero carousel image list (drives homepage slider)
     ├── i18n/
     │   ├── en.yaml         English UI strings
     │   └── fr.yaml         French UI strings
@@ -52,7 +74,7 @@ hugo-testing/
     │   ├── clubs/
     │   │   └── list.html   Custom clubs page (grid + map + registration CTA)
     │   ├── news/
-    │   │   ├── list.html   News index (FencingNB-styled card grid)
+    │   │   ├── list.html   News index (card grid, paginates recursively across year folders)
     │   │   └── single.html News article (3-col: empty left | article | recent-news sidebar)
     │   └── partials/
     │       └── site-header.html  Sticky nav, search overlay, language switcher, page header band
@@ -66,55 +88,47 @@ hugo-testing/
 
 ---
 
-## Hosting, branches & local dev
+## Adding content
 
-See **[DEVELOPMENT.md](DEVELOPMENT.md)** for the full workflow: branch strategy, local build commands, and GitHub Pages deployment.
+### New news post
+
+**File naming:** `{mon}-{dd}-{title}.{lang}.md` inside the year subfolder — see [STYLE_GUIDE.md](STYLE_GUIDE.md) for the full naming convention.
+
+Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
+
+**Front matter:**
+
+```yaml
+---
+title: "Post title"
+date: 2026-06-01
+category: "Results"   # badge label — drives card accent colour AND article divider colour
+summary: "One-sentence summary shown on the homepage card."
+---
+
+Full post body here (Markdown).
+```
+
+**Category colours:**
+
+| Value | Colour | French equivalent |
+|---|---|---|
+| `Results` | Teal | `Résultats` |
+| `Announcement` | Crimson | `Annonce` |
+| `Registration` | Green | `Inscription` |
+| `Community` | Navy | `Communauté` |
+
+The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
+
+**New year folder:** when the first article of a new calendar year is created, add a year subfolder with `_index.md` and `_index.fr.md` (copy from the previous year folder).
 
 ---
 
-## Pages — status
+### New event
 
-| URL | Status | Notes |
-|-----|--------|-------|
-| `/` | ✅ Built | Hero, upcoming events, latest news, quick-links section |
-| `/clubs/` | ✅ Built | Club grid, Google map, registration CTA |
-| `/news/` | ✅ Built | List + single-post layout. Articles have 3-col layout with Recent News sidebar, inline title, category-coloured divider. |
-| `/events/` | ✅ Built | Calendar grid with month navigation, event list below. Data from `data/events.yaml`. |
-| `/programs/` | 🔲 Placeholder | Menu link exists; page not yet built |
-| `/about/` | 🔲 Placeholder | Menu link exists; page not yet built |
-| `/join/` | 🔲 Placeholder | Menu link exists; page not yet built |
+Add an entry to `data/events.yaml`.
 
-French versions mirror English at `/fr/...`. The language switcher links directly to
-the translated page when one exists, otherwise falls back to the French home page.
-
----
-
-## Conventions
-
-### Bilingual rule — every page needs both language files
-
-Any section with a custom layout needs `_index.md` (EN) **and** `_index.fr.md` (FR)
-in its content directory. Without the French file, the language switcher falls back
-to the French home page instead of the translated page.
-
-Both files need `hide_page_header: true` in front matter if the layout provides its
-own page header (prevents the generic header in `site-header.html` from doubling up).
-
-### i18n — all UI text goes through translation strings
-
-Never hardcode display text in a layout. Add keys to **both** `i18n/en.yaml` and
-`i18n/fr.yaml`. Use `{{ i18n "key" }}` in templates. For strings with dynamic values
-use `{{ i18n "key" (dict "Var" value) }}` and `{{ .Var }}` in the YAML string.
-
-### Data-driven content
-
-Structured content (events, clubs) lives in `data/` as YAML. Layouts read it via
-`hugo.Data`. This lets content editors update data without touching layout files.
-
-**clubs.yaml** fields per club: `id`, `name`, `logo`, `email`, `website` (optional),
-`city`.
-
-**events.yaml** fields per event:
+**Fields:**
 
 | Field | Required | Notes |
 |---|---|---|
@@ -130,75 +144,13 @@ Structured content (events, clubs) lives in `data/` as YAML. Layouts read it via
 | `details_url` | — | If set, a teal **Learn More →** badge appears on the card (opens in new tab) |
 | `registration_url` | — | If set, a crimson **Register Now →** badge appears on the card (opens in new tab) |
 
-Categories with CSS and i18n support: `competition`, `training`, `national`, `provincial`, `clinic`, `meeting`, `announcement`.
-
-### CSS
-
-All styles in `fenb-1/assets/ananke/css/fenb.css`. CSS custom properties
-(`--teal`, `--crimson`, `--shadow-sm`, `--radius`, etc.) are defined at `:root` —
-use them rather than raw hex values. No inline styles for anything reusable.
-
-### 404 — bilingual via JavaScript
-
-Hugo generates one root `404.html` (English). A small inline script detects when
-the URL starts with `/fr/` and swaps: page text, nav link labels (from Hugo's French
-menu baked in at build time), nav link hrefs (prefixed with `/fr`), logo href, and
-the language-switcher button. If the French strings in `i18n/fr.yaml` change, update
-the hardcoded strings in `layouts/404.html` to match.
-
----
-
-## Brand
-
-- **Primary:** `#006156` (deep teal) — nav, headings, buttons, section accents
-- **Accent:** `#79242f` (crimson) — CTA buttons, hero badge, event category badges
-- **Logos:** `static/images/logo-color.svg` on light backgrounds;
-  `logo-white.svg` on dark/teal backgrounds (hero, teal-bg sections)
-- **Font stack:** Avenir, Nunito Sans, system-ui
-
----
-
-## Adding content
-
-### New news post
-
-Create `content/news/my-post.md`:
-
-```yaml
----
-title: "Post title"
-date: 2026-06-01
-category: "Results"   # badge label — drives card accent colour AND article divider colour
-summary: "One-sentence summary shown on the homepage card."
----
-
-Full post body here (Markdown).
-```
-
-Supported `category` values and their colours:
-
-| Value | Colour |
-|---|---|
-| `Results` | Teal |
-| `Announcement` | Crimson |
-| `Registration` | Green |
-| `Community` | Navy |
-
-French equivalents (`Résultats`, `Annonce`, `Inscription`, `Communauté`) map to the same colours via paired CSS selectors.
-
-The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
-
-Add `content/news/my-post.fr.md` for a French translation.
-
-### New event
-
-Add an entry to `data/events.yaml`:
+**Example:**
 
 ```yaml
 - title: "Event Name"
   date: "2026-06-01"              # ISO — sort/filter only; use first-of-month for uncertain dates
   display_date: "June 1, 2026"    # free-form; use "TBA" or "June 2026" if date is uncertain
-  category: competition           # see categories above
+  category: competition           # see categories below
   category_label: "Competition"
   venue: "Venue Name"
   location: "City, NB"
@@ -207,7 +159,25 @@ Add an entry to `data/events.yaml`:
   registration_url: ""            # URL for a Register Now badge; leave blank or omit if none
 ```
 
+**Category colours:**
+
+Each category drives three visual elements: the date badge on the event card, the tag pill, and the calendar bar on the month grid.
+
+| `category` | Example `category_label` | Colour |
+|---|---|---|
+| `competition` | `"Competition"` | Teal |
+| `training` | `"Training Camp"` | Dark green |
+| `national` | `"National Event"` | Navy |
+| `provincial` | `"Provincial Championship"` | Crimson |
+| `clinic` | `"Clinic"` | Olive |
+| `meeting` | `"FENB Meeting"` | Grey |
+| `announcement` | `"Announcement"` | Teal |
+
+`category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces).
+
 The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today), falling back to the most recent past events if fewer than 4 are upcoming. When the season ends, add an off-season placeholder entry (category `announcement`) so the section stays populated through the summer gap.
+
+---
 
 ### New club
 
@@ -222,6 +192,8 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
   city: "City, NB"
 ```
 
+---
+
 ### Hero carousel images
 
 Drop replacement images into `static/images/hero/` and update `data/hero_slides.yaml`:
@@ -234,8 +206,9 @@ slides:
     alt: ""
 ```
 
-Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances
-every 5 seconds; prev/next arrows allow manual control.
+Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; prev/next arrows allow manual control.
+
+---
 
 ### New section page
 
@@ -243,9 +216,8 @@ every 5 seconds; prev/next arrows allow manual control.
 2. Create `content/{section}/_index.md` and `content/{section}/_index.fr.md`
 3. Set `hide_page_header: true` in both front matter files if the layout provides its own page header inside `main` (prevents doubling up with `site-header.html`)
 4. Add i18n keys for any new UI strings to both `en.yaml` and `fr.yaml`
-5. Add the URL to the Pages table above
 
-If the section has single-page posts and you want the page header band to always show the **section title** (rather than each page's own title), add to the section `_index.md`:
+If the section has single-page posts and you want the page header band to show the **section title** rather than each page's own title, add to the section `_index.md`:
 
 ```yaml
 cascade:
