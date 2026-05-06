@@ -1,5 +1,6 @@
 # baseURL = 'https://fencingnb.ca/'
 baseURL = "https://ejamer.github.io/hugo-testing/"
+canonifyURLs = true
 
 defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = false
