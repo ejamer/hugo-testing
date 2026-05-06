@@ -1,8 +1,16 @@
 # Fencing-Escrime NB — Website
 
+This repo is testing a replacement tech stack for [fencingnb.ca](https://fencingnb.ca), generating a static site built with Hugo.
+
 **[► View live site](https://ejamer.github.io/hugo-testing/)**
 
-Replacement for [fencingnb.ca](https://fencingnb.ca). Static site built with Hugo. Bilingual (English / French). Brand colours: `#006156` (teal) · `#79242f` (crimson).
+## Testing locally
+
+1. From the repo root folder, type: `make serve`
+2. Then open `http://localhost:1313/hugo-testing/` in your browser.
+
+> [!TIP]
+> `make serve` runs three steps in order: builds the site, generates the search index with Pagefind, then starts the dev server. Using just `hugo server` inside the `fenb-1` folder skips the Pagefind step, so the search overlay will silently fail to load — always use `make serve` when you need a full-featured test.
 
 ---
 

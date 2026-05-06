@@ -66,20 +66,17 @@ flowchart TD
 
 ## Local development
 
-Hugo is installed via snap (`/snap/bin/hugo`). Run all commands from `fenb-1/`.
+Hugo is installed via snap (`/snap/bin/hugo`). Run all commands from the **repo root** unless noted.
 
 ```bash
-cd fenb-1
+# Dev server with search (preferred — run from repo root)
+make serve
 
-# Dev server — live reload, search won't work
-/snap/bin/hugo server
-
-# Dev server with search working (writes public/ to disk first)
-/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk
-
-# Production build (output → fenb-1/public/)
-/snap/bin/hugo --environment production && npx pagefind --site public
+# Production build (run from fenb-1/)
+cd fenb-1 && /snap/bin/hugo --environment production && npx pagefind --site public
 ```
+
+> **Note:** `make serve` builds the site, generates the Pagefind search index, then starts the dev server with `--renderStaticToDisk`. Plain `hugo server` skips the index step and search will not work.
 
 The site builds in ~100 ms.
 
