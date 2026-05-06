@@ -1,4 +1,8 @@
-baseURL = 'https://fencingnb.ca/'
+# baseURL = 'https://fencingnb.ca/'
+baseURL = "https://ejamer.github.io/hugo-testing/"
+relativeURLs = true
+canonifyURLs = true
+
 defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = false
 theme = 'ananke'
