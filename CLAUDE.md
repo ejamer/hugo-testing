@@ -15,6 +15,19 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 
 **When creating or modifying content**, check whether any new placeholder links, missing pages, or deferred decisions arise. If so, add a `- [ ]` entry to `TODO.md` under the relevant section before finishing. Mark items `- [x]` (and note the fix) when they are resolved.
 
+## Development workflow
+
+See **`DEVELOPMENT.md`** for the full branch strategy and build commands.
+
+Key rules:
+- **`main`** — production; pushing here triggers a GitHub Pages deploy. **Never commit directly.**
+- **`dev`** — permanent development branch; all work lands here first. **Never delete.**
+- **Feature branches** — cut from `dev`, PR back into `dev` when done, then delete.
+- **Release** — PR from `dev` into `main`.
+
+Dev server (run from `fenb-1/`): `/snap/bin/hugo server`
+Production build: `/snap/bin/hugo --environment production && npx pagefind --site public`
+
 ## Key conventions
 
 - Brand colours: `#006156` (teal) and `#79242f` (crimson) — defined as CSS vars in `fenb-1/assets/ananke/css/fenb.css`
@@ -22,9 +35,7 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - Every content page needs both an English (`_index.md`) and French (`_index.fr.md`) version so the language switcher links directly between them rather than falling back to the home page
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
 - Custom CSS only — no inline styles for anything that will be reused; add classes to `fenb.css`
-- Dev server: run `/snap/bin/hugo server` from `fenb-1/`
-- Production build (required for search): `/snap/bin/hugo --environment production && npx pagefind --site public` from `fenb-1/`
-- For dev with search working: `/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk`
+- For dev with search working: `/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk` from `fenb-1/`
 - Hero elements wider than `.fenb-hero-content` (max-width ~760px) use a negative-margin breakout: `width: Xvw; margin: 0 calc((100% - Xvw) / 2)`. This centers the element on the viewport while leaving surrounding text content at its normal width.
 
 ## Post-mortem

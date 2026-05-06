@@ -1,5 +1,7 @@
 # Fencing-Escrime NB — Website
 
+**[► View live site](https://ejamer.github.io/hugo-testing/)**
+
 Replacement for [fencingnb.ca](https://fencingnb.ca). Static site built with Hugo.
 Bilingual (English / French). Brand colours: `#006156` (teal) · `#79242f` (crimson).
 
@@ -64,24 +66,9 @@ hugo-testing/
 
 ---
 
-## Build & develop
+## Hosting, branches & local dev
 
-```bash
-cd fenb-1
-
-# Dev server with live reload (search won't work — see note below)
-/snap/bin/hugo server
-
-# Dev server with search working (writes public/ to disk)
-/snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk
-
-# Production build (output → fenb-1/public/)
-/snap/bin/hugo --environment production && npx pagefind --site public
-```
-
-Hugo is installed via snap (`/snap/bin/hugo`). The site builds in ~100 ms.
-
-**Search index:** Pagefind runs as a post-build step (`npx pagefind --site public`) and writes its index to `public/pagefind/`. This directory is not tracked in git — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before the site is served.
+See **[DEVELOPMENT.md](DEVELOPMENT.md)** for the full workflow: branch strategy, local build commands, and GitHub Pages deployment.
 
 ---
 
