@@ -371,19 +371,6 @@ events:
     details_url: ""
     registration_url: ""
 
-  # TEST: multi-day event spanning May 6–9
-  - title: "NB Development Camp"
-    date: "2026-05-06"
-    end_date: "2026-05-09"
-    display_date: "May 6–9, 2026"
-    location: "Fredericton, NB"
-    venue: "Fredericton"
-    category: "training"
-    category_label: "Training Camp"
-    description: "Provincial development camp — U15, U17 athletes."
-    details_url: ""
-    registration_url: ""
-
   - title: "Québec Youth Provincials"
     date: "2026-05-09"
     end_date: "2026-05-10"
@@ -397,9 +384,9 @@ events:
     registration_url: ""
 
   - title: "CC #4 — May Nationals"
-    date: "2026-05-16"
+    date: "2026-05-15"
     end_date: "2026-05-18"
-    display_date: "May 16–18, 2026"
+    display_date: "May 15–18, 2026"
     location: "Québec City, QC"
     venue: "Québec City"
     category: "national"
@@ -407,19 +394,6 @@ events:
     description: "Canadian Championships Circuit #4 — Veteran, Senior, Junior, Cadet, U15, U13."
     details_url: "https://fencing.ca/event/2026-may-nationals-quebec-city/"
     registration_url: "https://2mev.com/#!/events/2026-may-national-championships-championnats-nationaux-de-mai-2026"
-
-  # TEST: second event on May 16 (same day as CC #4 start) to test same-day stacking
-  - title: "Atlantic Regional Open"
-    date: "2026-05-16"
-    end_date: "2026-05-17"
-    display_date: "May 16–17, 2026"
-    location: "Moncton, NB"
-    venue: "Moncton"
-    category: "competition"
-    category_label: "Competition"
-    description: "Open individual and team events — all weapons."
-    details_url: ""
-    registration_url: ""
 
   # ── June 2026 ───────────────────────────────────────────
   - title: "OFA Provincial Championships"
