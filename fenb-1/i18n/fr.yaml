@@ -14,6 +14,9 @@ section_label_news:  "Restez informé"
 section_title_news:  "Actualités et résultats"
 view_all_news:       "Voir toutes les nouvelles"
 read_more:           "Lire la suite"
+back_to_news:        "Retour aux nouvelles"
+sidebar_recent_news: "Nouvelles récentes"
+see_more_news:       "Voir plus de nouvelles"
 
 # ── Section programmes ─────────────────────────────────────
 program_clubs_title:   "Trouver un club"

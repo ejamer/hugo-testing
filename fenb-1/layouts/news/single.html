@@ -1,0 +1,45 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<section class="fenb-section fenb-article-section">
+  <div class="fenb-container">
+    <div class="fenb-article-layout">
+
+      <aside class="fenb-article-sidebar fenb-article-sidebar--left"></aside>
+
+      <div class="fenb-article-main">
+        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . | urlize }}{{ end }}"></div>
+        <h1 class="fenb-article-title">{{ .Title }}</h1>
+        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . | urlize }}{{ end }}"></div>
+        <div class="fenb-article-meta">
+          {{ with .Params.category }}<span class="fenb-news-category fenb-news-category--{{ . | urlize }}">{{ . }}</span>{{ end }}
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+        </div>
+        <div class="fenb-article-body">
+          {{ .Content }}
+        </div>
+        <nav class="fenb-article-back">
+          <a href="{{ "/news/" | relLangURL }}">&larr; {{ i18n "back_to_news" }}</a>
+        </nav>
+      </div>
+
+      <aside class="fenb-article-sidebar fenb-article-sidebar--right">
+        <div class="fenb-sidebar-block">
+          <h3 class="fenb-sidebar-heading">{{ i18n "sidebar_recent_news" }}</h3>
+          <ul class="fenb-sidebar-news-list">
+            {{ $current := . }}
+            {{ range first 6 (where .Site.RegularPages "Section" "news") }}
+            <li class="fenb-sidebar-news-item{{ if eq .RelPermalink $current.RelPermalink }} is-current{{ end }}">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+            </li>
+            {{ end }}
+          </ul>
+          <a href="{{ "/news/" | relLangURL }}" class="fenb-sidebar-events-link">{{ i18n "see_more_news" }} &rarr;</a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+{{ end }}

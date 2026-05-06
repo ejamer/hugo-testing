@@ -14,6 +14,9 @@ section_label_news:  "Stay Informed"
 section_title_news:  "Latest News & Results"
 view_all_news:       "View all news"
 read_more:           "Read more"
+back_to_news:        "Back to News"
+sidebar_recent_news: "Recent News"
+see_more_news:       "See more news"
 
 # ── Programs section ───────────────────────────────────────
 program_clubs_title:   "Find a Club"

@@ -49,8 +49,11 @@ hugo-testing/
     │   ├── 404.html        Custom 404 (JS detects /fr/ and switches language)
     │   ├── clubs/
     │   │   └── list.html   Custom clubs page (grid + map + registration CTA)
+    │   ├── news/
+    │   │   ├── list.html   News index (FencingNB-styled card grid)
+    │   │   └── single.html News article (3-col: empty left | article | recent-news sidebar)
     │   └── partials/
-    │       └── site-header.html  Sticky nav, search overlay, language switcher (all pages)
+    │       └── site-header.html  Sticky nav, search overlay, language switcher, page header band
     └── static/
         └── images/
             ├── logo-color.svg    Used on light backgrounds
@@ -88,7 +91,7 @@ Hugo is installed via snap (`/snap/bin/hugo`). The site builds in ~100 ms.
 |-----|--------|-------|
 | `/` | ✅ Built | Hero, upcoming events, latest news, quick-links section |
 | `/clubs/` | ✅ Built | Club grid, Google map, registration CTA |
-| `/news/` | ✅ Built | 4 sample posts (results, announcement, registration, community) |
+| `/news/` | ✅ Built | List + single-post layout. Articles have 3-col layout with Recent News sidebar, inline title, category-coloured divider. |
 | `/events/` | 🔲 Placeholder | Menu link exists; page not yet built |
 | `/programs/` | 🔲 Placeholder | Menu link exists; page not yet built |
 | `/about/` | 🔲 Placeholder | Menu link exists; page not yet built |
@@ -177,12 +180,25 @@ Create `content/news/my-post.md`:
 ---
 title: "Post title"
 date: 2026-06-01
-category: "Results"   # badge label; drives card accent colour
+category: "Results"   # badge label — drives card accent colour AND article divider colour
 summary: "One-sentence summary shown on the homepage card."
 ---
 
 Full post body here (Markdown).
 ```
+
+Supported `category` values and their colours:
+
+| Value | Colour |
+|---|---|
+| `Results` | Teal |
+| `Announcement` | Crimson |
+| `Registration` | Green |
+| `Community` | Navy |
+
+French equivalents (`Résultats`, `Annonce`, `Inscription`, `Communauté`) map to the same colours via paired CSS selectors.
+
+The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 
 Add `content/news/my-post.fr.md` for a French translation.
 
@@ -237,6 +253,17 @@ every 5 seconds; prev/next arrows allow manual control.
 
 1. Create `layouts/{section}/list.html` defining the `main` block
 2. Create `content/{section}/_index.md` and `content/{section}/_index.fr.md`
-3. Set `hide_page_header: true` in both front matter files if the layout has its own header
+3. Set `hide_page_header: true` in both front matter files if the layout provides its own page header inside `main` (prevents doubling up with `site-header.html`)
 4. Add i18n keys for any new UI strings to both `en.yaml` and `fr.yaml`
 5. Add the URL to the Pages table above
+
+If the section has single-page posts and you want the page header band to always show the **section title** (rather than each page's own title), add to the section `_index.md`:
+
+```yaml
+cascade:
+  - _target:
+      kind: page
+    page_header_uses_section: true
+```
+
+Then create `layouts/{section}/single.html` defining only `title` and `main` — the band is rendered by `site-header.html` automatically.

@@ -5,9 +5,6 @@
 {{/* ── Page header ──────────────────────────────────────── */}}
 <header class="fenb-page-header">
   <div class="fenb-container">
-    <p class="fenb-section-label" style="color:rgba(255,255,255,0.65); margin-bottom:0.5rem;">
-      {{ i18n "clubs_section_label" }}
-    </p>
     <h1 class="fenb-page-title">{{ .Title }}</h1>
     <p class="fenb-page-subtitle">
       {{ i18n "clubs_page_subtitle" (dict "Count" (len hugo.Data.clubs.clubs)) }}

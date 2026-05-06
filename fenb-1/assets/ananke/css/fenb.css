@@ -474,16 +474,6 @@ main.pb7 { padding-bottom: 0 !important; }
   color: var(--text-dark);
   margin: 0;
   line-height: 1.15;
-  position: relative;
-}
-.fenb-section-title::after {
-  content: '';
-  display: block;
-  width: 44px;
-  height: 4px;
-  background: var(--teal);
-  border-radius: 2px;
-  margin-top: 0.6rem;
 }
 
 .fenb-see-all {
@@ -696,6 +686,16 @@ main.pb7 { padding-bottom: 0 !important; }
   border-radius: 4px;
 }
 
+/* EN + FR category colour variants */
+.fenb-news-category--announcement,
+.fenb-news-category--annonce     { background: var(--crimson-pale); color: var(--crimson); }
+.fenb-news-category--results,
+.fenb-news-category--resultats   { background: var(--teal-pale);    color: var(--teal); }
+.fenb-news-category--registration,
+.fenb-news-category--inscription { background: #e7f2ec;             color: #2d6a4f; }
+.fenb-news-category--community,
+.fenb-news-category--communaute  { background: #e8eef5;             color: #1a3a5c; }
+
 .fenb-news-card-meta time {
   font-size: 0.78rem;
   color: var(--text-muted);
@@ -787,7 +787,7 @@ main.pb7 { padding-bottom: 0 !important; }
 /* ── Inner page header ────────────────────────── */
 .fenb-page-header {
   background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
-  padding: 2.5rem 1.5rem;
+  padding: 1.25rem 1.5rem;
 }
 
 .fenb-page-header .fenb-container { max-width: 1200px; margin: 0 auto; }
@@ -1074,6 +1074,162 @@ main.pb7 { padding-bottom: 0 !important; }
   .fenb-clubs-map-wrap iframe { height: 340px; }
 }
 
+/* ── News article single page ─────────────────── */
+.fenb-article-section { background: var(--white); }
+
+.fenb-article-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr 280px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.fenb-article-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: center;
+  line-height: 1.25;
+  margin: 0 0 1rem;
+}
+
+.fenb-article-divider {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--teal);
+  margin: 0 auto 1.5rem;
+}
+.fenb-article-divider--announcement,
+.fenb-article-divider--annonce       { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
+.fenb-article-divider--results,
+.fenb-article-divider--resultats     { background: linear-gradient(90deg, var(--teal), #2d9a7f); }
+.fenb-article-divider--registration,
+.fenb-article-divider--inscription   { background: linear-gradient(90deg, #2d6a4f, #3d9a6b); }
+.fenb-article-divider--community,
+.fenb-article-divider--communaute    { background: linear-gradient(90deg, #1a3a5c, #2a5a8c); }
+
+.fenb-article-back { margin-top: 2.5rem; }
+
+.fenb-article-back a {
+  color: var(--teal);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.fenb-article-back a:hover { color: var(--crimson); }
+
+.fenb-article-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.fenb-article-body {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text-body);
+}
+.fenb-article-body p { margin: 0 0 1.25em; }
+.fenb-article-body h2,
+.fenb-article-body h3,
+.fenb-article-body h4 {
+  color: var(--text-dark);
+  margin: 2em 0 0.75em;
+  line-height: 1.3;
+}
+.fenb-article-body h2 { font-size: 1.5rem; }
+.fenb-article-body h3 { font-size: 1.25rem; }
+.fenb-article-body h4 { font-size: 1.1rem; }
+.fenb-article-body ul,
+.fenb-article-body ol {
+  margin: 0 0 1.25em 1.5rem;
+  padding: 0;
+}
+.fenb-article-body li { margin-bottom: 0.4em; }
+.fenb-article-body strong { font-weight: 600; color: var(--text-dark); }
+.fenb-article-body a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.fenb-article-body a:hover { color: var(--crimson); }
+.fenb-article-body blockquote {
+  border-left: 4px solid var(--teal);
+  margin: 1.5em 0;
+  padding: 0.75em 1.25em;
+  background: var(--teal-pale);
+  border-radius: 0 6px 6px 0;
+}
+
+/* ── News article sidebar ──────────────────────── */
+.fenb-sidebar-block {
+  background: var(--off-white);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem 1.5rem;
+  position: sticky;
+  top: 5rem;
+}
+
+.fenb-sidebar-heading {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.fenb-sidebar-news-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fenb-sidebar-news-item {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+.fenb-sidebar-news-item:last-child { border-bottom: none; }
+
+.fenb-sidebar-news-item a {
+  display: block;
+  color: var(--text-body);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.35;
+  margin-bottom: 0.2rem;
+}
+.fenb-sidebar-news-item a:hover { color: var(--teal); }
+.fenb-sidebar-news-item.is-current a {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.fenb-sidebar-news-item time {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+}
+
+.fenb-sidebar-events-link {
+  display: block;
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--light-gray);
+  color: var(--teal);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.fenb-sidebar-events-link:hover { color: var(--crimson); }
+
+/* ── News index list page ──────────────────────── */
+.fenb-news-index-section { background: var(--off-white); }
+
 /* ── Ananke background_color_class overrides ──── */
 .bg-fenb-teal    { background-color: var(--teal); }
 .bg-fenb-crimson { background-color: var(--crimson); }
@@ -1128,5 +1284,17 @@ main.pb7 { padding-bottom: 0 !important; }
   .fenb-events-grid { grid-template-columns: 1fr; }
   .fenb-news-grid   { grid-template-columns: 1fr; }
   .fenb-programs-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 1000px) {
+  .fenb-article-layout {
+    grid-template-columns: 1fr 260px;
+  }
+  .fenb-article-sidebar--left { display: none; }
+}
+
+@media (max-width: 680px) {
+  .fenb-article-layout { grid-template-columns: 1fr; }
+  .fenb-sidebar-block  { position: static; }
 }
 

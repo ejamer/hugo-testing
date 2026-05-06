@@ -105,7 +105,7 @@
         <div class="fenb-news-card-top{{ with .Params.category }} fenb-news-card-top--{{ . | urlize }}{{ end }}"></div>
         <div class="fenb-news-card-body">
           <div class="fenb-news-card-meta">
-            {{ with .Params.category }}<span class="fenb-news-category">{{ . }}</span>{{ end }}
+            {{ with .Params.category }}<span class="fenb-news-category fenb-news-category--{{ . | urlize }}">{{ . }}</span>{{ end }}
             <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
           </div>
           <h3 class="fenb-news-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>

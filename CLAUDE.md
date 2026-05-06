@@ -40,3 +40,22 @@ Always get user approval on the proposed changes before editing any docs.
 ## Nav chrome changes
 
 Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.
+
+## Page header band
+
+`site-header.html` renders a coloured `.fenb-page-header` band below the nav for all non-home pages. By default it shows the page's own `.Title`.
+
+If a section's single pages should show the **section title** in the band instead (e.g. "News & Results" on every news article), add this cascade to the section's `_index.md` and `_index.fr.md`:
+
+```yaml
+cascade:
+  - _target:
+      kind: page
+    page_header_uses_section: true
+```
+
+`site-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description` when set. The `_target: kind: page` scoping means the section's list page is unaffected.
+
+If a layout provides its own page header inside `main`, set `hide_page_header: true` in the section's front matter to prevent `site-header.html` from also rendering one.
+
+**When a user says "use the same header as page X"**, confirm whether they mean the *content* of the band (which title is shown) or just the *style* (height, colours) — they look similar in words but require completely different fixes.
