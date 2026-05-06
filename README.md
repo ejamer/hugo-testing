@@ -79,7 +79,7 @@ See **[DEVELOPMENT.md](DEVELOPMENT.md)** for the full workflow: branch strategy,
 | `/` | ✅ Built | Hero, upcoming events, latest news, quick-links section |
 | `/clubs/` | ✅ Built | Club grid, Google map, registration CTA |
 | `/news/` | ✅ Built | List + single-post layout. Articles have 3-col layout with Recent News sidebar, inline title, category-coloured divider. |
-| `/events/` | 🔲 Placeholder | Menu link exists; page not yet built |
+| `/events/` | ✅ Built | Calendar grid with month navigation, event list below. Data from `data/events.yaml`. |
 | `/programs/` | 🔲 Placeholder | Menu link exists; page not yet built |
 | `/about/` | 🔲 Placeholder | Menu link exists; page not yet built |
 | `/join/` | 🔲 Placeholder | Menu link exists; page not yet built |
@@ -121,6 +121,7 @@ Structured content (events, clubs) lives in `data/` as YAML. Layouts read it via
 | `title` | ✅ | |
 | `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter only |
 | `display_date` | ✅ | Free-form string shown on the card. Use `"TBA"` or `"July 2026"` for uncertain dates |
+| `end_date` | — | Optional. ISO `YYYY-MM-DD`. If set and greater than `date`, the calendar draws bars across the full range (inclusive). Leave blank or omit for single-day events. |
 | `category` | ✅ | See categories below |
 | `category_label` | ✅ | Fallback label if i18n key missing |
 | `venue` | ✅ | Short venue name shown on card |

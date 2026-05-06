@@ -1,0 +1,81 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+{{/* ── Page header ──────────────────────────────────────── */}}
+<header class="fenb-page-header">
+  <div class="fenb-container">
+    <h1 class="fenb-page-title">{{ .Title }}</h1>
+    <p class="fenb-page-subtitle">{{ i18n "events_page_subtitle" }}</p>
+  </div>
+</header>
+
+{{/* ── Calendar ────────────────────────────────────────── */}}
+<section class="fenb-section fenb-events-cal-section">
+  <div class="fenb-container">
+
+    {{/* Navigation bar */}}
+    <div class="fenb-cal-nav">
+      <button class="fenb-cal-btn" id="cal-prev" aria-label="{{ i18n "events_cal_prev" }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <div class="fenb-cal-selectors">
+        <select id="cal-month-select" class="fenb-cal-select" aria-label="{{ i18n "events_cal_month_label" }}"></select>
+        <select id="cal-year-select" class="fenb-cal-select" aria-label="{{ i18n "events_cal_year_label" }}"></select>
+      </div>
+      <button class="fenb-cal-btn" id="cal-next" aria-label="{{ i18n "events_cal_next" }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    {{/* Calendar grid — JS populates this */}}
+    <div class="fenb-cal-grid" id="cal-grid" role="grid" aria-label="{{ i18n "events_cal_grid_label" }}"></div>
+
+    {{/* Event list for selected month — JS populates this */}}
+    <div id="cal-events"></div>
+
+    {{/* No-JS fallback: full chronological list */}}
+    <noscript>
+      <div class="fenb-events-grid">
+        {{ range hugo.Data.events.events }}
+        {{ $d := time .date }}
+        <article class="fenb-event-card fenb-event-card--{{ .category }}">
+          <div class="fenb-event-date-badge">
+            <span class="fenb-event-day">{{ $d.Format "2" }}</span>
+            <span class="fenb-event-month">{{ i18n (printf "month_%s" ($d.Format "Jan")) | default ($d.Format "Jan") }}</span>
+            <span class="fenb-event-year">{{ $d.Format "2006" }}</span>
+          </div>
+          <div class="fenb-event-body">
+            <span class="fenb-tag fenb-tag--{{ .category }}">{{ i18n .category | default .category_label }}</span>
+            <h3 class="fenb-event-title">{{ .title }}</h3>
+            <p class="fenb-event-date-range">{{ .display_date }}</p>
+            <p class="fenb-event-meta">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              {{ .venue }}, {{ .location }}
+            </p>
+            {{ if .details_url }}<a class="fenb-event-details-link" href="{{ .details_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>{{ end }}
+            {{ if .registration_url }}<a class="fenb-event-register-link" href="{{ .registration_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>{{ end }}
+          </div>
+        </article>
+        {{ end }}
+      </div>
+    </noscript>
+
+  </div>
+</section>
+
+{{/* ── Embed data and i18n strings for the calendar JS ── */}}
+<script>
+window.FENB_CAL = {
+  events: {{ hugo.Data.events.events | jsonify | safeJS }},
+  months: ["{{ i18n "cal_month_jan" }}","{{ i18n "cal_month_feb" }}","{{ i18n "cal_month_mar" }}","{{ i18n "cal_month_apr" }}","{{ i18n "cal_month_may" }}","{{ i18n "cal_month_jun" }}","{{ i18n "cal_month_jul" }}","{{ i18n "cal_month_aug" }}","{{ i18n "cal_month_sep" }}","{{ i18n "cal_month_oct" }}","{{ i18n "cal_month_nov" }}","{{ i18n "cal_month_dec" }}"],
+  monthsShort: ["{{ i18n "month_Jan" }}","{{ i18n "month_Feb" }}","{{ i18n "month_Mar" }}","{{ i18n "month_Apr" }}","{{ i18n "month_May" }}","{{ i18n "month_Jun" }}","{{ i18n "month_Jul" }}","{{ i18n "month_Aug" }}","{{ i18n "month_Sep" }}","{{ i18n "month_Oct" }}","{{ i18n "month_Nov" }}","{{ i18n "month_Dec" }}"],
+  weekdays: ["{{ i18n "cal_wd_sun" }}","{{ i18n "cal_wd_mon" }}","{{ i18n "cal_wd_tue" }}","{{ i18n "cal_wd_wed" }}","{{ i18n "cal_wd_thu" }}","{{ i18n "cal_wd_fri" }}","{{ i18n "cal_wd_sat" }}"],
+  noEvents: "{{ i18n "events_cal_no_events" }}",
+  detailsLabel: "{{ i18n "event_details" }}",
+  registerLabel: "{{ i18n "event_register" }}"
+};
+</script>
+<script src="{{ "js/events-calendar.js" | absURL }}"></script>
+
+{{ end }}

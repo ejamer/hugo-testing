@@ -52,6 +52,23 @@ Always get user approval on the proposed changes before editing any docs.
 
 Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.
 
+## Embedding Hugo data in `<script>` tags
+
+Go's `html/template` applies JS-context escaping inside `<script>` blocks. A slice passed through `| jsonify` is output as a **quoted JSON string** rather than a raw array. Fix: embed normally and parse in JS:
+
+```html
+<script>
+window.MY_DATA = { events: {{ .events | jsonify }} };
+</script>
+```
+
+```js
+// In the JS file:
+var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.events;
+```
+
+`safeJS` does **not** bypass this — it only prevents double-escaping of already-safe JS values, not the context-aware string-wrapping. Go straight to `JSON.parse()`.
+
 ## Page header band
 
 `site-header.html` renders a coloured `.fenb-page-header` band below the nav for all non-home pages. By default it shows the page's own `.Title`.
