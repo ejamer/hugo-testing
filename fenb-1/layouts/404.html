@@ -14,7 +14,7 @@
 
 <script>
 (function () {
-  if (window.location.pathname.indexOf('/fr/') !== 0) return;
+  if (window.location.pathname.indexOf('/fr/') < 0) return;
 
   // ── 404 page text (French) ─────────────────────────────
   // Strings mirror i18n/fr.yaml — update both if changed.
@@ -26,7 +26,7 @@
 
   // ── French nav labels (from Hugo's French menu) ────────
   var frLabels = {
-    {{- range .Site.Sites -}}
+    {{- range hugo.Sites -}}
       {{- if eq .Language.Lang "fr" -}}
         {{- range .Menus.main -}}
           "{{ .URL }}": {{ .Name | jsonify | safeJS }},
