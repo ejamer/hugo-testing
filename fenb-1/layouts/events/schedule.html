@@ -1,0 +1,115 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+{{/* Build seasons list: current + any archived seasons */}}
+{{- $currentSeason := dict "label" hugo.Data.events.season "events" hugo.Data.events.events "isCurrent" true -}}
+{{- $allSeasons := slice $currentSeason -}}
+{{- if hugo.Data.events_archive -}}
+  {{- range $k, $v := hugo.Data.events_archive -}}
+    {{- $allSeasons = $allSeasons | append (dict "label" $v.season "events" $v.events "isCurrent" false) -}}
+  {{- end -}}
+{{- end -}}
+{{- $allSeasons = sort $allSeasons "label" "desc" -}}
+
+{{- $categories := slice "competition" "training" "national" "provincial" "clinic" "meeting" "announcement" -}}
+
+<section class="fenb-section fenb-schedule-section">
+  <div class="fenb-container fenb-schedule-container">
+
+    {{/* Screen-only controls (back link + print) */}}
+    <div class="fenb-schedule-controls">
+      <a href="{{ "/events/" | relLangURL }}" class="fenb-schedule-back-link">
+        &larr; {{ i18n "back_to_calendar" }}
+      </a>
+      <button class="fenb-schedule-print-btn" onclick="window.print()">{{ i18n "schedule_print" }}</button>
+    </div>
+
+    <div class="fenb-schedule-layout">
+
+      {{/* ── Main content column ── */}}
+      <div class="fenb-schedule-main">
+        {{- range $allSeasons -}}
+          {{- $season := .label -}}
+          {{- $seasonEvents := .events -}}
+
+          {{- $months := slice -}}
+          {{- range $seasonEvents -}}
+            {{- $mk := (time .date).Format "2006-01" -}}
+            {{- if not (in $months $mk) -}}
+              {{- $months = $months | append $mk -}}
+            {{- end -}}
+          {{- end -}}
+
+          <div class="fenb-schedule-season-block" data-season="{{ $season }}"{{ if not .isCurrent }} hidden{{ end }}>
+            {{- range $months -}}
+              {{- $mk := . -}}
+              {{- $monthDate := time (printf "%s-01" $mk) -}}
+              {{- $monthName := i18n (printf "cal_month_%s" ($monthDate.Format "Jan" | lower)) -}}
+
+              <div class="fenb-schedule-month" data-month="{{ $mk }}">
+                <h2 class="fenb-schedule-month-heading">{{ $monthName }} {{ $monthDate.Format "2006" }}</h2>
+                <ul class="fenb-schedule-list">
+                  {{- range $seasonEvents -}}
+                    {{- if eq ((time .date).Format "2006-01") $mk -}}
+                    <li class="fenb-schedule-item" data-category="{{ .category }}">
+                      <div class="fenb-schedule-row fenb-schedule-row--primary">
+                        <span class="fenb-schedule-date">{{ .display_date }}</span>
+                        <strong class="fenb-schedule-title">{{ .title }}</strong>
+                        <span class="fenb-schedule-category fenb-cal-bar--{{ .category }}">{{ i18n .category | default .category_label }}</span>
+                      </div>
+                      <div class="fenb-schedule-row fenb-schedule-row--secondary">
+                        <span class="fenb-schedule-location">{{ .venue }}, {{ .location }}</span>
+                        {{ with .description }}<span class="fenb-schedule-description">{{ . }}</span>{{ end }}
+                      </div>
+                      {{ if or .details_url .registration_url }}
+                      <div class="fenb-schedule-links">
+                        {{ with .details_url }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>{{ end }}
+                        {{ with .registration_url }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>{{ end }}
+                      </div>
+                      {{ end }}
+                    </li>
+                    {{- end -}}
+                  {{- end -}}
+                </ul>
+              </div>
+            {{- end -}}
+          </div>
+        {{- end -}}
+      </div>{{/* /.fenb-schedule-main */}}
+
+      {{/* ── Right sidebar ── */}}
+      <aside class="fenb-schedule-sidebar">
+
+        <div class="fenb-schedule-sidebar-group">
+          <label class="fenb-schedule-sidebar-label" for="schedule-season-select">{{ i18n "schedule_season" }}</label>
+          <select id="schedule-season-select" class="fenb-cal-select fenb-schedule-season-select">
+            {{- range $allSeasons -}}
+            <option value="{{ .label }}"{{ if .isCurrent }} selected{{ end }}>{{ .label }}</option>
+            {{- end -}}
+          </select>
+        </div>
+
+        <div class="fenb-schedule-sidebar-group">
+          <span class="fenb-schedule-sidebar-label">{{ i18n "schedule_filter_label" }}</span>
+          <div class="fenb-schedule-filter-meta-row">
+            <button class="fenb-schedule-filter-meta" data-action="all">{{ i18n "schedule_filter_all" }}</button>
+            <button class="fenb-schedule-filter-meta" data-action="none">{{ i18n "schedule_filter_none" }}</button>
+          </div>
+          <div class="fenb-schedule-filter-btns">
+            {{- range $categories -}}
+            <button class="fenb-schedule-filter-btn fenb-cal-bar--{{ . }} is-active" data-category="{{ . }}">{{ i18n . }}</button>
+            {{- end -}}
+          </div>
+        </div>
+
+      </aside>
+
+    </div>{{/* /.fenb-schedule-layout */}}
+
+  </div>
+</section>
+
+<script src="{{ "js/events-schedule.js" | absURL }}"></script>
+
+{{ end }}

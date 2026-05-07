@@ -31,6 +31,25 @@ width: Xvw;
 margin: 0 calc((100% - Xvw) / 2);
 ```
 
+### Two-column sidebar layout
+
+Several pages use a main-content + right-sidebar layout. Follow this pattern when adding any new list page that needs a filter or legend panel.
+
+| Page | Wrapper | Main column | Sidebar | Sidebar width |
+|---|---|---|---|---|
+| Events calendar | `.fenb-cal-layout` | `.fenb-cal-main` | `.fenb-cal-legend` | 185px |
+| Season schedule | `.fenb-schedule-layout` | `.fenb-schedule-main` | `.fenb-schedule-sidebar` | 200px |
+
+**Sidebar visual style** — apply to any new sidebar to stay consistent:
+```css
+border: 1px solid var(--teal);
+border-radius: var(--radius);
+padding: 1rem 1.25rem;
+background: var(--off-white);
+```
+
+**Responsive:** both layouts collapse to a single column at ≤720px (`flex-direction: column`). If the sidebar contains controls (filters, selectors), move it *above* the main content using `order: -1` on mobile so users see the controls before the list. If the sidebar is passive information (legend, key), leave it in natural order so it falls below.
+
 ---
 
 ## i18n — UI text
