@@ -32,6 +32,8 @@
 /* ── Reset / base ─────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
+html { scroll-padding-top: 130px; }
+
 body {
   font-family: 'Avenir', 'Nunito Sans', system-ui, -apple-system, sans-serif;
   color: var(--text-body);
@@ -1170,7 +1172,7 @@ main.pb7 { padding-bottom: 0 !important; }
 
 .fenb-clubs-map-wrap iframe {
   width: 100%;
-  height: 480px;
+  height: 580px;
   border: 0;
   display: block;
 }
@@ -1460,5 +1462,390 @@ main.pb7 { padding-bottom: 0 !important; }
 @media (max-width: 680px) {
   .fenb-article-layout { grid-template-columns: 1fr; }
   .fenb-sidebar-block  { position: static; }
+}
+
+/* ═══════════════════════════════════════════════════
+   About page
+   ═══════════════════════════════════════════════════ */
+
+/* ── Overview / mission ──────────────────────────── */
+.fenb-about-overview-section {
+  background: var(--white);
+  padding: 5rem 1.5rem;
+}
+
+.fenb-about-overview-section .fenb-container { max-width: 1100px; }
+
+.fenb-about-overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Typography rhythm — replaces inline style= on titles/labels */
+.fenb-about-overview-body .fenb-section-title  { margin-bottom: 1.5rem; }
+.fenb-about-mission-block .fenb-section-label  { display: block; margin-top: 2rem; }
+.fenb-about-history-content                    { margin-top: 2.5rem; }
+.fenb-about-history-content .fenb-section-label { display: block; }
+.fenb-about-history-content .fenb-section-title,
+.fenb-about-mission-block .fenb-section-title   { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+.fenb-about-history-content .fenb-section-title { margin-bottom: 1.5rem; }
+.fenb-about-mission-block .fenb-section-title   { margin-bottom: 0.75rem; }
+
+.fenb-about-overview-body p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--text-body);
+  margin: 0 0 1.25rem;
+}
+
+.fenb-about-mission-quote {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-style: italic;
+  color: var(--teal-dark);
+  background: var(--teal-pale);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 1rem 1.5rem;
+  margin: 2rem 0 0;
+  line-height: 1.7;
+}
+
+.fenb-about-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.fenb-about-sidebar-card {
+  background: var(--off-white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem;
+}
+
+.fenb-about-sidebar-card h3 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  margin: 0 0 0.75rem;
+}
+
+
+.fenb-about-sidebar-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fenb-about-sidebar-card li {
+  font-size: 0.9rem;
+  color: var(--text-body);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.fenb-about-sidebar-card li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font-weight: 700;
+}
+
+.fenb-about-sidebar-card a {
+  color: var(--teal);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.fenb-about-sidebar-card a:hover { text-decoration: underline; }
+
+/* ── History ─────────────────────────────────────── */
+.fenb-about-history-body {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.fenb-about-history-text p {
+  font-size: 1.025rem;
+  line-height: 1.8;
+  color: var(--text-body);
+  margin: 0 0 1.25rem;
+}
+
+.fenb-about-history-text p:last-child { margin-bottom: 0; }
+
+.fenb-about-history-photo {
+  margin: 0;
+}
+
+.fenb-about-history-photo img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+
+.fenb-about-history-photo figcaption {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 0.6rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+  .fenb-about-history-body {
+    grid-template-columns: 1fr;
+  }
+  .fenb-about-history-photo {
+    max-width: 180px;
+    margin: 0 auto;
+  }
+}
+
+/* ── Board of Directors ──────────────────────────── */
+.fenb-board-section {
+  background: var(--white);
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+.fenb-board-section .fenb-container { max-width: 1100px; }
+
+.fenb-board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.fenb-board-card {
+  background: var(--off-white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.fenb-board-card:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.fenb-board-card-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal-dark), var(--teal-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: var(--white);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.fenb-board-card-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  margin: 0 0 0.3rem;
+  line-height: 1.3;
+}
+
+.fenb-board-card-role {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--teal);
+}
+
+.fenb-board-card-role--ed { color: var(--crimson); }
+
+.fenb-board-card-avatar--ed {
+  background: linear-gradient(135deg, var(--crimson-dark), var(--crimson-light));
+}
+
+
+/* ── Governance sidebar card ─────────────────────── */
+.fenb-about-sidebar-card--governance {
+  background: var(--teal-pale);
+  border-color: var(--teal);
+}
+
+.fenb-about-sidebar-card--governance h3 { color: var(--teal-dark); }
+
+.fenb-sidebar-gov-link {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--teal-dark);
+  text-decoration: none;
+  margin-top: 0.25rem;
+}
+
+.fenb-sidebar-gov-link:hover { text-decoration: underline; }
+
+/* ── Contact ─────────────────────────────────────── */
+.fenb-about-contact-section {
+  background: var(--off-white);
+  padding: 4.5rem 1.5rem;
+}
+
+.fenb-about-contact-section .fenb-container { max-width: 900px; }
+
+.fenb-contact-card {
+  max-width: 320px;
+  margin-top: 2rem;
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fenb-contact-card a {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.fenb-contact-card a:hover { color: var(--teal); }
+
+/* ═══════════════════════════════════════════════════
+   Policies & Reports page
+   ═══════════════════════════════════════════════════ */
+
+.fenb-policy-section {
+  padding: 4rem 1.5rem;
+}
+
+.fenb-policy-section .fenb-container { max-width: 1100px; }
+
+.fenb-policy-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+
+
+.fenb-policy-toc {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fenb-policy-toc a {
+  font-size: 0.875rem;
+  color: var(--text-body);
+  text-decoration: none;
+  line-height: 1.3;
+}
+
+.fenb-policy-toc a:hover { color: var(--teal); }
+
+.fenb-policy-intro {
+  font-size: 1.025rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0 0 3rem;
+}
+
+.fenb-policy-group {
+  margin-bottom: 3rem;
+}
+
+.fenb-policy-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.fenb-policy-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--light-gray);
+  background: var(--white);
+}
+
+.fenb-policy-item:last-child { border-bottom: none; }
+
+.fenb-policy-item:nth-child(even) { background: var(--off-white); }
+
+.fenb-policy-name {
+  font-size: 0.93rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  line-height: 1.4;
+}
+
+.fenb-policy-links {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.fenb-policy-link {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--teal);
+  border: 1.5px solid var(--teal);
+  border-radius: 4px;
+  padding: 0.2rem 0.55rem;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: background var(--transition), color var(--transition);
+}
+
+.fenb-policy-link:hover {
+  background: var(--teal);
+  color: var(--white);
+}
+
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 860px) {
+  .fenb-about-overview-grid {
+    grid-template-columns: 1fr;
+  }
+  .fenb-about-sidebar { flex-direction: row; flex-wrap: wrap; }
+  .fenb-about-sidebar-card { flex: 1 1 200px; }
+  .fenb-policy-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .fenb-about-overview-section,
+  .fenb-board-section,
+  .fenb-about-contact-section { padding: 3.5rem 1rem; }
+  .fenb-policy-section { padding: 3rem 1rem; }
+  .fenb-policy-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
 }
 

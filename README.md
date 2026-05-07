@@ -23,7 +23,7 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 | CSS | Custom (`fenb-1/assets/ananke/css/fenb.css`) bundled into Ananke's pipeline |
 | i18n | Hugo built-in — English (`en-CA`) · French (`fr-CA`) |
 | Content | Markdown in `fenb-1/content/` |
-| Structured data | YAML in `fenb-1/data/` (events, clubs) |
+| Structured data | YAML in `fenb-1/data/` (events, clubs, board, policies) |
 
 ---
 
@@ -72,6 +72,8 @@ hugo-testing/
     │   ├── events.yaml        Current season's event calendar (drives homepage + /events/)
     │   ├── events_archive/    Past seasons — moved here at season rollover (see plans/)
     │   ├── clubs.yaml         Member club data (drives /clubs/ page)
+    │   ├── board.yaml         Board of directors and executive (drives /about/ page)
+    │   ├── policies.yaml      Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
     │   └── hero_slides.yaml   Hero carousel image list (drives homepage slider)
     ├── i18n/
     │   ├── en.yaml         English UI strings
@@ -79,6 +81,9 @@ hugo-testing/
     ├── layouts/
     │   ├── index.html      Custom homepage (hero, events, news, programs)
     │   ├── 404.html        Custom 404 (JS detects /fr/ and switches language)
+    │   ├── about/
+    │   │   ├── list.html   About page (overview, history, mission, board grid, contact)
+    │   │   └── single.html Policies & Reports page (sidebar TOC + policy/report lists)
     │   ├── clubs/
     │   │   └── list.html   Custom clubs page (grid + map + registration CTA)
     │   ├── news/
@@ -184,6 +189,23 @@ Each category drives three visual elements: the date badge on the event card, th
 `category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces).
 
 The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today), falling back to the most recent past events if fewer than 4 are upcoming. When the season ends, add an off-season placeholder entry (category `announcement`) so the section stays populated through the summer gap.
+
+---
+
+### Board of Directors
+
+Edit `data/board.yaml`. Each member entry:
+
+```yaml
+- name: "Full Name"
+  role_en: "President"       # displayed in English
+  role_fr: "Présidente"      # displayed in French
+```
+
+- The `season` field at the top of the file (e.g. `"2025–2026"`) appears as a subtitle in the sidebar card on the About page — update it at the start of each season.
+- `contact` is the board inquiry email shown on the About page.
+- Members are displayed in the order they appear in the file.
+- The Executive Director entry uses `role_en: "Executive Director"` — this triggers crimson card styling in the layout; do not rename the role without also updating `layouts/about/list.html`.
 
 ---
 

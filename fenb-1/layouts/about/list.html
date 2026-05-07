@@ -1,0 +1,97 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+{{/* ── Page header ──────────────────────────────────────── */}}
+<header class="fenb-page-header">
+  <div class="fenb-container">
+    <h1 class="fenb-page-title">{{ .Title }}</h1>
+    <p class="fenb-page-subtitle">{{ .Description }}</p>
+  </div>
+</header>
+
+{{/* ── Overview, History & Mission ─────────────────────── */}}
+<section class="fenb-about-overview-section">
+  <div class="fenb-container">
+    <div class="fenb-about-overview-grid">
+
+      <div class="fenb-about-overview-body">
+        <span class="fenb-section-label">{{ i18n "about_overview_label" }}</span>
+        <h2 class="fenb-section-title">{{ i18n "about_overview_title" }}</h2>
+        <p>{{ i18n "about_overview_body" }}</p>
+
+        <div class="fenb-about-history-content">
+          <span class="fenb-section-label">{{ i18n "about_history_label" }}</span>
+          <h3 class="fenb-section-title">{{ i18n "about_history_title" }}</h3>
+          <div class="fenb-about-history-body">
+            <div class="fenb-about-history-text">
+              {{ i18n "about_history_body" | markdownify }}
+            </div>
+            <figure class="fenb-about-history-photo">
+              <img src="/images/alfred-knappe.png" alt="Alfred Knappe, founding president of the New Brunswick Fencing Association" loading="lazy">
+              <figcaption>Alfred Knappe — founding president, 1969</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="fenb-about-mission-block">
+          <span class="fenb-section-label">{{ i18n "about_mission_label" }}</span>
+          <h3 class="fenb-section-title">{{ i18n "about_mission_title" }}</h3>
+          <blockquote class="fenb-about-mission-quote">{{ i18n "about_mission_quote" }}</blockquote>
+        </div>
+      </div>
+
+      <div class="fenb-about-sidebar">
+        <div class="fenb-about-sidebar-card fenb-about-sidebar-card--governance">
+          <h3>{{ i18n "about_governance_label" }}</h3>
+          <a href="{{ "about/policies-and-reports/" | relLangURL }}" class="fenb-sidebar-gov-link">
+            {{ i18n "about_governance_title" }} &rarr;
+          </a>
+        </div>
+        <div class="fenb-about-sidebar-card">
+          <h3>{{ i18n "about_affiliations_title" }}</h3>
+          <ul>
+            <li><a href="https://fencing.ca/" target="_blank" rel="noopener noreferrer">Canadian Fencing Federation</a></li>
+            <li><a href="https://www.sportnb.com/" target="_blank" rel="noopener noreferrer">Sport New Brunswick</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{{/* ── Board of Directors ────────────────────────────────── */}}
+<section class="fenb-board-section">
+  <div class="fenb-container">
+    <span class="fenb-section-label">{{ i18n "about_board_label" }}</span>
+    <h2 class="fenb-section-title">{{ i18n "about_board_title" }}</h2>
+    <div class="fenb-board-grid">
+      {{ range hugo.Data.board.members }}
+      {{ $initials := "" }}
+      {{ $parts := split .name " " }}
+      {{ range $parts }}{{ $initials = printf "%s%s" $initials (substr . 0 1) }}{{ end }}
+      <div class="fenb-board-card">
+        <div class="fenb-board-card-avatar{{ if eq .role_en "Executive Director" }} fenb-board-card-avatar--ed{{ end }}">{{ $initials }}</div>
+        <p class="fenb-board-card-name">{{ .name }}</p>
+        <p class="fenb-board-card-role{{ if eq .role_en "Executive Director" }} fenb-board-card-role--ed{{ end }}">
+          {{- if eq $.Site.Language.Lang "fr" }}{{ .role_fr }}{{ else }}{{ .role_en }}{{ end -}}
+        </p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{/* ── Contact ───────────────────────────────────────────── */}}
+<section class="fenb-about-contact-section">
+  <div class="fenb-container">
+    <span class="fenb-section-label">{{ i18n "about_contact_label" }}</span>
+    <h2 class="fenb-section-title">{{ i18n "about_contact_title" }}</h2>
+    <div class="fenb-contact-card">
+      <a href="mailto:{{ hugo.Data.board.contact }}">{{ hugo.Data.board.contact }}</a>
+    </div>
+  </div>
+</section>
+
+{{ end }}
