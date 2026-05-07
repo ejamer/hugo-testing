@@ -46,6 +46,16 @@ After completing a feature, ask the user whether a post-mortem is needed. A post
 
 Always get user approval on the proposed changes before editing any docs.
 
+## Events data schema and season archive
+
+`fenb-1/data/events.yaml` holds the current season. Required top-level fields:
+- `season` — display label with en-dash (e.g. `"2025–2026"`); shown in the schedule page dropdown and the page subtitle
+- `events` — list of event objects (see README.md for the full field schema)
+
+**Season rollover:** move `data/events.yaml` → `data/events_archive/YYYY-YYYY.yaml` (regular hyphen in the filename), then create a fresh `data/events.yaml` for the new season. The schedule page at `/events/schedule/` picks up all files in `data/events_archive/` automatically via Hugo's data folder — no layout or template changes needed.
+
+**Schedule page filter pattern:** `/events/schedule/` uses SSR + JS visibility toggling. Hugo renders every event with `data-season` and `data-category` HTML attributes; `static/js/events-schedule.js` shows/hides them in response to the season dropdown and category filter buttons. Print always reflects the current filtered state. Prefer this pattern over JS-only rendering for any future filterable list page — it gives a no-JS fallback and print support for free.
+
 ## Nav chrome changes
 
 Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.

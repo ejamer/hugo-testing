@@ -1,6 +1,7 @@
 # Fencing-Escrime NB — 2025–2026 Event Calendar
 # Sorted chronologically. Homepage shows first 4 upcoming (date >= today).
 # end_date: optional; if set and > date, calendar shows bars across the full range.
+season: "2025–2026"
 events:
 
   # ── September 2025 ──────────────────────────────────────

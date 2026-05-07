@@ -69,6 +69,11 @@ hugo-testing/
     │   ├── clubs/
     │   │   ├── _index.md      Clubs list page (EN)
     │   │   └── _index.fr.md   Clubs list page (FR)
+    │   ├── events/
+    │   │   ├── _index.md         Events section (EN)
+    │   │   ├── _index.fr.md      Events section (FR)
+    │   │   ├── schedule.en.md    Season schedule page (EN)
+    │   │   └── schedule.fr.md    Season schedule page (FR)
     │   └── news/
     │       ├── _index.md      News section (EN)
     │       ├── _index.fr.md   News section (FR)
@@ -97,6 +102,9 @@ hugo-testing/
     │   │       └── single.html  Individual policy page (sidebar back-link + language switcher)
     │   ├── clubs/
     │   │   └── list.html   Custom clubs page (grid + map + registration CTA)
+    │   ├── events/
+    │   │   ├── list.html     Events calendar (JS month grid + category legend sidebar)
+    │   │   └── schedule.html Season schedule (server-rendered list + filter sidebar)
     │   ├── news/
     │   │   ├── list.html   News index (card grid, paginates recursively across year folders)
     │   │   └── single.html News article (3-col: empty left | article | recent-news sidebar)
@@ -206,6 +214,17 @@ Each category drives three visual elements: the date badge on the event card, th
 `category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces).
 
 The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today), falling back to the most recent past events if fewer than 4 are upcoming. When the season ends, add an off-season placeholder entry (category `announcement`) so the section stays populated through the summer gap.
+
+#### Season rollover
+
+At the end of each season (typically late August):
+
+1. Move `data/events.yaml` to `data/events_archive/YYYY-YYYY.yaml` — use a regular hyphen in the filename (e.g. `2025-2026.yaml`).
+2. Create a fresh `data/events.yaml` for the incoming season with `season: "YYYY–YYYY"` (en-dash in the label) and an empty `events:` list.
+
+The season schedule page at `/events/schedule/` automatically adds a dropdown entry for the archived season on the next build — no layout or template changes needed.
+
+The **`season` field** at the top of `events.yaml` (e.g. `season: "2025–2026"`) is required — it drives the schedule page dropdown label and the page subtitle.
 
 ---
 

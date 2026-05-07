@@ -1,0 +1,21 @@
+name: Delete merged branches except protected branches
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete-branch:
+    if: >
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.ref != 'dev' &&
+      github.event.pull_request.head.ref != 'main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Delete branch
+        env:
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git push origin --delete "$BRANCH"
