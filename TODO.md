@@ -16,7 +16,7 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ## About page
 
-- [ ] **Policy document PDFs** — all 16 policies plus strategic plan and annual reports in `fenb-1/data/policies.yaml` have `url: "#"` placeholders. Replace with actual PDF URLs when documents are uploaded.
+- [x] **Policy document PDFs** — PDFs stored in `fenb-1/static/docs/`; 13 individual policies served as Hugo pages under `fenb-1/content/about/policies/`; AGM minutes (2012–2024, no 2023 gap), strategic plan, policy manual, and bylaws all linked. No 2025–2026 AGM minutes yet.
 - [x] **Alfred Knappe photo** — added `static/images/alfred-knappe.png`; placeholder removed from layout.
 - [ ] **Board member roles** — only Celine Fournet's role (President) was confirmed from source data. Other members are listed as "Director" — verify actual officer roles (Secretary, Treasurer, etc.) and update `fenb-1/data/board.yaml`.
 - [x] **General inquiries email** — updated to `fencingnb@gmail.com` in both the About contact section and the Clubs register button.
@@ -24,6 +24,10 @@ Items that need follow-up — kept current as pages are built and content is add
 ## Programs page
 
 - [ ] `/programs/` — menu link exists; page not yet built. Will need sub-pages for Athlete, Coach, and Official development (similar structure to About + Policies).
+
+## Policies page
+
+- [ ] **Individual policy PDF downloads** — add a download link for each policy on both the individual policy pages and the policies-and-reports list. Plan: use `md-to-pdf` npm package to generate PDFs from source markdown, store in `static/docs/policies/`. See `plans/policy-pdf-download.md`.
 
 ## Events data
 

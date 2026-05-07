@@ -13,6 +13,9 @@
   --crimson-dark:  #5e1c26;
   --crimson-light: #943040;
   --crimson-pale:  #f5e8ea;
+  --navy:          #1e3a5f;
+  --navy-dark:     #152b47;
+  --navy-light:    #274d7a;
   --white:         #ffffff;
   --off-white:     #f7f9f8;
   --light-gray:    #eaeef0;
@@ -1647,7 +1650,7 @@ main.pb7 { padding-bottom: 0 !important; }
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--teal-dark), var(--teal-light));
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy-light));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1670,13 +1673,19 @@ main.pb7 { padding-bottom: 0 !important; }
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: var(--teal);
+  color: var(--navy);
 }
 
-.fenb-board-card-role--ed { color: var(--crimson); }
+.fenb-board-card-role--crimson { color: var(--crimson); }
 
-.fenb-board-card-avatar--ed {
+.fenb-board-card-avatar--crimson {
   background: linear-gradient(135deg, var(--crimson-dark), var(--crimson-light));
+}
+
+.fenb-board-card-role--teal { color: var(--teal); }
+
+.fenb-board-card-avatar--teal {
+  background: linear-gradient(135deg, var(--teal-dark), var(--teal-light));
 }
 
 
