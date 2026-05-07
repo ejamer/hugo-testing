@@ -1,0 +1,35 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-policy-section">
+  <div class="fenb-container">
+    <div class="fenb-policy-layout">
+
+      {{/* ── Sidebar ───────────────────────────────────── */}}
+      <aside class="fenb-about-sidebar">
+        <div class="fenb-about-sidebar-card fenb-about-sidebar-card--governance">
+          <a href="{{ "about/policies-and-reports" | relLangURL }}" class="fenb-sidebar-gov-link">
+            &larr; {{ i18n "policies_back_policies" }}
+          </a>
+        </div>
+        {{ with .Translations }}
+        <div class="fenb-about-sidebar-card">
+          <p class="fenb-policy-also-in">{{ i18n "policies_also_in" }}</p>
+          {{ range . }}
+          <a href="{{ .Permalink }}" class="fenb-policy-lang-link">{{ .Language.Label }}</a>
+          {{ end }}
+        </div>
+        {{ end }}
+      </aside>
+
+      {{/* ── Policy content ────────────────────────────── */}}
+      <div class="fenb-policy-doc">
+        {{ .Content }}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{{ end }}

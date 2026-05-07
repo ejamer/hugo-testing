@@ -63,20 +63,7 @@
       </div>
     </div>
   </nav>
-  {{ if and (not .IsHome) (not .Params.hide_page_header) }}
-  {{- $headerTitle := .Title -}}
-  {{- $headerDesc  := .Params.description -}}
-  {{- if .Params.page_header_uses_section -}}
-    {{- $headerTitle = .CurrentSection.Title -}}
-    {{- $headerDesc  = .CurrentSection.Params.description -}}
-  {{- end -}}
-  <div class="fenb-page-header">
-    <div class="fenb-container">
-      <h1 class="fenb-page-title">{{ $headerTitle }}</h1>
-      {{ with $headerDesc }}<p class="fenb-page-subtitle">{{ . }}</p>{{ end }}
-    </div>
-  </div>
-  {{ end }}
+
 </header>
 <script>
   (function () {
@@ -171,3 +158,17 @@
     }
   })();
 </script>
+{{ if and (not .IsHome) (not .Params.hide_page_header) }}
+{{- $headerTitle := .Title -}}
+{{- $headerDesc  := .Params.description -}}
+{{- if .Params.page_header_uses_section -}}
+  {{- $headerTitle = .CurrentSection.Title -}}
+  {{- $headerDesc  = .CurrentSection.Params.description -}}
+{{- end -}}
+<div class="fenb-page-header">
+  <div class="fenb-container">
+    <h1 class="fenb-page-title">{{ $headerTitle }}</h1>
+    {{ with $headerDesc }}<p class="fenb-page-subtitle">{{ . }}</p>{{ end }}
+  </div>
+</div>
+{{ end }}
