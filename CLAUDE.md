@@ -82,6 +82,27 @@ var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.event
 
 `safeJS` does **not** bypass this — it only prevents double-escaping of already-safe JS values, not the context-aware string-wrapping. Go straight to `JSON.parse()`.
 
+## Hugo deprecated front matter and template APIs
+
+These were caught as build errors in this project:
+
+- **`_build:`** front matter key was removed in Hugo 0.145.0 — use **`build:`** instead.
+- **`.Language.LanguageName`** was deprecated in Hugo 0.158.0 — use **`.Language.Label`** instead.
+
+## i18n language-switcher labels
+
+When rendering an "also available in [language]" link, the label text must be in the **target language** (the one you're switching *to*), not the current page's language. Achieve this by storing the label in the *opposite* language's i18n file:
+
+```yaml
+# en.yaml — shown on EN pages, so write it in French
+policies_also_in: "Aussi disponible en"
+
+# fr.yaml — shown on FR pages, so write it in English
+policies_also_in: "Also available in"
+```
+
+The language name itself (`.Language.Label`) comes from the translation page and is already correct — only the surrounding label text needs this treatment.
+
 ## Page header band
 
 `site-header.html` renders a coloured `.fenb-page-header` band below the nav for all non-home pages. By default it shows the page's own `.Title`.

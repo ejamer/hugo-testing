@@ -1,0 +1,90 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-policy-section">
+  <div class="fenb-container">
+    <div class="fenb-policy-layout">
+
+      {{/* ── Sidebar ───────────────────────────────────── */}}
+      <aside class="fenb-about-sidebar">
+        <div class="fenb-about-sidebar-card fenb-about-sidebar-card--governance">
+          <a href="{{ "about/" | relLangURL }}" class="fenb-sidebar-gov-link">
+            &larr; {{ i18n "policies_back_about" }}
+          </a>
+        </div>
+        <div class="fenb-about-sidebar-card">
+          <h3>{{ i18n "policies_toc_title" }}</h3>
+          <ul class="fenb-policy-toc">
+            <li><a href="#board-governance">{{ i18n "policies_gov_title" }}</a></li>
+            <li><a href="#official-policies">{{ i18n "policies_docs_title" }}</a></li>
+            <li><a href="#annual-reports">{{ i18n "policies_reports_title" }}</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      {{/* ── Main content ──────────────────────────────── */}}
+      <div>
+
+        <p class="fenb-policy-intro">{{ i18n "policies_intro" }}</p>
+
+        {{/* ── Board and Governance ─────────────────────── */}}
+        <div class="fenb-policy-group">
+          <span class="fenb-section-label">{{ i18n "policies_gov_label" }}</span>
+          <h2 id="board-governance" class="fenb-section-title">{{ i18n "policies_gov_title" }}</h2>
+          <ul class="fenb-policy-list">
+            {{ range hugo.Data.policies.governance }}
+            <li class="fenb-policy-item">
+              <span class="fenb-policy-name">
+                {{- if eq $.Site.Language.Lang "fr" }}{{ .name_fr }}{{ else }}{{ .name_en }}{{ end -}}
+              </span>
+              <span class="fenb-policy-links">
+                <a href="{{ .url_en }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
+                <a href="{{ .url_fr }}" class="fenb-policy-link">{{ i18n "policies_link_fr" }}</a>
+              </span>
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+
+        {{/* ── Policy documents ────────────────────────── */}}
+        <div class="fenb-policy-group">
+          <span class="fenb-section-label">{{ i18n "policies_docs_label" }}</span>
+          <h2 id="official-policies" class="fenb-section-title">{{ i18n "policies_docs_title" }}</h2>
+          <ul class="fenb-policy-list">
+            {{ range hugo.Data.policies.documents }}
+            <li class="fenb-policy-item">
+              <span class="fenb-policy-name">
+                {{- if eq $.Site.Language.Lang "fr" }}{{ .name_fr }}{{ else }}{{ .name_en }}{{ end -}}
+              </span>
+              <span class="fenb-policy-links">
+                <a href="{{ .url_en }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
+                <a href="{{ .url_fr }}" class="fenb-policy-link">{{ i18n "policies_link_fr" }}</a>
+              </span>
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+
+        {{/* ── Annual Reports & AGM Minutes ──────────────── */}}
+        <div class="fenb-policy-group">
+          <span class="fenb-section-label">{{ i18n "policies_reports_label" }}</span>
+          <h2 id="annual-reports" class="fenb-section-title">{{ i18n "policies_reports_title" }}</h2>
+          <ul class="fenb-policy-list">
+            {{ range hugo.Data.policies.annual_reports }}
+            <li class="fenb-policy-item">
+              <span class="fenb-policy-name">{{ i18n "policies_agm_season" (dict "Start" .year "End" (add .year 1)) }}</span>
+              <span class="fenb-policy-links">
+                <a href="{{ .url }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
+              </span>
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}
