@@ -64,6 +64,22 @@ flowchart TD
 
 ---
 
+## Claude Code skills
+
+Common workflows are automated as Claude Code skills (invoked with `/fenb-*` in the CLI):
+
+| Skill | Shortcut for |
+|---|---|
+| `/fenb-commit` | Stage → commit → push, with branch strategy enforcement |
+| `/fenb-release` | Full pre-release checklist + open PR from `dev` into `main` |
+| `/fenb-new-news` | Create a bilingual news article |
+| `/fenb-new-page` | Create a new bilingual content page pair |
+| `/fenb-season-rollover` | Archive events season and start a fresh `events.yaml` |
+
+See `CLAUDE.md` for the full skill list and the `fenb-` prefix rule.
+
+---
+
 ## Local development
 
 Hugo is installed via snap (`/snap/bin/hugo`). Run all commands from the **repo root** unless noted.
@@ -79,6 +95,25 @@ cd fenb-1 && /snap/bin/hugo --environment production && npx pagefind --site publ
 > **Note:** `make serve` builds the site, generates the Pagefind search index, then starts the dev server with `--renderStaticToDisk`. Plain `hugo server` skips the index step and search will not work.
 
 The site builds in ~100 ms.
+
+---
+
+## Release checklist
+
+Before opening a PR from `dev` into `main`, verify:
+
+- [ ] **On `dev` branch** — confirm `git branch` shows `dev` and `git status` is clean
+- [ ] **Remote in sync** — `git fetch origin && git status` shows `dev` is not behind `origin/dev`
+- [ ] **Production build passes** — `make build-prod` completes with no errors or warnings
+- [ ] **Bilingual parity** — every `.en.md` in `fenb-1/content/` has a matching `.fr.md` (and vice versa)
+- [ ] **TODO.md reviewed** — no unchecked items are left addressed but unmarked
+- [ ] **No orphan placeholder links** — any new links introduced this cycle point to real pages
+
+After confirming the above, run `/fenb-release` or open the PR manually with:
+
+```bash
+gh pr create --base main --head dev --title "Release: <summary>" --body "..."
+```
 
 ### Search index
 
