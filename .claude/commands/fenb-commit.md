@@ -107,13 +107,14 @@ Report: commit hash and message on success. If the pre-commit hook fails, show t
 - If branch is new (no remote): `git push -u origin <branch>`
 - Otherwise: `git push`
 
-Report the push result. On success, show:
+Report the push result. On success, show the following as plain text (not a code block):
 
-```
-Done.
-  Branch:  <branch-name>
-  Commit:  <short-hash> <message>
-  Remote:  pushed to origin/<branch-name>
-```
+┌─ Commit Summary ─────────────────────────────
+│  <short-hash>  →  origin/<branch-name>
+│  <commit message>
+│  <N files changed · X insertions(+) · Y deletions(-)>
+└─────────────────────────────────────────────
+
+Use the file-change stats from the commit output for the last line.
 
 If this is a feature branch, remind the user: "When ready, open a PR into `dev` (not `main`)."
