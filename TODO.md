@@ -40,6 +40,7 @@ Test each project skill end-to-end at least once to verify it works correctly.
 | `/fenb-new-news` | ❌ Untested | |
 | `/fenb-new-page` | ❌ Untested | |
 | `/fenb-season-rollover` | ❌ Untested | |
+| `/fenb-merge-features` | ❌ Untested | |
 
 ## Events data
 

@@ -26,6 +26,7 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 | Skill | What it does |
 |---|---|
 | `/fenb-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
+| `/fenb-merge-features` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
 | `/fenb-new-news` | Create a bilingual news article with correct filenames and front matter |
 | `/fenb-new-page` | Create a new bilingual content page pair |
 | `/fenb-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |

@@ -71,6 +71,7 @@ Common workflows are automated as Claude Code skills (invoked with `/fenb-*` in 
 | Skill | Shortcut for |
 |---|---|
 | `/fenb-commit` | Stage → commit → push, with branch strategy enforcement |
+| `/fenb-merge-features` | Discover unmerged feature branches, select one, and open a PR into `dev` |
 | `/fenb-release` | Full pre-release checklist + open PR from `dev` into `main` |
 | `/fenb-new-news` | Create a bilingual news article |
 | `/fenb-new-page` | Create a new bilingual content page pair |
