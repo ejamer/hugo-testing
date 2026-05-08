@@ -52,6 +52,13 @@ Run through this checklist in order, pausing to report the result of each step b
 
    If the user picks **"Merge now"**: run `script -q -c "gh pr merge --merge --body ''" /dev/null` to merge using a regular merge commit. Never use `--delete-branch` — `dev` is the permanent development branch. Report success or failure.
 
+   After a successful merge, sync `dev` with the merge commit that GitHub added to `main`:
+   ```bash
+   git merge origin/main --no-edit
+   git push
+   ```
+   This prevents `dev` from drifting behind `main` by one commit per release.
+
    Pop the stash (if one was taken), then show the following as plain text (not a code block):
 
    ┌─ Release Summary ────────────────────────────
