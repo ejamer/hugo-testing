@@ -1,0 +1,17 @@
+{{- /*
+  Renders the standard section header (label + title + optional "see all" link).
+  Call with: (dict "label" … "title" … "linkURL" … "linkText" …)
+    label    — small uppercase label above the title (required)
+    title    — section heading text (required)
+    linkURL  — site-root-relative URL for the "see all" link, e.g. "/events/" (optional)
+    linkText — visible text for the link, without the arrow (optional)
+*/ -}}
+<div class="fenb-section-header">
+  <div>
+    <span class="fenb-section-label">{{ .label }}</span>
+    <h2 class="fenb-section-title">{{ .title }}</h2>
+  </div>
+  {{ with .linkURL }}
+  <a href="{{ . | relLangURL }}" class="fenb-see-all">{{ $.linkText }} &rarr;</a>
+  {{ end }}
+</div>

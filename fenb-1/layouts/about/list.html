@@ -2,17 +2,9 @@
 
 {{ define "main" }}
 
-{{/* ── Page header ──────────────────────────────────────── */}}
-<header class="fenb-page-header">
-  <div class="fenb-container">
-    <h1 class="fenb-page-title">{{ .Title }}</h1>
-    <p class="fenb-page-subtitle">{{ .Description }}</p>
-  </div>
-</header>
-
 {{/* ── Overview, History & Mission ─────────────────────── */}}
 <section class="fenb-about-overview-section">
-  <div class="fenb-container">
+  <div class="fenb-container fenb-container--narrow">
     <div class="fenb-about-overview-grid">
 
       <div class="fenb-about-overview-body">
@@ -27,10 +19,13 @@
             <div class="fenb-about-history-text">
               {{ i18n "about_history_body" | markdownify }}
             </div>
+            {{ with hugo.Data.board.founder }}
+            {{ $caption := index . (printf "caption_%s" $.Site.Language.Lang) | default .caption_en }}
             <figure class="fenb-about-history-photo">
-              <img src="/images/alfred-knappe.png" alt="Alfred Knappe, founding president of the New Brunswick Fencing Association" loading="lazy">
-              <figcaption>Alfred Knappe — founding president, 1969</figcaption>
+              <img src="{{ .photo }}" alt="{{ .name }}" loading="lazy">
+              <figcaption>{{ $caption }}</figcaption>
             </figure>
+            {{ end }}
           </div>
         </div>
 
@@ -51,8 +46,9 @@
         <div class="fenb-about-sidebar-card">
           <h3>{{ i18n "about_affiliations_title" }}</h3>
           <ul>
-            <li><a href="https://fencing.ca/" target="_blank" rel="noopener noreferrer">Canadian Fencing Federation</a></li>
-            <li><a href="https://www.sportnb.com/" target="_blank" rel="noopener noreferrer">Sport New Brunswick</a></li>
+            {{ range hugo.Data.board.affiliations }}
+            <li><a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ index . (printf "name_%s" $.Site.Language.Lang) | default .name_en }}</a></li>
+            {{ end }}
           </ul>
         </div>
       </div>
@@ -63,7 +59,7 @@
 
 {{/* ── Board of Directors ────────────────────────────────── */}}
 <section class="fenb-board-section">
-  <div class="fenb-container">
+  <div class="fenb-container fenb-container--narrow">
     <span class="fenb-section-label">{{ i18n "about_board_label" }}</span>
     <h2 class="fenb-section-title">{{ i18n "about_board_title" }}</h2>
     <div class="fenb-board-grid">
@@ -75,7 +71,7 @@
         <div class="fenb-board-card-avatar{{ with .card_color }} fenb-board-card-avatar--{{ . }}{{ end }}">{{ $initials }}</div>
         <p class="fenb-board-card-name">{{ .name }}</p>
         <p class="fenb-board-card-role{{ with .card_color }} fenb-board-card-role--{{ . }}{{ end }}">
-          {{- if eq $.Site.Language.Lang "fr" }}{{ .role_fr }}{{ else }}{{ .role_en }}{{ end -}}
+          {{- index . (printf "role_%s" $.Site.Language.Lang) | default .role_en -}}
         </p>
       </div>
       {{ end }}
@@ -85,7 +81,7 @@
 
 {{/* ── Contact ───────────────────────────────────────────── */}}
 <section class="fenb-about-contact-section">
-  <div class="fenb-container">
+  <div class="fenb-container fenb-container--tight">
     <span class="fenb-section-label">{{ i18n "about_contact_label" }}</span>
     <h2 class="fenb-section-title">{{ i18n "about_contact_title" }}</h2>
     <div class="fenb-contact-card">

@@ -1,0 +1,26 @@
+{{- /*
+  Renders a single news card.
+  Call with: (dict "page" . "heading" "h2" "truncate" 160)
+    page     — Hugo page object (required)
+    heading  — tag name for the title, "h2" or "h3" (default: "h2")
+    truncate — excerpt character limit (default: 160)
+*/ -}}
+{{- $page     := .page -}}
+{{- $heading  := .heading  | default "h2" -}}
+{{- $truncate := .truncate | default 160  -}}
+<article class="fenb-news-card">
+  <div class="fenb-news-card-top{{ with $page.Params.category }} fenb-news-card-top--{{ . | urlize }}{{ end }}"></div>
+  <div class="fenb-news-card-body">
+    <div class="fenb-news-card-meta">
+      {{ with $page.Params.category }}<span class="fenb-news-category fenb-news-category--{{ . | urlize }}">{{ . }}</span>{{ end }}
+      <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "January 2, 2006" }}</time>
+    </div>
+    {{ if eq $heading "h3" }}
+    <h3 class="fenb-news-title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+    {{ else }}
+    <h2 class="fenb-news-title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
+    {{ end }}
+    <p class="fenb-news-excerpt">{{ $page.Summary | plainify | truncate $truncate }}</p>
+    <a href="{{ $page.RelPermalink }}" class="fenb-read-more">{{ i18n "read_more" }} &rarr;</a>
+  </div>
+</article>

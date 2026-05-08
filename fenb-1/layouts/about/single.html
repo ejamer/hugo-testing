@@ -3,7 +3,7 @@
 {{ define "main" }}
 
 <section class="fenb-policy-section">
-  <div class="fenb-container">
+  <div class="fenb-container fenb-container--narrow">
     <div class="fenb-policy-layout">
 
       {{/* ── Sidebar ───────────────────────────────────── */}}
@@ -36,7 +36,7 @@
             {{ range hugo.Data.policies.governance }}
             <li class="fenb-policy-item">
               <span class="fenb-policy-name">
-                {{- if eq $.Site.Language.Lang "fr" }}{{ .name_fr }}{{ else }}{{ .name_en }}{{ end -}}
+                {{- index . (printf "name_%s" $.Site.Language.Lang) | default .name_en -}}
               </span>
               <span class="fenb-policy-links">
                 <a href="{{ .url_en }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
@@ -55,7 +55,7 @@
             {{ range hugo.Data.policies.documents }}
             <li class="fenb-policy-item">
               <span class="fenb-policy-name">
-                {{- if eq $.Site.Language.Lang "fr" }}{{ .name_fr }}{{ else }}{{ .name_en }}{{ end -}}
+                {{- index . (printf "name_%s" $.Site.Language.Lang) | default .name_en -}}
               </span>
               <span class="fenb-policy-links">
                 <a href="{{ .url_en }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>

@@ -17,10 +17,34 @@ Avenir, Nunito Sans, system-ui
 
 ## CSS
 
-All styles live in `fenb-1/assets/ananke/css/fenb.css`, bundled by Ananke's asset pipeline.
+Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped to one concern. Ananke's `resources.Concat` pipeline merges and minifies them into a single output at build time — no extra HTTP requests.
 
-- No inline styles for anything reusable — add a class to `fenb.css` instead
-- Use CSS custom properties defined at `:root` (`--teal`, `--crimson`, `--shadow-sm`, `--radius`, etc.) rather than raw hex values
+| File | Scope |
+|---|---|
+| `fenb-base.css` | `:root` variables, reset, shared section/container utilities, buttons, Ananke override |
+| `fenb-nav.css` | Nav, search overlay, language switcher, page header band |
+| `fenb-hero.css` | Homepage hero, slider, scroll arrow, animations |
+| `fenb-events.css` | Event cards, tags, calendar page |
+| `fenb-news.css` | News cards, article layout, article sidebar, 404 page |
+| `fenb-clubs.css` | Programs quick-links, clubs grid/map/CTA |
+| `fenb-about.css` | About page, policies page |
+| `fenb-schedule.css` | Season schedule page |
+| `fenb-responsive.css` | All `@media` breakpoints and print query — loaded last |
+
+The load order is declared in `hugo.toml` under `params.custom_css`.
+
+- No inline styles for anything reusable — add a class to the appropriate file instead
+- Use CSS custom properties defined at `:root` rather than raw hex values: `--teal`, `--crimson`, `--shadow-sm`, `--radius`, category colours (`--cat-training`, `--cat-national`, `--cat-clinic`, `--cat-meeting` and their `--cat-*-pale` variants), brand colour channels for `rgba()` (`--teal-rgb`, `--crimson-rgb`)
+
+### Container width modifiers
+
+`.fenb-container` defaults to `max-width: 1200px`. Use these modifier classes when a section needs a narrower width — add them directly to the `<div class="fenb-container …">` element rather than writing a new descendant selector override.
+
+| Class | Max-width | Used by |
+|---|---|---|
+| `.fenb-container--narrow` | 1100px | Events calendar, board, about overview, policies |
+| `.fenb-container--tight` | 900px | About contact |
+| `.fenb-container--sched` | 1000px | Season schedule |
 
 ### Hero breakout
 
@@ -65,7 +89,7 @@ Every content page needs both an English and French file so the language switche
 - Section index files: `_index.md` (EN) + `_index.fr.md` (FR)
 - Article files: `{name}.en.md` (EN) + `{name}.fr.md` (FR)
 
-Both files need `hide_page_header: true` in front matter if the layout provides its own page header inside `main` (prevents the generic band in `site-header.html` from doubling up).
+To show a subtitle in the page header band, set `description:` in the front matter — the partial reads it automatically. Use `hide_page_header: true` only when the layout renders its own header with dynamic content (e.g. the clubs page, which computes a live club count).
 
 ---
 
@@ -90,14 +114,14 @@ When the first article of a new calendar year arrives, create the year subfolder
 
 ## News category colours
 
-The `category` front matter field drives the card accent colour and article divider colour.
+The `category` front matter field drives the card top stripe, category badge colour, and article divider colour.
 
-| Value | Colour | French equivalent |
-|---|---|---|
-| `Results` | Teal | `Résultats` |
-| `Announcement` | Crimson | `Annonce` |
-| `Registration` | Green | `Inscription` |
-| `Community` | Navy | `Communauté` |
+| Value | CSS variable | Colour | French equivalent |
+|---|---|---|---|
+| `Results` | `--teal` | Teal | `Résultats` |
+| `Announcement` | `--crimson` | Crimson | `Annonce` |
+| `Registration` | `--cat-training` | Green | `Inscription` |
+| `Community` | `--cat-national` | Navy | `Communauté` |
 
 ---
 
@@ -105,17 +129,17 @@ The `category` front matter field drives the card accent colour and article divi
 
 Each category drives three visual elements: the date badge on the event card, the tag pill, and the calendar bar on the month grid.
 
-| `category` | Example `category_label` | Colour |
-|---|---|---|
-| `competition` | `"Competition"` | Teal |
-| `training` | `"Training Camp"` | Dark green |
-| `national` | `"National Event"` | Navy |
-| `provincial` | `"Provincial Championship"` | Crimson |
-| `clinic` | `"Clinic"` | Olive |
-| `meeting` | `"FENB Meeting"` | Grey |
-| `announcement` | `"Announcement"` | Teal |
+| `category` | Example `category_label` | CSS variable | Colour |
+|---|---|---|---|
+| `competition` | `"Competition"` | `--teal` | Teal |
+| `training` | `"Training Camp"` | `--cat-training` | Dark green |
+| `national` | `"National Event"` | `--cat-national` | Navy |
+| `provincial` | `"Provincial Championship"` | `--crimson` | Crimson |
+| `clinic` | `"Clinic"` | `--cat-clinic` | Olive |
+| `meeting` | `"FENB Meeting"` | `--cat-meeting` | Grey |
+| `announcement` | `"Announcement"` | `--teal` | Teal |
 
-`category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces).
+`category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces). Each non-brand category also has a `--cat-*-pale` variant used for tag backgrounds.
 
 ---
 
@@ -134,7 +158,9 @@ cascade:
 
 `site-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description`. The `target: kind: page` scoping leaves the section list page unaffected.
 
-**Suppress the band** — if a layout provides its own page header inside `main`, set `hide_page_header: true` in the section's `_index.md` front matter to prevent `site-header.html` from rendering a duplicate.
+**Add a subtitle** — set `description:` in the section's `_index.md` / `_index.fr.md` front matter. The partial renders it automatically as the subtitle below the title.
+
+**Suppress the band** — only needed when a layout renders its own header with dynamic content. Set `hide_page_header: true` in the section's `_index.md` front matter and add an explicit `<header class="fenb-page-header">` block in the layout. Do not use this just to add a static subtitle — use `description:` instead.
 
 ---
 

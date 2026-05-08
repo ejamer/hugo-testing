@@ -1,0 +1,243 @@
+/* ===================================================
+   fenb-nav.css — Navigation, search overlay,
+   language switcher, and inner page header band
+   =================================================== */
+
+/* ── Nav ──────────────────────────────────────── */
+.fenb-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.fenb-nav {
+  position: relative;
+  background: var(--white);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  transition: box-shadow var(--transition);
+}
+
+.fenb-nav--scrolled {
+  box-shadow: 0 3px 20px rgba(0,0,0,0.15);
+}
+
+.fenb-nav-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 1.5rem 0 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 126px;
+}
+
+.fenb-nav-logo-link { display: flex; align-items: center; flex-shrink: 0; }
+.fenb-nav-logo      { height: 122px; width: auto; }
+
+.fenb-nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.fenb-nav-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.fenb-nav-links a {
+  display: block;
+  color: var(--text-body);
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.fenb-nav-links a:hover {
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+
+/* Last link ("Join") gets a crimson pill */
+.fenb-nav-links li:last-child a {
+  background: var(--crimson);
+  color: #fff;
+  padding: 0.4rem 1rem;
+  margin-left: 0.5rem;
+}
+.fenb-nav-links li:last-child a:hover {
+  background: var(--crimson-dark);
+  color: #fff;
+}
+
+/* Search + lang group */
+.fenb-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+/* Language switcher */
+.fenb-lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.fenb-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--crimson);
+  background: transparent;
+  border: none;
+  transition: background var(--transition), color var(--transition);
+}
+
+.fenb-lang-btn:hover {
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+
+/* Hamburger */
+.fenb-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  width: 36px;
+}
+.fenb-nav-toggle span {
+  display: block;
+  height: 2px;
+  background: var(--text-body);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* Search icon button */
+.fenb-search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.45rem;
+  color: var(--text-body);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
+  flex-shrink: 0;
+}
+.fenb-search-btn:hover,
+.fenb-search-btn[aria-expanded="true"] {
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+
+/* Search overlay */
+.fenb-search-overlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+  z-index: 10;
+  padding: 1.5rem 0 2rem;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.fenb-search-overlay.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.fenb-search-overlay-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.fenb-search-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.fenb-search-row #fenb-search {
+  flex: 1;
+  min-width: 0;
+}
+.fenb-search-close {
+  flex-shrink: 0;
+  align-self: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
+  line-height: 0;
+}
+.fenb-search-close:hover {
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+
+/* Pagefind UI theme overrides */
+#fenb-search {
+  --pagefind-ui-primary:       var(--teal);
+  --pagefind-ui-text:          var(--text-body);
+  --pagefind-ui-background:    #fff;
+  --pagefind-ui-border:        var(--light-gray);
+  --pagefind-ui-tag:           var(--off-white);
+  --pagefind-ui-border-width:  2px;
+  --pagefind-ui-border-radius: 6px;
+  --pagefind-ui-font:          inherit;
+}
+#fenb-search .pagefind-ui__search-input:focus { outline-color: var(--teal); }
+#fenb-search .pagefind-ui__search-clear       { color: var(--teal); }
+#fenb-search .pagefind-ui__result-link        { color: var(--teal); }
+#fenb-search .pagefind-ui__result-link:hover  { color: var(--teal-dark); }
+
+/* ── Inner page header ────────────────────────── */
+.fenb-page-header {
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+  padding: 1.25rem 1.5rem;
+}
+
+.fenb-page-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.fenb-page-subtitle {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.78);
+  margin: 0.5rem 0 0;
+  font-weight: 300;
+}
