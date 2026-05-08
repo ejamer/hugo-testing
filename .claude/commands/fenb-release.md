@@ -20,19 +20,11 @@ Run through this checklist in order, pausing to report the result of each step b
 
 3. **Production build** — run `make build-prod` from the repo root. Report any errors or warnings. A clean build is required to proceed. If the build fails, pop the stash (if one was taken) before stopping.
 
-4. **Bilingual parity check** — run each command separately from the repo root (no `cd`). Run the EN check first, then the FR check:
-
-   EN check — finds `.en.md` files with no matching `.fr.md`:
+4. **Bilingual parity check** — run from the repo root:
    ```
-   find fenb-1/content -name "*.en.md" -exec sh -c 'fr="${1%.en.md}.fr.md"; [ ! -f "$fr" ] && echo "MISSING FR: $1"' _ {} \;
+   make check-parity
    ```
-
-   FR check — finds `.fr.md` files with no matching `.en.md` or `.md` counterpart:
-   ```
-   find fenb-1/content -name "*.fr.md" -exec sh -c 'base="${1%.fr.md}"; [ ! -f "${base}.en.md" ] && [ ! -f "${base}.md" ] && echo "MISSING EN: $1"' _ {} \;
-   ```
-
-   Section index files use `_index.md` (no language suffix) as a valid English counterpart — the FR check above already handles this. Report any files that produce output.
+   This checks that every `.en.md` has a `.fr.md` counterpart and vice versa (accepting `_index.md` as a valid English counterpart for section index files). Report any `MISSING FR:` or `MISSING EN:` lines in the output. No output means all files are paired.
 
 5. **Commit summary** — run `git log main..dev --oneline` to list what will land in this release. Show it to the user.
 

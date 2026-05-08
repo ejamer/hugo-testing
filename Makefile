@@ -11,4 +11,8 @@ clean:
 	rm -rf fenb-1/public fenb-1/resources/_gen
 	rm -f fenb-1/.hugo_build.lock fenb-1/hugo_stats.json
 
-.PHONY: serve build build-prod clean
+check-parity:
+	@bash -c 'find fenb-1/content -name "*.en.md" | while read f; do fr="$${f%.en.md}.fr.md"; [ ! -f "$$fr" ] && echo "MISSING FR: $$f"; done; true'
+	@bash -c 'find fenb-1/content -name "*.fr.md" | while read f; do base="$${f%.fr.md}"; [ ! -f "$${base}.en.md" ] && [ ! -f "$${base}.md" ] && echo "MISSING EN: $$f"; done; true'
+
+.PHONY: serve build build-prod clean check-parity
