@@ -81,6 +81,18 @@ Also update the events calendar page subtitle in `content/events/_index.md` and 
 
 **Schedule page filter pattern:** `/events/schedule/` uses SSR + JS visibility toggling. Hugo renders every event with `data-season` and `data-category` HTML attributes; `static/js/events-schedule.js` shows/hides them in response to the season dropdown and category filter buttons. Print always reflects the current filtered state. Prefer this pattern over JS-only rendering for any future filterable list page — it gives a no-JS fallback and print support for free.
 
+## `gh pr merge` requires an explicit PR number
+
+Never run `gh pr merge` without specifying a PR number. Without one, `gh` resolves to the PR associated with the *current branch* — which may not be the PR you just created. If you are on `dev` when you run it, it will find the most recent `dev→main` PR and can delete `dev`.
+
+Always capture the PR number from `gh pr create` output and pass it explicitly:
+
+```bash
+gh pr merge $PR_NUMBER --merge --delete-branch
+```
+
+Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the end).
+
 ## Nav chrome changes
 
 Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.

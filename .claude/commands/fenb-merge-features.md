@@ -92,7 +92,7 @@ EOF
 )"
 ```
 
-Capture the PR URL from the output.
+Capture the PR URL from the output and extract the PR number (the integer at the end of the URL). Store it as `$PR_NUMBER`.
 
 **If the command fails:** report the error and stop.
 
@@ -108,7 +108,7 @@ Use the `AskUserQuestion` tool:
 - **Option 2:** label `"Leave open"`, description `"Leave the PR open to review or merge later in GitHub"`
 
 **If the user picks "Merge now":**
-1. Run `script -q -c "gh pr merge --merge --delete-branch" /dev/null` to merge and delete the remote branch.
+1. Run `script -q -c "gh pr merge $PR_NUMBER --merge --delete-branch" /dev/null` — always pass the PR number explicitly to avoid operating on the wrong PR.
 2. Switch to dev and pull: `git checkout dev && git pull origin dev`
 3. Delete the local branch: `git branch -d $BRANCH`
 4. Report success.
