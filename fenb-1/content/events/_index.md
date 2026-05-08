@@ -1,4 +1,4 @@
 ---
 title: "Events & Calendar"
-hide_page_header: true
+description: "2025–2026 season schedule"
 ---

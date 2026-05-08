@@ -1,0 +1,171 @@
+/* ===================================================
+   fenb-base.css — Variables, reset, shared utilities,
+   buttons, and Ananke overrides
+   =================================================== */
+
+:root {
+  --teal:          #006156;
+  --teal-dark:     #004840;
+  --teal-mid:      #005249;
+  --teal-light:    #007a6b;
+  --teal-pale:     #e6f2f0;
+  --crimson:       #79242f;
+  --crimson-dark:  #5e1c26;
+  --crimson-light: #943040;
+  --crimson-pale:  #f5e8ea;
+  --navy:          #1e3a5f;
+  --navy-dark:     #152b47;
+  --navy-light:    #274d7a;
+  --white:         #ffffff;
+  --off-white:     #f7f9f8;
+  --light-gray:    #eaeef0;
+  --text-dark:     #1a2420;
+  --text-body:     #2e3d3a;
+  --text-muted:    #6b7f7a;
+  --shadow-xs:     0 1px 4px rgba(0,0,0,0.07);
+  --shadow-sm:     0 2px 10px rgba(0,0,0,0.09);
+  --shadow-md:     0 6px 24px rgba(0,0,0,0.13);
+  --shadow-lg:     0 12px 48px rgba(0,0,0,0.18);
+  --radius:        14px;
+  --radius-sm:     8px;
+  --ease:          cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition:    0.22s var(--ease);
+
+  /* Category colours — used for event badges, tags, cal bars, news stripes */
+  --cat-training:       #2d6a4f;
+  --cat-training-pale:  #e7f2ec;
+  --cat-national:       #1a3a5c;
+  --cat-national-pale:  #e8eef5;
+  --cat-clinic:         #5a6a3a;
+  --cat-clinic-pale:    #eef2e6;
+  --cat-meeting:        #4a4a4a;
+  --cat-meeting-pale:   #efefef;
+
+  /* Brand colour channels — for rgba() opacity tints */
+  --teal-rgb:           0, 97, 86;
+  --crimson-rgb:        121, 36, 47;
+}
+
+/* ── Reset / base ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-padding-top: 130px; }
+
+body {
+  font-family: 'Avenir', 'Nunito Sans', system-ui, -apple-system, sans-serif;
+  color: var(--text-body);
+  background: var(--white);
+}
+
+/* Keep ananke's <main> from adding bottom padding that fights our layout */
+main.pb7 { padding-bottom: 0 !important; }
+
+/* ── Shared section styles ────────────────────── */
+.fenb-section {
+  padding: 5rem 1.5rem;
+}
+
+.fenb-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.fenb-container--narrow { max-width: 1100px; }
+.fenb-container--tight  { max-width: 900px; }
+.fenb-container--sched  { max-width: 1000px; }
+
+.fenb-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.fenb-section-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.35rem;
+}
+
+.fenb-section-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0;
+  line-height: 1.15;
+}
+
+.fenb-see-all {
+  color: var(--teal);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+  white-space: nowrap;
+  margin-bottom: 0.25rem;
+}
+.fenb-see-all:hover {
+  color: var(--crimson);
+  border-color: var(--crimson);
+}
+
+/* ── Buttons ──────────────────────────────────── */
+.fenb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.9rem;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.025em;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+  white-space: nowrap;
+}
+.fenb-btn:hover { transform: translateY(-2px); }
+
+.fenb-btn-crimson {
+  background: var(--crimson);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(var(--crimson-rgb),0.38);
+}
+.fenb-btn-crimson:hover {
+  background: var(--crimson-dark);
+  box-shadow: 0 8px 28px rgba(var(--crimson-rgb),0.48);
+  color: #fff;
+}
+
+.fenb-btn-outline {
+  background: transparent;
+  color: rgba(255,255,255,0.9);
+  border: 2px solid rgba(255,255,255,0.5);
+}
+.fenb-btn-outline:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.85);
+  color: #fff;
+}
+
+.fenb-btn-teal {
+  background: var(--teal);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(var(--teal-rgb),0.3);
+}
+.fenb-btn-teal:hover {
+  background: var(--teal-dark);
+  box-shadow: 0 8px 28px rgba(var(--teal-rgb),0.4);
+  color: #fff;
+}
+
+/* ── Ananke background_color_class overrides ──── */
+.bg-fenb-teal { background-color: var(--teal); }

@@ -40,6 +40,11 @@ Test each project skill end-to-end at least once to verify it works correctly.
 | `/fenb-new-news` | ❌ Untested | |
 | `/fenb-new-page` | ❌ Untested | |
 | `/fenb-season-rollover` | ❌ Untested | |
+| `/fenb-merge-features` | ✅ Tested | PR number bug found and fixed during first run |
+
+## Code quality
+
+- [ ] **Split `site-header.html` partial** — currently conflates navigation and page header band into one file. Split into `partials/nav.html` (sticky nav, search overlay, language switcher, hamburger) and `partials/page-header.html` (the coloured band below the nav). Deferred from the May 2026 design review (H3). See `plans/archive/design-review.md` for the original finding.
 
 ## Events data
 

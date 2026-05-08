@@ -19,7 +19,17 @@ Then:
 
 4. Verify both files exist: the archive file and the new `events.yaml`.
 
-5. Remind the user to:
+5. Update `fenb-1/content/events/_index.md` and `fenb-1/content/events/_index.fr.md` — change the `description:` field to match the new season label:
+   ```yaml
+   # _index.md
+   description: "{new-season-label} season schedule"
+
+   # _index.fr.md
+   description: "Calendrier de la saison {new-season-label}"
+   ```
+   These files drive the subtitle shown in the events calendar page header band.
+
+6. Remind the user to:
    - Add the first events of the new season to `fenb-1/data/events.yaml`
    - Update the `season:` field in `fenb-1/data/board.yaml` to the new season label
    - Add a placeholder announcement event (category `announcement`) so the homepage events section stays populated during the off-season gap

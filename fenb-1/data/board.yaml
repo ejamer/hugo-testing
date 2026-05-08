@@ -1,5 +1,20 @@
 season: "2025–2026"
 contact: "fencingnb@gmail.com"
+
+founder:
+  name: "Alfred Knappe"
+  photo: "/images/alfred-knappe.png"
+  caption_en: "Alfred Knappe — founding president, 1969"
+  caption_fr: "Alfred Knappe — président fondateur, 1969"
+
+affiliations:
+  - name_en: "Canadian Fencing Federation"
+    name_fr: "Fédération canadienne d'escrime"
+    url: "https://fencing.ca/"
+  - name_en: "Sport New Brunswick"
+    name_fr: "Sport Nouveau-Brunswick"
+    url: "https://www.sportnb.com/"
+
 members:
   - name: "Celine Fournet"
     role_en: "President"

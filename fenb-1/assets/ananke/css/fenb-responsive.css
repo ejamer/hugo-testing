@@ -1,0 +1,119 @@
+/* ===================================================
+   fenb-responsive.css — All breakpoints and print query
+   Must be loaded last so overrides apply correctly.
+   =================================================== */
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 860px) {
+  .fenb-nav-links { display: none; }
+  .fenb-nav-links.is-open {
+    display: block;
+    position: absolute;
+    top: 126px;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--light-gray);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    padding: 0.75rem 0;
+    z-index: 199;
+  }
+  .fenb-nav-links.is-open ul  { flex-direction: column; gap: 0; }
+  .fenb-nav-links.is-open a   { border-radius: 0; padding: 0.85rem 1.5rem; color: var(--text-body); }
+  .fenb-nav-links.is-open li:last-child a {
+    margin: 0.5rem 1.5rem;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+  }
+  .fenb-nav-toggle { display: flex; }
+
+  .fenb-search-overlay-inner { padding: 0 1rem; }
+  .fenb-search-row { gap: 0.25rem; }
+
+  .fenb-section-header { flex-direction: column; align-items: flex-start; }
+  .fenb-section-header .fenb-see-all { align-self: flex-start; }
+
+  .fenb-hero-content { padding-bottom: 4rem; }
+
+  .fenb-about-overview-grid { grid-template-columns: 1fr; }
+  .fenb-about-sidebar { flex-direction: row; flex-wrap: wrap; }
+  .fenb-about-sidebar-card { flex: 1 1 200px; }
+  .fenb-policy-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .fenb-cal-layout { flex-direction: column; }
+  .fenb-cal-legend { flex: none; width: 100%; }
+
+  .fenb-schedule-layout { flex-direction: column; }
+  .fenb-schedule-sidebar { flex: none; width: 100%; order: -1; }
+  .fenb-schedule-filter-btns { flex-direction: row; flex-wrap: wrap; }
+}
+
+@media (max-width: 640px) {
+  .fenb-about-history-body { grid-template-columns: 1fr; }
+  .fenb-about-history-photo { max-width: 180px; margin: 0 auto; }
+}
+
+@media (max-width: 600px) {
+  .fenb-section  { padding: 3.5rem 1rem; }
+  .fenb-programs-section { padding: 3rem 1rem; }
+  .fenb-events-grid { grid-template-columns: 1fr; }
+  .fenb-news-grid   { grid-template-columns: 1fr; }
+  .fenb-programs-grid { grid-template-columns: 1fr; }
+
+  .fenb-clubs-grid     { grid-template-columns: 1fr; }
+  .fenb-clubs-benefits { grid-template-columns: 1fr; }
+  .fenb-clubs-cta-section { padding: 3.5rem 1rem; }
+  .fenb-clubs-map-wrap iframe { height: 340px; }
+
+  .fenb-about-overview-section,
+  .fenb-board-section,
+  .fenb-about-contact-section { padding: 3.5rem 1rem; }
+  .fenb-policy-section { padding: 3rem 1rem; }
+  .fenb-policy-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+}
+
+@media (max-width: 1000px) {
+  .fenb-article-layout { grid-template-columns: 1fr 260px; }
+}
+
+@media (max-width: 680px) {
+  .fenb-article-layout { grid-template-columns: 1fr; }
+  .fenb-sidebar-block  { position: static; }
+}
+
+/* ── Print ────────────────────────────────────── */
+@media print {
+  .fenb-nav-wrap,
+  .fenb-schedule-controls,
+  .fenb-schedule-sidebar { display: none !important; }
+
+  body, .fenb-schedule-section { background: #fff !important; }
+
+  .fenb-page-header {
+    background: #fff !important;
+    padding: 0.75rem 0 0.5rem;
+    border-bottom: 2px solid #000;
+  }
+  .fenb-page-title   { color: #000 !important; font-size: 1.4rem; }
+  .fenb-page-subtitle { color: #444 !important; }
+
+  .fenb-schedule-month-heading {
+    color: #000 !important;
+    border-bottom-color: #000 !important;
+  }
+
+  .fenb-schedule-category {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .fenb-schedule-date,
+  .fenb-schedule-location { color: #444 !important; }
+
+  .fenb-schedule-links a { color: #000 !important; }
+
+  .fenb-schedule-item    { break-inside: avoid; }
+  .fenb-schedule-month   { break-inside: avoid; }
+}

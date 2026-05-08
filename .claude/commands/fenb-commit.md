@@ -15,25 +15,41 @@ Report:
 **Branch rules:**
 - If on **`main`**: warn the user that commits never go directly to `main`, then automatically run `git checkout dev` and continue to Step 2.
 - If on **`dev`**: continue to Step 2.
-- If on any other branch (feature branch): skip to Step 3.
+- If on any other branch (feature branch): continue to Step 2 (treating the current branch as the default target).
 
 ---
 
-## Step 2 — Feature branch check (only if currently on `dev`)
+## Step 2 — Confirm target branch
 
-Show the user a brief summary of the pending changes (`git diff --stat HEAD`), then use the `AskUserQuestion` tool to present a popup with:
+Show the user a brief summary of the pending changes (`git diff --stat HEAD`), then use the `AskUserQuestion` tool to present a popup.
+
+**If currently on `dev`:**
 
 - **Question:** "Where should these changes land?"
 - **Option 1 (default):** label `"Continue on dev"`, description `"Commit directly to the dev branch"`
 - **Option 2:** label `"Create a new branch"`, description `"You will be prompted for the branch name"`
 
-**If the user picks "Continue on dev":** continue to Step 3 (treating `dev` as the target branch).
+If the user picks **"Continue on dev":** continue to Step 3.
 
-**If the user picks "Create a new branch":** use `AskUserQuestion` again to ask for the branch name:
+If the user picks **"Create a new branch":** use `AskUserQuestion` again to ask for the branch name:
 - **Question:** "Enter a branch name (kebab-case, e.g. feature/events-fix)"
 - **Option 1:** `"feature/my-changes"` — they will likely choose Other and type their own name
 
 Take the name they provide (or their Other input), run `git checkout -b <name>`, report the new branch name, and continue to Step 3.
+
+**If currently on a feature branch (not `dev` or `main`):**
+
+- **Question:** "Where should these changes land?"
+- **Option 1 (default):** label `"Stay on <branch-name>"`, description `"Commit to the current feature branch"`
+- **Option 2:** label `"Move to dev"`, description `"Stash changes, switch to dev, and commit there instead"`
+
+If the user picks **"Stay on <branch-name>":** continue to Step 3.
+
+If the user picks **"Move to dev":**
+1. Run `git stash push -m "fenb-commit: moving changes to dev"`
+2. Run `git checkout dev`
+3. Run `git stash pop`
+4. Report that changes have been moved to `dev`, then continue to Step 3 (targeting `dev`).
 
 ---
 

@@ -1,4 +1,4 @@
 ---
 title: "Événements & Calendrier"
-hide_page_header: true
+description: "Calendrier de la saison 2025–2026"
 ---
