@@ -3,7 +3,9 @@
     "allow": [
       "Bash(git *)",
       "Bash(make *)",
-      "Bash(npx pagefind *)"
+      "Bash(npx pagefind *)",
+      "Edit(/home/edjamer/Documents/GitHub/hugo-testing/*)",
+      "Write(/home/edjamer/Documents/GitHub/hugo-testing/*)"
     ]
   }
 }
