@@ -29,6 +29,18 @@ Items that need follow-up — kept current as pages are built and content is add
 
 - [ ] **Individual policy PDF downloads** — add a download link for each policy on both the individual policy pages and the policies-and-reports list. Plan: use `md-to-pdf` npm package to generate PDFs from source markdown, store in `static/docs/policies/`. See `plans/policy-pdf-download.md`.
 
+## Project skills
+
+Test each project skill end-to-end at least once to verify it works correctly.
+
+| Skill | Status | Notes |
+|---|---|---|
+| `/fenb-commit` | ✅ Tested | |
+| `/fenb-release` | ✅ Tested | |
+| `/fenb-new-news` | ❌ Untested | |
+| `/fenb-new-page` | ❌ Untested | |
+| `/fenb-season-rollover` | ❌ Untested | |
+
 ## Events data
 
 - [ ] **Season rollover (archive pattern)** — when a new fencing season begins, move the outgoing `fenb-1/data/events.yaml` to `fenb-1/data/events_archive/YYYY-YYYY.yaml` (e.g. `2025-2026.yaml`) before starting the new season file. No layout changes needed at that point. See `plans/events-data-archive.md` for the full plan including how to build a Past Events page when desired.

@@ -3,7 +3,10 @@
     "allow": [
       "Bash(git *)",
       "Bash(make *)",
-      "Bash(npx pagefind *)"
+      "Bash(npx pagefind *)",
+      "Bash(cd *)",
+      "Bash(find *)",
+      "Bash(gh *)"
     ]
   }
 }
