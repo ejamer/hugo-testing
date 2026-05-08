@@ -7,8 +7,8 @@
       "Bash(cd *)",
       "Bash(find *)",
       "Bash(gh *)",
-      "Edit(/home/edjamer/Documents/GitHub/hugo-testing/*)",
-      "Write(/home/edjamer/Documents/GitHub/hugo-testing/*)"
+      "Edit(/home/edjamer/Documents/GitHub/hugo-testing/**)",
+      "Write(/home/edjamer/Documents/GitHub/hugo-testing/**)"
     ]
   }
 }
