@@ -40,7 +40,7 @@ Test each project skill end-to-end at least once to verify it works correctly.
 | `/fenb-new-news` | ❌ Untested | |
 | `/fenb-new-page` | ❌ Untested | |
 | `/fenb-season-rollover` | ❌ Untested | |
-| `/fenb-merge-features` | ❌ Untested | |
+| `/fenb-merge-features` | ✅ Tested | PR number bug found and fixed during first run |
 
 ## Code quality
 
