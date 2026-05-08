@@ -127,12 +127,12 @@ Each category drives three visual elements: the date badge on the event card, th
 
 ```yaml
 cascade:
-  - _target:
+  - target:
       kind: page
     page_header_uses_section: true
 ```
 
-`site-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description`. The `_target: kind: page` scoping leaves the section list page unaffected.
+`site-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description`. The `target: kind: page` scoping leaves the section list page unaffected.
 
 **Suppress the band** — if a layout provides its own page header inside `main`, set `hide_page_header: true` in the section's `_index.md` front matter to prevent `site-header.html` from rendering a duplicate.
 

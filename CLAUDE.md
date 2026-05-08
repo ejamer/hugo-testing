@@ -9,12 +9,29 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - **`README.md`** — site structure, file layout, and how to add/update each content type (news, events, clubs). Read it when starting work on a new section or when unsure about data schemas.
 - **`STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colour reference. Read it before implementing any new visual element or content type.
 - **`TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
+- **`plans/`** — detailed implementation plans for multi-session features. Files here are referenced from TODO.md items when a task is too detailed for the checklist itself. Read the relevant plan file before starting any TODO item that links to one.
 
 ## Outstanding TODOs
 
 **At the start of every session, read `TODO.md`** in the repo root. Review each open item and flag to the user if any work in the session addresses or alters an item.
 
 **When creating or modifying content**, check whether any new placeholder links, missing pages, or deferred decisions arise. If so, add a `- [ ]` entry to `TODO.md` under the relevant section before finishing. Mark items `- [x]` (and note the fix) when they are resolved.
+
+## Claude Code skills
+
+Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the Claude Code CLI.
+
+**All project-specific skills must use the `fenb-` prefix.** This keeps them distinct from global Claude Code skills when browsing with tab-completion or searching by name.
+
+| Skill | What it does |
+|---|---|
+| `/fenb-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
+| `/fenb-new-news` | Create a bilingual news article with correct filenames and front matter |
+| `/fenb-new-page` | Create a new bilingual content page pair |
+| `/fenb-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
+| `/fenb-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
+
+When adding a new skill, name the file `fenb-{name}.md` in `.claude/commands/`.
 
 ## Development workflow
 
@@ -26,8 +43,11 @@ Key rules:
 - **Feature branches** — cut from `dev`, PR back into `dev` when done, then delete.
 - **Release** — PR from `dev` into `main`.
 
-Dev server (run from `fenb-1/`): `/snap/bin/hugo server`
-Production build: `/snap/bin/hugo --environment production && npx pagefind --site public`
+Dev server: `make serve`
+Production build: `make build-prod`
+Clean build artifacts: `make clean`
+
+All `make` commands run from the repo root.
 
 ## Key conventions
 

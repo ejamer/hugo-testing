@@ -33,7 +33,7 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 |------|--------|
 | [DEVELOPMENT.md](DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
 | [STYLE_GUIDE.md](STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
-| [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code |
+| [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code; lists available `/fenb-*` skills |
 | [TODO.md](TODO.md) | Outstanding items |
 
 ---
@@ -325,7 +325,7 @@ If the section has single-page posts and you want the page header band to show t
 
 ```yaml
 cascade:
-  - _target:
+  - target:
       kind: page
     page_header_uses_section: true
 ```
