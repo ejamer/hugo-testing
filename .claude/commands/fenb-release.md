@@ -45,10 +45,18 @@ Run through this checklist in order, pausing to report the result of each step b
 
    If the `gh` command fails, pop the stash (if one was taken) before stopping and report the error.
 
-   On success, pop the stash (if one was taken), then show the following as plain text (not a code block):
+   On success, capture the PR URL from the command output. Then use the `AskUserQuestion` tool with:
+   - **Question:** "PR created. Merge it now?"
+   - **Option 1:** label `"Merge now"`, description `"Merge the PR into main immediately (regular merge commit, dev branch kept)"`
+   - **Option 2:** label `"Leave open"`, description `"Leave the PR open to review or merge later in GitHub"`
+
+   If the user picks **"Merge now"**: run `script -q -c "gh pr merge --merge --body ''" /dev/null` to merge using a regular merge commit. Never use `--delete-branch` — `dev` is the permanent development branch. Report success or failure.
+
+   Pop the stash (if one was taken), then show the following as plain text (not a code block):
 
    ┌─ Release Summary ────────────────────────────
    │  PR:      <PR URL>
    │  Commits: <N commits from git log main..dev --oneline | wc -l>
    │  Target:  dev → main
+   │  Status:  Merged ✓  (or "Open — merge when ready")
    └─────────────────────────────────────────────
