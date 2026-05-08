@@ -36,13 +36,7 @@
 {{/* ── UPCOMING EVENTS ──────────────────────────────────── */}}
 <section class="fenb-section fenb-events-section" id="fenb-events">
   <div class="fenb-container">
-    <div class="fenb-section-header">
-      <div>
-        <span class="fenb-section-label">{{ i18n "section_label_events" }}</span>
-        <h2 class="fenb-section-title">{{ i18n "section_title_events" }}</h2>
-      </div>
-      <a href="{{ "/events/" | relLangURL }}" class="fenb-see-all">{{ i18n "view_all_events" }} &rarr;</a>
-    </div>
+    {{ partial "section-header.html" (dict "label" (i18n "section_label_events") "title" (i18n "section_title_events") "linkURL" "/events/" "linkText" (i18n "view_all_events")) }}
     <div class="fenb-events-grid">
       {{/* ISO 8601 strings are lexicographically sortable, so string "ge"/"lt" comparisons work. */}}
       {{ $today    := now.Format "2006-01-02" }}
@@ -55,33 +49,7 @@
         {{ end }}
       {{ end }}
       {{ range $toShow }}
-      {{ $dateObj := time .date }}
-      <div class="fenb-event-card fenb-event-card--{{ .category }}">
-        <div class="fenb-event-date-badge">
-          <span class="fenb-event-day">{{ $dateObj.Format "02" }}</span>
-          {{/* Build the i18n key dynamically, e.g. "month_Jan" → "janv." in French.
-               Falls back to Go's English abbreviation if the key is missing. */}}
-          <span class="fenb-event-month">{{ i18n (printf "month_%s" ($dateObj.Format "Jan")) | default ($dateObj.Format "Jan") }}</span>
-          <span class="fenb-event-year">{{ $dateObj.Format "2006" }}</span>
-        </div>
-        <div class="fenb-event-body">
-          {{/* i18n key matches the category value (e.g. "competition", "training").
-               Falls back to category_label from the YAML if the key is absent. */}}
-          <span class="fenb-tag fenb-tag--{{ .category }}">{{ i18n .category | default .category_label }}</span>
-          <h3 class="fenb-event-title">{{ .title }}</h3>
-          <p class="fenb-event-date-range">{{ .display_date }}</p>
-          <p class="fenb-event-meta">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            {{ .venue }}, {{ .location }}
-          </p>
-          {{ if .details_url }}
-          <a class="fenb-event-details-link" href="{{ .details_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>
-          {{ end }}
-          {{ if .registration_url }}
-          <a class="fenb-event-register-link" href="{{ .registration_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>
-          {{ end }}
-        </div>
-      </div>
+      {{ partial "event-card.html" . }}
       {{ end }}
     </div>
   </div>
@@ -92,27 +60,10 @@
 {{ if $news }}
 <section class="fenb-section fenb-news-section">
   <div class="fenb-container">
-    <div class="fenb-section-header">
-      <div>
-        <span class="fenb-section-label">{{ i18n "section_label_news" }}</span>
-        <h2 class="fenb-section-title">{{ i18n "section_title_news" }}</h2>
-      </div>
-      <a href="{{ "/news/" | relLangURL }}" class="fenb-see-all">{{ i18n "view_all_news" }} &rarr;</a>
-    </div>
+    {{ partial "section-header.html" (dict "label" (i18n "section_label_news") "title" (i18n "section_title_news") "linkURL" "/news/" "linkText" (i18n "view_all_news")) }}
     <div class="fenb-news-grid">
       {{ range first 3 $news }}
-      <article class="fenb-news-card">
-        <div class="fenb-news-card-top{{ with .Params.category }} fenb-news-card-top--{{ . | urlize }}{{ end }}"></div>
-        <div class="fenb-news-card-body">
-          <div class="fenb-news-card-meta">
-            {{ with .Params.category }}<span class="fenb-news-category fenb-news-category--{{ . | urlize }}">{{ . }}</span>{{ end }}
-            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
-          </div>
-          <h3 class="fenb-news-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-          <p class="fenb-news-excerpt">{{ .Summary | plainify | truncate 130 }}</p>
-          <a href="{{ .RelPermalink }}" class="fenb-read-more">{{ i18n "read_more" }} &rarr;</a>
-        </div>
-      </article>
+      {{ partial "news-card.html" (dict "page" . "heading" "h3" "truncate" 130) }}
       {{ end }}
     </div>
   </div>
@@ -123,72 +74,28 @@
 <section class="fenb-programs-section">
   <div class="fenb-container">
     <div class="fenb-programs-grid">
-      <a href="{{ "/clubs/" | relLangURL }}" class="fenb-program-card">
+      {{ range hugo.Data.programs.programs }}
+      <a href="{{ .url | relLangURL }}" class="fenb-program-card{{ if .accent }} fenb-program-card--accent{{ end }}">
         <div class="fenb-program-icon">
+          {{ if eq .id "clubs" }}
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-        </div>
-        <h3>{{ i18n "program_clubs_title" }}</h3>
-        <p>{{ i18n "program_clubs_desc" }}</p>
-        <span class="fenb-program-cta">{{ i18n "program_clubs_cta" }} &rarr;</span>
-      </a>
-      <a href="{{ "/events/" | relLangURL }}" class="fenb-program-card">
-        <div class="fenb-program-icon">
+          {{ else if eq .id "compete" }}
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        </div>
-        <h3>{{ i18n "program_compete_title" }}</h3>
-        <p>{{ i18n "program_compete_desc" }}</p>
-        <span class="fenb-program-cta">{{ i18n "program_compete_cta" }} &rarr;</span>
-      </a>
-      <a href="{{ "/programs/" | relLangURL }}" class="fenb-program-card">
-        <div class="fenb-program-icon">
+          {{ else if eq .id "dev" }}
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-        </div>
-        <h3>{{ i18n "program_dev_title" }}</h3>
-        <p>{{ i18n "program_dev_desc" }}</p>
-        <span class="fenb-program-cta">{{ i18n "program_dev_cta" }} &rarr;</span>
-      </a>
-      <a href="{{ "/join/" | relLangURL }}" class="fenb-program-card fenb-program-card--accent">
-        <div class="fenb-program-icon">
+          {{ else if eq .id "join" }}
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+          {{ end }}
         </div>
-        <h3>{{ i18n "program_join_title" }}</h3>
-        <p>{{ i18n "program_join_desc" }}</p>
-        <span class="fenb-program-cta">{{ i18n "program_join_cta" }} &rarr;</span>
+        <h3>{{ i18n (printf "program_%s_title" .id) }}</h3>
+        <p>{{ i18n (printf "program_%s_desc" .id) }}</p>
+        <span class="fenb-program-cta">{{ i18n (printf "program_%s_cta" .id) }} &rarr;</span>
       </a>
+      {{ end }}
     </div>
   </div>
 </section>
 
-<script>
-(function () {
-  var slider = document.getElementById('fenb-hero-slider');
-  if (!slider) return;
-  var slides = slider.querySelectorAll('.fenb-hero-slide');
-  if (slides.length < 2) return;
-  var current = 0;
-  var interval = 5000;
-  var timer;
-
-  function show(index) {
-    slides[current].classList.remove('is-active');
-    current = (index + slides.length) % slides.length;
-    slides[current].classList.add('is-active');
-  }
-
-  function advance() { show(current + 1); }
-
-  function startTimer() { timer = setInterval(advance, interval); }
-  function resetTimer() { clearInterval(timer); startTimer(); }
-
-  slider.querySelector('.fenb-hero-slider-btn--prev').addEventListener('click', function () {
-    show(current - 1); resetTimer();
-  });
-  slider.querySelector('.fenb-hero-slider-btn--next').addEventListener('click', function () {
-    show(current + 1); resetTimer();
-  });
-
-  startTimer();
-})();
-</script>
+<script src="{{ "js/hero-slider.js" | absURL }}"></script>
 
 {{ end }}

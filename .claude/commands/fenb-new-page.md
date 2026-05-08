@@ -5,7 +5,8 @@ Ask the user for:
 2. Page slug (e.g. `coach-development`)
 3. English title
 4. French title
-5. Whether the layout provides its own page header inside `main` — if yes, `hide_page_header: true` is needed
+5. Optional subtitle for the page header band (set as `description:` in front matter)
+6. Whether the layout renders its own **dynamic** header (e.g. one with live data like a record count) — only if yes is `hide_page_header: true` needed
 
 Then:
 1. Create `fenb-1/content/{section}/{slug}.en.md` with front matter:
@@ -13,7 +14,8 @@ Then:
    ---
    title: "{English title}"
    translationKey: "{slug}"
-   # hide_page_header: true   ← uncomment if layout renders its own header
+   # description: "{subtitle}"       ← set for a static page header subtitle
+   # hide_page_header: true          ← only if layout renders its own dynamic header
    ---
    ```
 2. Create `fenb-1/content/{section}/{slug}.fr.md` with the same structure and the French title.

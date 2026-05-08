@@ -1,0 +1,10 @@
+programs:
+  - id: clubs
+    url: /clubs/
+  - id: compete
+    url: /events/
+  - id: dev
+    url: /programs/
+  - id: join
+    url: /join/
+    accent: true

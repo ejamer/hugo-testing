@@ -69,10 +69,14 @@ Always get user approval on the proposed changes before editing any docs.
 ## Events data schema and season archive
 
 `fenb-1/data/events.yaml` holds the current season. Required top-level fields:
-- `season` — display label with en-dash (e.g. `"2025–2026"`); shown in the schedule page dropdown and the page subtitle
+- `season` — display label with en-dash (e.g. `"2025–2026"`); drives the schedule page season dropdown label
 - `events` — list of event objects (see README.md for the full field schema)
 
+The events calendar page subtitle (shown in the page header band) is set separately in `content/events/_index.md` and `content/events/_index.fr.md` via `description:` front matter — update both files at the start of each season.
+
 **Season rollover:** move `data/events.yaml` → `data/events_archive/YYYY-YYYY.yaml` (regular hyphen in the filename), then create a fresh `data/events.yaml` for the new season. The schedule page at `/events/schedule/` picks up all files in `data/events_archive/` automatically via Hugo's data folder — no layout or template changes needed.
+
+Also update the events calendar page subtitle in `content/events/_index.md` and `content/events/_index.fr.md` to match the new season label — e.g. `description: "2026–2027 season schedule"`. These files drive the subtitle shown in the page header band.
 
 **Schedule page filter pattern:** `/events/schedule/` uses SSR + JS visibility toggling. Hugo renders every event with `data-season` and `data-category` HTML attributes; `static/js/events-schedule.js` shows/hides them in response to the season dropdown and category filter buttons. Print always reflects the current filtered state. Prefer this pattern over JS-only rendering for any future filterable list page — it gives a no-JS fallback and print support for free.
 
@@ -148,6 +152,8 @@ cascade:
 
 `site-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description` when set. The `_target: kind: page` scoping means the section's list page is unaffected.
 
-If a layout provides its own page header inside `main`, set `hide_page_header: true` in the section's front matter to prevent `site-header.html` from also rendering one.
+**Preferred approach for a subtitle:** set `description:` in the section's `_index.md` / `_index.fr.md` front matter. The partial already reads `.Params.description` and renders it as the page subtitle — no template changes needed.
+
+Only use `hide_page_header: true` when the layout must render its own header with **dynamic content** (e.g. the clubs page, which shows the live club count in the subtitle). Pair it with an explicit `<header class="fenb-page-header">` block in the layout. Never use it simply to add a static subtitle — use `description:` instead.
 
 **When a user says "use the same header as page X"**, confirm whether they mean the *content* of the band (which title is shown) or just the *style* (height, colours) — they look similar in words but require completely different fixes.

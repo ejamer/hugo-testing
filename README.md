@@ -20,10 +20,10 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 |-------|--------|
 | Static site generator | [Hugo](https://gohugo.io) v0.161+ (extended) |
 | Theme | [Ananke](https://github.com/theNewDynamic/gohugo-theme-ananke) (submodule) |
-| CSS | Custom (`fenb-1/assets/ananke/css/fenb.css`) bundled into Ananke's pipeline |
+| CSS | Nine scoped files in `fenb-1/assets/ananke/css/fenb-*.css`, merged by Ananke's `resources.Concat` pipeline |
 | i18n | Hugo built-in — English (`en-CA`) · French (`fr-CA`) |
 | Content | Markdown in `fenb-1/content/` |
-| Structured data | YAML in `fenb-1/data/` (events, clubs, board, policies) |
+| Structured data | YAML in `fenb-1/data/` (events, clubs, board, programs, policies, hero slides) |
 
 ---
 
@@ -52,7 +52,15 @@ hugo-testing/
     ├── hugo.toml           Site config, languages, nav menus
     ├── assets/
     │   └── ananke/css/
-    │       └── fenb.css    All custom styles (bundled by Ananke)
+    │       ├── fenb-base.css       Variables, reset, shared utilities, buttons
+    │       ├── fenb-nav.css        Nav, search overlay, page header band
+    │       ├── fenb-hero.css       Hero section and animations
+    │       ├── fenb-events.css     Event cards, tags, calendar page
+    │       ├── fenb-news.css       News cards, article layout, 404 page
+    │       ├── fenb-clubs.css      Programs quick-links, clubs page
+    │       ├── fenb-about.css      About page, policies page
+    │       ├── fenb-schedule.css   Season schedule page
+    │       └── fenb-responsive.css All breakpoints and print query (loaded last)
     ├── content/            Section indexes: _index.md (EN) + _index.fr.md (FR)
     │   │                   Article files: {name}.en.md (EN) + {name}.fr.md (FR)
     │   ├── _index.md       Homepage (EN)
@@ -86,7 +94,8 @@ hugo-testing/
     │   ├── events.yaml        Current season's event calendar (drives homepage + /events/)
     │   ├── events_archive/    Past seasons — moved here at season rollover (see plans/)
     │   ├── clubs.yaml         Member club data (drives /clubs/ page)
-    │   ├── board.yaml         Board of directors and executive (drives /about/ page)
+    │   ├── board.yaml         Board of directors; also holds founder photo info and affiliations (drives /about/)
+    │   ├── programs.yaml      Homepage quick-link cards (URLs + accent flag for the join card)
     │   ├── policies.yaml      Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
     │   └── hero_slides.yaml   Hero carousel image list (drives homepage slider)
     ├── i18n/
@@ -107,9 +116,12 @@ hugo-testing/
     │   │   └── schedule.html Season schedule (server-rendered list + filter sidebar)
     │   ├── news/
     │   │   ├── list.html   News index (card grid, paginates recursively across year folders)
-    │   │   └── single.html News article (3-col: empty left | article | recent-news sidebar)
+    │   │   └── single.html News article (2-col: article | recent-news sidebar)
     │   └── partials/
-    │       └── site-header.html  Sticky nav, search overlay, language switcher, page header band
+    │       ├── site-header.html  Sticky nav, search overlay, language switcher, page header band
+    │       ├── event-card.html   Single event card — accepts a YAML event object as context
+    │       ├── news-card.html    Single news card — call with (dict "page" . "heading" "h2" "truncate" 160)
+    │       └── section-header.html  Section label + h2 + optional "see all" link — call with (dict "label" … "title" … "linkURL" … "linkText" …)
     └── static/
         ├── docs/
         │   ├── policy-manual-en.pdf / policy-manual-fr.pdf
@@ -117,11 +129,15 @@ hugo-testing/
         │   ├── strategic-plan-en.pdf / strategic-plan-fr.pdf
         │   ├── agm-minutes/    2012.pdf … YYYY.pdf (one per season start year)
         │   └── archived/       Previous combined policy manual — stored, not linked
-        └── images/
-            ├── logo-color.svg    Used on light backgrounds
-            ├── logo-white.svg    Used on dark/teal backgrounds (hero, etc.)
-            ├── clubs/            Member club logos (club-logo-{ID}.{ext})
-            └── hero/             Hero carousel images (hero1.jpg … heroN.jpg)
+        ├── images/
+        │   ├── logo-color.svg    Used on light backgrounds
+        │   ├── logo-white.svg    Used on dark/teal backgrounds (hero, etc.)
+        │   ├── clubs/            Member club logos (club-logo-{ID}.{ext})
+        │   └── hero/             Hero carousel images (hero1.jpg … heroN.jpg)
+        └── js/
+            ├── hero-slider.js       Homepage hero carousel (auto-advance + prev/next)
+            ├── events-calendar.js   Events calendar page (JS month grid)
+            └── events-schedule.js   Season schedule page (season toggle + category filters)
 ```
 
 ---
@@ -129,6 +145,8 @@ hugo-testing/
 ## Adding content
 
 ### New news post
+
+> **Skill available:** run `/fenb-new-news` in Claude Code — it prompts for date, slug, titles, category, and summaries, then creates both language files with correct front matter and filenames.
 
 **File naming:** `{mon}-{dd}-{title}.{lang}.md` inside the year subfolder — see [STYLE_GUIDE.md](STYLE_GUIDE.md) for the full naming convention.
 
@@ -217,6 +235,8 @@ The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ to
 
 #### Season rollover
 
+> **Skill available:** run `/fenb-season-rollover` in Claude Code — it verifies the outgoing season label, archives `events.yaml`, creates a fresh one, and updates the events calendar page subtitles.
+
 At the end of each season (typically late August):
 
 1. Move `data/events.yaml` to `data/events_archive/YYYY-YYYY.yaml` — use a regular hyphen in the filename (e.g. `2025-2026.yaml`).
@@ -224,24 +244,47 @@ At the end of each season (typically late August):
 
 The season schedule page at `/events/schedule/` automatically adds a dropdown entry for the archived season on the next build — no layout or template changes needed.
 
-The **`season` field** at the top of `events.yaml` (e.g. `season: "2025–2026"`) is required — it drives the schedule page dropdown label and the page subtitle.
+The **`season` field** at the top of `events.yaml` (e.g. `season: "2025–2026"`) is required — it drives the schedule page season dropdown label.
+
+Also update the events calendar page subtitle in `content/events/_index.md` and `content/events/_index.fr.md` at rollover time:
+```yaml
+# _index.md
+description: "2026–2027 season schedule"
+
+# _index.fr.md
+description: "Calendrier de la saison 2026–2027"
+```
 
 ---
 
 ### Board of Directors
 
-Edit `data/board.yaml`. Each member entry:
+Edit `data/board.yaml`. Top-level keys:
 
-```yaml
-- name: "Full Name"
-  role_en: "President"       # displayed in English
-  role_fr: "Présidente"      # displayed in French
-```
-
-- The `season` field at the top of the file (e.g. `"2025–2026"`) appears as a subtitle in the sidebar card on the About page — update it at the start of each season.
-- `contact` is the board inquiry email shown on the About page.
-- Members are displayed in the order they appear in the file.
-- Add `card_color` to any member whose avatar and role label should use a non-default colour. Omit the field for standard directors (navy). Supported values: `teal`, `crimson`.
+- `season` — display label (e.g. `"2025–2026"`); update at the start of each season
+- `contact` — board inquiry email shown on the About contact section
+- `founder` — founder photo and bilingual caption shown in the history section:
+  ```yaml
+  founder:
+    name: "Alfred Knappe"
+    photo: "/images/alfred-knappe.png"
+    caption_en: "Alfred Knappe — founding president, 1969"
+    caption_fr: "Alfred Knappe — président fondateur, 1969"
+  ```
+- `affiliations` — provincial/national affiliations shown in the About sidebar:
+  ```yaml
+  affiliations:
+    - name_en: "Canadian Fencing Federation"
+      name_fr: "Fédération canadienne d'escrime"
+      url: "https://fencing.ca/"
+  ```
+- `members` — board member list. Each entry:
+  ```yaml
+  - name: "Full Name"
+    role_en: "President"       # displayed in English
+    role_fr: "Présidente"      # displayed in French
+  ```
+  Members are displayed in the order they appear in the file. Add `card_color: teal` or `card_color: crimson` to any member whose avatar and role label should use a non-default colour (omit for standard directors, which use navy).
 
 ---
 
@@ -316,10 +359,13 @@ Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advan
 
 ### New section page
 
+> **Skill available:** run `/fenb-new-page` in Claude Code — it prompts for section, slug, titles, and an optional subtitle, then creates both language files with correct front matter.
+
 1. Create `layouts/{section}/list.html` defining the `main` block
 2. Create `content/{section}/_index.md` and `content/{section}/_index.fr.md`
-3. Set `hide_page_header: true` in both front matter files if the layout provides its own page header inside `main` (prevents doubling up with `site-header.html`)
-4. Add i18n keys for any new UI strings to both `en.yaml` and `fr.yaml`
+   - Set `description:` in both files for a subtitle in the page header band (the partial renders it automatically)
+   - Only add `hide_page_header: true` if the layout needs to render a **dynamic** subtitle itself (e.g. one computed from live data)
+3. Add i18n keys for any new UI strings to both `en.yaml` and `fr.yaml`
 
 If the section has single-page posts and you want the page header band to show the **section title** rather than each page's own title, add to the section `_index.md`:
 
