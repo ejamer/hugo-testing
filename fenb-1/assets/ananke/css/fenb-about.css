@@ -349,7 +349,7 @@
 
 /* ── Dark mode: policy links ─────────────────────── */
 [data-theme="dark"] .fenb-policy-link { color: var(--teal-light); border-color: var(--teal-light); }
-[data-theme="dark"] .fenb-policy-link:hover { background: var(--teal-light); color: var(--white); }
+[data-theme="dark"] .fenb-policy-link:hover { background: var(--teal-light); color: #fff; }
 
 /* ── Dark mode: board cards ──────────────────────── */
 [data-theme="dark"] .fenb-board-card-avatar { color: #fff; }

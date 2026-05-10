@@ -85,7 +85,7 @@ The toggle sets `data-theme="dark"` on `<html>`; a `[data-theme="dark"]` block i
 
 **Badge/pill swap:** light mode uses pale-tint bg + brand-colour text. In dark mode the pale tints are near-black, so invert to full brand-colour bg + `#fff` text (`var(--teal)` bg + white = ~7.5:1 ✓).
 
-**Hardcoded values to watch:** semi-transparent darks (`rgba(0,0,0,0.05)` borders) become invisible on dark surfaces — use `var(--light-gray)` instead. Tachyons utility classes like `bg-near-white` hardcode a hex value that ignores CSS variables; override them explicitly in `[data-theme="dark"]`.
+**Hardcoded values to watch:** semi-transparent darks (`rgba(0,0,0,0.05)` borders) become invisible on dark surfaces — use `var(--light-gray)` instead. Tachyons utility classes like `bg-near-white` hardcode a hex value that ignores CSS variables; override them explicitly in `[data-theme="dark"]`. Conversely, use `#fff` (not `var(--white)`) for text on coloured backgrounds — `--white` remaps to `#141f1d` in dark mode, so `color: var(--white)` on a teal button silently produces dark text.
 
 **Rule location:** add `[data-theme="dark"]` overrides at the bottom of the same CSS file as the component, not in a separate file.
 

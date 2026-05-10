@@ -367,6 +367,6 @@
 [data-theme="dark"] .fenb-tag--announcement { background: var(--teal);          color: #fff; }
 
 [data-theme="dark"] .fenb-cal-btn { border-color: var(--teal-light); color: var(--teal-light); }
-[data-theme="dark"] .fenb-cal-btn:hover { background: var(--teal-light); color: var(--white); }
+[data-theme="dark"] .fenb-cal-btn:hover { background: var(--teal-light); color: #fff; }
 [data-theme="dark"] .fenb-cal-schedule-link { color: var(--teal-light); }
 [data-theme="dark"] .fenb-cal-select { border-color: var(--teal-light); }
