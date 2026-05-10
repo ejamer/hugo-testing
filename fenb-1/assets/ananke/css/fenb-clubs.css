@@ -261,3 +261,7 @@
 .fenb-clubs-cta-action {
   margin-top: 0.5rem;
 }
+
+/* ── Dark mode ────────────────────────────────── */
+[data-theme="dark"] .fenb-club-btn-outline { color: var(--teal-light); border-color: var(--teal-light); }
+[data-theme="dark"] .fenb-club-btn-outline:hover { background: var(--teal-pale); border-color: var(--teal-light); color: var(--teal-light); }

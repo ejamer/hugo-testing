@@ -313,3 +313,23 @@
 
 /* ── News index list page ──────────────────────── */
 .fenb-news-index-section { background: var(--off-white); }
+
+/* ── Dark mode ────────────────────────────────── */
+[data-theme="dark"] .fenb-news-category                          { background: var(--teal);        color: #fff; }
+[data-theme="dark"] .fenb-news-category--announcement,
+[data-theme="dark"] .fenb-news-category--annonce                { background: var(--crimson);      color: #fff; }
+[data-theme="dark"] .fenb-news-category--results,
+[data-theme="dark"] .fenb-news-category--resultats              { background: var(--teal);         color: #fff; }
+[data-theme="dark"] .fenb-news-category--registration,
+[data-theme="dark"] .fenb-news-category--inscription            { background: var(--cat-training); color: #fff; }
+[data-theme="dark"] .fenb-news-category--community,
+[data-theme="dark"] .fenb-news-category--communaute             { background: var(--cat-national); color: #fff; }
+
+[data-theme="dark"] .fenb-404-code { color: var(--text-dark); }
+
+[data-theme="dark"] .fenb-sidebar-events-link,
+[data-theme="dark"] .fenb-sidebar-news-item.is-current a,
+[data-theme="dark"] .fenb-sidebar-news-item a:hover { color: var(--teal-light); }
+[data-theme="dark"] .fenb-article-body a { color: var(--teal-light); }
+[data-theme="dark"] .fenb-article-back a { color: var(--teal-light); }
+[data-theme="dark"] .fenb-read-more { color: var(--teal-light); }

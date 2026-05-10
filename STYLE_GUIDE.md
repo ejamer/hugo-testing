@@ -76,6 +76,21 @@ background: var(--off-white);
 
 ---
 
+## Dark mode
+
+The toggle sets `data-theme="dark"` on `<html>`; a `[data-theme="dark"]` block in `fenb-base.css` overrides the semantic background, text, shadow, and pale-tint variables. Brand colours (`--teal`, `--crimson`, `--navy`) are unchanged, but two behave differently enough to note:
+
+- **`--teal-light`** resolves to `#4dbfad` in dark mode (~7.7:1 on dark bg). **Use it instead of `var(--teal)` for any teal text or border in a `[data-theme="dark"]` rule** — `var(--teal)` (#006156) is ~2.5:1 and fails contrast.
+- **`--teal-pale`** resolves to `#1e3632` — a dark hover background, not a visible tint.
+
+**Badge/pill swap:** light mode uses pale-tint bg + brand-colour text. In dark mode the pale tints are near-black, so invert to full brand-colour bg + `#fff` text (`var(--teal)` bg + white = ~7.5:1 ✓).
+
+**Hardcoded values to watch:** semi-transparent darks (`rgba(0,0,0,0.05)` borders) become invisible on dark surfaces — use `var(--light-gray)` instead. Tachyons utility classes like `bg-near-white` hardcode a hex value that ignores CSS variables; override them explicitly in `[data-theme="dark"]`.
+
+**Rule location:** add `[data-theme="dark"]` overrides at the bottom of the same CSS file as the component, not in a separate file.
+
+---
+
 ## i18n — UI text
 
 Never hardcode display text in a layout. Add keys to **both** `i18n/en.yaml` and `i18n/fr.yaml`. Use `{{ i18n "key" }}` in templates. For strings with dynamic values: `{{ i18n "key" (dict "Var" value) }}` with `{{ .Var }}` in the YAML value.

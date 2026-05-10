@@ -46,6 +46,27 @@
   --crimson-rgb:        121, 36, 47;
 }
 
+/* ── Dark mode overrides ──────────────────────── */
+[data-theme="dark"] {
+  --white:              #141f1d;
+  --off-white:          #1a2825;
+  --light-gray:         #2c3c38;
+  --text-dark:          #e8f0ee;
+  --text-body:          #bdd4cf;
+  --text-muted:         #87a09a;
+  --teal-pale:          #1e3632;
+  --teal-light:         #4dbfad;
+  --crimson-pale:       #271214;
+  --shadow-xs:          0 1px 4px rgba(0,0,0,0.4);
+  --shadow-sm:          0 2px 10px rgba(0,0,0,0.4);
+  --shadow-md:          0 6px 24px rgba(0,0,0,0.5);
+  --shadow-lg:          0 12px 48px rgba(0,0,0,0.6);
+  --cat-training-pale:  #0d2018;
+  --cat-national-pale:  #0d1828;
+  --cat-clinic-pale:    #121c0c;
+  --cat-meeting-pale:   #1e1e1e;
+}
+
 /* ── Reset / base ─────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -167,5 +188,11 @@ main.pb7 { padding-bottom: 0 !important; }
   color: #fff;
 }
 
+/* ── Dark mode: shared utilities ──────────────── */
+[data-theme="dark"] .fenb-section-label { color: var(--teal-light); }
+[data-theme="dark"] .fenb-see-all { color: var(--teal-light); }
+[data-theme="dark"] .fenb-see-all:hover { color: var(--crimson-light); border-color: var(--crimson-light); }
+
 /* ── Ananke background_color_class overrides ──── */
 .bg-fenb-teal { background-color: var(--teal); }
+[data-theme="dark"] .bg-near-white { background-color: var(--white); }
