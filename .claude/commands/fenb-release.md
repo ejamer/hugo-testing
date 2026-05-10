@@ -52,12 +52,7 @@ Run through this checklist in order, pausing to report the result of each step b
 
    If the user picks **"Merge now"**: run `script -q -c "gh pr merge --merge --body ''" /dev/null` to merge using a regular merge commit. Never use `--delete-branch` — `dev` is the permanent development branch. Report success or failure.
 
-   After a successful merge, reset `dev` to match `main` exactly (avoids the merge-commit ping-pong that leaves dev 1 ahead/behind):
-   ```bash
-   git fetch origin
-   git reset --hard origin/main
-   git push --force-with-lease origin dev
-   ```
+   After a successful merge, run `git fetch origin` to update remote refs locally. Do not merge or reset `dev` — GitHub's merge commit will leave `dev` showing "1 behind main" in the UI, but the content is identical and collaborators can use normal `git pull`. It resolves naturally when the next commit lands on `dev`.
 
    Pop the stash (if one was taken), then show the following as plain text (not a code block):
 
