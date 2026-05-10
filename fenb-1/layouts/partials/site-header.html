@@ -25,22 +25,56 @@
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </button>
-        <button class="fenb-theme-toggle" id="fenb-theme-toggle" aria-label="Toggle dark mode">
-          <svg class="fenb-theme-icon fenb-theme-icon--sun" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <svg class="fenb-theme-icon fenb-theme-icon--moon" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
+        <div class="fenb-theme-wrap">
+          <button class="fenb-theme-toggle" id="fenb-theme-toggle"
+                  aria-haspopup="menu" aria-expanded="false" aria-label="Theme">
+            <svg class="fenb-theme-icon fenb-theme-icon--sun" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="fenb-theme-icon fenb-theme-icon--moon" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="fenb-theme-icon fenb-theme-icon--system" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </button>
+          <div class="fenb-theme-menu" id="fenb-theme-menu" role="menu" aria-hidden="true">
+            <button class="fenb-theme-option" role="menuitem" data-pref="light">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+              {{ i18n "theme_light" }}
+            </button>
+            <button class="fenb-theme-option" role="menuitem" data-pref="dark">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+              {{ i18n "theme_dark" }}
+            </button>
+            <button class="fenb-theme-option" role="menuitem" data-pref="system">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+              {{ i18n "theme_system" }}
+            </button>
+          </div>
+        </div>
         <div class="fenb-lang-switch">
           {{- /*
             If this page has a direct translation, link to it (preferred: keeps the reader
@@ -99,20 +133,76 @@
       }, { passive: true });
     }
 
-    // Dark mode toggle
+    // Theme selector dropdown
     const themeToggle = document.getElementById('fenb-theme-toggle');
-    function applyTheme(theme) {
-      if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
-        document.documentElement.removeAttribute('data-theme');
-      }
-      localStorage.setItem('fenb-theme', theme);
+    const themeMenu   = document.getElementById('fenb-theme-menu');
+    const sysDark     = window.matchMedia('(prefers-color-scheme: dark)');
+    const iconSun     = themeToggle && themeToggle.querySelector('.fenb-theme-icon--sun');
+    const iconMoon    = themeToggle && themeToggle.querySelector('.fenb-theme-icon--moon');
+    const iconSystem  = themeToggle && themeToggle.querySelector('.fenb-theme-icon--system');
+
+    function applyTheme(pref) {
+      const isDark = pref === 'dark' || (pref === 'system' && sysDark.matches);
+      if (isDark) document.documentElement.setAttribute('data-theme', 'dark');
+      else        document.documentElement.removeAttribute('data-theme');
+      if (iconSun)    iconSun.style.display    = pref === 'light'  ? 'block' : 'none';
+      if (iconMoon)   iconMoon.style.display   = pref === 'dark'   ? 'block' : 'none';
+      if (iconSystem) iconSystem.style.display = pref === 'system' ? 'block' : 'none';
+      if (themeMenu) themeMenu.querySelectorAll('.fenb-theme-option').forEach(function (btn) {
+        btn.classList.toggle('is-active', btn.dataset.pref === pref);
+      });
+      localStorage.setItem('fenb-theme', pref);
     }
-    if (themeToggle) {
+
+    function openThemeMenu() {
+      if (searchOverlay) closeSearch();
+      themeMenu.classList.add('is-open');
+      themeMenu.setAttribute('aria-hidden', 'false');
+      themeToggle.setAttribute('aria-expanded', 'true');
+      const active = themeMenu.querySelector('.fenb-theme-option.is-active') ||
+                     themeMenu.querySelector('.fenb-theme-option');
+      if (active) active.focus();
+    }
+
+    function closeThemeMenu() {
+      themeMenu.classList.remove('is-open');
+      themeMenu.setAttribute('aria-hidden', 'true');
+      themeToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    if (themeToggle && themeMenu) {
+      applyTheme(localStorage.getItem('fenb-theme') || 'system');
+
+      sysDark.addEventListener('change', function () {
+        if ((localStorage.getItem('fenb-theme') || 'system') === 'system') applyTheme('system');
+      });
+
       themeToggle.addEventListener('click', function () {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        applyTheme(isDark ? 'light' : 'dark');
+        themeMenu.classList.contains('is-open') ? closeThemeMenu() : openThemeMenu();
+      });
+
+      themeMenu.querySelectorAll('.fenb-theme-option').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyTheme(btn.dataset.pref);
+          closeThemeMenu();
+          themeToggle.focus();
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (themeMenu.classList.contains('is-open') &&
+            !themeToggle.contains(e.target) &&
+            !themeMenu.contains(e.target)) {
+          closeThemeMenu();
+        }
+      });
+
+      themeMenu.addEventListener('keydown', function (e) {
+        const opts = Array.from(themeMenu.querySelectorAll('.fenb-theme-option'));
+        const idx  = opts.indexOf(document.activeElement);
+        if (e.key === 'Escape') { closeThemeMenu(); themeToggle.focus(); }
+        else if (e.key === 'ArrowDown') { e.preventDefault(); opts[(idx + 1) % opts.length].focus(); }
+        else if (e.key === 'ArrowUp')   { e.preventDefault(); opts[(idx - 1 + opts.length) % opts.length].focus(); }
       });
     }
 
@@ -128,6 +218,7 @@
     }
 
     function openSearch() {
+      closeThemeMenu();
       searchOverlay.classList.add('is-open');
       searchOverlay.setAttribute('aria-hidden', 'false');
       searchBtn.setAttribute('aria-expanded', 'true');

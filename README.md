@@ -131,7 +131,7 @@ hugo-testing/
         │   └── archived/       Previous combined policy manual — stored, not linked
         ├── images/
         │   ├── logo-color.svg    Used on light backgrounds
-        │   ├── logo-white.svg    Used on dark/teal backgrounds (hero, etc.)
+        │   ├── logo-white.svg    Used on dark/teal backgrounds (hero, etc.) and in dark mode nav
         │   ├── clubs/            Member club logos (club-logo-{ID}.{ext})
         │   └── hero/             Hero carousel images (hero1.jpg … heroN.jpg)
         └── js/

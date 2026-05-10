@@ -138,6 +138,11 @@
   transition: transform var(--transition), opacity var(--transition);
 }
 
+/* Theme selector */
+.fenb-theme-wrap {
+  position: relative;
+}
+
 /* Dark mode toggle */
 .fenb-theme-toggle {
   display: flex;
@@ -152,16 +157,58 @@
   transition: background var(--transition), color var(--transition);
   flex-shrink: 0;
 }
-.fenb-theme-toggle:hover {
+.fenb-theme-toggle:hover,
+.fenb-theme-toggle[aria-expanded="true"] {
   background: var(--teal-pale);
   color: var(--teal);
 }
 
-/* Moon shown in light mode; sun shown in dark mode */
-.fenb-theme-icon--sun  { display: none; }
-.fenb-theme-icon--moon { display: block; }
-[data-theme="dark"] .fenb-theme-icon--sun  { display: block; }
-[data-theme="dark"] .fenb-theme-icon--moon { display: none; }
+.fenb-theme-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  padding: 0.25rem;
+  flex-direction: column;
+  min-width: 130px;
+  z-index: 20;
+}
+.fenb-theme-menu.is-open { display: flex; }
+
+.fenb-theme-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-body);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  width: 100%;
+  transition: background var(--transition), color var(--transition);
+}
+.fenb-theme-option:hover {
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+.fenb-theme-option.is-active {
+  color: var(--teal);
+  font-weight: 700;
+}
+
+/* Icons default — JS overrides on init; system icon shown before JS runs */
+.fenb-theme-icon--sun    { display: none; }
+.fenb-theme-icon--moon   { display: none; }
+.fenb-theme-icon--system { display: block; }
 
 /* Search icon button */
 .fenb-search-btn {
@@ -279,4 +326,9 @@
 [data-theme="dark"] .fenb-search-btn:hover,
 [data-theme="dark"] .fenb-search-btn[aria-expanded="true"],
 [data-theme="dark"] .fenb-theme-toggle:hover,
+[data-theme="dark"] .fenb-theme-toggle[aria-expanded="true"],
 [data-theme="dark"] .fenb-search-close:hover { color: var(--teal-light); }
+
+[data-theme="dark"] .fenb-theme-option:hover { color: var(--teal-light); }
+[data-theme="dark"] .fenb-theme-option.is-active { color: var(--teal-light); }
+[data-theme="dark"] #fenb-search .pagefind-ui__result-link:hover { color: var(--teal-light); }
