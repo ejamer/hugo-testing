@@ -1,0 +1,7 @@
+<script>
+  (function () {
+    var saved = localStorage.getItem('fenb-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  })();
+</script>

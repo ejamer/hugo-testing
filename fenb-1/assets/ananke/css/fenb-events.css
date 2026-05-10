@@ -352,3 +352,21 @@
 .fenb-cal-card--highlight {
   animation: fenb-cal-highlight 1.5s ease forwards;
 }
+
+/* ── Dark mode ────────────────────────────────── */
+[data-theme="dark"] .fenb-event-card { border-color: var(--light-gray); }
+[data-theme="dark"] .fenb-event-details-link { color: var(--teal-light); }
+[data-theme="dark"] .fenb-event-register-link { color: var(--text-body); }
+
+[data-theme="dark"] .fenb-tag--competition  { background: var(--teal);          color: #fff; }
+[data-theme="dark"] .fenb-tag--training     { background: var(--cat-training);  color: #fff; }
+[data-theme="dark"] .fenb-tag--national     { background: var(--cat-national);  color: #fff; }
+[data-theme="dark"] .fenb-tag--provincial   { background: var(--crimson);       color: #fff; }
+[data-theme="dark"] .fenb-tag--clinic       { background: var(--cat-clinic);    color: #fff; }
+[data-theme="dark"] .fenb-tag--meeting      { background: var(--cat-meeting);   color: #fff; }
+[data-theme="dark"] .fenb-tag--announcement { background: var(--teal);          color: #fff; }
+
+[data-theme="dark"] .fenb-cal-btn { border-color: var(--teal-light); color: var(--teal-light); }
+[data-theme="dark"] .fenb-cal-btn:hover { background: var(--teal-light); color: var(--white); }
+[data-theme="dark"] .fenb-cal-schedule-link { color: var(--teal-light); }
+[data-theme="dark"] .fenb-cal-select { border-color: var(--teal-light); }

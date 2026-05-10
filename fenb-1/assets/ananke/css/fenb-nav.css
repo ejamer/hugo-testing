@@ -34,6 +34,10 @@
 .fenb-nav-logo-link { display: flex; align-items: center; flex-shrink: 0; }
 .fenb-nav-logo      { height: 122px; width: auto; }
 
+.fenb-nav-logo--white                    { display: none; }
+[data-theme="dark"] .fenb-nav-logo--color { display: none; }
+[data-theme="dark"] .fenb-nav-logo--white { display: block; }
+
 .fenb-nav-links {
   display: flex;
   align-items: center;
@@ -134,6 +138,31 @@
   transition: transform var(--transition), opacity var(--transition);
 }
 
+/* Dark mode toggle */
+.fenb-theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.45rem;
+  color: var(--text-body);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
+  flex-shrink: 0;
+}
+.fenb-theme-toggle:hover {
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+
+/* Moon shown in light mode; sun shown in dark mode */
+.fenb-theme-icon--sun  { display: none; }
+.fenb-theme-icon--moon { display: block; }
+[data-theme="dark"] .fenb-theme-icon--sun  { display: block; }
+[data-theme="dark"] .fenb-theme-icon--moon { display: none; }
+
 /* Search icon button */
 .fenb-search-btn {
   display: flex;
@@ -209,7 +238,7 @@
 #fenb-search {
   --pagefind-ui-primary:       var(--teal);
   --pagefind-ui-text:          var(--text-body);
-  --pagefind-ui-background:    #fff;
+  --pagefind-ui-background:    var(--white);
   --pagefind-ui-border:        var(--light-gray);
   --pagefind-ui-tag:           var(--off-white);
   --pagefind-ui-border-width:  2px;
@@ -241,3 +270,13 @@
   margin: 0.5rem 0 0;
   font-weight: 300;
 }
+
+/* ── Dark mode ────────────────────────────────── */
+[data-theme="dark"] .fenb-lang-btn { color: var(--text-body); }
+
+[data-theme="dark"] .fenb-nav-links a:hover,
+[data-theme="dark"] .fenb-lang-btn:hover,
+[data-theme="dark"] .fenb-search-btn:hover,
+[data-theme="dark"] .fenb-search-btn[aria-expanded="true"],
+[data-theme="dark"] .fenb-theme-toggle:hover,
+[data-theme="dark"] .fenb-search-close:hover { color: var(--teal-light); }

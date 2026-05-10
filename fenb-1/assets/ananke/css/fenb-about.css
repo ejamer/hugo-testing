@@ -346,3 +346,30 @@
   background: var(--teal);
   color: var(--white);
 }
+
+/* ── Dark mode: policy links ─────────────────────── */
+[data-theme="dark"] .fenb-policy-link { color: var(--teal-light); border-color: var(--teal-light); }
+[data-theme="dark"] .fenb-policy-link:hover { background: var(--teal-light); color: var(--white); }
+
+/* ── Dark mode: board cards ──────────────────────── */
+[data-theme="dark"] .fenb-board-card-avatar { color: #fff; }
+
+[data-theme="dark"] .fenb-board-card-role,
+[data-theme="dark"] .fenb-board-card-role--crimson,
+[data-theme="dark"] .fenb-board-card-role--teal { color: var(--text-muted); }
+
+/* ── Dark mode contrast fixes ────────────────────── */
+[data-theme="dark"] .fenb-about-mission-quote {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .fenb-about-sidebar-card h3,
+[data-theme="dark"] .fenb-about-sidebar-card li::before,
+[data-theme="dark"] .fenb-about-sidebar-card a {
+  color: var(--teal-light);
+}
+
+[data-theme="dark"] .fenb-about-sidebar-card--governance h3,
+[data-theme="dark"] .fenb-sidebar-gov-link {
+  color: var(--teal-light);
+}
