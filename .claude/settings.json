@@ -7,7 +7,7 @@
       "Bash(cd *)",
       "Bash(find *)",
       "Bash(gh *)",
-      "Bash(script -q -c * /dev/null)"
+      "Bash(script -q -c *)"
     ]
   }
 }
