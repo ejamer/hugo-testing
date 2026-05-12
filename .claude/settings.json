@@ -6,7 +6,8 @@
       "Bash(npx pagefind *)",
       "Bash(cd *)",
       "Bash(find *)",
-      "Bash(gh *)"
+      "Bash(gh *)",
+      "Bash(script -q -c * /dev/null)"
     ]
   }
 }
