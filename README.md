@@ -13,6 +13,19 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 | [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code; lists available `/fenb-*` skills |
 | [TODO.md](TODO.md) | Outstanding items |
 
+### Claude Code skills
+
+Content and data workflows are available as Claude Code skills (invoked with `/fenb-*` in the CLI):
+
+| Skill | What it does |
+|---|---|
+| `/fenb-new-news` | Create a bilingual news article with correct filenames and front matter |
+| `/fenb-new-page` | Create a new bilingual content page pair |
+| `/fenb-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
+| `/fenb-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
+
+For git and release workflow skills (`/fenb-commit`, `/fenb-merge-features`, `/fenb-release`), see `DEVELOPMENT.md`.
+
 ---
 
 ## Project layout
