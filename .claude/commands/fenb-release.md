@@ -1,4 +1,8 @@
-Prepare and open a release PR from `dev` into `main` for the FencingNB Hugo site.
+---
+description: Prepare and open a release PR from `dev` into `main` for the FencingNB Hugo site. Runs a production build check, bilingual parity check, and opens a PR.
+disable-model-invocation: true
+allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(script *) Read AskUserQuestion
+---
 
 Run through this checklist in order, pausing to report the result of each step before continuing:
 

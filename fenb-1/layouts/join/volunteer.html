@@ -1,0 +1,63 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-join-page">
+  <div class="fenb-container fenb-container--narrow">
+
+    <div class="fenb-join-back">
+      <a href="{{ "/join/" | relLangURL }}">&larr; {{ i18n "join_back" }}</a>
+    </div>
+
+    <p class="fenb-section-label">{{ i18n "join_volunteer_label" }}</p>
+    <p class="fenb-join-page-intro">{{ i18n "join_volunteer_intro" }}</p>
+
+    {{/* ── Volunteer roles ── */}}
+    <p class="fenb-section-label" style="margin-top:2.5rem">{{ i18n "join_volunteer_roles_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "join_volunteer_roles_title" }}</h2>
+    <div class="fenb-join-roles-grid">
+
+      <div>
+        <p class="fenb-join-role-group-title">{{ i18n "join_volunteer_cat_committee" }}</p>
+        <ul class="fenb-join-role-list">
+          <li>{{ i18n "join_volunteer_role_comm_1" }}</li>
+          <li>{{ i18n "join_volunteer_role_comm_2" }}</li>
+          <li>{{ i18n "join_volunteer_role_comm_3" }}</li>
+          <li>{{ i18n "join_volunteer_role_comm_4" }}</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="fenb-join-role-group-title">{{ i18n "join_volunteer_cat_home" }}</p>
+        <ul class="fenb-join-role-list">
+          <li>{{ i18n "join_volunteer_role_home_1" }}</li>
+          <li>{{ i18n "join_volunteer_role_home_2" }}</li>
+          <li>{{ i18n "join_volunteer_role_home_3" }}</li>
+          <li>{{ i18n "join_volunteer_role_home_4" }}</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="fenb-join-role-group-title">{{ i18n "join_volunteer_cat_tournament" }}</p>
+        <ul class="fenb-join-role-list">
+          <li>{{ i18n "join_volunteer_role_tourn_1" }}</li>
+          <li>{{ i18n "join_volunteer_role_tourn_2" }}</li>
+          <li>{{ i18n "join_volunteer_role_tourn_3" }}</li>
+        </ul>
+      </div>
+
+    </div>
+
+    {{/* ── Apply CTA ── */}}
+    <div class="fenb-join-apply-cta">
+      <div class="fenb-join-apply-cta-body">
+        <p class="fenb-section-label" style="color:rgba(255,255,255,0.65)">{{ i18n "join_volunteer_apply_label" }}</p>
+        <p>{{ i18n "join_volunteer_apply_body" }}</p>
+      </div>
+      <a href="mailto:fencingnb@gmail.com" class="fenb-btn-white">{{ i18n "join_volunteer_apply_btn" }}</a>
+    </div>
+
+  </div>
+</section>
+
+{{ end }}

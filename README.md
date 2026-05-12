@@ -20,10 +20,10 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 |-------|--------|
 | Static site generator | [Hugo](https://gohugo.io) v0.161+ (extended) |
 | Theme | [Ananke](https://github.com/theNewDynamic/gohugo-theme-ananke) (submodule) |
-| CSS | Nine scoped files in `fenb-1/assets/ananke/css/fenb-*.css`, merged by Ananke's `resources.Concat` pipeline |
+| CSS | Ten scoped files in `fenb-1/assets/ananke/css/fenb-*.css`, merged by Ananke's `resources.Concat` pipeline |
 | i18n | Hugo built-in — English (`en-CA`) · French (`fr-CA`) |
 | Content | Markdown in `fenb-1/content/` |
-| Structured data | YAML in `fenb-1/data/` (events, clubs, board, programs, policies, hero slides) |
+| Structured data | YAML in `fenb-1/data/` (events, clubs, board, programs, policies, hero slides, join URLs) |
 
 ---
 
@@ -60,6 +60,7 @@ hugo-testing/
     │       ├── fenb-clubs.css      Programs quick-links, clubs page
     │       ├── fenb-about.css      About page, policies page
     │       ├── fenb-schedule.css   Season schedule page
+    │       ├── fenb-join.css       Join & Register section (landing, membership, clubs, volunteer)
     │       └── fenb-responsive.css All breakpoints and print query (loaded last)
     ├── content/            Section indexes: _index.md (EN) + _index.fr.md (FR)
     │   │                   Article files: {name}.en.md (EN) + {name}.fr.md (FR)
@@ -77,6 +78,15 @@ hugo-testing/
     │   ├── clubs/
     │   │   ├── _index.md      Clubs list page (EN)
     │   │   └── _index.fr.md   Clubs list page (FR)
+    │   ├── join/
+    │   │   ├── _index.md           Join landing page (EN)
+    │   │   ├── _index.fr.md        Join landing page (FR)
+    │   │   ├── membership.en.md    Individual membership (EN) — layout: membership
+    │   │   ├── membership.fr.md    Individual membership (FR) — layout: membership
+    │   │   ├── clubs.en.md         Club registration (EN) — layout: clubs
+    │   │   ├── clubs.fr.md         Club registration (FR) — layout: clubs
+    │   │   ├── volunteer.en.md     Volunteer (EN) — layout: volunteer
+    │   │   └── volunteer.fr.md     Volunteer (FR) — layout: volunteer
     │   ├── events/
     │   │   ├── _index.md         Events section (EN)
     │   │   ├── _index.fr.md      Events section (FR)
@@ -97,6 +107,7 @@ hugo-testing/
     │   ├── board.yaml         Board of directors; also holds founder photo info and affiliations (drives /about/)
     │   ├── programs.yaml      Homepage quick-link cards (URLs + accent flag for the join card)
     │   ├── policies.yaml      Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
+    │   ├── join.yaml          Join section seasonal URLs (2MEV membership portal, club registration form)
     │   └── hero_slides.yaml   Hero carousel image list (drives homepage slider)
     ├── i18n/
     │   ├── en.yaml         English UI strings
@@ -111,6 +122,11 @@ hugo-testing/
     │   │       └── single.html  Individual policy page (sidebar back-link + language switcher)
     │   ├── clubs/
     │   │   └── list.html   Custom clubs page (grid + map + registration CTA)
+    │   ├── join/
+    │   │   ├── list.html        Join landing page (three path cards)
+    │   │   ├── membership.html  Individual membership (2MEV CTA, type cards, steps)
+    │   │   ├── clubs.html       Club registration (requirements, benefits, form CTA)
+    │   │   └── volunteer.html   Volunteer opportunities (role groups, apply CTA)
     │   ├── events/
     │   │   ├── list.html     Events calendar (JS month grid + category legend sidebar)
     │   │   └── schedule.html Season schedule (server-rendered list + filter sidebar)
@@ -377,3 +393,14 @@ cascade:
 ```
 
 Then create `layouts/{section}/single.html` defining only `title` and `main` — the band is rendered by `site-header.html` automatically.
+
+If pages within the section need **fundamentally different HTML structure** (not just different data), use `layout: {name}` in the page's front matter instead of a shared `single.html`. Hugo looks for `layouts/{section}/{name}.html`. The join section uses this pattern — each sub-page has its own layout file (`membership.html`, `clubs.html`, `volunteer.html`).
+
+---
+
+### Join section seasonal updates
+
+Two URLs in `data/join.yaml` need updating at the start of each season:
+
+- `membership_url` — the 2MEV registration portal URL (includes the season slug, e.g. `fencing-nb-2025-2026`); update when 2MEV creates the new season's registration page
+- `club_form_url` — the Google Form URL for club registration; leave blank to fall back to an email CTA (the clubs layout handles the empty case automatically)
