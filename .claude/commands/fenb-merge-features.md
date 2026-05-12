@@ -1,4 +1,8 @@
-Open a pull request from a feature branch into `dev` for the FencingNB Hugo site.
+---
+description: Open a pull request from a feature branch into `dev` for the FencingNB Hugo site.
+disable-model-invocation: true
+allowed-tools: Bash(git *) Bash(gh *) Bash(script *) AskUserQuestion
+---
 
 Walk through each step in order. After each step, report the result clearly before continuing.
 

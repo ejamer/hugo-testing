@@ -1,4 +1,8 @@
-Perform a season rollover for the FencingNB events data.
+---
+description: Perform a season rollover for the FencingNB events data — archives current season YAML and creates a fresh events.yaml for the new season.
+disable-model-invocation: true
+allowed-tools: Read Write Bash(ls *)
+---
 
 Ask the user for:
 1. The **outgoing season** in filename format — regular hyphen, no spaces (e.g. `2025-2026`)

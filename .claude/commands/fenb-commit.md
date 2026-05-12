@@ -1,4 +1,8 @@
-Stage, commit, and push changes for the FencingNB Hugo site, following the project's branch strategy.
+---
+description: Stage, commit, and push changes for the FencingNB Hugo site, following the project's branch strategy.
+disable-model-invocation: true
+allowed-tools: Bash(git *) AskUserQuestion
+---
 
 Walk through each step below in order. After each step, report the result clearly before continuing. Use bold headers and plain status lines so the output is easy to scan.
 

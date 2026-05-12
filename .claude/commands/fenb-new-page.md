@@ -1,4 +1,8 @@
-Create a new bilingual content page pair for the FencingNB Hugo site.
+---
+description: Create a new bilingual content page pair for the FencingNB Hugo site.
+disable-model-invocation: true
+allowed-tools: Read Write
+---
 
 Ask the user for:
 1. Section path (e.g. `about`, `programs`, `events`)

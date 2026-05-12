@@ -1,4 +1,8 @@
-Create a new bilingual news article for the FencingNB Hugo site.
+---
+description: Create a new bilingual news article for the FencingNB Hugo site.
+disable-model-invocation: true
+allowed-tools: Read Write
+---
 
 Ask the user for:
 1. Publication date (YYYY-MM-DD)
