@@ -8,6 +8,56 @@ Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/hugo.
 
 ---
 
+## Claude Code skills
+
+Common workflows are automated as Claude Code skills (invoked with `/fenb-*` in the CLI):
+
+| Skill | What it does |
+|---|---|
+| `/fenb-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
+| `/fenb-merge-features` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
+| `/fenb-new-news` | Create a bilingual news article with correct filenames and front matter |
+| `/fenb-new-page` | Create a new bilingual content page pair |
+| `/fenb-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
+| `/fenb-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
+| `/fenb-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
+
+See `CLAUDE.md` for the full skill list and the `fenb-` prefix rule.
+
+---
+
+## Stack
+
+| Layer | Choice |
+|-------|--------|
+| Static site generator | [Hugo](https://gohugo.io) v0.161+ (extended) |
+| Theme | [Ananke](https://github.com/theNewDynamic/gohugo-theme-ananke) (submodule) |
+| CSS | Ten scoped files in `fenb-1/assets/ananke/css/fenb-*.css`, merged by Ananke's `resources.Concat` pipeline |
+| i18n | Hugo built-in — English (`en-CA`) · French (`fr-CA`) |
+| Content | Markdown in `fenb-1/content/` |
+| Structured data | YAML in `fenb-1/data/` (events, clubs, board, programs, policies, hero slides, join URLs) |
+
+---
+
+## Local development
+
+Hugo is installed via snap (`/snap/bin/hugo`). Run all commands from the **repo root** unless noted.
+
+```bash
+# Dev server with search (preferred — run from repo root)
+make serve
+
+# Production build (run from fenb-1/)
+cd fenb-1 && /snap/bin/hugo --environment production && npx pagefind --site public
+```
+
+> [!TIP]
+> `make serve` runs three steps in order: builds the site, generates the search index with Pagefind, then starts the dev server. Using just `hugo server` inside the `fenb-1` folder skips the Pagefind step, so the search overlay will silently fail to load — always use `make serve` when you need a full-featured test.
+
+The site builds in ~100 ms. Open `http://localhost:1313/hugo-testing/` in your browser.
+
+---
+
 ## Branch strategy
 
 | Branch | Purpose |
@@ -61,41 +111,6 @@ flowchart TD
 2. Develop and test locally.
 3. Push the feature branch and open a PR into `dev`. Merge and delete the feature branch.
 4. When `dev` is ready to release, open a PR from `dev` into `main`. The Actions job deploys on merge.
-
----
-
-## Claude Code skills
-
-Common workflows are automated as Claude Code skills (invoked with `/fenb-*` in the CLI):
-
-| Skill | Shortcut for |
-|---|---|
-| `/fenb-commit` | Stage → commit → push, with branch strategy enforcement |
-| `/fenb-merge-features` | Discover unmerged feature branches, select one, and open a PR into `dev` |
-| `/fenb-release` | Full pre-release checklist + open PR from `dev` into `main` |
-| `/fenb-new-news` | Create a bilingual news article |
-| `/fenb-new-page` | Create a new bilingual content page pair |
-| `/fenb-season-rollover` | Archive events season and start a fresh `events.yaml` |
-
-See `CLAUDE.md` for the full skill list and the `fenb-` prefix rule.
-
----
-
-## Local development
-
-Hugo is installed via snap (`/snap/bin/hugo`). Run all commands from the **repo root** unless noted.
-
-```bash
-# Dev server with search (preferred — run from repo root)
-make serve
-
-# Production build (run from fenb-1/)
-cd fenb-1 && /snap/bin/hugo --environment production && npx pagefind --site public
-```
-
-> **Note:** `make serve` builds the site, generates the Pagefind search index, then starts the dev server with `--renderStaticToDisk`. Plain `hugo server` skips the index step and search will not work.
-
-The site builds in ~100 ms.
 
 ---
 
