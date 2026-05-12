@@ -4,29 +4,6 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 
 **[► View live site](https://ejamer.github.io/hugo-testing/)**
 
-## Testing locally
-
-1. From the repo root folder, type: `make serve`
-2. Then open `http://localhost:1313/hugo-testing/` in your browser.
-
-> [!TIP]
-> `make serve` runs three steps in order: builds the site, generates the search index with Pagefind, then starts the dev server. Using just `hugo server` inside the `fenb-1` folder skips the Pagefind step, so the search overlay will silently fail to load — always use `make serve` when you need a full-featured test.
-
----
-
-## Stack
-
-| Layer | Choice |
-|-------|--------|
-| Static site generator | [Hugo](https://gohugo.io) v0.161+ (extended) |
-| Theme | [Ananke](https://github.com/theNewDynamic/gohugo-theme-ananke) (submodule) |
-| CSS | Ten scoped files in `fenb-1/assets/ananke/css/fenb-*.css`, merged by Ananke's `resources.Concat` pipeline |
-| i18n | Hugo built-in — English (`en-CA`) · French (`fr-CA`) |
-| Content | Markdown in `fenb-1/content/` |
-| Structured data | YAML in `fenb-1/data/` (events, clubs, board, programs, policies, hero slides, join URLs) |
-
----
-
 ## Related docs
 
 | File | Covers |
