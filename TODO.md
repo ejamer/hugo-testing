@@ -54,6 +54,15 @@ Test each project skill end-to-end at least once to verify it works correctly.
 | `/fenb-new-page` | ✅ Tested | Used to scaffold the join section (May 2026) |
 | `/fenb-season-rollover` | ❌ Untested | |
 | `/fenb-merge-features` | ✅ Tested | PR number bug found and fixed during first run |
+| `/fenb-get-results` | ✅ Tested | Ran against Mississauga Open and Championnat provincial des Jeunes 2026 (May 2026) |
+
+### `/fenb-get-results` — content creation (Step 6)
+
+Step 6 of the skill is currently a placeholder. Once results are found, the skill should:
+
+- [ ] Create a bilingual news article (EN + FR) summarising NB fencer results — call `/fenb-new-news` with pre-filled title, date, category (`Results` / `Résultats`), and a generated summary listing placements
+- [ ] Add `results_url` links to the matching event(s) in `fenb-1/data/events.yaml` so the event card on the site links directly to the FTL results page
+- [ ] Prompt user to review generated content, then call `/fenb-commit` to stage and push
 
 ## Code quality
 

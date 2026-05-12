@@ -15,6 +15,9 @@ fenb-1/bin/
 *~
 # ^^^^^^^ FENB-1 ^^^^^^^
 
+# Script output and browser session data (generated, not committed)
+scripts/output/
+scripts/.browser-profile/
 
 # Editor/IDE
 # .idea/

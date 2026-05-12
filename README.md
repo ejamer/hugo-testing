@@ -48,6 +48,10 @@ hugo-testing/
 ├── TODO.md                Outstanding items — keep current
 ├── plans/                 Design decisions and deferred plans
 ├── README.md              This file
+├── scripts/               Utility scripts (see Scripts section below)
+│   ├── fencingtimelive-results.py   Fetch tournament results and find NB fencers
+│   ├── output/            Generated JSON output — gitignored, not committed
+│   └── .browser-profile/  Saved Chrome session for fencingtimelive.com login — gitignored
 └── fenb-1/                Hugo site root
     ├── hugo.toml           Site config, languages, nav menus
     ├── assets/
@@ -155,6 +159,46 @@ hugo-testing/
             ├── events-calendar.js   Events calendar page (JS month grid)
             └── events-schedule.js   Season schedule page (season toggle + category filters)
 ```
+
+---
+
+## Scripts
+
+Utility scripts live in `scripts/`. They are independent of the Hugo build — run them from the repo root with `python3 scripts/<name>.py`.
+
+### fencingtimelive-results.py
+
+Fetches recent tournament results from [fencingtimelive.com](https://www.fencingtimelive.com) and checks each event for NB fencer participation, matching competitors against the club list in `fenb-1/data/clubs.yaml`.
+
+> **Skill available:** run `/fenb-get-results` in Claude Code — it handles parameters, login, tournament selection, and result reporting interactively.
+
+**Usage:**
+
+```bash
+# Option A — browser login (recommended): opens system Chrome for Google sign-in
+python3 scripts/fencingtimelive-results.py
+
+# Option B — manual cookie: copy Cookie header from browser DevTools
+python3 scripts/fencingtimelive-results.py --cookie "connect.sid=...;AWSALB=..."
+
+# Other options
+python3 scripts/fencingtimelive-results.py --country USA --days -2
+python3 scripts/fencingtimelive-results.py --help
+```
+
+| Flag | Default | Notes |
+|---|---|---|
+| `--cookie` | *(opens browser)* | Full `Cookie:` header string from DevTools; omit to use browser login |
+| `--country` | `CAN` | FIE country code |
+| `--days` | `-1` | `-2` last 30 days, `-1` last 10 days, `0` in progress, `1` next 7 days |
+| `--list` | — | Print tournament list as JSON and exit (used by skill) |
+| `--select N` | — | Skip interactive picker, use tournament N from the list (used by skill) |
+
+**Authentication:** the site uses Google OAuth, which cannot be automated. On first run, system Chrome opens and you complete the Google login normally. The session is saved to `scripts/.browser-profile/` (gitignored) and reused on subsequent runs until it expires.
+
+**Output:** JSON written to `scripts/output/<tournament-slug>-<date>.json` (gitignored) and printed to stdout. Progress logs go to stderr, so `python3 scripts/fencingtimelive-results.py > out.json` captures only the JSON.
+
+**Dependencies:** `pip install playwright pyyaml` — no extra browser install needed; the script uses system Chrome.
 
 ---
 
