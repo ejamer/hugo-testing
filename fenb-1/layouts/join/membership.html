@@ -1,0 +1,78 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-join-page">
+  <div class="fenb-container fenb-container--narrow">
+
+    <div class="fenb-join-back">
+      <a href="{{ "/join/" | relLangURL }}">&larr; {{ i18n "join_back" }}</a>
+    </div>
+
+    {{/* ── Intro + registration CTA ── */}}
+    <p class="fenb-section-label">{{ i18n "join_membership_label" }}</p>
+
+    <div class="fenb-join-register-cta">
+      <div class="fenb-join-register-cta-body">
+        <p>{{ i18n "join_membership_intro" }}</p>
+      </div>
+      <div class="fenb-join-register-cta-action">
+        <a href="{{ hugo.Data.join.membership_url }}" class="fenb-btn-white" target="_blank" rel="noopener noreferrer">
+          {{ i18n "join_membership_cta_label" }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+        <p class="fenb-join-register-note">{{ i18n "join_membership_cta_note" }}</p>
+      </div>
+    </div>
+
+    {{/* ── Membership types ── */}}
+    <p class="fenb-section-label">{{ i18n "join_membership_types_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "join_membership_types_title" }}</h2>
+    <div class="fenb-join-type-grid">
+      <div class="fenb-join-type-card">
+        <h3>{{ i18n "join_type_rec_title" }}</h3>
+        <p>{{ i18n "join_type_rec_desc" }}</p>
+      </div>
+      <div class="fenb-join-type-card">
+        <h3>{{ i18n "join_type_full_title" }}</h3>
+        <p>{{ i18n "join_type_full_desc" }}</p>
+      </div>
+      <div class="fenb-join-type-card">
+        <h3>{{ i18n "join_type_assoc_title" }}</h3>
+        <p>{{ i18n "join_type_assoc_desc" }}</p>
+      </div>
+    </div>
+
+    {{/* ── Registration steps ── */}}
+    <p class="fenb-section-label">{{ i18n "join_membership_steps_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "join_membership_steps_title" }}</h2>
+    <div class="fenb-join-steps">
+      <div class="fenb-join-step">
+        <div class="fenb-join-step-num">1</div>
+        <div class="fenb-join-step-body">
+          <h3>{{ i18n "join_step_1_title" }}</h3>
+          <p>{{ i18n "join_step_1_desc" }}</p>
+        </div>
+      </div>
+      <div class="fenb-join-step">
+        <div class="fenb-join-step-num">2</div>
+        <div class="fenb-join-step-body">
+          <h3>{{ i18n "join_step_2_title" }}</h3>
+          <p>{{ i18n "join_step_2_desc" }}</p>
+        </div>
+      </div>
+      <div class="fenb-join-step">
+        <div class="fenb-join-step-num">3</div>
+        <div class="fenb-join-step-body">
+          <h3>{{ i18n "join_step_3_title" }}</h3>
+          <p>{{ i18n "join_step_3_desc" }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fenb-join-note">{{ i18n "join_membership_note" }}</div>
+
+  </div>
+</section>
+
+{{ end }}

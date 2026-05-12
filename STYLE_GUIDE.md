@@ -29,6 +29,7 @@ Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped t
 | `fenb-clubs.css` | Programs quick-links, clubs grid/map/CTA |
 | `fenb-about.css` | About page, policies page |
 | `fenb-schedule.css` | Season schedule page |
+| `fenb-join.css` | Join & Register section (landing page, membership, club registration, volunteer) |
 | `fenb-responsive.css` | All `@media` breakpoints and print query — loaded last |
 
 The load order is declared in `hugo.toml` under `params.custom_css`.
@@ -94,6 +95,21 @@ The toggle sets `data-theme="dark"` on `<html>`; a `[data-theme="dark"]` block i
 ## i18n — UI text
 
 Never hardcode display text in a layout. Add keys to **both** `i18n/en.yaml` and `i18n/fr.yaml`. Use `{{ i18n "key" }}` in templates. For strings with dynamic values: `{{ i18n "key" (dict "Var" value) }}` with `{{ .Var }}` in the YAML value.
+
+---
+
+## Per-page layouts within a section
+
+When pages in a section share a section index (`_index.md`) but need **different HTML structures** from each other — not just different content — use the `layout:` front matter field rather than a shared `single.html`:
+
+```yaml
+# content/join/membership.en.md
+layout: membership
+```
+
+Hugo resolves this to `layouts/{section}/{layout}.html` (e.g. `layouts/join/membership.html`). The join section uses this pattern because each sub-page (membership registration, club registration, volunteer) has a structurally distinct layout.
+
+Use a shared `single.html` when pages differ only in data. Use `layout:` when the HTML structure itself differs enough that a shared template would need complex conditionals.
 
 ---
 

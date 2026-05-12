@@ -1,0 +1,384 @@
+/* ===================================================
+   fenb-join.css — Join & Register section
+   =================================================== */
+
+/* ── Landing page ─────────────────────────────────── */
+.fenb-join-section {
+  background: var(--off-white);
+  padding: 4.5rem 1.5rem;
+}
+
+.fenb-join-intro {
+  max-width: 600px;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 1rem 0 3rem;
+}
+
+.fenb-join-paths {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.fenb-join-path-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  padding: 2.25rem 1.75rem;
+  text-decoration: none;
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.fenb-join-path-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--teal);
+  color: var(--text-dark);
+}
+
+.fenb-join-path-icon {
+  color: var(--teal);
+  margin-bottom: 0.35rem;
+}
+
+.fenb-join-path-card h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.fenb-join-path-card > p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.65;
+  flex: 1;
+}
+
+.fenb-join-path-cta {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-top: 0.5rem;
+  transition: color var(--transition);
+}
+.fenb-join-path-card:hover .fenb-join-path-cta { color: var(--teal-dark); }
+
+/* ── Sub-page shared ──────────────────────────────── */
+.fenb-join-page {
+  padding: 3.5rem 1.5rem 5rem;
+}
+
+.fenb-join-back {
+  margin-bottom: 2.25rem;
+}
+.fenb-join-back a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--teal);
+  text-decoration: none;
+}
+.fenb-join-back a:hover { text-decoration: underline; }
+
+.fenb-join-page-intro {
+  max-width: 680px;
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0.75rem 0 0;
+}
+
+/* ── Registration CTA (teal banner) ──────────────── */
+.fenb-join-register-cta {
+  background: var(--teal);
+  border-radius: var(--radius);
+  padding: 2.25rem 2.25rem;
+  margin: 2.5rem 0 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.fenb-join-register-cta-body {
+  flex: 1;
+  min-width: 240px;
+}
+.fenb-join-register-cta-body p {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.78);
+  margin: 0;
+  line-height: 1.65;
+}
+
+.fenb-join-register-cta-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.fenb-join-register-note {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  margin: 0;
+}
+
+.fenb-btn-white {
+  background: #fff;
+  color: var(--teal);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition);
+  white-space: nowrap;
+}
+.fenb-btn-white:hover {
+  background: var(--off-white);
+  color: var(--teal-dark);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+  transform: translateY(-2px);
+}
+
+/* ── Membership type cards ────────────────────────── */
+.fenb-join-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin: 1.75rem 0 3rem;
+}
+
+.fenb-join-type-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  box-shadow: var(--shadow-xs);
+}
+.fenb-join-type-card h3 {
+  font-size: 0.975rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 0.5rem;
+}
+.fenb-join-type-card p {
+  font-size: 0.865rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* ── Steps ────────────────────────────────────────── */
+.fenb-join-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 1.75rem 0 2rem;
+}
+
+.fenb-join-step {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.fenb-join-step-num {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fenb-join-step-body h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0.15rem 0 0.3rem;
+}
+.fenb-join-step-body p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* ── Note callout ─────────────────────────────────── */
+.fenb-join-note {
+  background: var(--teal-pale);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 1.75rem 0;
+}
+
+/* ── Requirements grid (clubs) ────────────────────── */
+.fenb-join-req-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin: 1.75rem 0 3rem;
+}
+
+.fenb-join-req-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  box-shadow: var(--shadow-xs);
+}
+.fenb-join-req-icon {
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+}
+.fenb-join-req-card h3 {
+  font-size: 0.975rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 0.5rem;
+}
+.fenb-join-req-card p {
+  font-size: 0.865rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* ── Form / contact CTA row ───────────────────────── */
+.fenb-join-form-cta {
+  background: var(--off-white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  padding: 2rem 2.25rem;
+  margin: 2rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+.fenb-join-form-cta-text h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 0.35rem;
+}
+.fenb-join-form-cta-text p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Volunteer role groups ────────────────────────── */
+.fenb-join-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.75rem;
+  margin: 1.75rem 0 3rem;
+}
+
+.fenb-join-role-group-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.fenb-join-role-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.fenb-join-role-list li {
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  padding: 0.35rem 0 0.35rem 1.2rem;
+  position: relative;
+  line-height: 1.45;
+}
+.fenb-join-role-list li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.65rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--teal);
+}
+
+/* ── Volunteer apply CTA ──────────────────────────── */
+.fenb-join-apply-cta {
+  background: var(--teal);
+  border-radius: var(--radius);
+  padding: 2.25rem 2.25rem;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.75rem;
+}
+.fenb-join-apply-cta-body {
+  flex: 1;
+  min-width: 240px;
+}
+.fenb-join-apply-cta-body p {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.78);
+  margin: 0.5rem 0 0;
+  line-height: 1.65;
+}
+
+/* ── Dark mode ────────────────────────────────────── */
+[data-theme="dark"] .fenb-join-path-card { background: var(--white); }
+[data-theme="dark"] .fenb-join-path-card:hover { border-color: var(--teal-light); }
+[data-theme="dark"] .fenb-join-path-icon { color: var(--teal-light); }
+[data-theme="dark"] .fenb-join-path-cta { color: var(--teal-light); }
+[data-theme="dark"] .fenb-join-path-card:hover .fenb-join-path-cta { color: var(--teal-light); }
+[data-theme="dark"] .fenb-join-back a { color: var(--teal-light); }
+[data-theme="dark"] .fenb-join-note { border-left-color: var(--teal-light); }
+[data-theme="dark"] .fenb-join-type-card { background: var(--white); }
+[data-theme="dark"] .fenb-join-req-card { background: var(--white); }
+[data-theme="dark"] .fenb-join-req-icon { color: var(--teal-light); }
+[data-theme="dark"] .fenb-join-role-group-title { color: var(--teal-light); }
+[data-theme="dark"] .fenb-join-role-list li::before { background: var(--teal-light); }
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 860px) {
+  .fenb-join-paths { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .fenb-join-register-cta,
+  .fenb-join-apply-cta { flex-direction: column; }
+  .fenb-join-register-cta-action { width: 100%; }
+  .fenb-btn-white { width: 100%; justify-content: center; }
+  .fenb-join-form-cta { flex-direction: column; }
+  .fenb-join-roles-grid { grid-template-columns: 1fr; }
+}

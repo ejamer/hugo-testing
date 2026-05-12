@@ -37,3 +37,5 @@ Then:
    - Add the first events of the new season to `fenb-1/data/events.yaml`
    - Update the `season:` field in `fenb-1/data/board.yaml` to the new season label
    - Add a placeholder announcement event (category `announcement`) so the homepage events section stays populated during the off-season gap
+   - Update `membership_url` in `fenb-1/data/join.yaml` once 2MEV creates the new season's registration page (the slug in the URL changes each season, e.g. `fencing-nb-2026-2027`)
+   - Update `club_form_url` in `fenb-1/data/join.yaml` if a new Google Form is created for the new season

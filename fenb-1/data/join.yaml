@@ -1,0 +1,4 @@
+# Update membership_url at the start of each season.
+# Update club_form_url when a new Google Form is created.
+membership_url: "https://2mev.com/#!/memberships/fencing-nb-2025-2026"
+club_form_url: ""
