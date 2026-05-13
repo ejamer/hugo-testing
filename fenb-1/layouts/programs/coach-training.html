@@ -1,0 +1,88 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-program-page">
+  <div class="fenb-container fenb-container--narrow">
+
+    <div class="fenb-program-back">
+      <a href="{{ "/programs/" | relLangURL }}">&larr; {{ i18n "programs_back" }}</a>
+    </div>
+
+    {{/* ── Overview ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_coach_label" }}</p>
+    <p class="fenb-program-intro">{{ i18n "programs_coach_intro" }}</p>
+
+    {{/* ── Three Coaching Streams ── */}}
+    <div class="fenb-coach-streams">
+
+      <div class="fenb-coach-stream">
+        <h2 class="fenb-coach-stream-title">{{ i18n "programs_coach_stream_community" }}</h2>
+        <div class="fenb-coach-levels">
+          <div class="fenb-coach-level">
+            <h3>{{ i18n "programs_coach_comm_init_title" }}</h3>
+            <p>{{ i18n "programs_coach_comm_init_desc" }}</p>
+          </div>
+          <div class="fenb-coach-level">
+            <h3>{{ i18n "programs_coach_comm_ongoing_title" }}</h3>
+            <p>{{ i18n "programs_coach_comm_ongoing_desc" }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fenb-coach-stream">
+        <h2 class="fenb-coach-stream-title">{{ i18n "programs_coach_stream_instruction" }}</h2>
+        <div class="fenb-coach-levels">
+          <div class="fenb-coach-level">
+            <h3>{{ i18n "programs_coach_instr_beginner_title" }}</h3>
+            <p>{{ i18n "programs_coach_instr_beginner_desc" }}</p>
+          </div>
+          <div class="fenb-coach-level">
+            <h3>{{ i18n "programs_coach_instr_inter_title" }}</h3>
+            <p>{{ i18n "programs_coach_instr_inter_desc" }}</p>
+          </div>
+          <div class="fenb-coach-level">
+            <h3>{{ i18n "programs_coach_instr_adv_title" }}</h3>
+            <p>{{ i18n "programs_coach_instr_adv_desc" }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fenb-coach-stream">
+        <h2 class="fenb-coach-stream-title">{{ i18n "programs_coach_stream_competition" }}</h2>
+        <div class="fenb-coach-levels">
+          <div class="fenb-coach-level">
+            <h3>{{ i18n "programs_coach_comp_intro_title" }}</h3>
+            <p>{{ i18n "programs_coach_comp_intro_desc" }}</p>
+          </div>
+          <div class="fenb-coach-level">
+            <h3>{{ i18n "programs_coach_comp_dev_title" }}</h3>
+            <p>{{ i18n "programs_coach_comp_dev_desc" }}</p>
+          </div>
+          <div class="fenb-coach-level">
+            <h3>{{ i18n "programs_coach_comp_hp_title" }}</h3>
+            <p>{{ i18n "programs_coach_comp_hp_desc" }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    {{/* ── Contact CTA ── */}}
+    <div class="fenb-program-contact-cta">
+      <div class="fenb-program-contact-body">
+        <p class="fenb-section-label">{{ i18n "programs_coach_contact_label" }}</p>
+        <h2 class="fenb-section-title">{{ i18n "programs_coach_contact_title" }}</h2>
+        <p>{{ i18n "programs_coach_contact_body" }}</p>
+      </div>
+      <div class="fenb-program-contact-action">
+        <a href="mailto:{{ hugo.Data.board.contact }}" class="fenb-btn fenb-btn-white">
+          {{ i18n "programs_coach_contact_btn" }}
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{{ end }}

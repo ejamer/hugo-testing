@@ -344,6 +344,7 @@ hugo-testing/
     │       ├── fenb-about.css      About page, policies page
     │       ├── fenb-schedule.css   Season schedule page
     │       ├── fenb-join.css       Join & Register section (landing, membership, clubs, volunteer)
+    │       ├── fenb-programs.css   Programs & Development section (landing, 6 sub-pages)
     │       └── fenb-responsive.css All breakpoints and print query (loaded last)
     ├── content/            Section indexes: _index.md (EN) + _index.fr.md (FR)
     │   │                   Article files: {name}.en.md (EN) + {name}.fr.md (FR)
@@ -370,6 +371,21 @@ hugo-testing/
     │   │   ├── clubs.fr.md         Club registration (FR) — layout: clubs
     │   │   ├── volunteer.en.md     Volunteer (EN) — layout: volunteer
     │   │   └── volunteer.fr.md     Volunteer (FR) — layout: volunteer
+    │   ├── programs/
+    │   │   ├── _index.md                      Programs landing page (EN)
+    │   │   ├── _index.fr.md                   Programs landing page (FR)
+    │   │   ├── athlete-development.en.md       Athlete Development / LTAD (EN) — layout: athlete-development
+    │   │   ├── athlete-development.fr.md       Athlete Development / LTAD (FR) — layout: athlete-development
+    │   │   ├── coach-training.en.md            Coach Training & Certification (EN) — layout: coach-training
+    │   │   ├── coach-training.fr.md            Coach Training & Certification (FR) — layout: coach-training
+    │   │   ├── canada-winter-games.en.md       Canada Winter Games 2027 (EN) — layout: canada-winter-games
+    │   │   ├── canada-winter-games.fr.md       Canada Winter Games 2027 (FR) — layout: canada-winter-games
+    │   │   ├── referee-development.en.md       Referee Development (EN) — layout: referee-development
+    │   │   ├── referee-development.fr.md       Referee Development (FR) — layout: referee-development
+    │   │   ├── secretariat-development.en.md   Secretariat Development (EN) — layout: secretariat-development
+    │   │   ├── secretariat-development.fr.md   Secretariat Development (FR) — layout: secretariat-development
+    │   │   ├── armourer-development.en.md      Armourer Development (EN) — layout: armourer-development
+    │   │   └── armourer-development.fr.md      Armourer Development (FR) — layout: armourer-development
     │   ├── events/
     │   │   ├── _index.md         Events section (EN)
     │   │   ├── _index.fr.md      Events section (FR)
@@ -410,6 +426,14 @@ hugo-testing/
     │   │   ├── membership.html  Individual membership (2MEV CTA, type cards, steps)
     │   │   ├── clubs.html       Club registration (requirements, benefits, form CTA)
     │   │   └── volunteer.html   Volunteer opportunities (role groups, apply CTA)
+    │   ├── programs/
+    │   │   ├── list.html                    Programs landing page (six path cards)
+    │   │   ├── athlete-development.html     LTAD overview, ten key factors, armband program
+    │   │   ├── coach-training.html          Three coaching streams (community, instructional, competition)
+    │   │   ├── canada-winter-games.html     CWG 2027 selection program, documents, rankings, funding
+    │   │   ├── referee-development.html     Club and provincial referee certification levels
+    │   │   ├── secretariat-development.html Secretariat roles and responsibilities
+    │   │   └── armourer-development.html    Armourer responsibilities (pre-comp, during, safety, club)
     │   ├── events/
     │   │   ├── list.html     Events calendar (JS month grid + category legend sidebar)
     │   │   └── schedule.html Season schedule (server-rendered list + filter sidebar)

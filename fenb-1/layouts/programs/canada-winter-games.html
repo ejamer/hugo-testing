@@ -1,0 +1,70 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-program-page">
+  <div class="fenb-container fenb-container--narrow">
+
+    <div class="fenb-program-back">
+      <a href="{{ "/programs/" | relLangURL }}">&larr; {{ i18n "programs_back" }}</a>
+    </div>
+
+    {{/* ── Overview ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_cwg_label" }}</p>
+    <p class="fenb-program-intro">{{ i18n "programs_cwg_intro" }}</p>
+
+    {{/* ── Eligibility ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_cwg_elig_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_cwg_elig_title" }}</h2>
+    <div class="fenb-program-info-card">
+      <p>{{ i18n "programs_cwg_elig_body" }}</p>
+    </div>
+
+    {{/* ── Team Plan Documents ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_cwg_resources_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_cwg_resources_title" }}</h2>
+    <ul class="fenb-program-links-list">
+      <li>
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          {{ i18n "programs_cwg_team_plan_en" }}
+        </a>
+      </li>
+      <li>
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          {{ i18n "programs_cwg_team_plan_fr" }}
+        </a>
+      </li>
+    </ul>
+
+    {{/* ── Rankings ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_cwg_rankings_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_cwg_rankings_title" }}</h2>
+    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; max-width: 640px; margin: 0.5rem 0 1.25rem;">{{ i18n "programs_cwg_rankings_body" }}</p>
+    <ul class="fenb-program-links-list">
+      <li>
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          {{ i18n "programs_cwg_rankings_cwg" }}
+        </a>
+      </li>
+      <li>
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          {{ i18n "programs_cwg_rankings_u17" }}
+        </a>
+      </li>
+    </ul>
+
+    {{/* ── Financial Support ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_cwg_funding_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_cwg_funding_title" }}</h2>
+    <div class="fenb-program-info-card">
+      <p>{{ i18n "programs_cwg_funding_body" }}</p>
+    </div>
+
+  </div>
+</section>
+
+{{ end }}

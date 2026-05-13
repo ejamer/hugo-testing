@@ -1,0 +1,95 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-programs-landing">
+  <div class="fenb-container fenb-container--narrow">
+    <p class="fenb-section-label">{{ i18n "programs_landing_label" }}</p>
+    <p class="fenb-programs-landing-intro">{{ i18n "programs_landing_intro" }}</p>
+
+    <div class="fenb-programs-cards">
+
+      <a href="{{ "/programs/athlete-development/" | relLangURL }}" class="fenb-programs-card-link">
+        <div class="fenb-programs-card-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="5" r="1.5"></circle>
+            <path d="M9 19l1.5-5L9 11l-3 2"></path>
+            <path d="M15 19l-1.5-5L15 11l3 2"></path>
+            <path d="M7.5 11l4.5-2 4.5 2"></path>
+          </svg>
+        </div>
+        <h2>{{ i18n "programs_card_athlete_title" }}</h2>
+        <p>{{ i18n "programs_card_athlete_desc" }}</p>
+        <span class="fenb-programs-card-cta">{{ i18n "programs_card_athlete_cta" }} &rarr;</span>
+      </a>
+
+      <a href="{{ "/programs/coach-training/" | relLangURL }}" class="fenb-programs-card-link">
+        <div class="fenb-programs-card-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h2>{{ i18n "programs_card_coach_title" }}</h2>
+        <p>{{ i18n "programs_card_coach_desc" }}</p>
+        <span class="fenb-programs-card-cta">{{ i18n "programs_card_coach_cta" }} &rarr;</span>
+      </a>
+
+      <a href="{{ "/programs/canada-winter-games/" | relLangURL }}" class="fenb-programs-card-link">
+        <div class="fenb-programs-card-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
+        </div>
+        <h2>{{ i18n "programs_card_cwg_title" }}</h2>
+        <p>{{ i18n "programs_card_cwg_desc" }}</p>
+        <span class="fenb-programs-card-cta">{{ i18n "programs_card_cwg_cta" }} &rarr;</span>
+      </a>
+
+      <a href="{{ "/programs/referee-development/" | relLangURL }}" class="fenb-programs-card-link">
+        <div class="fenb-programs-card-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="2" width="6" height="6" rx="1"></rect>
+            <path d="M3 22v-1a7 7 0 0 1 7-7h4a7 7 0 0 1 7 7v1"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </div>
+        <h2>{{ i18n "programs_card_referee_title" }}</h2>
+        <p>{{ i18n "programs_card_referee_desc" }}</p>
+        <span class="fenb-programs-card-cta">{{ i18n "programs_card_referee_cta" }} &rarr;</span>
+      </a>
+
+      <a href="{{ "/programs/secretariat-development/" | relLangURL }}" class="fenb-programs-card-link">
+        <div class="fenb-programs-card-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <h2>{{ i18n "programs_card_secretariat_title" }}</h2>
+        <p>{{ i18n "programs_card_secretariat_desc" }}</p>
+        <span class="fenb-programs-card-cta">{{ i18n "programs_card_secretariat_cta" }} &rarr;</span>
+      </a>
+
+      <a href="{{ "/programs/armourer-development/" | relLangURL }}" class="fenb-programs-card-link">
+        <div class="fenb-programs-card-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+          </svg>
+        </div>
+        <h2>{{ i18n "programs_card_armourer_title" }}</h2>
+        <p>{{ i18n "programs_card_armourer_desc" }}</p>
+        <span class="fenb-programs-card-cta">{{ i18n "programs_card_armourer_cta" }} &rarr;</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+{{ end }}

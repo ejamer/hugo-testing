@@ -6,7 +6,7 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ## Placeholder pages
 
-- [ ] `/programs/` — menu link exists; page not yet built
+- [x] `/programs/` — built: landing + 6 sub-pages (athlete development, coach training, CWG 2027, referee, secretariat, armourer)
 - [x] `/about/` — built: overview, mission, history, board of directors, contact, and policies sub-page
 - [x] `/join/` — landing page + three sub-pages built (membership, clubs, volunteer); layouts use `layout:` front matter to select `layouts/join/{membership,clubs,volunteer}.html`
   - [ ] **Club registration form URL** — add Google Form URL to `fenb-1/data/join.yaml` → `club_form_url` when available; clubs page currently falls back to email contact
@@ -36,7 +36,27 @@ All four join pages need a visual review in the dev server before release. Key i
 
 ## Programs page
 
-- [ ] `/programs/` — menu link exists; page not yet built. Will need sub-pages for Athlete, Coach, and Official development (similar structure to About + Policies).
+- [x] `/programs/` — built: landing page (6-card disambiguation grid) + 6 sub-pages with distinct layouts. Each sub-page uses `layout:` front matter to select `layouts/programs/{slug}.html`. CSS in `fenb-1/assets/ananke/css/fenb-programs.css`.
+
+### Programs — follow-up required
+
+- [ ] **Athlete Development — armband document links** — `layouts/programs/athlete-development.html` has 4 `href="#"` placeholders for CFF armband program PDFs (general + épée/foil/sabre appendices). Replace with actual CFF document URLs when available.
+- [ ] **CWG 2027 — document links** — `layouts/programs/canada-winter-games.html` has 4 `href="#"` placeholders: two team plan PDFs (EN/FR) and two rankings links (CWG 2027 athlete rankings + U17 spreadsheet). Replace with actual URLs when available.
+- [ ] **Inline style cleanup** — `layouts/programs/athlete-development.html` and `layouts/programs/canada-winter-games.html` have a few inline `style=` attributes for spacing/font-size; move to `fenb-programs.css` classes.
+
+### Programs — page-by-page design and content review
+
+All seven pages need a full review pass for both style and content quality before release. For each page: run `make serve`, load the EN and FR versions, and assess layout, spacing, typography, content accuracy, and French translation quality. Revise layout HTML, CSS, i18n strings, and/or content structure as needed.
+
+- [ ] **`/programs/` (landing)** — 6-card grid. Check card heights even out across rows, icons are legible, hover states work, responsive collapse to 2-col then 1-col looks right.
+- [ ] **`/programs/athlete-development/`** — LTAD intro, 10-factor 2-column list, armband program section. Check 2-col factor list wraps cleanly on mobile; consider whether the factor list needs more visual weight (e.g. numbered cards vs plain list).
+- [ ] **`/programs/coach-training/`** — 3-column streams grid. Assess whether the three columns have readable line lengths; review level descriptions for accuracy; check the teal contact CTA banner at bottom.
+- [ ] **`/programs/canada-winter-games/`** — eligibility card, document links (all `href="#"` placeholders), rankings links. Review once real document URLs are available; assess whether the page needs more context about the selection timeline.
+- [ ] **`/programs/referee-development/`** — numbered elements list, 2-column club/provincial cards. The provincial card is significantly longer than the club card — assess whether the layout should stack rather than sit side-by-side on desktop.
+- [ ] **`/programs/secretariat-development/`** — 7-card duties grid + mission blockquote. Check grid auto-fit behaviour (may produce a single orphan card in the last row); review blockquote styling.
+- [ ] **`/programs/armourer-development/`** — 2×2 sections grid. Straightforward but check card body text doesn't overflow on narrow viewports; review content length balance across the four cards.
+- [ ] **French versions** — load all seven pages under `/fr/programmes/` and verify translations read naturally (machine-assisted; needs native-speaker or bilingual review).
+- [ ] **HONOURS & AWARDS** — the old site's programs page listed "FENB Honours & Awards" as a 7th program area; not yet built here. Add as a sub-page if/when content is ready.
 
 ## Policies page
 
