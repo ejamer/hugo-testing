@@ -28,130 +28,6 @@ For git and release workflow skills (`/fenb-commit`, `/fenb-merge-features`, `/f
 
 ---
 
-## Project layout
-
-```
-hugo-testing/
-├── CLAUDE.md              Process instructions for Claude
-├── DEVELOPMENT.md         Branch strategy and build commands
-├── STYLE_GUIDE.md         Brand, CSS, and content conventions
-├── TODO.md                Outstanding items — keep current
-├── plans/                 Design decisions and deferred plans
-├── README.md              This file
-├── scripts/               Utility scripts (see Scripts section below)
-│   ├── fencingtimelive-results.py   Fetch tournament results and find NB fencers
-│   ├── output/            Generated JSON output — gitignored, not committed
-│   └── .browser-profile/  Saved Chrome session for fencingtimelive.com login — gitignored
-└── fenb-1/                Hugo site root
-    ├── hugo.toml           Site config, languages, nav menus
-    ├── assets/
-    │   └── ananke/css/
-    │       ├── fenb-base.css       Variables, reset, shared utilities, buttons
-    │       ├── fenb-nav.css        Nav, search overlay, page header band
-    │       ├── fenb-hero.css       Hero section and animations
-    │       ├── fenb-events.css     Event cards, tags, calendar page
-    │       ├── fenb-news.css       News cards, article layout, 404 page
-    │       ├── fenb-clubs.css      Programs quick-links, clubs page
-    │       ├── fenb-about.css      About page, policies page
-    │       ├── fenb-schedule.css   Season schedule page
-    │       ├── fenb-join.css       Join & Register section (landing, membership, clubs, volunteer)
-    │       └── fenb-responsive.css All breakpoints and print query (loaded last)
-    ├── content/            Section indexes: _index.md (EN) + _index.fr.md (FR)
-    │   │                   Article files: {name}.en.md (EN) + {name}.fr.md (FR)
-    │   ├── _index.md       Homepage (EN)
-    │   ├── _index.fr.md    Homepage (FR)
-    │   ├── about/
-    │   │   ├── _index.md               About section (EN)
-    │   │   ├── _index.fr.md            About section (FR)
-    │   │   ├── policies-and-reports.en.md
-    │   │   ├── policies-and-reports.fr.md
-    │   │   └── policies/               Individual policy pages (EN + FR pairs)
-    │   │       ├── safe-sport.en.md
-    │   │       ├── safe-sport.fr.md
-    │   │       └── … (one slug.en.md + slug.fr.md per policy)
-    │   ├── clubs/
-    │   │   ├── _index.md      Clubs list page (EN)
-    │   │   └── _index.fr.md   Clubs list page (FR)
-    │   ├── join/
-    │   │   ├── _index.md           Join landing page (EN)
-    │   │   ├── _index.fr.md        Join landing page (FR)
-    │   │   ├── membership.en.md    Individual membership (EN) — layout: membership
-    │   │   ├── membership.fr.md    Individual membership (FR) — layout: membership
-    │   │   ├── clubs.en.md         Club registration (EN) — layout: clubs
-    │   │   ├── clubs.fr.md         Club registration (FR) — layout: clubs
-    │   │   ├── volunteer.en.md     Volunteer (EN) — layout: volunteer
-    │   │   └── volunteer.fr.md     Volunteer (FR) — layout: volunteer
-    │   ├── events/
-    │   │   ├── _index.md         Events section (EN)
-    │   │   ├── _index.fr.md      Events section (FR)
-    │   │   ├── schedule.en.md    Season schedule page (EN)
-    │   │   └── schedule.fr.md    Season schedule page (FR)
-    │   └── news/
-    │       ├── _index.md      News section (EN)
-    │       ├── _index.fr.md   News section (FR)
-    │       └── 2026/          One subfolder per calendar year
-    │           ├── _index.md
-    │           ├── _index.fr.md
-    │           ├── apr-05-nb-athletes-nationals.en.md
-    │           └── apr-05-nb-athletes-nationals.fr.md
-    ├── data/
-    │   ├── events.yaml        Current season's event calendar (drives homepage + /events/)
-    │   ├── events_archive/    Past seasons — moved here at season rollover (see plans/)
-    │   ├── clubs.yaml         Member club data (drives /clubs/ page)
-    │   ├── board.yaml         Board of directors; also holds founder photo info and affiliations (drives /about/)
-    │   ├── programs.yaml      Homepage quick-link cards (URLs + accent flag for the join card)
-    │   ├── policies.yaml      Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
-    │   ├── join.yaml          Join section seasonal URLs (2MEV membership portal, club registration form)
-    │   └── hero_slides.yaml   Hero carousel image list (drives homepage slider)
-    ├── i18n/
-    │   ├── en.yaml         English UI strings
-    │   └── fr.yaml         French UI strings
-    ├── layouts/
-    │   ├── index.html      Custom homepage (hero, events, news, programs)
-    │   ├── 404.html        Custom 404 (JS detects /fr/ and switches language)
-    │   ├── about/
-    │   │   ├── list.html   About page (overview, history, mission, board grid, contact)
-    │   │   ├── single.html Policies & Reports page (sidebar TOC + policy/report lists)
-    │   │   └── policies/
-    │   │       └── single.html  Individual policy page (sidebar back-link + language switcher)
-    │   ├── clubs/
-    │   │   └── list.html   Custom clubs page (grid + map + registration CTA)
-    │   ├── join/
-    │   │   ├── list.html        Join landing page (three path cards)
-    │   │   ├── membership.html  Individual membership (2MEV CTA, type cards, steps)
-    │   │   ├── clubs.html       Club registration (requirements, benefits, form CTA)
-    │   │   └── volunteer.html   Volunteer opportunities (role groups, apply CTA)
-    │   ├── events/
-    │   │   ├── list.html     Events calendar (JS month grid + category legend sidebar)
-    │   │   └── schedule.html Season schedule (server-rendered list + filter sidebar)
-    │   ├── news/
-    │   │   ├── list.html   News index (card grid, paginates recursively across year folders)
-    │   │   └── single.html News article (2-col: article | recent-news sidebar)
-    │   └── partials/
-    │       ├── site-header.html  Sticky nav, search overlay, language switcher, page header band
-    │       ├── event-card.html   Single event card — accepts a YAML event object as context
-    │       ├── news-card.html    Single news card — call with (dict "page" . "heading" "h2" "truncate" 160)
-    │       └── section-header.html  Section label + h2 + optional "see all" link — call with (dict "label" … "title" … "linkURL" … "linkText" …)
-    └── static/
-        ├── docs/
-        │   ├── policy-manual-en.pdf / policy-manual-fr.pdf
-        │   ├── bylaws-en.pdf / bylaws-fr.pdf
-        │   ├── strategic-plan-en.pdf / strategic-plan-fr.pdf
-        │   ├── agm-minutes/    2012.pdf … YYYY.pdf (one per season start year)
-        │   └── archived/       Previous combined policy manual — stored, not linked
-        ├── images/
-        │   ├── logo-color.svg    Used on light backgrounds
-        │   ├── logo-white.svg    Used on dark/teal backgrounds (hero, etc.) and in dark mode nav
-        │   ├── clubs/            Member club logos (club-logo-{ID}.{ext})
-        │   └── hero/             Hero carousel images (hero1.jpg … heroN.jpg)
-        └── js/
-            ├── hero-slider.js       Homepage hero carousel (auto-advance + prev/next)
-            ├── events-calendar.js   Events calendar page (JS month grid)
-            └── events-schedule.js   Season schedule page (season toggle + category filters)
-```
-
----
-
 ## Scripts
 
 Utility scripts live in `scripts/`. They are independent of the Hugo build — run them from the repo root with `python3 scripts/<name>.py`.
@@ -438,3 +314,127 @@ Two URLs in `data/join.yaml` need updating at the start of each season:
 
 - `membership_url` — the 2MEV registration portal URL (includes the season slug, e.g. `fencing-nb-2025-2026`); update when 2MEV creates the new season's registration page
 - `club_form_url` — the Google Form URL for club registration; leave blank to fall back to an email CTA (the clubs layout handles the empty case automatically)
+
+---
+
+## Project layout
+
+```
+hugo-testing/
+├── CLAUDE.md              Process instructions for Claude
+├── DEVELOPMENT.md         Branch strategy and build commands
+├── STYLE_GUIDE.md         Brand, CSS, and content conventions
+├── TODO.md                Outstanding items — keep current
+├── plans/                 Design decisions and deferred plans
+├── README.md              This file
+├── scripts/               Utility scripts (see Scripts section below)
+│   ├── fencingtimelive-results.py   Fetch tournament results and find NB fencers
+│   ├── output/            Generated JSON output — gitignored, not committed
+│   └── .browser-profile/  Saved Chrome session for fencingtimelive.com login — gitignored
+└── fenb-1/                Hugo site root
+    ├── hugo.toml           Site config, languages, nav menus
+    ├── assets/
+    │   └── ananke/css/
+    │       ├── fenb-base.css       Variables, reset, shared utilities, buttons
+    │       ├── fenb-nav.css        Nav, search overlay, page header band
+    │       ├── fenb-hero.css       Hero section and animations
+    │       ├── fenb-events.css     Event cards, tags, calendar page
+    │       ├── fenb-news.css       News cards, article layout, 404 page
+    │       ├── fenb-clubs.css      Programs quick-links, clubs page
+    │       ├── fenb-about.css      About page, policies page
+    │       ├── fenb-schedule.css   Season schedule page
+    │       ├── fenb-join.css       Join & Register section (landing, membership, clubs, volunteer)
+    │       └── fenb-responsive.css All breakpoints and print query (loaded last)
+    ├── content/            Section indexes: _index.md (EN) + _index.fr.md (FR)
+    │   │                   Article files: {name}.en.md (EN) + {name}.fr.md (FR)
+    │   ├── _index.md       Homepage (EN)
+    │   ├── _index.fr.md    Homepage (FR)
+    │   ├── about/
+    │   │   ├── _index.md               About section (EN)
+    │   │   ├── _index.fr.md            About section (FR)
+    │   │   ├── policies-and-reports.en.md
+    │   │   ├── policies-and-reports.fr.md
+    │   │   └── policies/               Individual policy pages (EN + FR pairs)
+    │   │       ├── safe-sport.en.md
+    │   │       ├── safe-sport.fr.md
+    │   │       └── … (one slug.en.md + slug.fr.md per policy)
+    │   ├── clubs/
+    │   │   ├── _index.md      Clubs list page (EN)
+    │   │   └── _index.fr.md   Clubs list page (FR)
+    │   ├── join/
+    │   │   ├── _index.md           Join landing page (EN)
+    │   │   ├── _index.fr.md        Join landing page (FR)
+    │   │   ├── membership.en.md    Individual membership (EN) — layout: membership
+    │   │   ├── membership.fr.md    Individual membership (FR) — layout: membership
+    │   │   ├── clubs.en.md         Club registration (EN) — layout: clubs
+    │   │   ├── clubs.fr.md         Club registration (FR) — layout: clubs
+    │   │   ├── volunteer.en.md     Volunteer (EN) — layout: volunteer
+    │   │   └── volunteer.fr.md     Volunteer (FR) — layout: volunteer
+    │   ├── events/
+    │   │   ├── _index.md         Events section (EN)
+    │   │   ├── _index.fr.md      Events section (FR)
+    │   │   ├── schedule.en.md    Season schedule page (EN)
+    │   │   └── schedule.fr.md    Season schedule page (FR)
+    │   └── news/
+    │       ├── _index.md      News section (EN)
+    │       ├── _index.fr.md   News section (FR)
+    │       └── 2026/          One subfolder per calendar year
+    │           ├── _index.md
+    │           ├── _index.fr.md
+    │           ├── apr-05-nb-athletes-nationals.en.md
+    │           └── apr-05-nb-athletes-nationals.fr.md
+    ├── data/
+    │   ├── events.yaml        Current season's event calendar (drives homepage + /events/)
+    │   ├── events_archive/    Past seasons — moved here at season rollover (see plans/)
+    │   ├── clubs.yaml         Member club data (drives /clubs/ page)
+    │   ├── board.yaml         Board of directors; also holds founder photo info and affiliations (drives /about/)
+    │   ├── programs.yaml      Homepage quick-link cards (URLs + accent flag for the join card)
+    │   ├── policies.yaml      Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
+    │   ├── join.yaml          Join section seasonal URLs (2MEV membership portal, club registration form)
+    │   └── hero_slides.yaml   Hero carousel image list (drives homepage slider)
+    ├── i18n/
+    │   ├── en.yaml         English UI strings
+    │   └── fr.yaml         French UI strings
+    ├── layouts/
+    │   ├── index.html      Custom homepage (hero, events, news, programs)
+    │   ├── 404.html        Custom 404 (JS detects /fr/ and switches language)
+    │   ├── about/
+    │   │   ├── list.html   About page (overview, history, mission, board grid, contact)
+    │   │   ├── single.html Policies & Reports page (sidebar TOC + policy/report lists)
+    │   │   └── policies/
+    │   │       └── single.html  Individual policy page (sidebar back-link + language switcher)
+    │   ├── clubs/
+    │   │   └── list.html   Custom clubs page (grid + map + registration CTA)
+    │   ├── join/
+    │   │   ├── list.html        Join landing page (three path cards)
+    │   │   ├── membership.html  Individual membership (2MEV CTA, type cards, steps)
+    │   │   ├── clubs.html       Club registration (requirements, benefits, form CTA)
+    │   │   └── volunteer.html   Volunteer opportunities (role groups, apply CTA)
+    │   ├── events/
+    │   │   ├── list.html     Events calendar (JS month grid + category legend sidebar)
+    │   │   └── schedule.html Season schedule (server-rendered list + filter sidebar)
+    │   ├── news/
+    │   │   ├── list.html   News index (card grid, paginates recursively across year folders)
+    │   │   └── single.html News article (2-col: article | recent-news sidebar)
+    │   └── partials/
+    │       ├── site-header.html  Sticky nav, search overlay, language switcher, page header band
+    │       ├── event-card.html   Single event card — accepts a YAML event object as context
+    │       ├── news-card.html    Single news card — call with (dict "page" . "heading" "h2" "truncate" 160)
+    │       └── section-header.html  Section label + h2 + optional "see all" link — call with (dict "label" … "title" … "linkURL" … "linkText" …)
+    └── static/
+        ├── docs/
+        │   ├── policy-manual-en.pdf / policy-manual-fr.pdf
+        │   ├── bylaws-en.pdf / bylaws-fr.pdf
+        │   ├── strategic-plan-en.pdf / strategic-plan-fr.pdf
+        │   ├── agm-minutes/    2012.pdf … YYYY.pdf (one per season start year)
+        │   └── archived/       Previous combined policy manual — stored, not linked
+        ├── images/
+        │   ├── logo-color.svg    Used on light backgrounds
+        │   ├── logo-white.svg    Used on dark/teal backgrounds (hero, etc.) and in dark mode nav
+        │   ├── clubs/            Member club logos (club-logo-{ID}.{ext})
+        │   └── hero/             Hero carousel images (hero1.jpg … heroN.jpg)
+        └── js/
+            ├── hero-slider.js       Homepage hero carousel (auto-advance + prev/next)
+            ├── events-calendar.js   Events calendar page (JS month grid)
+            └── events-schedule.js   Season schedule page (season toggle + category filters)
+```
