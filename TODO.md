@@ -41,8 +41,8 @@ All four join pages need a visual review in the dev server before release. Key i
 ### Programs — follow-up required
 
 - [ ] **Athlete Development — armband document links** — `layouts/programs/athlete-development.html` has 4 `href="#"` placeholders for CFF armband program PDFs (general + épée/foil/sabre appendices). Replace with actual CFF document URLs when available.
-- [ ] **CWG 2027 — document links** — `layouts/programs/canada-winter-games.html` has 4 `href="#"` placeholders: two team plan PDFs (EN/FR) and two rankings links (CWG 2027 athlete rankings + U17 spreadsheet). Replace with actual URLs when available.
-- [ ] **Inline style cleanup** — `layouts/programs/athlete-development.html` and `layouts/programs/canada-winter-games.html` have a few inline `style=` attributes for spacing/font-size; move to `fenb-programs.css` classes.
+- [x] **CWG 2027 — document links** — page renamed to `canada-games-2027`; Team Plan PDFs (EN/FR) served from `static/documents/canada-games/`; rankings spreadsheet linked directly; financial assistance form linked.
+- [ ] **Inline style cleanup** — `layouts/programs/athlete-development.html` has a few inline `style=` attributes for spacing/font-size; move to `fenb-programs.css` classes.
 
 ### Programs — page-by-page design and content review
 
@@ -51,7 +51,7 @@ All seven pages need a full review pass for both style and content quality befor
 - [ ] **`/programs/` (landing)** — 6-card grid. Check card heights even out across rows, icons are legible, hover states work, responsive collapse to 2-col then 1-col looks right.
 - [ ] **`/programs/athlete-development/`** — LTAD intro, 10-factor 2-column list, armband program section. Check 2-col factor list wraps cleanly on mobile; consider whether the factor list needs more visual weight (e.g. numbered cards vs plain list).
 - [ ] **`/programs/coach-training/`** — 3-column streams grid. Assess whether the three columns have readable line lengths; review level descriptions for accuracy; check the teal contact CTA banner at bottom.
-- [ ] **`/programs/canada-winter-games/`** — eligibility card, document links (all `href="#"` placeholders), rankings links. Review once real document URLs are available; assess whether the page needs more context about the selection timeline.
+- [ ] **`/programs/canada-games-2027/`** — major rebuild complete (logos, sidebar, key dates, financial assistance, rankings with points description). Review logo sizing, responsive two-column layout on mobile, and French translation quality.
 - [ ] **`/programs/referee-development/`** — numbered elements list, 2-column club/provincial cards. The provincial card is significantly longer than the club card — assess whether the layout should stack rather than sit side-by-side on desktop.
 - [ ] **`/programs/secretariat-development/`** — 7-card duties grid + mission blockquote. Check grid auto-fit behaviour (may produce a single orphan card in the last row); review blockquote styling.
 - [ ] **`/programs/armourer-development/`** — 2×2 sections grid. Straightforward but check card body text doesn't overflow on narrow viewports; review content length balance across the four cards.
