@@ -47,6 +47,19 @@
   margin-bottom: 0.35rem;
 }
 
+.fenb-programs-card-icon--pill {
+  background: #ffffff;
+  border: 1.5px solid var(--teal-pale);
+  border-radius: 24px;
+  width: 72px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] .fenb-programs-card-icon--pill { border-color: transparent; }
+
 .fenb-programs-card-link h2 {
   font-size: 1.1rem;
   font-weight: 700;
@@ -214,7 +227,219 @@
   line-height: 1.6;
 }
 
-/* ── Canada Winter Games ──────────────────────────── */
+/* ── Canada Games 2027 ────────────────────────────── */
+.fenb-cwg-logos {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+
+.fenb-cwg-logo--cg {
+  height: 130px;
+  width: auto;
+}
+.fenb-cwg-logo--qc {
+  height: 130px;
+  width: auto;
+}
+
+
+.fenb-cwg-layout {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.fenb-cwg-financial-link {
+  margin-top: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.025em;
+  color: var(--teal);
+  border: 2px solid var(--teal);
+  background: transparent;
+  transition: background var(--transition), color var(--transition);
+}
+.fenb-cwg-financial-link:hover {
+  background: var(--teal);
+  color: #fff;
+}
+
+.fenb-cwg-sublabel {
+  margin-top: 0.25rem;
+}
+.fenb-cwg-subheading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0.35rem 0 0;
+}
+
+.fenb-cwg-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-left: 2px solid var(--light-gray);
+  margin-left: 0.75rem;
+}
+.fenb-cwg-timeline-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.6rem 0 0.6rem 1.25rem;
+  position: relative;
+}
+.fenb-cwg-timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  border: 2px solid var(--teal);
+}
+.fenb-cwg-timeline-item--past::before {
+  background: var(--text-muted);
+  border-color: var(--text-muted);
+}
+.fenb-cwg-timeline-item--games::before {
+  width: 12px;
+  height: 12px;
+  left: -7px;
+  background: var(--crimson, #c0392b);
+  border-color: var(--crimson, #c0392b);
+}
+.fenb-cwg-timeline-date {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 110px;
+  flex-shrink: 0;
+}
+.fenb-cwg-timeline-label {
+  font-size: 0.875rem;
+  color: var(--text-dark);
+  line-height: 1.4;
+}
+.fenb-cwg-timeline-item--past .fenb-cwg-timeline-label {
+  color: var(--text-muted);
+}
+.fenb-cwg-timeline-item--games .fenb-cwg-timeline-label {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.fenb-cwg-points-heading {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin: 1.25rem 0 0.3rem;
+}
+.fenb-cwg-points-body {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0 0 0.3rem;
+}
+.fenb-cwg-scaling-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0.25rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.fenb-cwg-scaling-list li {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding-left: 1rem;
+  position: relative;
+}
+.fenb-cwg-scaling-list li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+}
+.fenb-cwg-points-note {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 1rem 0 1.25rem;
+  font-style: italic;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--light-gray);
+}
+
+.fenb-cwg-rankings-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0;
+}
+
+.fenb-cwg-sidebar-card {
+  background: var(--off-white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.25rem;
+  position: sticky;
+  top: 5rem;
+}
+.fenb-cwg-sidebar-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 0 0 0.85rem;
+}
+.fenb-cwg-sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.fenb-cwg-sidebar-links li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  color: var(--teal);
+  text-decoration: none;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--light-gray);
+  transition: color var(--transition);
+}
+.fenb-cwg-sidebar-links li:last-child a { border-bottom: none; }
+.fenb-cwg-sidebar-links li a:hover { color: var(--teal-dark); text-decoration: underline; }
+.fenb-cwg-sidebar-divider {
+  height: 0.75rem;
+}
+
+.fenb-programs-card-picto {
+  display: block;
+}
+
+/* ── Canada Winter Games (legacy shared card) ─────── */
 .fenb-program-info-card {
   background: var(--white);
   border: 1px solid var(--light-gray);
@@ -228,6 +453,21 @@
   color: var(--text-muted);
   line-height: 1.7;
   margin: 0;
+}
+
+.fenb-cwg-card-sep {
+  border: none;
+  border-top: 1px solid var(--light-gray);
+  margin: 1.5rem 0;
+}
+.fenb-cwg-card-subheading {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 0.5rem;
+}
+.fenb-cwg-card-links {
+  margin: 0.75rem 0 0 !important;
 }
 
 .fenb-program-links-list {
@@ -393,7 +633,14 @@
 }
 
 /* ── Dark mode ────────────────────────────────────── */
-[data-theme="dark"] .fenb-programs-card-link { background: var(--white); }
+[data-theme="dark"] .fenb-cwg-sidebar-card { background: var(--off-white); border-color: var(--light-gray); }
+[data-theme="dark"] .fenb-cwg-sidebar-label { color: var(--teal-light); }
+[data-theme="dark"] .fenb-cwg-sidebar-links li a { color: var(--teal-light); border-color: var(--light-gray); }
+[data-theme="dark"] .fenb-cwg-financial-link { color: var(--teal-light); border-color: var(--teal-light); }
+[data-theme="dark"] .fenb-cwg-financial-link:hover { background: var(--teal-light); color: var(--white); }
+[data-theme="dark"] .fenb-cwg-points-heading { color: var(--teal-light); }
+
+[data-theme="dark"] .fenb-programs-card-link { background: var(--off-white); }
 [data-theme="dark"] .fenb-programs-card-link:hover { border-color: var(--teal-light); }
 [data-theme="dark"] .fenb-programs-card-icon { color: var(--teal-light); }
 [data-theme="dark"] .fenb-programs-card-cta { color: var(--teal-light); }
@@ -401,21 +648,23 @@
 [data-theme="dark"] .fenb-program-back a { color: var(--teal-light); }
 [data-theme="dark"] .fenb-program-note { border-left-color: var(--teal-light); }
 [data-theme="dark"] .fenb-program-mission { border-left-color: var(--teal-light); }
-[data-theme="dark"] .fenb-coach-stream { background: var(--white); }
+[data-theme="dark"] .fenb-coach-stream { background: var(--off-white); }
 [data-theme="dark"] .fenb-coach-stream-title { color: var(--teal-light); }
-[data-theme="dark"] .fenb-program-info-card { background: var(--white); }
+[data-theme="dark"] .fenb-program-info-card { background: var(--off-white); }
 [data-theme="dark"] .fenb-program-links-list li a { color: var(--teal-light); }
 [data-theme="dark"] .fenb-program-resource-links li a { color: var(--teal-light); }
-[data-theme="dark"] .fenb-referee-level-card { background: var(--white); }
+[data-theme="dark"] .fenb-referee-level-card { background: var(--off-white); }
 [data-theme="dark"] .fenb-referee-part h4 { color: var(--teal-light); }
-[data-theme="dark"] .fenb-program-duty-card { background: var(--white); }
-[data-theme="dark"] .fenb-armourer-section-card { background: var(--white); }
+[data-theme="dark"] .fenb-program-duty-card { background: var(--off-white); }
+[data-theme="dark"] .fenb-armourer-section-card { background: var(--off-white); }
 
 /* ── Responsive ───────────────────────────────────── */
 @media (max-width: 900px) {
   .fenb-programs-cards { grid-template-columns: repeat(2, 1fr); }
   .fenb-coach-streams { grid-template-columns: 1fr; }
   .fenb-armourer-sections { grid-template-columns: 1fr; }
+  .fenb-cwg-layout { grid-template-columns: 1fr; }
+  .fenb-cwg-sidebar-card { position: static; }
 }
 @media (max-width: 700px) {
   .fenb-referee-levels { grid-template-columns: 1fr; }
