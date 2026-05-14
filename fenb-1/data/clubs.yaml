@@ -1,3 +1,5 @@
+# Member clubs — used by layouts/clubs/list.html
+# Logos live in static/images/clubs/. website is optional; omit if none.
 clubs:
   - id: BSE
     name: "Beaches Sabre Club East"

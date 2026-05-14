@@ -1,0 +1,20 @@
+{{- /*
+  Renders an inline SVG from static/images/svg/<name>.svg.
+  Parameters:
+    name  (required) — filename without .svg extension
+    w     (optional) — width  in px, injected into the <svg> tag
+    h     (optional) — height in px, injected into the <svg> tag
+    class (optional) — CSS class(es) injected into the <svg> tag
+*/ -}}
+{{- $svg := readFile (printf "static/images/svg/%s" .name) -}}
+{{- $inject := "" -}}
+{{- if and .w .h -}}
+  {{- $inject = printf `width="%d" height="%d" ` .w .h -}}
+{{- end -}}
+{{- with .class -}}
+  {{- $inject = printf `%sclass="%s" ` $inject . -}}
+{{- end -}}
+{{- if $inject -}}
+  {{- $svg = replace $svg "<svg " (printf "<svg %s" $inject) -}}
+{{- end -}}
+{{- $svg | safeHTML -}}

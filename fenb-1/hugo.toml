@@ -17,6 +17,7 @@ theme = 'ananke'
     "fenb-about.css",
     "fenb-schedule.css",
     "fenb-join.css",
+    "fenb-programs.css",
     "fenb-responsive.css",
   ]
   background_color_class = "bg-fenb-teal"

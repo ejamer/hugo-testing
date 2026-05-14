@@ -1,0 +1,198 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-program-page fenb-cwg-page">
+  <div class="fenb-container fenb-container--narrow">
+
+    <div class="fenb-program-back">
+      <a href="{{ "/programs/" | relLangURL }}">&larr; {{ i18n "programs_back" }}</a>
+    </div>
+
+    {{/* ── Logos (full-width above columns) ── */}}
+    <div class="fenb-cwg-logos">
+      <img src="{{ "images/canada-games/cg-logo-horizontal.png" | relURL }}"
+           data-src-light="{{ "images/canada-games/cg-logo-horizontal.png" | absURL }}"
+           data-src-dark="{{ "images/canada-games/cg-logo-horizontal-white.png" | absURL }}"
+           alt="{{ i18n "programs_cwg_cg_logo_alt" }}"
+           class="fenb-cwg-logo fenb-cwg-logo--cg fenb-cwg-theme-logo">
+      <img src="{{ "images/canada-games/qc2027-logo-horizontal.png" | relURL }}"
+           data-src-light="{{ "images/canada-games/qc2027-logo-horizontal.png" | absURL }}"
+           data-src-dark="{{ "images/canada-games/qc2027-logo-horizontal-dark.png" | absURL }}"
+           alt="{{ i18n "programs_cwg_qc_logo_alt" }}"
+           class="fenb-cwg-logo fenb-cwg-logo--qc fenb-cwg-theme-logo">
+    </div>
+    <script>
+    (function () {
+      function updateCwgLogos() {
+        var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.querySelectorAll('.fenb-cwg-theme-logo').forEach(function (img) {
+          img.src = dark ? img.dataset.srcDark : img.dataset.srcLight;
+        });
+      }
+      updateCwgLogos();
+      new MutationObserver(updateCwgLogos).observe(
+        document.documentElement,
+        { attributes: true, attributeFilter: ['data-theme'] }
+      );
+    })();
+    </script>
+
+    {{/* ── Two-column layout: main content + sidebar ── */}}
+    <div class="fenb-cwg-layout">
+
+      <div class="fenb-cwg-main">
+
+        {{/* ── Intro ── */}}
+        <p class="fenb-program-intro fenb-cwg-intro-text">{{ i18n "programs_cwg_intro" }}</p>
+
+        {{/* ── Who Can Participate ── */}}
+        <p class="fenb-section-label">{{ i18n "programs_cwg_elig_label" }}</p>
+        <h2 class="fenb-section-title">{{ i18n "programs_cwg_elig_title" }}</h2>
+        <div class="fenb-program-info-card">
+          <p>{{ i18n "programs_cwg_elig_body" }}</p>
+
+          <div class="fenb-cwg-card-sep"></div>
+
+          <p>{{ i18n "programs_cwg_docs_body" }}</p>
+          <ul class="fenb-program-links-list fenb-cwg-card-links">
+            <li>
+              <a href="{{ "documents/canada-games/team-plan-en.pdf" | relURL }}" target="_blank" rel="noopener noreferrer">
+                {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
+                {{ i18n "programs_cwg_team_plan_en" }}
+              </a>
+            </li>
+            <li>
+              <a href="{{ "documents/canada-games/team-plan-fr.pdf" | relURL }}" target="_blank" rel="noopener noreferrer">
+                {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
+                {{ i18n "programs_cwg_team_plan_fr" }}
+              </a>
+            </li>
+          </ul>
+
+          <div class="fenb-cwg-card-sep"></div>
+
+          <h4 class="fenb-cwg-card-subheading">{{ i18n "programs_cwg_financial_title" }}</h4>
+          <p>{{ i18n "programs_cwg_financial_body" }}</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLWeIKFk1wdT0Mbjvy4YpH-aSO-xm8uHJZVWFE66_Kw1vjoA/viewform"
+             target="_blank" rel="noopener noreferrer"
+             class="fenb-btn fenb-cwg-financial-link">
+            {{ i18n "programs_cwg_financial_link" }} &rarr;
+          </a>
+        </div>
+
+        {{/* ── Key Dates ── */}}
+        <p class="fenb-section-label">{{ i18n "programs_cwg_dates_label" }}</p>
+        <h2 class="fenb-section-title">{{ i18n "programs_cwg_dates_title" }}</h2>
+        <ol class="fenb-cwg-timeline">
+          <li class="fenb-cwg-timeline-item fenb-cwg-timeline-item--past">
+            <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_tsq_closed_when" }}</span>
+            <span class="fenb-cwg-timeline-label">{{ i18n "programs_cwg_date_tsq_closed" }}</span>
+          </li>
+          <li class="fenb-cwg-timeline-item fenb-cwg-timeline-item--past">
+            <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_staff_when" }}</span>
+            <span class="fenb-cwg-timeline-label">{{ i18n "programs_cwg_date_staff" }}</span>
+          </li>
+          <li class="fenb-cwg-timeline-item fenb-cwg-timeline-item--past">
+            <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_late_entry_when" }}</span>
+            <span class="fenb-cwg-timeline-label">{{ i18n "programs_cwg_date_late_entry" }}</span>
+          </li>
+          <li class="fenb-cwg-timeline-item">
+            <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_core_when" }}</span>
+            <span class="fenb-cwg-timeline-label">{{ i18n "programs_cwg_date_core" }}</span>
+          </li>
+          <li class="fenb-cwg-timeline-item">
+            <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_final_when" }}</span>
+            <span class="fenb-cwg-timeline-label">{{ i18n "programs_cwg_date_final" }}</span>
+          </li>
+          <li class="fenb-cwg-timeline-item fenb-cwg-timeline-item--games">
+            <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_games_when" }}</span>
+            <span class="fenb-cwg-timeline-label">{{ i18n "programs_cwg_date_games" }}</span>
+          </li>
+        </ol>
+
+        {{/* ── Athlete Rankings ── */}}
+        <p class="fenb-section-label">{{ i18n "programs_cwg_rankings_label" }}</p>
+        <h2 class="fenb-section-title">{{ i18n "programs_cwg_rankings_title" }}</h2>
+        <div class="fenb-program-info-card">
+          <p>{{ i18n "programs_cwg_rankings_body_intro" }}</p>
+
+          <h4 class="fenb-cwg-points-heading">{{ i18n "programs_cwg_rankings_p1_heading" }}</h4>
+          <p class="fenb-cwg-points-body">{{ i18n "programs_cwg_rankings_p1_body" }}</p>
+
+          <h4 class="fenb-cwg-points-heading">{{ i18n "programs_cwg_rankings_p2_heading" }}</h4>
+          <p class="fenb-cwg-points-body">{{ i18n "programs_cwg_rankings_p2_body" }}</p>
+
+          <h4 class="fenb-cwg-points-heading">{{ i18n "programs_cwg_rankings_p3_heading" }}</h4>
+          <p class="fenb-cwg-points-body">{{ i18n "programs_cwg_rankings_p3_body" }}</p>
+          <ul class="fenb-cwg-scaling-list">
+            <li>{{ i18n "programs_cwg_rankings_scale_local" }}</li>
+            <li>{{ i18n "programs_cwg_rankings_scale_regional" }}</li>
+            <li>{{ i18n "programs_cwg_rankings_scale_national" }}</li>
+          </ul>
+
+          <p class="fenb-cwg-points-note">{{ i18n "programs_cwg_rankings_points_note" }}</p>
+
+          <a href="https://docs.google.com/spreadsheets/d/1bXPWEDCEGpDcTOufhtHJ6ZuYdDx-Kaqe/edit?gid=1189192189#gid=1189192189"
+             target="_blank" rel="noopener noreferrer"
+             class="fenb-btn fenb-btn-teal fenb-cwg-rankings-cta">
+            {{ partial "icon.html" (dict "name" "activity.svg" "w" 16 "h" 16) }}
+            {{ i18n "programs_cwg_rankings_cwg" }}
+          </a>
+        </div>
+
+      </div>{{/* /fenb-cwg-main */}}
+
+      {{/* ── Sidebar ── */}}
+      <aside class="fenb-cwg-sidebar">
+        <div class="fenb-cwg-sidebar-card">
+          <p class="fenb-cwg-sidebar-label">{{ i18n "programs_cwg_sidebar_label" }}</p>
+          <ul class="fenb-cwg-sidebar-links">
+            <li>
+              <a href="https://www.canadagames.ca/" target="_blank" rel="noopener noreferrer">
+                {{ i18n "programs_cwg_sidebar_cg" }}
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
+              </a>
+            </li>
+            <li>
+              <a href="https://www.canadagames.ca/future-games/quebec-2027" target="_blank" rel="noopener noreferrer">
+                {{ i18n "programs_cwg_sidebar_cg_qc" }}
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
+              </a>
+            </li>
+            <li>
+              <a href="https://www.canadagames.ca/teams/new-brunswick" target="_blank" rel="noopener noreferrer">
+                {{ i18n "programs_cwg_sidebar_cg_nb" }}
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
+              </a>
+            </li>
+            <li class="fenb-cwg-sidebar-divider"></li>
+            <li>
+              <a href="https://www.jeuxducanada2027.ca/" target="_blank" rel="noopener noreferrer">
+                {{ i18n "programs_cwg_sidebar_qc" }}
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
+              </a>
+            </li>
+            <li>
+              <a href="https://www.jeuxducanada2027.ca/en/sports/escrime" target="_blank" rel="noopener noreferrer">
+                {{ i18n "programs_cwg_sidebar_qc_fencing" }}
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
+              </a>
+            </li>
+            <li class="fenb-cwg-sidebar-divider"></li>
+            <li>
+              <a href="https://www.teamnb.ca/" target="_blank" rel="noopener noreferrer">
+                {{ i18n "programs_cwg_sidebar_teamnb" }}
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>{{/* /fenb-cwg-layout */}}
+
+  </div>
+</section>
+
+{{ end }}

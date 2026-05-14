@@ -11,7 +11,7 @@
     <h3 class="fenb-event-title">{{ .title }}</h3>
     <p class="fenb-event-date-range">{{ .display_date }}</p>
     <p class="fenb-event-meta">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      {{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}
       {{ .venue }}, {{ .location }}
     </p>
     {{ if .details_url }}

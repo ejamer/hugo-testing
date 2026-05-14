@@ -1,0 +1,48 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-program-page">
+  <div class="fenb-container fenb-container--narrow">
+
+    <div class="fenb-program-back">
+      <a href="{{ "/programs/" | relLangURL }}">&larr; {{ i18n "programs_back" }}</a>
+    </div>
+
+    {{/* ── Overview ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_armourer_label" }}</p>
+    <p class="fenb-program-intro">{{ i18n "programs_armourer_intro" }}</p>
+
+    {{/* ── Four Responsibility Areas ── */}}
+    <div class="fenb-armourer-sections">
+
+      <div class="fenb-armourer-section-card">
+        <p class="fenb-section-label">{{ i18n "programs_armourer_pre_label" }}</p>
+        <h3>{{ i18n "programs_armourer_pre_title" }}</h3>
+        <p>{{ i18n "programs_armourer_pre_body" }}</p>
+      </div>
+
+      <div class="fenb-armourer-section-card">
+        <p class="fenb-section-label">{{ i18n "programs_armourer_during_label" }}</p>
+        <h3>{{ i18n "programs_armourer_during_title" }}</h3>
+        <p>{{ i18n "programs_armourer_during_body" }}</p>
+      </div>
+
+      <div class="fenb-armourer-section-card">
+        <p class="fenb-section-label">{{ i18n "programs_armourer_safety_label" }}</p>
+        <h3>{{ i18n "programs_armourer_safety_title" }}</h3>
+        <p>{{ i18n "programs_armourer_safety_body" }}</p>
+      </div>
+
+      <div class="fenb-armourer-section-card">
+        <p class="fenb-section-label">{{ i18n "programs_armourer_club_label" }}</p>
+        <h3>{{ i18n "programs_armourer_club_title" }}</h3>
+        <p>{{ i18n "programs_armourer_club_body" }}</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{{ end }}
