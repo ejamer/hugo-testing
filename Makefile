@@ -1,10 +1,10 @@
 serve:
-	cd fenb-1 && /snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk
+	cd fenb-1 && /snap/bin/hugo && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk --disableFastRender
 
-build:
+build: clean
 	cd fenb-1 && /snap/bin/hugo
 
-build-prod:
+build-prod: clean
 	cd fenb-1 && /snap/bin/hugo --environment production --minify && npx pagefind --site public
 
 clean:
