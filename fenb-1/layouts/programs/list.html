@@ -1,0 +1,29 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-programs-landing">
+  <div class="fenb-container fenb-container--narrow">
+    <p class="fenb-section-label">{{ i18n "programs_landing_label" }}</p>
+    <p class="fenb-programs-landing-intro">{{ i18n "programs_landing_intro" }}</p>
+
+    <div class="fenb-programs-cards">
+      {{ range hugo.Data.program_cards.program_cards }}
+      <a href="{{ .url | relLangURL }}" class="fenb-programs-card-link">
+        <div class="fenb-programs-card-icon fenb-programs-card-icon--pill">
+          {{ if .icon }}
+            {{ partial "icon.html" (dict "name" .icon "w" .icon_size "h" .icon_size) }}
+          {{ else if .img }}
+            <img src="{{ .img | relURL }}" alt="" height="38" aria-hidden="true" class="fenb-programs-card-picto">
+          {{ end }}
+        </div>
+        <h2>{{ i18n (printf "programs_card_%s_title" .id) }}</h2>
+        <p>{{ i18n (printf "programs_card_%s_desc" .id) }}</p>
+        <span class="fenb-programs-card-cta">{{ i18n (printf "programs_card_%s_cta" .id) }} &rarr;</span>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ end }}

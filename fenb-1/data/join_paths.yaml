@@ -1,0 +1,13 @@
+# Join landing page cards — used by layouts/join/list.html
+# icon: filename in static/images/svg/ — rendered via partials/icon.html.
+# Text comes from i18n keys: join_path_{id}_title / _desc / _cta
+join_paths:
+  - id: membership
+    url: /join/membership/
+    icon: users.svg
+  - id: clubs
+    url: /join/clubs/
+    icon: home.svg
+  - id: volunteer
+    url: /join/volunteer/
+    icon: heart.svg

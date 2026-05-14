@@ -36,8 +36,10 @@ Show the user a brief summary of the pending changes (`git diff --stat HEAD`), t
 If the user picks **"Continue on dev":** continue to Step 3.
 
 If the user picks **"Create a new branch":** use `AskUserQuestion` again to ask for the branch name:
-- **Question:** "Enter a branch name (kebab-case, e.g. feature/events-fix)"
-- **Option 1:** `"feature/my-changes"` — they will likely choose Other and type their own name
+- **Question:** "Enter a branch name (format: feat/one-or-two-words, e.g. feat/programs, feat/coach-page)"
+- **Option 1:** `"feat/my-feature"` — they will likely choose Other and type their own name
+
+Branch naming rules: prefix `feat/`, followed by one or two words (dashes allowed, no slashes). Example: `feat/programs`, `feat/event-archive`. Note: `dev/` cannot be used as a prefix because a branch named `dev` already exists in this repo.
 
 Take the name they provide (or their Other input), run `git checkout -b <name>`, report the new branch name, and continue to Step 3.
 

@@ -381,7 +381,7 @@ events:
     category: "competition"
     category_label: "Competition"
     description: "Youth division."
-    details_url: ""
+    details_url: "https://fencing.ca/event/2026-may-nationals-quebec-city/"
     registration_url: ""
 
   - title: "CC #4 — May Nationals"

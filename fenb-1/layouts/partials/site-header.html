@@ -20,57 +20,26 @@
                 aria-expanded="false"
                 aria-controls="fenb-search-overlay"
                 data-lang="{{ .Site.Language.Lang }}">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
+          {{ partial "icon.html" (dict "name" "search.svg" "w" 21 "h" 21) }}
         </button>
         <div class="fenb-theme-wrap">
           <button class="fenb-theme-toggle" id="fenb-theme-toggle"
                   aria-haspopup="menu" aria-expanded="false" aria-label="Theme">
-            <svg class="fenb-theme-icon fenb-theme-icon--sun" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="5"></circle>
-              <line x1="12" y1="1" x2="12" y2="3"></line>
-              <line x1="12" y1="21" x2="12" y2="23"></line>
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-              <line x1="1" y1="12" x2="3" y2="12"></line>
-              <line x1="21" y1="12" x2="23" y2="12"></line>
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-            </svg>
-            <svg class="fenb-theme-icon fenb-theme-icon--moon" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-            <svg class="fenb-theme-icon fenb-theme-icon--system" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="3" width="20" height="14" rx="2"></rect>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
+            {{ partial "icon.html" (dict "name" "sun.svg" "w" 21 "h" 21 "class" "fenb-theme-icon fenb-theme-icon--sun") }}
+            {{ partial "icon.html" (dict "name" "moon.svg" "w" 21 "h" 21 "class" "fenb-theme-icon fenb-theme-icon--moon") }}
+            {{ partial "icon.html" (dict "name" "monitor.svg" "w" 21 "h" 21 "class" "fenb-theme-icon fenb-theme-icon--system") }}
           </button>
           <div class="fenb-theme-menu" id="fenb-theme-menu" role="menu" aria-hidden="true">
             <button class="fenb-theme-option" role="menuitem" data-pref="light">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-              </svg>
+              {{ partial "icon.html" (dict "name" "sun.svg" "w" 16 "h" 16) }}
               {{ i18n "theme_light" }}
             </button>
             <button class="fenb-theme-option" role="menuitem" data-pref="dark">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-              </svg>
+              {{ partial "icon.html" (dict "name" "moon.svg" "w" 16 "h" 16) }}
               {{ i18n "theme_dark" }}
             </button>
             <button class="fenb-theme-option" role="menuitem" data-pref="system">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="3" width="20" height="14" rx="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
+              {{ partial "icon.html" (dict "name" "monitor.svg" "w" 16 "h" 16) }}
               {{ i18n "theme_system" }}
             </button>
           </div>
@@ -105,10 +74,7 @@
         <div class="fenb-search-row">
           <div id="fenb-search"></div>
           <button class="fenb-search-close" id="fenb-search-close" aria-label="Close search">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
+            {{ partial "icon.html" (dict "name" "close.svg" "w" 20 "h" 20) }}
           </button>
         </div>
       </div>

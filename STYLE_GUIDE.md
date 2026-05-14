@@ -195,6 +195,50 @@ cascade:
 
 ---
 
+## Icon system
+
+All decorative SVG icons live in `fenb-1/static/images/svg/` as individual files. Icons use `viewBox` only — no `width` or `height` attributes — and include `aria-hidden="true"`. Size is always set at the callsite.
+
+### Rendering icons in templates
+
+Use the `icon.html` partial when you need to control size or inject a CSS class:
+
+```html
+{{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}
+{{ partial "icon.html" (dict "name" "sun.svg" "w" 21 "h" 21 "class" "fenb-theme-icon fenb-theme-icon--sun") }}
+```
+
+For data-file-driven loops where the icon filename comes from YAML, pass the size in the template (the template knows its own layout context):
+
+```html
+{{ range hugo.Data.club_benefits.club_benefits }}
+  {{ partial "icon.html" (dict "name" .icon "w" 28 "h" 28) }}
+{{ end }}
+```
+
+For simple one-off uses where no size or class override is needed, `readFile` is fine:
+
+```html
+{{ readFile (printf "static/images/svg/%s" .icon) | safeHTML }}
+```
+
+### Adding a new icon
+
+1. Drop the `.svg` file in `fenb-1/static/images/svg/`.
+2. Strip any `width`/`height` attributes — keep `viewBox` only.
+3. Add `aria-hidden="true"` to the `<svg>` tag.
+4. Reference it by filename via the partial or `readFile`.
+
+### Data files that reference icons
+
+| Data file | Used by | Icon field |
+|---|---|---|
+| `data/quicklinks.yaml` | `layouts/index.html` | `icon` |
+| `data/joinpaths.yaml` | `layouts/join/list.html` | `icon` |
+| `data/programcards.yaml` | `layouts/programs/list.html` | `icon` (SVG) or `img` (raster) |
+
+---
+
 ## 404 page
 
 Hugo generates one root `404.html` (English). A small inline script detects when the URL starts with `/fr/` and swaps: page text, nav link labels (from Hugo's French menu baked in at build time), nav link hrefs, logo href, and the language-switcher button. If French strings in `i18n/fr.yaml` change, update the hardcoded strings in `layouts/404.html` to match.

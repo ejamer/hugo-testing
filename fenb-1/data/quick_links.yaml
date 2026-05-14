@@ -1,0 +1,17 @@
+# Homepage quick-link cards — used by layouts/index.html
+# accent: true highlights the card (used for the primary CTA).
+# icon: filename in static/images/svg/ — rendered via partials/icon.html.
+quick_links:
+  - id: clubs
+    url: /clubs/
+    icon: home.svg
+  - id: compete
+    url: /events/
+    icon: calendar.svg
+  - id: dev
+    url: /programs/
+    icon: activity.svg
+  - id: join
+    url: /join/
+    icon: user-plus.svg
+    accent: true

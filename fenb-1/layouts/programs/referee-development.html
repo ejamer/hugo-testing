@@ -1,0 +1,73 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-program-page">
+  <div class="fenb-container fenb-container--narrow">
+
+    <div class="fenb-program-back">
+      <a href="{{ "/programs/" | relLangURL }}">&larr; {{ i18n "programs_back" }}</a>
+    </div>
+
+    {{/* ── Overview ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_referee_label" }}</p>
+    <p class="fenb-program-intro">{{ i18n "programs_referee_intro" }}</p>
+
+    {{/* ── Five Core Elements ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_referee_elements_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_referee_elements_title" }}</h2>
+    <ul class="fenb-program-elements">
+      <li>{{ i18n "programs_referee_element_1" }}</li>
+      <li>{{ i18n "programs_referee_element_2" }}</li>
+      <li>{{ i18n "programs_referee_element_3" }}</li>
+      <li>{{ i18n "programs_referee_element_4" }}</li>
+      <li>{{ i18n "programs_referee_element_5" }}</li>
+    </ul>
+
+    {{/* ── Club and Provincial Levels ── */}}
+    <div class="fenb-referee-levels">
+
+      <div class="fenb-referee-level-card">
+        <p class="fenb-section-label">{{ i18n "programs_referee_club_label" }}</p>
+        <h3>{{ i18n "programs_referee_club_title" }}</h3>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_referee_club_theory_title" }}</h4>
+          <p>{{ i18n "programs_referee_club_theory_body" }}</p>
+        </div>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_referee_club_pract_title" }}</h4>
+          <p>{{ i18n "programs_referee_club_pract_body" }}</p>
+        </div>
+      </div>
+
+      <div class="fenb-referee-level-card">
+        <p class="fenb-section-label">{{ i18n "programs_referee_prov_label" }}</p>
+        <h3>{{ i18n "programs_referee_prov_title" }}</h3>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_referee_prov_theory1_title" }}</h4>
+          <p>{{ i18n "programs_referee_prov_theory1_body" }}</p>
+        </div>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_referee_prov_theory2_title" }}</h4>
+          <p>{{ i18n "programs_referee_prov_theory2_body" }}</p>
+        </div>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_referee_prov_theory3_title" }}</h4>
+          <p>{{ i18n "programs_referee_prov_theory3_body" }}</p>
+        </div>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_referee_prov_pract_title" }}</h4>
+          <p>{{ i18n "programs_referee_prov_pract_body" }}</p>
+        </div>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_referee_prov_cert_title" }}</h4>
+          <p>{{ i18n "programs_referee_prov_cert_body" }}</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{{ end }}

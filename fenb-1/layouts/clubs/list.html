@@ -29,29 +29,19 @@
         <div class="fenb-club-body">
           <h2 class="fenb-club-name">{{ .name }}</h2>
           <p class="fenb-club-city">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
+            {{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}
             {{ .city }}
           </p>
         </div>
         <div class="fenb-club-actions">
           {{ with .website }}
           <a href="{{ . }}" class="fenb-club-btn fenb-club-btn-primary" target="_blank" rel="noopener noreferrer">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="2" y1="12" x2="22" y2="12"></line>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-            </svg>
+            {{ partial "icon.html" (dict "name" "globe.svg" "w" 14 "h" 14) }}
             {{ i18n "clubs_visit_website" }}
           </a>
           {{ end }}
           <a href="mailto:{{ .email }}" class="fenb-club-btn fenb-club-btn-outline">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
+            {{ partial "icon.html" (dict "name" "envelope.svg" "w" 14 "h" 14) }}
             {{ i18n "clubs_contact" }}
           </a>
         </div>
@@ -92,21 +82,21 @@
     <div class="fenb-clubs-benefits">
       <div class="fenb-clubs-benefit">
         <div class="fenb-clubs-benefit-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          {{ partial "icon.html" (dict "name" "box.svg" "w" 28 "h" 28) }}
         </div>
         <h3>{{ i18n "clubs_benefit_1_title" }}</h3>
         <p>{{ i18n "clubs_benefit_1_desc" }}</p>
       </div>
       <div class="fenb-clubs-benefit">
         <div class="fenb-clubs-benefit-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          {{ partial "icon.html" (dict "name" "star.svg" "w" 28 "h" 28) }}
         </div>
         <h3>{{ i18n "clubs_benefit_2_title" }}</h3>
         <p>{{ i18n "clubs_benefit_2_desc" }}</p>
       </div>
       <div class="fenb-clubs-benefit">
         <div class="fenb-clubs-benefit-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          {{ partial "icon.html" (dict "name" "calendar.svg" "w" 28 "h" 28) }}
         </div>
         <h3>{{ i18n "clubs_benefit_3_title" }}</h3>
         <p>{{ i18n "clubs_benefit_3_desc" }}</p>

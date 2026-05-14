@@ -1,0 +1,71 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+<section class="fenb-program-page">
+  <div class="fenb-container fenb-container--narrow">
+
+    <div class="fenb-program-back">
+      <a href="{{ "/programs/" | relLangURL }}">&larr; {{ i18n "programs_back" }}</a>
+    </div>
+
+    {{/* ── Overview ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_athlete_label" }}</p>
+    <p class="fenb-program-intro">{{ i18n "programs_athlete_intro" }}</p>
+
+    {{/* ── Ten Key Factors ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_athlete_ltad_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_athlete_ltad_title" }}</h2>
+    <ol class="fenb-program-factors">
+      <li>{{ i18n "programs_athlete_factor_1" }}</li>
+      <li>{{ i18n "programs_athlete_factor_2" }}</li>
+      <li>{{ i18n "programs_athlete_factor_3" }}</li>
+      <li>{{ i18n "programs_athlete_factor_4" }}</li>
+      <li>{{ i18n "programs_athlete_factor_5" }}</li>
+      <li>{{ i18n "programs_athlete_factor_6" }}</li>
+      <li>{{ i18n "programs_athlete_factor_7" }}</li>
+      <li>{{ i18n "programs_athlete_factor_8" }}</li>
+      <li>{{ i18n "programs_athlete_factor_9" }}</li>
+      <li>{{ i18n "programs_athlete_factor_10" }}</li>
+    </ol>
+
+    {{/* ── Armband Program ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_athlete_cff_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_athlete_cff_title" }}</h2>
+    <p class="fenb-program-intro" style="margin-bottom: 1.75rem;">{{ i18n "programs_athlete_cff_body" }}</p>
+
+    <p class="fenb-section-label">{{ i18n "programs_athlete_cff_links_label" }}</p>
+    <h3 class="fenb-section-title" style="font-size: 1rem; margin-bottom: 0.5rem;">{{ i18n "programs_athlete_cff_links_title" }}</h3>
+    <ul class="fenb-program-resource-links">
+      <li>
+        <a href="#" aria-label="{{ i18n "programs_athlete_cff_general" }}">
+          {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
+          {{ i18n "programs_athlete_cff_general" }}
+        </a>
+      </li>
+      <li>
+        <a href="#" aria-label="{{ i18n "programs_athlete_cff_epee" }}">
+          {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
+          {{ i18n "programs_athlete_cff_epee" }}
+        </a>
+      </li>
+      <li>
+        <a href="#" aria-label="{{ i18n "programs_athlete_cff_foil" }}">
+          {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
+          {{ i18n "programs_athlete_cff_foil" }}
+        </a>
+      </li>
+      <li>
+        <a href="#" aria-label="{{ i18n "programs_athlete_cff_sabre" }}">
+          {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
+          {{ i18n "programs_athlete_cff_sabre" }}
+        </a>
+      </li>
+    </ul>
+
+    <div class="fenb-program-note">{{ i18n "programs_athlete_cff_note" }}</div>
+
+  </div>
+</section>
+
+{{ end }}
