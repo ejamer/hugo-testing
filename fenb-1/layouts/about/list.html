@@ -43,7 +43,7 @@
         <div class="fenb-about-sidebar-card">
           <h3>{{ i18n "about_affiliations_title" }}</h3>
           <ul>
-            {{ range hugo.Data.board.affiliations }}
+            {{ range hugo.Data.board_members.affiliations }}
             <li><a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ index . (printf "name_%s" $.Site.Language.Lang) | default .name_en }}</a></li>
             {{ end }}
           </ul>
@@ -60,7 +60,7 @@
     <span class="fenb-section-label">{{ i18n "about_board_label" }}</span>
     <h2 class="fenb-section-title">{{ i18n "about_board_title" }}</h2>
     <div class="fenb-board-grid">
-      {{ range hugo.Data.board.members }}
+      {{ range hugo.Data.board_members.members }}
       {{ $initials := "" }}
       {{ $parts := split .name " " }}
       {{ range $parts }}{{ $initials = printf "%s%s" $initials (substr . 0 1) }}{{ end }}
@@ -82,7 +82,7 @@
     <span class="fenb-section-label">{{ i18n "about_contact_label" }}</span>
     <h2 class="fenb-section-title">{{ i18n "about_contact_title" }}</h2>
     <div class="fenb-contact-card">
-      <a href="mailto:{{ hugo.Data.board.contact }}">{{ hugo.Data.board.contact }}</a>
+      <a href="mailto:{{ hugo.Data.board_members.contact }}">{{ hugo.Data.board_members.contact }}</a>
     </div>
   </div>
 </section>

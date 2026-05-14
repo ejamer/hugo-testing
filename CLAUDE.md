@@ -98,6 +98,14 @@ Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the
 
 Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.
 
+## Hugo data file naming
+
+**Never use hyphens in data filenames. Use underscores as word separators** (e.g. `board_members.yaml`, `join_paths.yaml`). Hugo stores the data key as the literal filename (without extension), so `program-cards.yaml` produces a key of `program-cards`. Go templates cannot use hyphens in dot-notation identifiers, meaning `hugo.Data.program-cards` is a syntax error and `hugo.Data.program_cards` silently returns nil. The page renders empty with no error. `hero_slides.yaml` is the established pattern in this repo.
+
+Match the top-level YAML key to the filename exactly (e.g. file `join_paths.yaml` → top-level key `join_paths:`).
+
+**Only create a data file for genuinely editable content** — clubs, events, board members, hero slides. Static structural elements (a fixed set of cards, navigation icons) belong directly in the template. Data files add indirection without benefit when the content never changes.
+
 ## Hugo `absURL` with leading slash
 
 `absURL` treats a leading `/` as **domain-root-relative** and ignores the base path. With `baseURL = "https://ejamer.github.io/hugo-testing/"`:

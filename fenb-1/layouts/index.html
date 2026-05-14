@@ -72,7 +72,7 @@
 <section class="fenb-programs-section">
   <div class="fenb-container">
     <div class="fenb-programs-grid">
-      {{ range hugo.Data.quicklinks.quicklinks }}
+      {{ range hugo.Data.quick_links.quick_links }}
       <a href="{{ .url | relLangURL }}" class="fenb-program-card{{ if .accent }} fenb-program-card--accent{{ end }}">
         <div class="fenb-program-icon">
           {{ readFile (printf "static/images/svg/%s" .icon) | safeHTML }}

@@ -1,3 +1,6 @@
+# Board of Directors — used by layouts/about/list.html
+# Update season label and members list at the start of each year.
+# card_color: "teal" or "crimson" highlights an officer; omit for regular directors.
 season: "2025–2026"
 contact: "fencingnb@gmail.com"
 

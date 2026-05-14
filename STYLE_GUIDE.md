@@ -234,10 +234,8 @@ For simple one-off uses where no size or class override is needed, `readFile` is
 | Data file | Used by | Icon field |
 |---|---|---|
 | `data/quicklinks.yaml` | `layouts/index.html` | `icon` |
-| `data/join-paths.yaml` | `layouts/join/list.html` | `icon` |
-| `data/join-requirements.yaml` | `layouts/join/clubs.html` | `icon` |
-| `data/club-benefits.yaml` | `layouts/join/clubs.html`, `layouts/clubs/list.html` | `icon` |
-| `data/program-cards.yaml` | `layouts/programs/list.html` | `icon` (SVG) or `img` (raster) |
+| `data/joinpaths.yaml` | `layouts/join/list.html` | `icon` |
+| `data/programcards.yaml` | `layouts/programs/list.html` | `icon` (SVG) or `img` (raster) |
 
 ---
 

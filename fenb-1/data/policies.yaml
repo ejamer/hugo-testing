@@ -1,3 +1,6 @@
+# Governance documents and policies — used by layouts/about/list.html
+# governance: high-level org documents (policy manual, bylaws, strategic plan)
+# documents: individual policies; each links to a bilingual content page under /about/policies/
 governance:
   - name_en: "FENB Board Policy Manual"
     name_fr: "Manuel des politiques du conseil de FENB"

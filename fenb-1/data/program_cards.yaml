@@ -1,3 +1,7 @@
+# Programs landing page cards — used by layouts/programs/list.html
+# icon: SVG filename in static/images/svg/ + icon_size in px — rendered via partials/icon.html.
+# img: use instead of icon for raster images (e.g. Canada Games logo).
+# Text comes from i18n keys: programs_card_{id}_title / _desc / _cta
 program_cards:
   - id: athlete
     url: /programs/athlete-development/
