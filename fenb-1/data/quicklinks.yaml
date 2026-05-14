@@ -1,10 +1,14 @@
-programs:
+quicklinks:
   - id: clubs
     url: /clubs/
+    icon: home.svg
   - id: compete
     url: /events/
+    icon: calendar.svg
   - id: dev
     url: /programs/
+    icon: activity.svg
   - id: join
     url: /join/
+    icon: user-plus.svg
     accent: true

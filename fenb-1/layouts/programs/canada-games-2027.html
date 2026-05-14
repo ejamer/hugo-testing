@@ -58,13 +58,13 @@
           <ul class="fenb-program-links-list fenb-cwg-card-links">
             <li>
               <a href="{{ "documents/canada-games/team-plan-en.pdf" | relURL }}" target="_blank" rel="noopener noreferrer">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
                 {{ i18n "programs_cwg_team_plan_en" }}
               </a>
             </li>
             <li>
               <a href="{{ "documents/canada-games/team-plan-fr.pdf" | relURL }}" target="_blank" rel="noopener noreferrer">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
                 {{ i18n "programs_cwg_team_plan_fr" }}
               </a>
             </li>
@@ -136,7 +136,7 @@
           <a href="https://docs.google.com/spreadsheets/d/1bXPWEDCEGpDcTOufhtHJ6ZuYdDx-Kaqe/edit?gid=1189192189#gid=1189192189"
              target="_blank" rel="noopener noreferrer"
              class="fenb-btn fenb-btn-teal fenb-cwg-rankings-cta">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            {{ partial "icon.html" (dict "name" "activity.svg" "w" 16 "h" 16) }}
             {{ i18n "programs_cwg_rankings_cwg" }}
           </a>
         </div>
@@ -151,39 +151,39 @@
             <li>
               <a href="https://www.canadagames.ca/" target="_blank" rel="noopener noreferrer">
                 {{ i18n "programs_cwg_sidebar_cg" }}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
               </a>
             </li>
             <li>
               <a href="https://www.canadagames.ca/future-games/quebec-2027" target="_blank" rel="noopener noreferrer">
                 {{ i18n "programs_cwg_sidebar_cg_qc" }}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
               </a>
             </li>
             <li>
               <a href="https://www.canadagames.ca/teams/new-brunswick" target="_blank" rel="noopener noreferrer">
                 {{ i18n "programs_cwg_sidebar_cg_nb" }}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
               </a>
             </li>
             <li class="fenb-cwg-sidebar-divider"></li>
             <li>
               <a href="https://www.jeuxducanada2027.ca/" target="_blank" rel="noopener noreferrer">
                 {{ i18n "programs_cwg_sidebar_qc" }}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
               </a>
             </li>
             <li>
               <a href="https://www.jeuxducanada2027.ca/en/sports/escrime" target="_blank" rel="noopener noreferrer">
                 {{ i18n "programs_cwg_sidebar_qc_fencing" }}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
               </a>
             </li>
             <li class="fenb-cwg-sidebar-divider"></li>
             <li>
               <a href="https://www.teamnb.ca/" target="_blank" rel="noopener noreferrer">
                 {{ i18n "programs_cwg_sidebar_teamnb" }}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                {{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}
               </a>
             </li>
           </ul>

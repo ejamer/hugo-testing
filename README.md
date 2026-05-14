@@ -443,6 +443,7 @@ hugo-testing/
     │   └── partials/
     │       ├── site-header.html  Sticky nav, search overlay, language switcher, page header band
     │       ├── event-card.html   Single event card — accepts a YAML event object as context
+    │       ├── icon.html         Inline SVG renderer — call with (dict "name" "file.svg" "w" 24 "h" 24 "class" "…")
     │       ├── news-card.html    Single news card — call with (dict "page" . "heading" "h2" "truncate" 160)
     │       └── section-header.html  Section label + h2 + optional "see all" link — call with (dict "label" … "title" … "linkURL" … "linkText" …)
     └── static/
@@ -456,7 +457,8 @@ hugo-testing/
         │   ├── logo-color.svg    Used on light backgrounds
         │   ├── logo-white.svg    Used on dark/teal backgrounds (hero, etc.) and in dark mode nav
         │   ├── clubs/            Member club logos (club-logo-{ID}.{ext})
-        │   └── hero/             Hero carousel images (hero1.jpg … heroN.jpg)
+        │   ├── hero/             Hero carousel images (hero1.jpg … heroN.jpg)
+        │   └── svg/              Decorative icon SVGs — viewBox only, aria-hidden, rendered via icon.html partial
         └── js/
             ├── hero-slider.js       Homepage hero carousel (auto-advance + prev/next)
             ├── events-calendar.js   Events calendar page (JS month grid)

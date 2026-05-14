@@ -13,14 +13,14 @@
         {{/* Navigation bar */}}
         <div class="fenb-cal-nav">
           <button class="fenb-cal-btn" id="cal-prev" aria-label="{{ i18n "events_cal_prev" }}">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            {{ partial "icon.html" (dict "name" "arrow-left.svg" "w" 16 "h" 16) }}
           </button>
           <div class="fenb-cal-selectors">
             <select id="cal-month-select" class="fenb-cal-select" aria-label="{{ i18n "events_cal_month_label" }}"></select>
             <select id="cal-year-select" class="fenb-cal-select" aria-label="{{ i18n "events_cal_year_label" }}"></select>
           </div>
           <button class="fenb-cal-btn" id="cal-next" aria-label="{{ i18n "events_cal_next" }}">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            {{ partial "icon.html" (dict "name" "arrow-right.svg" "w" 16 "h" 16) }}
           </button>
           <a href="{{ "/events/schedule/" | relLangURL }}" class="fenb-cal-schedule-link">{{ i18n "schedule_view_all" }}</a>
         </div>

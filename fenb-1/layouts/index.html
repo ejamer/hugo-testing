@@ -14,10 +14,10 @@
       </div>
       {{ end }}
       <button class="fenb-hero-slider-btn fenb-hero-slider-btn--prev" aria-label="Previous slide">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        {{ partial "icon.html" (dict "name" "arrow-left.svg" "w" 16 "h" 16) }}
       </button>
       <button class="fenb-hero-slider-btn fenb-hero-slider-btn--next" aria-label="Next slide">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        {{ partial "icon.html" (dict "name" "arrow-right.svg" "w" 16 "h" 16) }}
       </button>
     </div>
     <p class="fenb-hero-tagline">{{ i18n "hero_tagline" }}</p>
@@ -27,9 +27,7 @@
     </div>
   </div>
   <a href="#fenb-events" class="fenb-hero-scroll" aria-label="Scroll down">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9"></polyline>
-    </svg>
+    {{ partial "icon.html" (dict "name" "arrow-down.svg" "w" 24 "h" 24) }}
   </a>
 </section>
 
@@ -74,18 +72,10 @@
 <section class="fenb-programs-section">
   <div class="fenb-container">
     <div class="fenb-programs-grid">
-      {{ range hugo.Data.programs.programs }}
+      {{ range hugo.Data.quicklinks.quicklinks }}
       <a href="{{ .url | relLangURL }}" class="fenb-program-card{{ if .accent }} fenb-program-card--accent{{ end }}">
         <div class="fenb-program-icon">
-          {{ if eq .id "clubs" }}
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-          {{ else if eq .id "compete" }}
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          {{ else if eq .id "dev" }}
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-          {{ else if eq .id "join" }}
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-          {{ end }}
+          {{ readFile (printf "static/images/svg/%s" .icon) | safeHTML }}
         </div>
         <h3>{{ i18n (printf "program_%s_title" .id) }}</h3>
         <p>{{ i18n (printf "program_%s_desc" .id) }}</p>
