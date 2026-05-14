@@ -1,16 +1,16 @@
 governance:
   - name_en: "FENB Board Policy Manual"
     name_fr: "Manuel des politiques du conseil de FENB"
-    url_en: "/docs/policy-manual-en.pdf"
-    url_fr: "/docs/policy-manual-fr.pdf"
+    url_en: "/documents/about/governance/policy-manual-en.pdf"
+    url_fr: "/documents/about/governance/policy-manual-fr.pdf"
   - name_en: "FENB Bylaws"
     name_fr: "Règlements de FENB"
-    url_en: "/docs/bylaws-en.pdf"
-    url_fr: "/docs/bylaws-fr.pdf"
+    url_en: "/documents/about/governance/bylaws-en.pdf"
+    url_fr: "/documents/about/governance/bylaws-fr.pdf"
   - name_en: "2024–2028 Strategic Plan"
     name_fr: "Plan stratégique 2024–2028"
-    url_en: "/docs/strategic-plan-en.pdf"
-    url_fr: "/docs/strategic-plan-fr.pdf"
+    url_en: "/documents/about/governance/strategic-plan-en.pdf"
+    url_fr: "/documents/about/governance/strategic-plan-fr.pdf"
 
 documents:
   - name_en: "Safe Sport, Conduct, and Athlete Safety Policy"
@@ -68,28 +68,28 @@ documents:
 
 annual_reports:
   - year: 2024
-    url: "/docs/agm-minutes/2024.pdf"
+    url: "/documents/about/agm-minutes/2024.pdf"
   - year: 2023
-    url: "/docs/agm-minutes/2023.pdf"
+    url: "/documents/about/agm-minutes/2023.pdf"
   - year: 2022
-    url: "/docs/agm-minutes/2022.pdf"
+    url: "/documents/about/agm-minutes/2022.pdf"
   - year: 2021
-    url: "/docs/agm-minutes/2021.pdf"
+    url: "/documents/about/agm-minutes/2021.pdf"
   - year: 2020
-    url: "/docs/agm-minutes/2020.pdf"
+    url: "/documents/about/agm-minutes/2020.pdf"
   - year: 2019
-    url: "/docs/agm-minutes/2019.pdf"
+    url: "/documents/about/agm-minutes/2019.pdf"
   - year: 2018
-    url: "/docs/agm-minutes/2018.pdf"
+    url: "/documents/about/agm-minutes/2018.pdf"
   - year: 2017
-    url: "/docs/agm-minutes/2017.pdf"
+    url: "/documents/about/agm-minutes/2017.pdf"
   - year: 2016
-    url: "/docs/agm-minutes/2016.pdf"
+    url: "/documents/about/agm-minutes/2016.pdf"
   - year: 2015
-    url: "/docs/agm-minutes/2015.pdf"
+    url: "/documents/about/agm-minutes/2015.pdf"
   - year: 2014
-    url: "/docs/agm-minutes/2014.pdf"
+    url: "/documents/about/agm-minutes/2014.pdf"
   - year: 2013
-    url: "/docs/agm-minutes/2013.pdf"
+    url: "/documents/about/agm-minutes/2013.pdf"
   - year: 2012
-    url: "/docs/agm-minutes/2012.pdf"
+    url: "/documents/about/agm-minutes/2012.pdf"
