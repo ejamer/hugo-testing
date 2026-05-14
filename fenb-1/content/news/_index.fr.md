@@ -6,3 +6,6 @@ cascade:
       kind: page
     page_header_uses_section: true
 ---
+
+<!-- Page content is not read from this file. Articles are individual .md files in content/news/YYYY/.
+     This file only provides the section title, description, and cascade front matter. -->

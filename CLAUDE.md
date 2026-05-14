@@ -106,6 +106,20 @@ Match the top-level YAML key to the filename exactly (e.g. file `join_paths.yaml
 
 **Only create a data file for genuinely editable content** — clubs, events, board members, hero slides. Static structural elements (a fixed set of cards, navigation icons) belong directly in the template. Data files add indirection without benefit when the content never changes.
 
+## Layout-driven section pages
+
+If a section's `_index.md` body is never rendered (the layout uses i18n strings or `hugo.Data` exclusively and never calls `.Content`), add an HTML comment in the body naming the actual content source:
+
+```markdown
+---
+title: "..."
+---
+
+<!-- Page content is not read from this file. Edit in data/clubs.yaml. -->
+```
+
+HTML comments in the body of a layout-driven page are never output — they exist only for editors who open the file expecting to find editable content.
+
 ## Hugo `absURL` with leading slash
 
 `absURL` treats a leading `/` as **domain-root-relative** and ignores the base path. With `baseURL = "https://ejamer.github.io/hugo-testing/"`:
