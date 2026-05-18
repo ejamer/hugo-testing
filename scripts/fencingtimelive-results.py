@@ -323,39 +323,58 @@ def http_get_html(url: str, cookie: str) -> str:
 # NB club matching
 # ---------------------------------------------------------------------------
 
-def load_nb_club_ids(yaml_path: Path) -> set[str]:
+def load_nb_clubs(yaml_path: Path) -> tuple[set[str], set[str], list[dict]]:
     """
-    Read fenb-1/data/clubs.yaml and return the set of club ID strings.
-    These IDs (e.g. "RST", "DAM") are the canonical abbreviations used by both
-    FencingNB and fencingtimelive.com.
+    Read fenb-1/data/clubs.yaml and return (ids, names, clubs):
+      ids   — short abbreviations, e.g. {"RST", "DAM"}
+      names — full club names, e.g. {"Damocles Fencing Club"}
+      clubs — list of {"id": ..., "name": ...} dicts sorted by id, for output
     """
     with open(yaml_path) as f:
         data = yaml.safe_load(f)
-    return {c["id"] for c in data["clubs"]}
+    ids = {c["id"] for c in data["clubs"]}
+    names = {c["name"] for c in data["clubs"]}
+    clubs = sorted([{"id": c["id"], "name": c["name"]} for c in data["clubs"]], key=lambda c: c["id"])
+    return ids, names, clubs
 
 
-def club_prefix(club_str: str) -> str:
-    """
-    Extract the abbreviation from a FTL club string like 'DAM - Damocles Fencing Club'.
-    Returns the part before ' - ', or the full string if no separator is present.
-    """
-    club_str = club_str.strip()
-    if " - " in club_str:
-        return club_str.split(" - ")[0]
-    return club_str
-
-
-def is_nb_entry(entry: dict, nb_ids: set[str]) -> bool:
+def is_nb_entry(entry: dict, nb_ids: set[str], nb_names: set[str]) -> bool:
     """
     Return True if a results or competitors entry belongs to a FencingNB club.
+
+    Three independent checks (any one is sufficient):
+      a) Full club name matches a name in clubs.yaml
+         (FTL results API returns full names like "Damocles Fencing Club")
+      b) Club field prefix before " - " matches a known abbreviation
+         (handles a "DAM - Damocles..." format if FTL ever uses it)
+      c) Division field equals "NB" or "New Brunswick"
 
     Both API endpoints include a 'club1' field, so it is checked first.
     The remaining fallbacks cover the endpoint-specific alternatives:
       - results endpoint:     'clubs'
       - competitors endpoint: 'clubNames'
     """
-    club_field = entry.get("club1") or entry.get("clubs") or entry.get("clubNames") or ""
-    return club_prefix(club_field) in nb_ids
+    club_field = (
+        entry.get("club1") or entry.get("clubs") or entry.get("clubNames") or ""
+    ).strip()
+
+    # (a) full name match
+    if club_field in nb_names:
+        return True
+
+    # (b) ID prefix match — handles "DAM - Damocles Fencing Club" format
+    if " - " in club_field:
+        if club_field.split(" - ")[0].strip() in nb_ids:
+            return True
+    elif club_field in nb_ids:
+        return True  # bare abbreviation (unlikely but handled)
+
+    # (c) division field
+    div = (entry.get("div") or "").strip()
+    if div in {"NB", "New Brunswick"}:
+        return True
+
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -433,7 +452,7 @@ class ScheduleParser(HTMLParser):
                 "id": self._row_id,
                 "day": self._day,
                 "start_time": self._cols[0] if len(self._cols) > 0 else "",
-                "name":       self._cols[1] if len(self._cols) > 1 else "",
+                "name": re.sub(r"\s+", " ", self._cols[1]).strip() if len(self._cols) > 1 else "",
                 "status":     self._cols[2] if len(self._cols) > 2 else "",
             })
             self._in_row = False
@@ -569,9 +588,9 @@ def main():
     else:
         cookie = get_cookie_via_browser()
 
-    # Load NB club IDs from the site's own clubs.yaml so the list stays in sync
+    # Load NB club data from the site's own clubs.yaml so the list stays in sync
     # when clubs are added or removed from the federation.
-    nb_ids = load_nb_club_ids(CLUBS_YAML)
+    nb_ids, nb_names, nb_clubs = load_nb_clubs(CLUBS_YAML)
     log(f"Loaded {len(nb_ids)} NB clubs: {', '.join(sorted(nb_ids))}", "info")
 
     # Step 1 — fetch tournament list
@@ -646,7 +665,7 @@ def main():
             time.sleep(RATE_LIMIT_SECS)
             continue
 
-        nb_fencers = [e for e in entries if is_nb_entry(e, nb_ids)]
+        nb_fencers = [e for e in entries if is_nb_entry(e, nb_ids, nb_names)]
 
         if nb_fencers:
             log(f"{len(nb_fencers)} NB fencer(s) found (source: {source})", "ok")
@@ -656,6 +675,7 @@ def main():
                 "start_time": event["start_time"],
                 "status": status_oneline,
                 "source": source,
+                "total_fencers": len(entries),
                 "results_url": f"{BASE_URL}/events/results/{event['id']}",
                 "nb_fencers": [
                     {
@@ -685,7 +705,7 @@ def main():
             "dates": tourn["dates"],
             "schedule_url": f"{BASE_URL}/tournaments/eventSchedule/{tourn['id']}",
         },
-        "nb_clubs_checked": sorted(nb_ids),
+        "nb_clubs_checked": nb_clubs,
         "events_with_nb_fencers": nb_events,
     }
     json_str = json.dumps(output, indent=2, ensure_ascii=False)

@@ -32,6 +32,7 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 | `/fenb-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
 | `/fenb-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
 | `/fenb-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
+| `/fenb-new-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
 
 When adding a new skill, name the file `fenb-{name}.md` in `.claude/commands/`.
 
