@@ -83,12 +83,29 @@ The toggle sets `data-theme="dark"` on `<html>`; a `[data-theme="dark"]` block i
 
 - **`--teal-light`** resolves to `#4dbfad` in dark mode (~7.7:1 on dark bg). **Use it instead of `var(--teal)` for any teal text or border in a `[data-theme="dark"]` rule** — `var(--teal)` (#006156) is ~2.5:1 and fails contrast.
 - **`--teal-pale`** resolves to `#1e3632` — a dark hover background, not a visible tint.
+- **`--navy-light`** resolves to `#6aabdf` in dark mode. **Use it instead of `var(--navy)` for any navy text or border in a `[data-theme="dark"]` rule** — `var(--navy)` (#1e3a5f) is near-black on the dark background and fails contrast.
 
 **Badge/pill swap:** light mode uses pale-tint bg + brand-colour text. In dark mode the pale tints are near-black, so invert to full brand-colour bg + `#fff` text (`var(--teal)` bg + white = ~7.5:1 ✓).
 
 **Hardcoded values to watch:** semi-transparent darks (`rgba(0,0,0,0.05)` borders) become invisible on dark surfaces — use `var(--light-gray)` instead. Tachyons utility classes like `bg-near-white` hardcode a hex value that ignores CSS variables; override them explicitly in `[data-theme="dark"]`. Conversely, use `#fff` (not `var(--white)`) for text on coloured backgrounds — `--white` remaps to `#141f1d` in dark mode, so `color: var(--white)` on a teal button silently produces dark text.
 
 **Rule location:** add `[data-theme="dark"]` overrides at the bottom of the same CSS file as the component, not in a separate file.
+
+---
+
+## Event link types
+
+Three link types appear on event cards and schedule rows. Each has a specific CSS class — always use it so colours stay consistent across card, schedule, and print contexts:
+
+| Link | Class | Screen colour | Dark mode |
+|---|---|---|---|
+| Learn More → | `fenb-event-details-link` | `--teal` | `--teal-light` |
+| Register Now → | `fenb-event-register-link` | `--crimson` | `--text-body` |
+| View Results → | `fenb-event-results-link` | `--navy` | `--navy-light` |
+
+`Register Now` is suppressed for past events (date < today). `View Results` shows regardless of date when `results_url` is set.
+
+Any layout that renders event links (card partial, schedule list, future widgets) must use these classes — **not** a plain `<a>` with a local colour rule — so that print and dark-mode overrides apply automatically.
 
 ---
 

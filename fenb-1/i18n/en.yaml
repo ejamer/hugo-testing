@@ -49,6 +49,7 @@ meeting:      "FENB Meeting"
 announcement: "Announcement"
 event_details:   "Learn More"
 event_register:  "Register Now"
+event_results:   "View Results"
 
 # ── Month abbreviations (used for localized date display in event cards) ───────
 month_Jan: "Jan"

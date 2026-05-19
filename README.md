@@ -125,7 +125,8 @@ Add an entry to `data/events.yaml`.
 | `location` | ✅ | City / province |
 | `description` | — | Optional. Not shown on homepage cards |
 | `details_url` | — | If set, a teal **Learn More →** badge appears on the card (opens in new tab) |
-| `registration_url` | — | If set, a crimson **Register Now →** badge appears on the card (opens in new tab) |
+| `registration_url` | — | If set, a crimson **Register Now →** badge appears on the card (opens in new tab). Hidden for past events (date < today). |
+| `results_url` | — | If set, a navy **View Results →** badge appears on the card (opens in new tab). Populated automatically by `/fenb-get-results` after a tournament scrape. |
 
 **Example:**
 
@@ -140,6 +141,7 @@ Add an entry to `data/events.yaml`.
   description: "Optional details not shown on homepage."
   details_url: ""                 # URL for a Learn More badge; leave blank or omit if none
   registration_url: ""            # URL for a Register Now badge; leave blank or omit if none
+  results_url: ""                 # URL for a View Results badge; leave blank or omit if none
 ```
 
 **Category colours:**
