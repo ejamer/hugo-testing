@@ -25,7 +25,7 @@ Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped t
 | `fenb-nav.css` | Nav, search overlay, language switcher, page header band |
 | `fenb-hero.css` | Homepage hero, slider, scroll arrow, animations |
 | `fenb-events.css` | Event cards, tags, calendar page |
-| `fenb-news.css` | News cards, article layout, article sidebar, 404 page |
+| `fenb-news.css` | News cards, article layout, article sidebar, results tables, 404 page |
 | `fenb-clubs.css` | Programs quick-links, clubs grid/map/CTA |
 | `fenb-about.css` | About page, policies page |
 | `fenb-schedule.css` | Season schedule page |
@@ -171,6 +171,29 @@ Each category drives three visual elements: the date badge on the event card, th
 | `announcement` | `"Announcement"` | `--teal` | Teal |
 
 `category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces). Each non-brand category also has a `--cat-*-pale` variant used for tag backgrounds.
+
+---
+
+## Results tables (news articles)
+
+Results news articles (`category: Results` / `Résultats`) use an enhanced table pattern driven by `static/js/results-table.js`, which is loaded automatically by `layouts/news/single.html` for those categories only.
+
+**Column order:** always `Name | Club | Place` — Place must be the last column so the JS can target it by index.
+
+**Medal emoji:** add 🥇 🥈 🥉 before the fencer name in the Name cell for places 1–3 (e.g. `🥇 YANO Wendy`). Use the plain name for all other places.
+
+**In-progress rows:** use `—` in the Place cell when results are not yet posted.
+
+**JS behaviour (automatic — no extra markup needed):**
+- Hides the Place column by default and inserts a "Show placements" / "Afficher les positions" toggle button above each table.
+- Default sort is ascending by Place (best results first) so the table is meaningful without placements visible.
+- All visible column headers are clickable to re-sort; `aria-sort` is updated for accessibility.
+- Button labels are bilingual, detected from `html[lang]`.
+
+**CSS classes** (applied by JS, not the markdown author):
+- `.fenb-results-table` — table-level: `border-collapse`, padding, hover row
+- `.fenb-sortable-th` — header: pointer cursor, `↕ / ↑ / ↓` indicator
+- `.fenb-results-toggle` — toggle button: right-aligned above the table
 
 ---
 

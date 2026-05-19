@@ -463,5 +463,6 @@ hugo-testing/
         └── js/
             ├── hero-slider.js       Homepage hero carousel (auto-advance + prev/next)
             ├── events-calendar.js   Events calendar page (JS month grid)
-            └── events-schedule.js   Season schedule page (season toggle + category filters)
+            ├── events-schedule.js   Season schedule page (season toggle + category filters)
+            └── results-table.js     Results news articles — sortable columns, hidden Place column, "Show placements" toggle
 ```

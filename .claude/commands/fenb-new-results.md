@@ -19,12 +19,15 @@ Read the JSON file.
 
 Scan `events_with_nb_fencers` for any entry where `source` is `"competitors"` (place values are empty — results not yet posted).
 
-**If any exist, stop immediately.** Report:
-- A warning that the article cannot be created yet because not all events are finished.
+**If any exist**, report:
+- A warning that not all events are finished.
 - A list of the in-progress events (name, day, start time).
-- Tell the user to re-run `/fenb-results-article` once all events are complete.
 
-Do not proceed until all events have `source: "results"`.
+Then ask the user via `AskUserQuestion` whether to:
+- **Wait** — stop here; re-run `/fenb-new-results` once all events are complete.
+- **Proceed anyway** — continue with the in-progress events included, showing "—" for placement; the article may need updating once final results are posted.
+
+Stop if the user chooses to wait. Otherwise continue.
 
 ---
 
@@ -41,22 +44,38 @@ Ask the user two things via `AskUserQuestion`:
 
 ## Step 4 — Identify top results
 
-From all finished events, find any NB fencer with a numeric place of 1, 2, or 3. Strip any trailing `T` (tied) suffix before comparing. Collect these for the article intro.
+Count unique NB fencers across all events (deduplicate by name across multiple events).
+
+From all finished events, collect:
+- **Medalists**: any NB fencer with a numeric place of 1, 2, or 3. Strip any trailing `T` before comparing. Map to medal emoji: 1 → 🥇, 2 → 🥈, 3 → 🥉.
+- **Top-16 non-medalists**: any NB fencer with a numeric place of 4–16 (strip `T` before comparing).
 
 ---
 
 ## Step 5 — Write EN article body
 
-**Opening paragraph** (2–3 sentences):
-- Name the tournament, location, and dates.
-- State how many NB fencers competed across how many events.
-- If any podium finishes exist, name them: "[Name] won gold in [Event]" or "[Name] finished on the podium in [Event]."
+**Paragraph 1** (2 sentences):
+- Name the tournament, location, and dates. State the total number of unique NB fencers and how many events they appeared in.
+
+**Paragraph 2** — top performers block:
+- Open with a generic congratulatory sentence ("Congratulations to our podium finishers!" or similar).
+- List each medalist on its own line using a backslash line-break (`\`):
+  ```
+  🥇 NAME — Event\
+  🥈 NAME — Event\
+  🥉 NAME — Event
+  ```
+- Follow with a congratulatory sentence and a comma-separated inline list of top-16 non-medalists:
+  `NAME (Event), NAME (Event), …`
 
 **Per-event sections** (one per event, in the order they appear in the JSON):
 - Heading: `### [Event name]` — hyperlink the heading text to `results_url`
-- Markdown table with columns `Place | Name | Club`
-- Sort rows ascending by numeric place (strip trailing `T` for sort only; display the original value including `T`)
+- Markdown table with columns **`Name | Club | Place`** (Place is always last)
+- Add the appropriate medal emoji before the fencer's name for places 1–3 (e.g. `🥇 YANO Wendy`)
+- Leave Place as `—` for any in-progress event rows
 - One blank line between the table and the next heading
+
+The JS in `static/js/results-table.js` automatically hides the Place column and makes headers sortable — the markdown table format is all that is needed.
 
 ---
 
@@ -83,7 +102,7 @@ Translate the full article into French using the same structure. Standard French
 | Name            | Nom          |
 | Club            | Club         |
 
-Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée senior féminin"). Translate all prose. Keep fencer names and club names unchanged.
+Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée senior féminin"). The FR table header for the name column is `Nom`, for place is `Position`. Translate all prose. Keep fencer names and club names unchanged. Medal emoji and backslash line-breaks carry over unchanged.
 
 ---
 
