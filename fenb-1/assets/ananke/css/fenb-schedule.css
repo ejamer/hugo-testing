@@ -194,16 +194,20 @@
 .fenb-schedule-links a {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--teal);
   text-decoration: none;
 }
 .fenb-schedule-links a:hover { text-decoration: underline; }
+.fenb-schedule-links .fenb-event-details-link  { color: var(--teal); }
+.fenb-schedule-links .fenb-event-register-link { color: var(--crimson); }
+.fenb-schedule-links .fenb-event-results-link  { color: var(--navy); }
 
 /* ── Dark mode ────────────────────────────────── */
 [data-theme="dark"] .fenb-schedule-month-heading { color: var(--teal-light); border-bottom-color: var(--teal-light); }
 [data-theme="dark"] .fenb-schedule-filter-meta { border-color: var(--teal-light); color: var(--teal-light); }
 [data-theme="dark"] .fenb-schedule-filter-meta:hover { background: var(--teal-light); color: #fff; }
-[data-theme="dark"] .fenb-schedule-back-link,
-[data-theme="dark"] .fenb-schedule-links a { color: var(--teal-light); }
+[data-theme="dark"] .fenb-schedule-back-link { color: var(--teal-light); }
+[data-theme="dark"] .fenb-schedule-links .fenb-event-details-link  { color: var(--teal-light); }
+[data-theme="dark"] .fenb-schedule-links .fenb-event-register-link { color: var(--text-body); }
+[data-theme="dark"] .fenb-schedule-links .fenb-event-results-link  { color: var(--navy-light); }
 [data-theme="dark"] .fenb-schedule-print-btn { border-color: var(--teal-light); color: var(--teal-light); }
 [data-theme="dark"] .fenb-schedule-print-btn:hover { background: var(--teal-light); color: #fff; }

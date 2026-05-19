@@ -46,6 +46,17 @@
   letter-spacing: 0.03em;
 }
 .fenb-event-register-link:hover { text-decoration: underline; }
+.fenb-event-results-link {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+.fenb-event-results-link:hover { text-decoration: underline; }
 
 /* Date badge sidebar */
 .fenb-event-date-badge {
@@ -357,6 +368,7 @@
 [data-theme="dark"] .fenb-event-card { border-color: var(--light-gray); }
 [data-theme="dark"] .fenb-event-details-link { color: var(--teal-light); }
 [data-theme="dark"] .fenb-event-register-link { color: var(--text-body); }
+[data-theme="dark"] .fenb-event-results-link { color: var(--navy-light); }
 
 [data-theme="dark"] .fenb-tag--competition  { background: var(--teal);          color: #fff; }
 [data-theme="dark"] .fenb-tag--training     { background: var(--cat-training);  color: #fff; }

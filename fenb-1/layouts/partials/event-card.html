@@ -17,8 +17,12 @@
     {{ if .details_url }}
     <a class="fenb-event-details-link" href="{{ .details_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>
     {{ end }}
-    {{ if .registration_url }}
+    {{- $todayMidnight := time (now.Format "2006-01-02") -}}
+    {{ if and .registration_url (not ($dateObj.Before $todayMidnight)) }}
     <a class="fenb-event-register-link" href="{{ .registration_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>
+    {{ end }}
+    {{ if .results_url }}
+    <a class="fenb-event-results-link" href="{{ .results_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_results" }} &rarr;</a>
     {{ end }}
   </div>
 </article>

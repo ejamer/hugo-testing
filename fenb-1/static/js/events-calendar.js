@@ -5,6 +5,8 @@
   // Hugo's html/template JS-context escaping serializes the array as a JSON string;
   // parse it back to a real array if needed.
   var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.events;
+  // today at midnight, for future-date checks
+  var today = cal.today ? new Date(cal.today + 'T00:00:00') : (function () { var d = new Date(); d.setHours(0,0,0,0); return d; }());
 
   var year, month; // current display state (month is 0-indexed)
 
@@ -254,12 +256,16 @@
       var idx = item.idx;
       var d   = new Date(e.date + 'T00:00:00');
 
+      var eventDate = new Date(e.date + 'T00:00:00');
       var linksHtml = '';
       if (e.details_url) {
         linksHtml += '<a href="' + esc(e.details_url) + '" class="fenb-event-details-link" target="_blank" rel="noopener noreferrer">' + esc(cal.detailsLabel) + ' →</a>';
       }
-      if (e.registration_url) {
+      if (e.registration_url && eventDate >= today) {
         linksHtml += '<a href="' + esc(e.registration_url) + '" class="fenb-event-register-link" target="_blank" rel="noopener noreferrer">' + esc(cal.registerLabel) + ' →</a>';
+      }
+      if (e.results_url) {
+        linksHtml += '<a href="' + esc(e.results_url) + '" class="fenb-event-results-link" target="_blank" rel="noopener noreferrer">' + esc(cal.resultsLabel) + ' →</a>';
       }
 
       var article = document.createElement('article');

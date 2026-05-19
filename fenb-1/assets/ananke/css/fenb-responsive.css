@@ -112,7 +112,13 @@
   .fenb-schedule-date,
   .fenb-schedule-location { color: #444 !important; }
 
-  .fenb-schedule-links a { color: #000 !important; }
+  .fenb-schedule-links {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .fenb-schedule-links .fenb-event-details-link  { color: #006156 !important; }
+  .fenb-schedule-links .fenb-event-register-link { color: #79242f !important; }
+  .fenb-schedule-links .fenb-event-results-link  { color: #1e3a5f !important; }
 
   .fenb-schedule-item    { break-inside: avoid; }
   .fenb-schedule-month   { break-inside: avoid; }

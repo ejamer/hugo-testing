@@ -102,6 +102,24 @@ End with a summary: how many events had NB fencers, total NB fencer appearances 
 
 ---
 
+## Step 5.5 — Update events.yaml results_url
+
+After reporting results, check whether the tournament matches an event in `fenb-1/data/events.yaml`.
+
+**Match logic:** Read `fenb-1/data/events.yaml`. For each event in the `events` list, check whether:
+- The tournament dates overlap the event's `date` (and `end_date` if set), AND
+- The event title is a plausible match for the tournament name (case-insensitive substring or fuzzy match — e.g. "May Nationals" matching "CC #4 — May Nationals")
+
+If a match is found:
+- Check whether the event already has a `results_url` field set to a non-empty value.
+- **If empty or missing:** Ask the user: "I found a matching event in events.yaml: `{event title}` ({display_date}). Would you like to set its `results_url` to the FTL tournament schedule URL?\n`{tournament.schedule_url}`"
+- **If the user confirms:** Update the matching event in `fenb-1/data/events.yaml` by adding or setting `results_url: "{tournament.schedule_url}"` on the event, preserving all other fields and the file's existing formatting style.
+- **If already set:** Report the existing URL and take no action.
+
+If no match is found, skip silently and proceed to Step 6.
+
+---
+
 ## Step 6 — Publish results
 
 Once **all** events at the tournament are complete, run `/fenb-new-results` to generate a bilingual news article from the saved JSON output file.

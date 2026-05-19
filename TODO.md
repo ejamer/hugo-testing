@@ -81,7 +81,7 @@ Test each project skill end-to-end at least once to verify it works correctly.
 
 Bilingual article creation is handled by `/fenb-new-results`. Enhancements still outstanding:
 
-- [ ] Add `results_url` links to the matching event(s) in `fenb-1/data/events.yaml` so the event card on the site links directly to the FTL results page
+- [x] Add `results_url` links to the matching event(s) in `fenb-1/data/events.yaml` so the event card on the site links directly to the FTL results page — field added to schema; event-card, schedule, and calendar JS all render "View Results →" when set; `/fenb-get-results` now offers to populate it automatically after a scrape
 - [ ] After writing the article files, prompt the user to run `/fenb-commit` to stage and push
 - [ ] **May Nationals 2026 article** — Cadet Men's Foil (SINGH RANGER Sammy / Damocles) was still in the elimination round at time of writing; Place shows `—` in both `may-18-2026-05-15-may-nationals.en.md` and `.fr.md`. Update once final results are posted on fencingtimelive.com.
 
