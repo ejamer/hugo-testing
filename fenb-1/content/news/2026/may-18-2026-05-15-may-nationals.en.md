@@ -16,6 +16,8 @@ Congratulations to our podium finishers!
 
 We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber), FLYNN Isil (Veteran Women's Foil), RICHARD Clara (Junior Women's Foil), STEVENS Ashelin (U-15 Women's Saber), COLLINS David (Veteran Men's Épée), ZHANG Zhirong (Junior Men's Épée), LAROCQUE Olivier (U-13 Men's Épée), RICHARD Clara (Senior Women's Foil).
 
+---
+
 ### [Senior Women's Épée](https://www.fencingtimelive.com/events/results/9831397F93CD432FB45F15C8BF787BAF)
 
 | Name | Club | Place |
