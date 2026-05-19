@@ -2,3 +2,6 @@
 title: "Nouvelles et résultats"
 description: "Les derniers résultats de compétition, annonces et mises à jour d'Escrime-Fencing NB."
 ---
+
+<!-- Organizational year folder. Page content is not read from this file.
+     Articles are the individual .md files in this directory. -->

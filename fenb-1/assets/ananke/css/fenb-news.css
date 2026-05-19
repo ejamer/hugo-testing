@@ -314,6 +314,72 @@
 /* ── News index list page ──────────────────────── */
 .fenb-news-index-section { background: var(--off-white); }
 
+/* ── Results tables ───────────────────────────── */
+.fenb-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93rem;
+  margin-bottom: 0.25em;
+}
+
+.fenb-results-table th,
+.fenb-results-table td {
+  padding: 0.55rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.fenb-results-table thead th {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: var(--off-white);
+  white-space: nowrap;
+}
+
+.fenb-results-table tbody tr:last-child td { border-bottom: none; }
+.fenb-results-table tbody tr:hover { background: var(--off-white); }
+
+.fenb-sortable-th {
+  cursor: pointer;
+  user-select: none;
+}
+.fenb-sortable-th:hover { color: var(--teal); }
+.fenb-sortable-th::after          { content: " ↕"; opacity: 0.35; font-size: 0.85em; }
+.fenb-sortable-th[aria-sort="ascending"]::after  { content: " ↑"; opacity: 1; }
+.fenb-sortable-th[aria-sort="descending"]::after { content: " ↓"; opacity: 1; }
+
+.fenb-results-toggle {
+  display: block;
+  margin-left: auto;
+  margin-bottom: 0.3rem;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.78rem;
+  font-family: inherit;
+  border: 1px solid var(--light-gray);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.fenb-results-toggle:hover,
+.fenb-results-toggle[aria-pressed="true"] {
+  background: var(--teal-pale);
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+[data-theme="dark"] .fenb-sortable-th:hover { color: var(--teal-light); }
+[data-theme="dark"] .fenb-results-toggle:hover,
+[data-theme="dark"] .fenb-results-toggle[aria-pressed="true"] {
+  background: transparent;
+  color: var(--teal-light);
+  border-color: var(--teal-light);
+}
+
 /* ── Dark mode ────────────────────────────────── */
 [data-theme="dark"] .fenb-news-category                          { background: var(--teal);        color: #fff; }
 [data-theme="dark"] .fenb-news-category--announcement,

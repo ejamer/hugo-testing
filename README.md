@@ -23,6 +23,7 @@ Content and data workflows are available as Claude Code skills (invoked with `/f
 | `/fenb-new-page` | Create a new bilingual content page pair |
 | `/fenb-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
 | `/fenb-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
+| `/fenb-new-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
 
 For git and release workflow skills (`/fenb-commit`, `/fenb-merge-features`, `/fenb-release`), see `DEVELOPMENT.md`.
 
@@ -462,5 +463,6 @@ hugo-testing/
         └── js/
             ├── hero-slider.js       Homepage hero carousel (auto-advance + prev/next)
             ├── events-calendar.js   Events calendar page (JS month grid)
-            └── events-schedule.js   Season schedule page (season toggle + category filters)
+            ├── events-schedule.js   Season schedule page (season toggle + category filters)
+            └── results-table.js     Results news articles — sortable columns, hidden Place column, "Show placements" toggle
 ```

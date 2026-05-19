@@ -102,11 +102,6 @@ End with a summary: how many events had NB fencers, total NB fencer appearances 
 
 ---
 
-## Step 6 — [PLACEHOLDER] Create site content
+## Step 6 — Publish results
 
-> **Not yet implemented.** Future work: process the results JSON to generate Hugo site content.
->
-> Planned additions:
-> - Create a bilingual news article (EN + FR) summarising NB fencer results, using `/fenb-new-news`
-> - Add a results entry to the relevant event in `fenb-1/data/events.yaml` with the `results_url` links
-> - Prompt the user to review and commit the generated content via `/fenb-commit`
+Once **all** events at the tournament are complete, run `/fenb-new-results` to generate a bilingual news article from the saved JSON output file.

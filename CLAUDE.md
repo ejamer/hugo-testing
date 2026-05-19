@@ -32,6 +32,7 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 | `/fenb-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
 | `/fenb-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
 | `/fenb-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
+| `/fenb-new-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
 
 When adding a new skill, name the file `fenb-{name}.md` in `.claude/commands/`.
 
@@ -105,6 +106,20 @@ Before implementing anything that touches the nav bar layout (adding/moving butt
 Match the top-level YAML key to the filename exactly (e.g. file `join_paths.yaml` → top-level key `join_paths:`).
 
 **Only create a data file for genuinely editable content** — clubs, events, board members, hero slides. Static structural elements (a fixed set of cards, navigation icons) belong directly in the template. Data files add indirection without benefit when the content never changes.
+
+## Layout-driven section pages
+
+If a section's `_index.md` body is never rendered (the layout uses i18n strings or `hugo.Data` exclusively and never calls `.Content`), add an HTML comment in the body naming the actual content source:
+
+```markdown
+---
+title: "..."
+---
+
+<!-- Page content is not read from this file. Edit in data/clubs.yaml. -->
+```
+
+HTML comments in the body of a layout-driven page are never output — they exist only for editors who open the file expecting to find editable content.
 
 ## Hugo `absURL` with leading slash
 
