@@ -151,7 +151,7 @@ Add an entry to `data/events.yaml`.
 |---|---|---|
 | `title` | ✅ | |
 | `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter only |
-| `display_date` | ✅ | Free-form string shown on the card. Use `"TBA"` or `"July 2026"` for uncertain dates |
+| `display_date` | — | Override for the date shown on the card. **Omit for single-day events** — the date is computed automatically in the current language. Set only for multi-day ranges (e.g. `"Apr 11–12, 2026"`), uncertain dates (`"TBA"`), or free-form text (`"Opening Summer 2026"`). |
 | `end_date` | — | Optional. ISO `YYYY-MM-DD`. If set and greater than `date`, the calendar draws bars across the full range (inclusive). Leave blank or omit for single-day events. |
 | `category` | ✅ | See categories below |
 | `category_label` | ✅ | Fallback label if i18n key missing |
@@ -167,7 +167,7 @@ Add an entry to `data/events.yaml`.
 ```yaml
 - title: "Event Name"
   date: "2026-06-01"              # ISO — sort/filter only; use first-of-month for uncertain dates
-  display_date: "June 1, 2026"    # free-form; use "TBA" or "June 2026" if date is uncertain
+  # display_date: "Jun 1–2, 2026" # omit for single-day events; set only for ranges, TBA, or free-form text
   category: competition           # see categories below
   category_label: "Competition"
   venue: "Venue Name"

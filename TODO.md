@@ -92,9 +92,9 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 ### High priority
 
 - [x] **Remove `canonifyURLs = true`** (`hugo.toml:3`) — removed; fixed all templates and data files to use `relURL`/`relLangURL` without leading slashes. One hardcoded bare path remains in article Markdown content (`feb-28-new-club-moncton.fr.md`) which is correct for production.
-- [ ] **Fix French date formatting** — two separate issues:
-  - `layouts/news/single.html:14`: `{{ .Date.Format "January 2, 2006" }}` always outputs English month names on French article pages. Replace with i18n month lookup (same pattern used in `event-card.html`).
-  - `data/events.yaml`: `display_date` field is manually entered in English. Remove the field from the schema; compute the display date in `layouts/partials/event-card.html` from `date` + `i18n "month_*"` keys, with day/month/year order conditioned on language.
+- [x] **Fix French date formatting** — both issues resolved:
+  - `layouts/news/single.html`: article date now uses `cal_month_*` i18n keys with language-conditional order ("May 18, 2026" / "18 mai 2026"); sidebar uses abbreviated `month_*` keys.
+  - `data/events.yaml` + `event-card.html` + `events/schedule.html`: single-day events (13) had `display_date` removed; templates compute a bilingual date from `date` field when `display_date` is absent. Multi-day ranges and free-form overrides (22) keep `display_date` unchanged.
 - [ ] **Replace locale-string category detection** (`layouts/news/single.html:19`) — `if in (slice "Results" "Résultats") .Params.category` is fragile; breaks silently if translation wording changes. Add a canonical `category_id` field to news front matter (e.g. `category_id: results`) and check that instead. Update archetypes and existing articles.
 
 ### Medium priority
