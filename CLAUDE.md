@@ -26,20 +26,20 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 
 | Skill | What it does |
 |---|---|
-| `/fenb-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
-| `/fenb-merge-features` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
-| `/fenb-new-news` | Create a bilingual news article with correct filenames and front matter |
-| `/fenb-new-page` | Create a new bilingual content page pair |
-| `/fenb-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
-| `/fenb-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
-| `/fenb-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
-| `/fenb-new-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
+| `/fenb-git-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
+| `/fenb-git-merge` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
+| `/fenb-git-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
+| `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
+| `/fenb-content-add-page` | Create a new bilingual content page pair |
+| `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
+| `/fenb-data-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
+| `/fenb-data-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
 
-When adding a new skill, name the file `fenb-{name}.md` in `.claude/commands/`.
+When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/commands/`. Types: `git` (branch/commit/PR workflows), `content` (creating new pages or articles), `data` (fetching or managing structured data files).
 
 ## Content creation — use skills, not `hugo new`
 
-`/fenb-new-news` and `/fenb-new-results` are the correct entry points for news articles. They enforce bilingual pair creation, correct filename format (`{mon}-{dd}-{slug}.{lang}.md`), year subfolder existence, and required front matter fields. `hugo new` with the `news` archetype works but only creates a single file — it cannot enforce the bilingual pair or the naming convention. Never use `hugo new` directly for news content.
+`/fenb-content-add-news` and `/fenb-content-add-results` are the correct entry points for news articles. They enforce bilingual pair creation, correct filename format (`{mon}-{dd}-{slug}.{lang}.md`), year subfolder existence, and required front matter fields. `hugo new` with the `news` archetype works but only creates a single file — it cannot enforce the bilingual pair or the naming convention. Never use `hugo new` directly for news content.
 
 ## Development workflow
 
@@ -86,7 +86,7 @@ The events calendar page subtitle (shown in the page header band) is set separat
 
 Also update the events calendar page subtitle in `content/events/_index.md` and `content/events/_index.fr.md` to match the new season label — e.g. `description: "2026–2027 season schedule"`. These files drive the subtitle shown in the page header band.
 
-**Event link fields:** `details_url`, `registration_url`, and `results_url` are all optional strings. `registration_url` is only rendered when the event date ≥ today. `results_url` is rendered regardless of date and is populated automatically by `/fenb-get-results` Step 5.5. All three use specific CSS classes (`fenb-event-details-link`, `fenb-event-register-link`, `fenb-event-results-link`) — any new layout rendering these links must use those classes so print and dark-mode styles apply automatically.
+**Event link fields:** `details_url`, `registration_url`, and `results_url` are all optional strings. `registration_url` is only rendered when the event date ≥ today. `results_url` is rendered regardless of date and is populated automatically by `/fenb-data-get-results` Step 5.5. All three use specific CSS classes (`fenb-event-details-link`, `fenb-event-register-link`, `fenb-event-results-link`) — any new layout rendering these links must use those classes so print and dark-mode styles apply automatically.
 
 **Schedule page filter pattern:** `/events/schedule/` uses SSR + JS visibility toggling. Hugo renders every event with `data-season` and `data-category` HTML attributes; `static/js/events-schedule.js` shows/hides them in response to the season dropdown and category filter buttons. Print always reflects the current filtered state. Prefer this pattern over JS-only rendering for any future filterable list page — it gives a no-JS fallback and print support for free.
 

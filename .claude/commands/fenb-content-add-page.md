@@ -46,7 +46,7 @@ Then:
    - **`STYLE_GUIDE.md`** — does the new section introduce any CSS files, layout patterns, or conventions not yet documented?
    - **`CLAUDE.md`** — do the project conventions, data schemas, or skill descriptions need updating?
    - **`DEVELOPMENT.md`** — does the release checklist or any build step need updating?
-   - **Other skills** (`fenb-season-rollover`, `fenb-release`, etc.) — does the new section introduce any seasonal maintenance steps or release checks that should be added to an existing skill?
+   - **Other skills** (`fenb-data-season-rollover`, `fenb-git-release`, etc.) — does the new section introduce any seasonal maintenance steps or release checks that should be added to an existing skill?
 
    For each item, state clearly: needs update / no update needed, and why. Get user approval before making any changes to these files.
 

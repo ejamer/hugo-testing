@@ -44,11 +44,11 @@ Git and release workflows are automated as Claude Code skills (invoked with `/fe
 
 | Skill | What it does |
 |---|---|
-| `/fenb-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
-| `/fenb-merge-features` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
-| `/fenb-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
+| `/fenb-git-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
+| `/fenb-git-merge` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
+| `/fenb-git-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
 
-For content-creation skills (`/fenb-new-news`, `/fenb-new-page`, `/fenb-season-rollover`, `/fenb-get-results`), see `README.md`. See `CLAUDE.md` for the full skill list and the `fenb-` prefix rule.
+For content and data skills (`/fenb-content-add-news`, `/fenb-content-add-page`, `/fenb-data-get-results`, `/fenb-data-season-rollover`), see `README.md`. See `CLAUDE.md` for the full skill list and naming convention.
 
 ---
 
@@ -159,11 +159,21 @@ Before opening a PR from `dev` into `main`, verify:
 - [ ] **TODO.md reviewed** — no unchecked items are left addressed but unmarked
 - [ ] **No orphan placeholder links** — any new links introduced this cycle point to real pages
 
-After confirming the above, run `/fenb-release` or open the PR manually with:
+After confirming the above, run `/fenb-git-release` or open the PR manually with:
 
 ```bash
 gh pr create --base main --head dev --title "Release: <summary>" --body "..."
 ```
+
+### Release versioning
+
+Releases may optionally be tagged with a semver version (`vMAJOR.MINOR.PATCH`). The `/fenb-git-release` skill prompts for this after each successful merge. Tagging is optional — during rapid development, most merges are untagged.
+
+| Level | When to use | Example trigger |
+|---|---|---|
+| **Major** | Major redesign or structural restructure | Full site redesign, navigation overhaul |
+| **Minor** | New section or feature added | New content type, new page, new interactive feature |
+| **Patch** | Content update or fix | News article, event update, copy correction |
 
 ### Search index
 

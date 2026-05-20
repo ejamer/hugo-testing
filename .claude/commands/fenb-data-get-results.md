@@ -122,4 +122,4 @@ If no match is found, skip silently and proceed to Step 6.
 
 ## Step 6 — Publish results
 
-Once **all** events at the tournament are complete, run `/fenb-new-results` to generate a bilingual news article from the saved JSON output file.
+Once **all** events at the tournament are complete, run `/fenb-content-add-results` to generate a bilingual news article from the saved JSON output file.

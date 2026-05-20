@@ -20,13 +20,13 @@ Content and data workflows are available as Claude Code skills (invoked with `/f
 
 | Skill | What it does |
 |---|---|
-| `/fenb-new-news` | Create a bilingual news article with correct filenames and front matter |
-| `/fenb-new-page` | Create a new bilingual content page pair |
-| `/fenb-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
-| `/fenb-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
-| `/fenb-new-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
+| `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
+| `/fenb-content-add-page` | Create a new bilingual content page pair |
+| `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
+| `/fenb-data-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
+| `/fenb-data-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
 
-For git and release workflow skills (`/fenb-commit`, `/fenb-merge-features`, `/fenb-release`), see `DEVELOPMENT.md`.
+For git and release workflow skills (`/fenb-git-commit`, `/fenb-git-merge`, `/fenb-git-release`), see `DEVELOPMENT.md`.
 
 ---
 
@@ -38,7 +38,7 @@ Utility scripts live in `scripts/`. They are independent of the Hugo build — r
 
 Fetches recent tournament results from [fencingtimelive.com](https://www.fencingtimelive.com) and checks each event for NB fencer participation, matching competitors against the club list in `fenb-1/data/clubs.yaml`.
 
-> **Skill available:** run `/fenb-get-results` in Claude Code — it handles parameters, login, tournament selection, and result reporting interactively.
+> **Skill available:** run `/fenb-data-get-results` in Claude Code — it handles parameters, login, tournament selection, and result reporting interactively.
 
 **Usage:**
 
@@ -97,7 +97,7 @@ The banner is rendered by `layouts/partials/site-announcement.html` and hidden f
 
 ### New news post
 
-> **Skill available:** run `/fenb-new-news` in Claude Code — it prompts for date, slug, titles, category, and summaries, then creates both language files with correct front matter and filenames.
+> **Skill available:** run `/fenb-content-add-news` in Claude Code — it prompts for date, slug, titles, category, and summaries, then creates both language files with correct front matter and filenames.
 
 **File naming:** `{mon}-{dd}-{title}.{lang}.md` inside the year subfolder — see [STYLE_GUIDE.md](STYLE_GUIDE.md) for the full naming convention.
 
@@ -159,7 +159,7 @@ Add an entry to `data/events.yaml`.
 | `description` | — | Optional. Not shown on homepage cards |
 | `details_url` | — | If set, a teal **Learn More →** badge appears on the card (opens in new tab) |
 | `registration_url` | — | If set, a crimson **Register Now →** badge appears on the card (opens in new tab). Hidden for past events (date < today). |
-| `results_url` | — | If set, a navy **View Results →** badge appears on the card (opens in new tab). Populated automatically by `/fenb-get-results` after a tournament scrape. |
+| `results_url` | — | If set, a navy **View Results →** badge appears on the card (opens in new tab). Populated automatically by `/fenb-data-get-results` after a tournament scrape. |
 
 **Example:**
 
@@ -199,7 +199,7 @@ The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ to
 
 #### Season rollover
 
-> **Skill available:** run `/fenb-season-rollover` in Claude Code — it verifies the outgoing season label, archives `events.yaml`, creates a fresh one, and updates the events calendar page subtitles.
+> **Skill available:** run `/fenb-data-season-rollover` in Claude Code — it verifies the outgoing season label, archives `events.yaml`, creates a fresh one, and updates the events calendar page subtitles.
 
 At the end of each season (typically late August):
 
@@ -315,7 +315,7 @@ Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advan
 
 ### New section page
 
-> **Skill available:** run `/fenb-new-page` in Claude Code — it prompts for section, slug, titles, and an optional subtitle, then creates both language files with correct front matter.
+> **Skill available:** run `/fenb-content-add-page` in Claude Code — it prompts for section, slug, titles, and an optional subtitle, then creates both language files with correct front matter.
 
 1. Create `layouts/{section}/list.html` defining the `main` block
 2. Create `content/{section}/_index.md` and `content/{section}/_index.fr.md`

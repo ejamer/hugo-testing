@@ -52,7 +52,7 @@ Take the name they provide (or their Other input), run `git checkout -b <name>`,
 If the user picks **"Stay on <branch-name>":** continue to Step 3.
 
 If the user picks **"Move to dev":**
-1. Run `git stash push -m "fenb-commit: moving changes to dev"`
+1. Run `git stash push -m "fenb-git-commit: moving changes to dev"`
 2. Run `git checkout dev`
 3. Run `git stash pop`
 4. Report that changes have been moved to `dev`, then continue to Step 3 (targeting `dev`).
