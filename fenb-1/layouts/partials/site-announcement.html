@@ -1,0 +1,10 @@
+{{- with .Site.Params.announcement -}}
+{{- if .enabled -}}
+{{- $text := cond (eq $.Lang "fr") .text_fr .text_en -}}
+<div class="fenb-announcement"
+     style="--ann-bg: {{ .bg_color }}; --ann-color: {{ .text_color }};"
+     role="alert">
+  <p class="fenb-announcement__text">{{ $text }}</p>
+</div>
+{{- end -}}
+{{- end -}}

@@ -332,3 +332,19 @@
 [data-theme="dark"] .fenb-theme-option:hover { color: var(--teal-light); }
 [data-theme="dark"] .fenb-theme-option.is-active { color: var(--teal-light); }
 [data-theme="dark"] #fenb-search .pagefind-ui__result-link:hover { color: var(--teal-light); }
+
+/* ── Announcement banner ─────────────────────────── */
+.fenb-announcement {
+  background: var(--ann-bg, #cc0000);
+  color: var(--ann-color, #ffffff);
+  text-align: center;
+  padding: 7px 16px;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.fenb-announcement__text {
+  margin: 0;
+}

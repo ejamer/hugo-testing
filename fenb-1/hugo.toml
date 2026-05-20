@@ -22,6 +22,13 @@ theme = 'ananke'
   ]
   background_color_class = "bg-fenb-teal"
 
+  [params.announcement]
+    enabled    = true
+    bg_color   = "#cc0000"
+    text_color = "#ffffff"
+    text_en    = "** DRAFT ** — Exploring website update options; please visit our official site at: https://www.fencingnb.ca/ — ** DRAFT **"
+    text_fr    = "** BROUILLON ** — Exploration des options de mise à jour du site; veuillez visiter notre site officiel à : https://www.fencingnb.ca/ — ** BROUILLON **"
+
   [params.ananke]
     show_recent_posts = false
 
