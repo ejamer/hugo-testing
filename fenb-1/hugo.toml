@@ -49,32 +49,32 @@ theme = 'ananke'
 
 [[languages.en.menus.main]]
   name = "Events"
-  url = "/events/"
+  url = "events/"
   weight = 1
 
 [[languages.en.menus.main]]
   name = "News & Results"
-  url = "/news/"
+  url = "news/"
   weight = 2
 
 [[languages.en.menus.main]]
   name = "Programs"
-  url = "/programs/"
+  url = "programs/"
   weight = 3
 
 [[languages.en.menus.main]]
   name = "Clubs"
-  url = "/clubs/"
+  url = "clubs/"
   weight = 4
 
 [[languages.en.menus.main]]
   name = "About"
-  url = "/about/"
+  url = "about/"
   weight = 5
 
 [[languages.en.menus.main]]
   name = "Join"
-  url = "/join/"
+  url = "join/"
   weight = 6
 
 # ── Français ───────────────────────────────────────────────
@@ -87,33 +87,33 @@ theme = 'ananke'
   [languages.fr.params]
     description = "Escrime-Fencing NB — L'organisation sportive provinciale du Nouveau-Brunswick pour l'escrime."
 
-# French menu URLs omit the /fr/ prefix; relLangURL in the nav template adds it.
+# French menu URLs omit the fr/ prefix; relLangURL in the nav template adds it.
 [[languages.fr.menus.main]]
   name = "Événements"
-  url = "/events/"
+  url = "events/"
   weight = 1
 
 [[languages.fr.menus.main]]
   name = "Nouvelles et résultats"
-  url = "/news/"
+  url = "news/"
   weight = 2
 
 [[languages.fr.menus.main]]
   name = "Programmes"
-  url = "/programs/"
+  url = "programs/"
   weight = 3
 
 [[languages.fr.menus.main]]
   name = "Clubs"
-  url = "/clubs/"
+  url = "clubs/"
   weight = 4
 
 [[languages.fr.menus.main]]
   name = "À propos"
-  url = "/about/"
+  url = "about/"
   weight = 5
 
 [[languages.fr.menus.main]]
   name = "Adhérer"
-  url = "/join/"
+  url = "join/"
   weight = 6
