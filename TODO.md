@@ -87,6 +87,34 @@ Bilingual article creation is handled by `/fenb-new-results`. Enhancements still
 
 ## Code quality
 
+See `plans/hugo-code-review.html` for the full Hugo code review report with detailed analysis and rationale for each item below.
+
+### High priority
+
+- [ ] **Remove `canonifyURLs = true`** (`hugo.toml:3`) — deprecated setting that actively conflicts with `absURL`/`relURL` usage throughout the site; already caused at least one documented URL bug. Remove the line, run `make build`, verify no broken links.
+- [ ] **Fix French date formatting** — two separate issues:
+  - `layouts/news/single.html:14`: `{{ .Date.Format "January 2, 2006" }}` always outputs English month names on French article pages. Replace with i18n month lookup (same pattern used in `event-card.html`).
+  - `data/events.yaml`: `display_date` field is manually entered in English. Remove the field from the schema; compute the display date in `layouts/partials/event-card.html` from `date` + `i18n "month_*"` keys, with day/month/year order conditioned on language.
+- [ ] **Replace locale-string category detection** (`layouts/news/single.html:19`) — `if in (slice "Results" "Résultats") .Params.category` is fragile; breaks silently if translation wording changes. Add a canonical `category_id` field to news front matter (e.g. `category_id: results`) and check that instead. Update archetypes and existing articles.
+
+### Medium priority
+
+- [ ] **Move `baseURL` to environment config files** — production URL (`https://fencingnb.ca/`) is currently commented out; test URL is active. Create `config/production/hugo.toml` and `config/development/hugo.toml`; remove `baseURL` from root `hugo.toml`. `make build-prod` already passes `--environment production`.
+- [ ] **Add explicit date sort to news sidebar** (`layouts/news/single.html:32`) — `where .Site.RegularPages "Section" "news"` does not guarantee sort order. Wrap with `sort ... "Date" "desc"` before `first 6`.
+- [ ] **Add `defer` to non-deferred script tags** — `layouts/index.html:89` (`hero-slider.js`) and `layouts/events/list.html:77` (`events-calendar.js`) lack `defer`; they block the HTML parser on download. Add `defer` attribute to both.
+- [ ] **Map `summary` to `<meta name="description">`** — news articles have a `summary` front matter field but it is not emitted as a meta description tag. Add a `<meta name="description">` in the head partial that falls back to `site.Params.description` when `summary` is absent.
+- [ ] **Add RSS output for the news section** — add `[outputs]` config to `hugo.toml` so Hugo generates `/news/index.xml` and `/fr/news/index.xml`. Add `<link rel="alternate">` in the head partial to advertise the feed.
+- [ ] **Add explicit `[markup]` config block** (`hugo.toml`) — document (and control) Goldmark rendering settings; current behaviour relies on undocumented defaults.
+
+### Low priority
+
+- [ ] **Extract event categories to a data file** — hardcoded category list in `layouts/events/list.html:49-56` (calendar legend) must be manually kept in sync with `data/events.yaml`. Create `data/event_categories.yaml`; iterate over it in both the legend and event-card styles.
+- [ ] **Update archetypes** — `archetypes/default.md` uses TOML (`+++`) while all content uses YAML (`---`); fields are too minimal. Switch to YAML; create `archetypes/news.md` with `category` and `summary` pre-filled.
+- [ ] **Add `errorf` guard in `icon.html`** (`layouts/partials/icon.html:9`) — missing SVG file silently produces blank output. Add `{{ if not $svg }}{{ errorf "icon.html: file not found: %s" .name }}{{ end }}` to surface the error at build time.
+- [ ] **Make Hugo path configurable in Makefile** — all targets hard-code `/snap/bin/hugo`; breaks for any other install method. Replace with `HUGO ?= /snap/bin/hugo` at the top of the Makefile.
+- [ ] **Pin Ananke submodule to a specific commit** — the CSS pipeline runs through Ananke's `GetMainCSS.html`; an unpinned update could silently break it. Pin in `.gitmodules` and note the version in README.
+- [ ] **Document CSS pipeline location in README** — custom CSS belongs in `assets/ananke/css/` (not `static/`), but this is non-obvious. Add a note explaining the Ananke pipeline mechanism and the requirement to also list files in `hugo.toml`'s `custom_css` array.
+
 - [ ] **Split `site-header.html` partial** — currently conflates navigation and page header band into one file. Split into `partials/nav.html` (sticky nav, search overlay, language switcher, hamburger) and `partials/page-header.html` (the coloured band below the nav). Deferred from the May 2026 design review (H3). See `plans/archive/design-review.md` for the original finding.
 
 ## Events data
