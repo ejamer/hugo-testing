@@ -100,8 +100,8 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 ### Medium priority
 
 - [x] **Move `baseURL` to environment config files** — `config/production/hugo.toml` (fencingnb.ca) and `config/development/hugo.toml` (ejamer.github.io) created; `baseURL` removed from root `hugo.toml`; `make build` and `make serve` updated to pass `--environment development` (bare `hugo` defaults to production).
-- [ ] **Add explicit date sort to news sidebar** (`layouts/news/single.html:32`) — `where .Site.RegularPages "Section" "news"` does not guarantee sort order. Wrap with `sort ... "Date" "desc"` before `first 6`.
-- [ ] **Add `defer` to non-deferred script tags** — `layouts/index.html:89` (`hero-slider.js`) and `layouts/events/list.html:77` (`events-calendar.js`) lack `defer`; they block the HTML parser on download. Add `defer` attribute to both.
+- [x] **Add explicit date sort to news sidebar** — wrapped `where` result with `sort ... "Date" "desc"` before `first 6`.
+- [x] **Add `defer` to non-deferred script tags** — added `defer` to `hero-slider.js`, `events-calendar.js`, and `events-schedule.js` (schedule was also missing it).
 - [ ] **Map `summary` to `<meta name="description">`** — news articles have a `summary` front matter field but it is not emitted as a meta description tag. Add a `<meta name="description">` in the head partial that falls back to `site.Params.description` when `summary` is absent.
 - [ ] **Add RSS output for the news section** — add `[outputs]` config to `hugo.toml` so Hugo generates `/news/index.xml` and `/fr/news/index.xml`. Add `<link rel="alternate">` in the head partial to advertise the feed.
 - [ ] **Add explicit `[markup]` config block** (`hugo.toml`) — document (and control) Goldmark rendering settings; current behaviour relies on undocumented defaults.

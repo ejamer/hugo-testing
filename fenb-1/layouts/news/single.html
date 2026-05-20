@@ -33,7 +33,7 @@
           <h3 class="fenb-sidebar-heading">{{ i18n "sidebar_recent_news" }}</h3>
           <ul class="fenb-sidebar-news-list">
             {{ $current := . }}
-            {{ range first 6 (where .Site.RegularPages "Section" "news") }}
+            {{ range first 6 (sort (where .Site.RegularPages "Section" "news") "Date" "desc") }}
             <li class="fenb-sidebar-news-item{{ if eq .RelPermalink $current.RelPermalink }} is-current{{ end }}">
               <a href="{{ .RelPermalink }}">{{ .Title }}</a>
               {{- $sbMonth := i18n (printf "month_%s" (.Date.Format "Jan")) | default (.Date.Format "Jan") -}}
