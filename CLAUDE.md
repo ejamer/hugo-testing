@@ -37,6 +37,10 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 
 When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/commands/`. Types: `git` (branch/commit/PR workflows), `content` (creating new pages or articles), `data` (fetching or managing structured data files).
 
+## version.json
+
+`fenb-1/static/version.json` is managed automatically by `/fenb-git-release` — do not edit it manually. It is written and committed to `dev` as part of every release, and records the version tag, timestamp, author, PR URL, and commit count for the release. Served at `/version.json` on the live site.
+
 ## Content creation — use skills, not `hugo new`
 
 `/fenb-content-add-news` and `/fenb-content-add-results` are the correct entry points for news articles. They enforce bilingual pair creation, correct filename format (`{mon}-{dd}-{slug}.{lang}.md`), year subfolder existence, and required front matter fields. `hugo new` with the `news` archetype works but only creates a single file — it cannot enforce the bilingual pair or the naming convention. Never use `hugo new` directly for news content.

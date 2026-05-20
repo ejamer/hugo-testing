@@ -175,6 +175,12 @@ Releases may optionally be tagged with a semver version (`vMAJOR.MINOR.PATCH`). 
 | **Minor** | New section or feature added | New content type, new page, new interactive feature |
 | **Patch** | Content update or fix | News article, event update, copy correction |
 
+`/fenb-git-release` also writes `fenb-1/static/version.json` and commits it to `dev` as part of every release. It records the version, timestamp, author, PR URL, and commit count. Check the currently deployed version with:
+
+```bash
+curl https://fencingnb.ca/version.json
+```
+
 ### Search index
 
 Pagefind runs as a post-build step and writes its index to `public/pagefind/`. This directory is **not tracked in git** — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before serving.
