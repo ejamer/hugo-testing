@@ -1,5 +1,6 @@
-# baseURL = 'https://fencingnb.ca/'
-baseURL = "https://ejamer.github.io/hugo-testing/"
+# baseURL is set per environment:
+#   config/development/hugo.toml → https://ejamer.github.io/hugo-testing/
+#   config/production/hugo.toml  → https://fencingnb.ca/
 
 defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = false

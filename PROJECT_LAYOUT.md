@@ -15,7 +15,10 @@ hugo-testing/
 │   ├── output/            Generated JSON output — gitignored, not committed
 │   └── .browser-profile/  Saved Chrome session for fencingtimelive.com login — gitignored
 └── fenb-1/                Hugo site root
-    ├── hugo.toml           Site config, languages, nav menus
+    ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)
+    ├── config/
+    │   ├── development/hugo.toml   baseURL for local dev (ejamer.github.io/hugo-testing)
+    │   └── production/hugo.toml    baseURL for production (fencingnb.ca)
     ├── assets/
     │   └── ananke/css/
     │       ├── fenb-base.css       Variables, reset, shared utilities, buttons

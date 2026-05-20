@@ -15,17 +15,26 @@ Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/hugo.
 Hugo is installed via snap (`/snap/bin/hugo`). Run all commands from the **repo root** unless noted.
 
 ```bash
-# Dev server with search (preferred — run from repo root)
-make serve
-
-# Production build (run from fenb-1/)
-cd fenb-1 && /snap/bin/hugo --environment production && npx pagefind --site public
+make serve        # dev server with search (preferred)
+make build        # quick local build — no minification, no pagefind
+make build-prod   # production build — minified + pagefind index
 ```
 
 > [!TIP]
 > `make serve` runs three steps in order: builds the site, generates the search index with Pagefind, then starts the dev server. Using just `hugo server` inside the `fenb-1` folder skips the Pagefind step, so the search overlay will silently fail to load — always use `make serve` when you need a full-featured test.
 
 The site builds in ~100 ms. Open `http://localhost:1313/hugo-testing/` in your browser.
+
+### Environment configuration
+
+`baseURL` is set per environment in `fenb-1/config/`:
+
+| Directory | Environment | `baseURL` | Used by |
+|---|---|---|---|
+| `config/development/` | `development` | `https://ejamer.github.io/hugo-testing/` | `make serve`, `make build` |
+| `config/production/` | `production` | `https://fencingnb.ca/` | `make build-prod` |
+
+Hugo defaults to `production` for the bare `hugo` command and `development` for `hugo server`. `make build` and `make serve` explicitly pass `--environment development` so local builds always use the test URL. Never put `baseURL` in the root `hugo.toml` — it belongs only in these environment files.
 
 ---
 

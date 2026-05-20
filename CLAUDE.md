@@ -126,7 +126,7 @@ HTML comments in the body of a layout-driven page are never output — they exis
 
 ## URL paths — the no-leading-slash rule
 
-Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as **host-root-relative**, stripping the base URL's path component. With `baseURL = "https://ejamer.github.io/hugo-testing/"`:
+Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as **host-root-relative**, stripping the base URL's path component. With the development `baseURL` `"https://ejamer.github.io/hugo-testing/"` (set in `config/development/hugo.toml`):
 
 - `"/events/" | relLangURL` → `/events/` ❌ (base path `/hugo-testing/` lost)
 - `"events/" | relLangURL` → `/hugo-testing/events/` ✓

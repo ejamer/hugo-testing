@@ -99,7 +99,7 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 
 ### Medium priority
 
-- [ ] **Move `baseURL` to environment config files** — production URL (`https://fencingnb.ca/`) is currently commented out; test URL is active. Create `config/production/hugo.toml` and `config/development/hugo.toml`; remove `baseURL` from root `hugo.toml`. `make build-prod` already passes `--environment production`.
+- [x] **Move `baseURL` to environment config files** — `config/production/hugo.toml` (fencingnb.ca) and `config/development/hugo.toml` (ejamer.github.io) created; `baseURL` removed from root `hugo.toml`; `make build` and `make serve` updated to pass `--environment development` (bare `hugo` defaults to production).
 - [ ] **Add explicit date sort to news sidebar** (`layouts/news/single.html:32`) — `where .Site.RegularPages "Section" "news"` does not guarantee sort order. Wrap with `sort ... "Date" "desc"` before `first 6`.
 - [ ] **Add `defer` to non-deferred script tags** — `layouts/index.html:89` (`hero-slider.js`) and `layouts/events/list.html:77` (`events-calendar.js`) lack `defer`; they block the HTML parser on download. Add `defer` attribute to both.
 - [ ] **Map `summary` to `<meta name="description">`** — news articles have a `summary` front matter field but it is not emitted as a meta description tag. Add a `<meta name="description">` in the head partial that falls back to `site.Params.description` when `summary` is absent.
