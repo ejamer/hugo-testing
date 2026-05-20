@@ -4,10 +4,10 @@
       "Bash(git *)",
       "Bash(make *)",
       "Bash(npx pagefind *)",
-      "Bash(cd *)",
-      "Bash(find *)",
       "Bash(gh *)",
-      "Bash(script -q -c *)"
+      "Bash(curl -s *)",
+      "Bash(hugo *)",
+      "Bash(python3 scripts/fencingtimelive-results.py *)"
     ]
   }
 }
