@@ -11,6 +11,16 @@ theme = 'ananke'
   section = ["HTML", "RSS"]
   page    = ["HTML"]
 
+[markup]
+  [markup.goldmark.renderer]
+    # Keep unsafe = false — content authors should not need raw HTML in Markdown.
+    # If a specific page needs an embed or iframe, use a shortcode instead.
+    unsafe = false
+
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel   = 4
+
 [params]
   custom_css = [
     "fenb-base.css",

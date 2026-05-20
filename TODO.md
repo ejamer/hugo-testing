@@ -104,7 +104,7 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 - [x] **Add `defer` to non-deferred script tags** — added `defer` to `hero-slider.js`, `events-calendar.js`, and `events-schedule.js` (schedule was also missing it).
 - [x] **Map `summary` to `<meta name="description">`** — already handled by Ananke's `baseof.html`; `summary` front matter maps to Hugo's `.Summary` which the theme emits as the meta description. No code change needed.
 - [x] **Add RSS output for the news section** — `[outputs]` added to `hugo.toml`; feeds at `/news/index.xml` and `/fr/news/index.xml`; RSS icon link added to footer alongside social icons (bilingual aria-label).
-- [ ] **Add explicit `[markup]` config block** (`hugo.toml`) — document (and control) Goldmark rendering settings; current behaviour relies on undocumented defaults.
+- [x] **Add explicit `[markup]` config block** — added to `hugo.toml` with `unsafe = false` (explicit, with comment), and `tableOfContents` start/end levels.
 
 ### Low priority
 
