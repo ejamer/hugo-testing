@@ -1,20 +1,22 @@
 # All commands run from repo root. Hugo site lives in fenb-1/.
-# Hugo and pagefind are installed via snap (/snap/bin/hugo) and npm respectively.
+# Hugo installed via snap; pagefind via npm. Override HUGO if installed elsewhere:
+#   make serve HUGO=/usr/local/bin/hugo
+HUGO ?= /snap/bin/hugo
 
 # Dev server: pre-builds pagefind search index, then serves with live reload.
 # --renderStaticToDisk + --disableFastRender ensures pagefind files are on disk so the
 # search UI works locally. --noHTTPCache prevents stale assets during development.
 serve:
-	cd fenb-1 && /snap/bin/hugo --environment development && npx pagefind --site public && /snap/bin/hugo server --renderStaticToDisk --disableFastRender --noHTTPCache --watch
+	cd fenb-1 && $(HUGO) --environment development && npx pagefind --site public && $(HUGO) server --renderStaticToDisk --disableFastRender --noHTTPCache --watch
 
 # Quick local build (no minification, no pagefind). Useful for checking output.
 build: clean
-	cd fenb-1 && /snap/bin/hugo --environment development
+	cd fenb-1 && $(HUGO) --environment development
 
 # Production build: minifies output and generates the pagefind search index.
 # Used by /fenb-release before opening a dev→main PR.
 build-prod: clean
-	cd fenb-1 && /snap/bin/hugo --environment production --minify && npx pagefind --site public
+	cd fenb-1 && $(HUGO) --environment production --minify && npx pagefind --site public
 
 # Remove Hugo's output and cache directories so the next build starts clean.
 clean:

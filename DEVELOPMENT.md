@@ -12,7 +12,7 @@ Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/hugo.
 
 ## Local development
 
-Hugo is installed via snap (`/snap/bin/hugo`). Run all commands from the **repo root** unless noted.
+Hugo is installed via snap (`/snap/bin/hugo`). Run all commands from the **repo root** unless noted. If Hugo is installed elsewhere, override the path: `make serve HUGO=/usr/local/bin/hugo`.
 
 ```bash
 make serve        # dev server with search (preferred)

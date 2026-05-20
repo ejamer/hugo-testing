@@ -110,8 +110,8 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 
 - [x] **Extract event categories to a data file** — `data/event_categories.yaml` created; calendar legend (`events/list.html`) and schedule filter slice (`events/schedule.html`) both now iterate over `hugo.Data.event_categories.event_categories`.
 - [x] **Update archetypes** — `default.md` switched to YAML front matter; `archetypes/news.md` created with `category` and `summary` pre-filled. Note: bilingual pair creation still requires `/fenb-new-news` — archetypes can't enforce that.
-- [ ] **Add `errorf` guard in `icon.html`** (`layouts/partials/icon.html:9`) — missing SVG file silently produces blank output. Add `{{ if not $svg }}{{ errorf "icon.html: file not found: %s" .name }}{{ end }}` to surface the error at build time.
-- [ ] **Make Hugo path configurable in Makefile** — all targets hard-code `/snap/bin/hugo`; breaks for any other install method. Replace with `HUGO ?= /snap/bin/hugo` at the top of the Makefile.
+- [x] **Add `errorf` guard in `icon.html`** — missing SVG now fails the build with a clear message rather than silently producing blank output.
+- [x] **Make Hugo path configurable in Makefile** — `HUGO ?= /snap/bin/hugo` variable added; all targets use `$(HUGO)`; override with `make serve HUGO=/usr/local/bin/hugo`.
 - [ ] **Pin Ananke submodule to a specific commit** — the CSS pipeline runs through Ananke's `GetMainCSS.html`; an unpinned update could silently break it. Pin in `.gitmodules` and note the version in README.
 - [ ] **Document CSS pipeline location in README** — custom CSS belongs in `assets/ananke/css/` (not `static/`), but this is non-obvious. Add a note explaining the Ananke pipeline mechanism and the requirement to also list files in `hugo.toml`'s `custom_css` array.
 
