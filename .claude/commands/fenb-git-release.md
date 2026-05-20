@@ -57,17 +57,19 @@ Run through this checklist in order, pausing to report the result of each step b
 
    If the user picks "Cancel", pop the stash (if one was taken), then stop. Do not open the PR without explicit user approval.
 
-10. **Open PR** — run:
+10. **Open PR** — first check for an existing open PR: `gh pr list --base main --head dev --state open --json url,number`. If one already exists, use its URL and number (skip creating a new one and report "Using existing PR #N"). Otherwise run:
     ```
     gh pr create --base main --head dev --title "Release: {summary of changes}" --body "..."
     ```
     Include the commit summary in the PR body. Use the `gh` CLI. Capture the PR URL from the output.
 
-    If the `gh` command fails, pop the stash (if one was taken) before stopping and report the error.
+    If the `gh pr create` command fails, pop the stash (if one was taken) before stopping and report the error.
 
 11. **Write version.json** — compute the following values using bash, then write `fenb-1/static/version.json` using the Write tool:
 
-    - **`version`** — the target version from Step 8 if the user selected "Yes"; otherwise the current tag from Step 1 (or `"untagged"` if no tags exist)
+    - **`version`** — depends on whether a tag was selected in Step 8:
+      - **Tagged release:** use the selected version string (e.g. `"v0.1.0"`)
+      - **Untagged release:** append `-dev` to the current tag from Step 1 (e.g. `"v1.2.3-dev"`). If no tags exist at all, use `"v0.0.0-dev"`.
     - **`released_at`** — run `date -u +"%Y-%m-%dT%H:%M:%SZ"`
     - **`released_by`** — run `git config user.name` and `git config user.email`, then anonymize the email:
       ```bash
@@ -78,7 +80,9 @@ Run through this checklist in order, pausing to report the result of each step b
       ```
       Format as `"Name <anon_email>"` (e.g. `"Ed Jamer <edw*****@g*****.com>"`)
     - **`pr`** — the PR URL captured in Step 10
-    - **`commits_in_release`** — run `git log main..dev --oneline | wc -l | tr -d ' '`
+    - **`commits_since_tag`** — cumulative commit count since the last semver tag, computed as follows:
+      - **Tagged release:** `git log <prev-tag>..HEAD --oneline | wc -l | tr -d ' '` where `<prev-tag>` is the current tag from Step 1 (the one before this release). If no previous tag exists, use `git log --oneline | wc -l | tr -d ' '` (all commits).
+      - **Untagged release:** same as above — commits since the last tag (or all commits if no tags). This makes the counter cumulative across consecutive untagged releases.
 
     Write the file as valid JSON:
     ```json
@@ -87,7 +91,7 @@ Run through this checklist in order, pausing to report the result of each step b
       "released_at": "...",
       "released_by": "...",
       "pr": "...",
-      "commits_in_release": N
+      "commits_since_tag": N
     }
     ```
 
@@ -120,7 +124,7 @@ Run through this checklist in order, pausing to report the result of each step b
 
     ┌─ Release Summary ────────────────────────────
     │  PR:      <PR URL>
-    │  Commits: <commits_in_release>
+    │  Commits: <commits_since_tag> since last tag
     │  Target:  dev → main
     │  Tag:     <vX.Y.Z>  — or —  None  (existing: <current-tag>)
     │  Status:  Merged ✓  (or "Open — merge when ready")
