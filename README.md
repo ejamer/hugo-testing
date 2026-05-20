@@ -152,8 +152,8 @@ Add an entry to `data/events.yaml`.
 | `title` | ✅ | |
 | `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
 | `end_date` | — | ISO `YYYY-MM-DD`. Omit or leave blank for single-day events. If set, the displayed date shows as a range (`Sep 20–21` or `Nov 29 – Dec 1`) and the calendar draws bars across the full range. |
-| `category` | ✅ | See categories below |
-| `category_label` | ✅ | Fallback label if i18n key missing |
+| `category` | ✅ | See categories below — must be a canonical ID from `data/event_categories.yaml` |
+| `category_label` | ✅ | Fallback label shown if the i18n key is missing (keep in sync with the i18n value) |
 | `venue` | ✅ | Short venue name shown on card |
 | `location` | ✅ | City / province |
 | `description` | — | Optional. Not shown on homepage cards |
@@ -181,7 +181,7 @@ Add an entry to `data/events.yaml`.
 
 Each category drives three visual elements: the date badge on the event card, the tag pill, and the calendar bar on the month grid.
 
-| `category` | Example `category_label` | Colour |
+| `category` | `category_label` | Colour |
 |---|---|---|
 | `competition` | `"Competition"` | Teal |
 | `training` | `"Training Camp"` | Dark green |
@@ -191,7 +191,9 @@ Each category drives three visual elements: the date badge on the event card, th
 | `meeting` | `"FENB Meeting"` | Grey |
 | `announcement` | `"Announcement"` | Teal |
 
-`category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces).
+`category` is the canonical ID — must match exactly (lowercase, no spaces) and must exist in `data/event_categories.yaml`. `category_label` is a fallback display string used if the i18n key is missing.
+
+**Adding a new category:** add the ID to `data/event_categories.yaml`, add i18n keys to both `i18n/en.yaml` and `i18n/fr.yaml`, and add the corresponding CSS colour rules to `fenb-events.css`.
 
 The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today), falling back to the most recent past events if fewer than 4 are upcoming. When the season ends, add an off-season placeholder entry (category `announcement`) so the section stays populated through the summer gap.
 

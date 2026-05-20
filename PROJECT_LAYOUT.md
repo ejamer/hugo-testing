@@ -86,14 +86,17 @@ hugo-testing/
     │           ├── apr-05-nb-athletes-nationals.en.md
     │           └── apr-05-nb-athletes-nationals.fr.md
     ├── data/
-    │   ├── events.yaml        Current season's event calendar (drives homepage + /events/)
-    │   ├── events_archive/    Past seasons — moved here at season rollover (see plans/)
-    │   ├── clubs.yaml         Member club data (drives /clubs/ page)
-    │   ├── board.yaml         Board of directors; also holds founder photo info and affiliations (drives /about/)
-    │   ├── programs.yaml      Homepage quick-link cards (URLs + accent flag for the join card)
-    │   ├── policies.yaml      Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
-    │   ├── join.yaml          Join section seasonal URLs (2MEV membership portal, club registration form)
-    │   └── hero_slides.yaml   Hero carousel image list (drives homepage slider)
+    │   ├── events.yaml             Current season's event calendar (drives homepage + /events/)
+    │   ├── events_archive/         Past seasons — moved here at season rollover (see plans/)
+    │   ├── event_categories.yaml   Canonical category IDs — drives calendar legend and schedule filters
+    │   ├── clubs.yaml              Member club data (drives /clubs/ page)
+    │   ├── board_members.yaml      Board of directors and affiliations (drives /about/)
+    │   ├── program_cards.yaml      Programs landing page cards
+    │   ├── quick_links.yaml        Homepage quick-link cards
+    │   ├── join_paths.yaml         Join landing page cards
+    │   ├── join.yaml               Join section seasonal URLs (2MEV portal, club form)
+    │   ├── policies.yaml           Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
+    │   └── hero_slides.yaml        Hero carousel image list (drives homepage slider)
     ├── i18n/
     │   ├── en.yaml         English UI strings
     │   └── fr.yaml         French UI strings

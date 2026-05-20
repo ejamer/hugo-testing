@@ -189,7 +189,9 @@ Each category drives three visual elements: the date badge on the event card, th
 | `meeting` | `"FENB Meeting"` | `--cat-meeting` | Grey |
 | `announcement` | `"Announcement"` | `--teal` | Teal |
 
-`category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces). Each non-brand category also has a `--cat-*-pale` variant used for tag backgrounds.
+`category` is the canonical ID and CSS hook — must match exactly (lowercase, no spaces) and must be listed in `data/event_categories.yaml` (which drives the calendar legend and schedule filter buttons). `category_label` is a fallback display string used when the i18n key is missing. Each non-brand category also has a `--cat-*-pale` variant used for tag backgrounds.
+
+To add a new category: add the ID to `data/event_categories.yaml`, add i18n keys to `en.yaml` and `fr.yaml`, and add CSS colour rules for `fenb-cal-bar--{id}`, `fenb-tag--{id}`, and their dark-mode and pale variants in `fenb-events.css`.
 
 ---
 

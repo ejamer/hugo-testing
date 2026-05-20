@@ -46,13 +46,9 @@
       <aside class="fenb-cal-legend">
         <h3 class="fenb-cal-legend-title">{{ i18n "cal_legend_title" }}</h3>
         <ul class="fenb-cal-legend-list">
-          <li><span class="fenb-cal-legend-swatch fenb-cal-bar--competition"></span>{{ i18n "competition" }}</li>
-          <li><span class="fenb-cal-legend-swatch fenb-cal-bar--training"></span>{{ i18n "training" }}</li>
-          <li><span class="fenb-cal-legend-swatch fenb-cal-bar--national"></span>{{ i18n "national" }}</li>
-          <li><span class="fenb-cal-legend-swatch fenb-cal-bar--provincial"></span>{{ i18n "provincial" }}</li>
-          <li><span class="fenb-cal-legend-swatch fenb-cal-bar--clinic"></span>{{ i18n "clinic" }}</li>
-          <li><span class="fenb-cal-legend-swatch fenb-cal-bar--meeting"></span>{{ i18n "meeting" }}</li>
-          <li><span class="fenb-cal-legend-swatch fenb-cal-bar--announcement"></span>{{ i18n "announcement" }}</li>
+          {{ range hugo.Data.event_categories.event_categories }}
+          <li><span class="fenb-cal-legend-swatch fenb-cal-bar--{{ . }}"></span>{{ i18n . }}</li>
+          {{ end }}
         </ul>
       </aside>
 

@@ -12,7 +12,7 @@
 {{- end -}}
 {{- $allSeasons = sort $allSeasons "label" "desc" -}}
 
-{{- $categories := slice "competition" "training" "national" "provincial" "clinic" "meeting" "announcement" -}}
+{{- $categories := hugo.Data.event_categories.event_categories -}}
 
 <section class="fenb-section fenb-schedule-section">
   <div class="fenb-container fenb-container--sched">
