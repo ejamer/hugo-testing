@@ -129,6 +129,16 @@ The article page header band shows "News & Results" (the section title) rather t
 
 **New year folder:** when the first article of a new calendar year is created, add a year subfolder with `_index.md` and `_index.fr.md` (copy from the previous year folder).
 
+**Internal links in article body:** use Hugo's `relref` shortcode rather than hardcoded paths. `relref` resolves to the correct URL at build time (including language prefix) and produces a build error if the target page doesn't exist.
+
+```markdown
+Visit our [club directory]({{< relref "clubs/" >}}) for more information.
+```
+
+Do **not** write `[clubs](/clubs/)` or `[clubs](/fr/clubs/)` — root-relative paths skip the base URL and will silently break if the site is ever served from a subdirectory. `relref` is language-aware: in a French article it automatically resolves to the French version of the target page.
+
+Note: `relref` only works for Hugo content pages (`content/`). For links to static files (PDFs in `static/documents/`), use a plain Markdown link with a site-root-relative path: `[Annual Report](/documents/about/agm-minutes/2024.pdf)` — this is correct for production at `fencingnb.ca/` where there is no subpath.
+
 ---
 
 ### New event
@@ -212,18 +222,10 @@ description: "Calendrier de la saison 2026–2027"
 
 ### Board of Directors
 
-Edit `data/board.yaml`. Top-level keys:
+Edit `data/board_members.yaml`. Top-level keys:
 
 - `season` — display label (e.g. `"2025–2026"`); update at the start of each season
 - `contact` — board inquiry email shown on the About contact section
-- `founder` — founder photo and bilingual caption shown in the history section:
-  ```yaml
-  founder:
-    name: "Alfred Knappe"
-    photo: "/images/alfred-knappe.png"
-    caption_en: "Alfred Knappe — founding president, 1969"
-    caption_fr: "Alfred Knappe — président fondateur, 1969"
-  ```
 - `affiliations` — provincial/national affiliations shown in the About sidebar:
   ```yaml
   affiliations:
@@ -261,18 +263,18 @@ Edit `data/board.yaml`. Top-level keys:
    ```yaml
    - name_en: "Policy Name"
      name_fr: "Nom de la politique"
-     url_en: "/about/policies/{slug}/"
-     url_fr: "/fr/about/policies/{slug}/"
+     url_en: about/policies/{slug}/
+     url_fr: fr/about/policies/{slug}/
    ```
 
 #### Add a new AGM minutes year
 
-1. Drop the PDF in `static/docs/agm-minutes/YYYY.pdf` where `YYYY` is the **season start year** (e.g. `2025.pdf` = the 2025–2026 season).
+1. Drop the PDF in `static/documents/about/agm-minutes/YYYY.pdf` where `YYYY` is the **season start year** (e.g. `2025.pdf` = the 2025–2026 season).
 2. Add an entry at the top of `annual_reports` in `data/policies.yaml`:
 
    ```yaml
    - year: 2025
-     url: "/docs/agm-minutes/2025.pdf"
+     url: documents/about/agm-minutes/2025.pdf
    ```
 
 The season label ("2025–2026 Season AGM Minutes") is computed automatically from `year` in the layout.
@@ -286,7 +288,7 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
 ```yaml
 - id: XYZ
   name: "Club Name"
-  logo: "/images/clubs/club-logo-XYZ.png"
+  logo: images/clubs/club-logo-XYZ.png
   email: "club@example.com"
   website: "https://example.com"   # omit if none
   city: "City, NB"
@@ -300,9 +302,9 @@ Drop replacement images into `static/images/hero/` and update `data/hero_slides.
 
 ```yaml
 slides:
-  - src: /images/hero/hero1.jpg
+  - src: images/hero/hero1.jpg
     alt: "Alt text for accessibility"
-  - src: /images/hero/hero2.jpg
+  - src: images/hero/hero2.jpg
     alt: ""
 ```
 

@@ -124,16 +124,30 @@ title: "..."
 
 HTML comments in the body of a layout-driven page are never output — they exist only for editors who open the file expecting to find editable content.
 
-## Hugo `absURL` with leading slash
+## URL paths — the no-leading-slash rule
 
-`absURL` treats a leading `/` as **domain-root-relative** and ignores the base path. With `baseURL = "https://ejamer.github.io/hugo-testing/"`:
+Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as **host-root-relative**, stripping the base URL's path component. With `baseURL = "https://ejamer.github.io/hugo-testing/"`:
 
-- `"/pagefind/x.js" | absURL` → `https://ejamer.github.io/pagefind/x.js` ❌ (subpath lost)
+- `"/events/" | relLangURL` → `/events/` ❌ (base path `/hugo-testing/` lost)
+- `"events/" | relLangURL` → `/hugo-testing/events/` ✓
+- `"/pagefind/x.js" | absURL` → `https://ejamer.github.io/pagefind/x.js` ❌
 - `"pagefind/x.js" | absURL` → `https://ejamer.github.io/hugo-testing/pagefind/x.js` ✓
 
-Always omit the leading slash when using `absURL` for site-root-relative paths that must include the base path.
+**Rule: never use a leading `/` with any Hugo URL function.** This applies to:
+- Hardcoded strings in templates: `"events/" | relLangURL`, `"js/hero-slider.js" | absURL`
+- Paths stored in data YAML files (`data/*.yaml`) that are piped through `relURL` or `relLangURL` in templates — store them without a leading slash (e.g. `logo: images/clubs/foo.png`, not `logo: /images/clubs/foo.png`)
 
-This is especially important for paths embedded in `<script>` strings, where `canonifyURLs` does **not** apply post-processing.
+## Internal links in article Markdown body
+
+Use Hugo's `relref` shortcode for links between content pages. It resolves the correct URL at build time (including language prefix) and fails the build if the target doesn't exist:
+
+```markdown
+Visit our [club directory]({{< relref "clubs/" >}}) for details.
+```
+
+Do **not** hardcode root-relative paths (`/clubs/` or `/fr/clubs/`) in article body text — they skip the base URL and silently break on subpath deployments.
+
+For links to static assets (PDFs in `static/documents/`), a plain Markdown path is acceptable: `[Report](/documents/about/agm-minutes/2024.pdf)`. This is correct for production at `fencingnb.ca/` (no subpath). On the GitHub Pages test deployment the path will be wrong, but that is an acceptable test-environment limitation for static file links.
 
 ## Hugo template `sort` syntax
 

@@ -91,7 +91,7 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 
 ### High priority
 
-- [ ] **Remove `canonifyURLs = true`** (`hugo.toml:3`) — deprecated setting that actively conflicts with `absURL`/`relURL` usage throughout the site; already caused at least one documented URL bug. Remove the line, run `make build`, verify no broken links.
+- [x] **Remove `canonifyURLs = true`** (`hugo.toml:3`) — removed; fixed all templates and data files to use `relURL`/`relLangURL` without leading slashes. One hardcoded bare path remains in article Markdown content (`feb-28-new-club-moncton.fr.md`) which is correct for production.
 - [ ] **Fix French date formatting** — two separate issues:
   - `layouts/news/single.html:14`: `{{ .Date.Format "January 2, 2006" }}` always outputs English month names on French article pages. Replace with i18n month lookup (same pattern used in `event-card.html`).
   - `data/events.yaml`: `display_date` field is manually entered in English. Remove the field from the schema; compute the display date in `layouts/partials/event-card.html` from `date` + `i18n "month_*"` keys, with day/month/year order conditioned on language.

@@ -3,15 +3,15 @@
 # icon: filename in static/images/svg/ — rendered via partials/icon.html.
 quick_links:
   - id: clubs
-    url: /clubs/
+    url: clubs/
     icon: home.svg
   - id: compete
-    url: /events/
+    url: events/
     icon: calendar.svg
   - id: dev
-    url: /programs/
+    url: programs/
     icon: activity.svg
   - id: join
-    url: /join/
+    url: join/
     icon: user-plus.svg
     accent: true

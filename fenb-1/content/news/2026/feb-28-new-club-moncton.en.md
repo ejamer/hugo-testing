@@ -17,4 +17,4 @@ Founded by coach Renée Comeau, the Dieppe Fencing Academy opens its doors this 
 - Adult Learn-to-Fence — Thursday evenings
 - Competitive Stream — by assessment
 
-For more information on the Dieppe Fencing Academy, visit their page in our [club directory](/clubs/).
+For more information on the Dieppe Fencing Academy, visit their page in our [club directory]({{< relref "clubs/" >}}).

@@ -22,7 +22,7 @@
           <button class="fenb-cal-btn" id="cal-next" aria-label="{{ i18n "events_cal_next" }}">
             {{ partial "icon.html" (dict "name" "arrow-right.svg" "w" 16 "h" 16) }}
           </button>
-          <a href="{{ "/events/schedule/" | relLangURL }}" class="fenb-cal-schedule-link">{{ i18n "schedule_view_all" }}</a>
+          <a href="{{ "events/schedule/" | relLangURL }}" class="fenb-cal-schedule-link">{{ i18n "schedule_view_all" }}</a>
         </div>
 
         {{/* Calendar grid — JS populates this */}}

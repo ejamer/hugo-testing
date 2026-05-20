@@ -17,4 +17,4 @@ Fondée par l'entraîneur Renée Comeau, l'Académie d'escrime de Dieppe ouvre s
 - Adultes — Apprendre à faire de l'escrime — soirs de jeudi
 - Volet compétitif — sur évaluation
 
-Pour plus d'informations sur l'Académie d'escrime de Dieppe, visitez leur page dans notre [répertoire de clubs](/fr/clubs/).
+Pour plus d'informations sur l'Académie d'escrime de Dieppe, visitez leur page dans notre [répertoire de clubs]({{< relref "clubs/" >}}).
