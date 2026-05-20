@@ -178,15 +178,39 @@ Fix: emit the declaration via `printf | safeHTML` so it's in the same template a
 
 See `layouts/news/rss.xml` for the established pattern.
 
-## Sweep rule — changing a field or function used across templates
+## Sweep rule — before any structural git or template change
 
-Before declaring any template change complete, grep every place the old field or function is used:
+Before a structural change (renaming a field, moving a file, restoring a submodule), grep for related tracked files and references first:
 
 ```bash
+# Template/JS field changes
 grep -rn 'field_name' fenb-1/layouts/ fenb-1/static/js/ .claude/commands/
+
+# Git structural changes (submodule, .gitmodules, tracked file moves)
+git ls-files | grep -i 'relevant_name'
 ```
 
-Missing one location (a second partial, a JS file, a skill) has consistently required a second bug-report round trip. The grep takes 5 seconds; the round trip costs much more.
+Missing one location has consistently required a second round trip. The grep takes 5 seconds.
+
+## Restoring a git submodule gitlink
+
+When a submodule's files have been committed as regular tracked files (mode `100644`) instead of a gitlink (mode `160000`), `git rm --cached` + `git add` alone will re-track the files rather than create the gitlink. Use `git update-index` to force the gitlink:
+
+```bash
+# 1. Remove regular-file tracking
+git rm -r --cached path/to/submodule/
+
+# 2. Create .gitmodules at repo root (not inside a subdirectory)
+
+# 3. Force-register the gitlink at the pinned commit hash
+git update-index --add --cacheinfo 160000,<sha1>,path/to/submodule
+
+# 4. Verify
+git ls-files --stage path/to/submodule   # should show mode 160000
+git submodule status                      # should show the hash
+```
+
+Also verify that the `.git` file inside the submodule directory has the correct relative `gitdir:` depth to reach the repo root's `.git/modules/` directory, and that the `worktree` in `.git/modules/<name>/config` includes any intermediate path components.
 
 ## Return-value partials for computed display strings
 

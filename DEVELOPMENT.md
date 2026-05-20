@@ -57,11 +57,38 @@ For content-creation skills (`/fenb-new-news`, `/fenb-new-page`, `/fenb-season-r
 | Layer | Choice |
 |-------|--------|
 | Static site generator | [Hugo](https://gohugo.io) v0.161+ (extended) |
-| Theme | [Ananke](https://github.com/theNewDynamic/gohugo-theme-ananke) (submodule) |
+| Theme | [Ananke](https://github.com/gohugo-ananke/ananke) (git submodule — pinned at a specific commit) |
 | CSS | Ten scoped files in `fenb-1/assets/ananke/css/fenb-*.css`, merged by Ananke's `resources.Concat` pipeline |
 | i18n | Hugo built-in — English (`en-CA`) · French (`fr-CA`) |
 | Content | Markdown in `fenb-1/content/` |
 | Structured data | YAML in `fenb-1/data/` (events, clubs, board, programs, policies, hero slides, join URLs) |
+
+---
+
+## Ananke theme submodule
+
+The Ananke theme lives in `fenb-1/themes/ananke/` and is managed as a git submodule. A submodule is a pinned reference to a specific commit in another repository — the repo stores only the commit hash, not the files themselves. The files are present locally but not tracked by this repo.
+
+**After a fresh clone**, populate the theme files:
+```bash
+git submodule update --init
+```
+
+**To update Ananke** to a newer version:
+```bash
+git submodule update --remote fenb-1/themes/ananke  # fetch and checkout latest main
+make build                                           # verify the build still works
+git add fenb-1/themes/ananke                        # stage the updated commit hash
+git commit -m "Update Ananke theme to <new-hash>"
+```
+
+The commit in `fenb-1/themes/ananke` after `git add` will be the new pinned version. Always verify the build before committing an update — Ananke's CSS pipeline (`GetMainCSS.html`) is load-bearing for the site's stylesheet.
+
+**Checking the current pinned version:**
+```bash
+git submodule status               # shows pinned hash
+cd fenb-1/themes/ananke && git log --oneline -3  # shows what that commit is
+```
 
 ---
 
