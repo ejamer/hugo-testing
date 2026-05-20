@@ -1,13 +1,13 @@
 # Homepage hero carousel — used by layouts/index.html
 # Images live in static/images/hero/. alt text is required for accessibility.
 slides:
-  - src: /images/hero/hero1.jpg
+  - src: images/hero/hero1.jpg
     alt: ""
-  - src: /images/hero/hero2.jpg
+  - src: images/hero/hero2.jpg
     alt: ""
-  - src: /images/hero/hero3.jpg
+  - src: images/hero/hero3.jpg
     alt: ""
-  - src: /images/hero/hero4.jpg
+  - src: images/hero/hero4.jpg
     alt: ""
-  - src: /images/hero/hero5.jpg
+  - src: images/hero/hero5.jpg
     alt: ""

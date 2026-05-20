@@ -12,14 +12,14 @@
 {{- end -}}
 {{- $allSeasons = sort $allSeasons "label" "desc" -}}
 
-{{- $categories := slice "competition" "training" "national" "provincial" "clinic" "meeting" "announcement" -}}
+{{- $categories := hugo.Data.event_categories.event_categories -}}
 
 <section class="fenb-section fenb-schedule-section">
   <div class="fenb-container fenb-container--sched">
 
     {{/* Screen-only controls (back link + print) */}}
     <div class="fenb-schedule-controls">
-      <a href="{{ "/events/" | relLangURL }}" class="fenb-schedule-back-link">
+      <a href="{{ "events/" | relLangURL }}" class="fenb-schedule-back-link">
         &larr; {{ i18n "back_to_calendar" }}
       </a>
       <button class="fenb-schedule-print-btn" onclick="window.print()">{{ i18n "schedule_print" }}</button>
@@ -54,7 +54,7 @@
                     {{- if eq ((time .date).Format "2006-01") $mk -}}
                     <li class="fenb-schedule-item" data-category="{{ .category }}">
                       <div class="fenb-schedule-row fenb-schedule-row--primary">
-                        <span class="fenb-schedule-date">{{ .display_date }}</span>
+                        <span class="fenb-schedule-date">{{ partial "event-date.html" . }}</span>
                         <strong class="fenb-schedule-title">{{ .title }}</strong>
                         <span class="fenb-schedule-category fenb-cal-bar--{{ .category }}">{{ i18n .category | default .category_label }}</span>
                       </div>
@@ -114,6 +114,6 @@
   </div>
 </section>
 
-<script src="{{ "js/events-schedule.js" | absURL }}"></script>
+<script src="{{ "js/events-schedule.js" | absURL }}" defer></script>
 
 {{ end }}

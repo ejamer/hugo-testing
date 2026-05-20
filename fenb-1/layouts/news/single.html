@@ -6,21 +6,25 @@
     <div class="fenb-article-layout">
 
       <div class="fenb-article-main">
-        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . | urlize }}{{ end }}"></div>
+        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . }}{{ end }}"></div>
         <h1 class="fenb-article-title">{{ .Title }}</h1>
-        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . | urlize }}{{ end }}"></div>
+        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . }}{{ end }}"></div>
         <div class="fenb-article-meta">
-          {{ with .Params.category }}<span class="fenb-news-category fenb-news-category--{{ . | urlize }}">{{ . }}</span>{{ end }}
-          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+          {{ with .Params.category }}<span class="fenb-news-category fenb-news-category--{{ . }}">{{ i18n . }}</span>{{ end }}
+          {{- $day := .Date.Format "2" -}}
+          {{- $month := i18n (printf "cal_month_%s" (.Date.Format "Jan" | lower)) | default (.Date.Format "January") -}}
+          {{- $year := .Date.Format "2006" -}}
+          {{- $dateStr := cond (eq .Site.Language.Lang "fr") (printf "%s %s %s" $day ($month | lower) $year) (printf "%s %s, %s" $month $day $year) -}}
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ $dateStr }}</time>
         </div>
         <div class="fenb-article-body">
           {{ .Content }}
         </div>
-        {{ if in (slice "Results" "Résultats") .Params.category }}
+        {{ if eq .Params.category "results" }}
         <script src="{{ "js/results-table.js" | absURL }}" defer></script>
         {{ end }}
         <nav class="fenb-article-back">
-          <a href="{{ "/news/" | relLangURL }}">&larr; {{ i18n "back_to_news" }}</a>
+          <a href="{{ "news/" | relLangURL }}">&larr; {{ i18n "back_to_news" }}</a>
         </nav>
       </div>
 
@@ -29,14 +33,16 @@
           <h3 class="fenb-sidebar-heading">{{ i18n "sidebar_recent_news" }}</h3>
           <ul class="fenb-sidebar-news-list">
             {{ $current := . }}
-            {{ range first 6 (where .Site.RegularPages "Section" "news") }}
+            {{ range first 6 (sort (where .Site.RegularPages "Section" "news") "Date" "desc") }}
             <li class="fenb-sidebar-news-item{{ if eq .RelPermalink $current.RelPermalink }} is-current{{ end }}">
               <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+              {{- $sbMonth := i18n (printf "month_%s" (.Date.Format "Jan")) | default (.Date.Format "Jan") -}}
+              {{- $sbDate := cond (eq $.Site.Language.Lang "fr") (printf "%s %s %s" (.Date.Format "2") $sbMonth (.Date.Format "2006")) (printf "%s %s, %s" $sbMonth (.Date.Format "2") (.Date.Format "2006")) -}}
+              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ $sbDate }}</time>
             </li>
             {{ end }}
           </ul>
-          <a href="{{ "/news/" | relLangURL }}" class="fenb-sidebar-events-link">{{ i18n "see_more_news" }} &rarr;</a>
+          <a href="{{ "news/" | relLangURL }}" class="fenb-sidebar-events-link">{{ i18n "see_more_news" }} &rarr;</a>
         </div>
       </aside>
 

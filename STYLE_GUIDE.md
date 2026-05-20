@@ -32,7 +32,7 @@ Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped t
 | `fenb-join.css` | Join & Register section (landing page, membership, club registration, volunteer) |
 | `fenb-responsive.css` | All `@media` breakpoints and print query — loaded last |
 
-The load order is declared in `hugo.toml` under `params.custom_css`.
+The load order is declared in `hugo.toml` under `params.ananke.custom_css`. Files must live in `fenb-1/assets/ananke/css/` — **not** `fenb-1/static/css/` — so Ananke's pipeline picks them up for concatenation, minification, and (in production) fingerprinting. A file placed in `static/` would be served separately, uncached, and unminified.
 
 - No inline styles for anything reusable — add a class to the appropriate file instead
 - Use CSS custom properties defined at `:root` rather than raw hex values: `--teal`, `--crimson`, `--shadow-sm`, `--radius`, category colours (`--cat-training`, `--cat-national`, `--cat-clinic`, `--cat-meeting` and their `--cat-*-pale` variants), brand colour channels for `rgba()` (`--teal-rgb`, `--crimson-rgb`)
@@ -162,14 +162,16 @@ When the first article of a new calendar year arrives, create the year subfolder
 
 ## News category colours
 
-The `category` front matter field drives the card top stripe, category badge colour, and article divider colour.
+The `category` front matter field is a **canonical ID** (lowercase, no spaces) — the same convention used by event categories. The badge label is looked up via i18n at render time; never put a display string or translated label in the front matter.
 
-| Value | CSS variable | Colour | French equivalent |
-|---|---|---|---|
-| `Results` | `--teal` | Teal | `Résultats` |
-| `Announcement` | `--crimson` | Crimson | `Annonce` |
-| `Registration` | `--cat-training` | Green | `Inscription` |
-| `Community` | `--cat-national` | Navy | `Communauté` |
+| `category` | Badge EN | Badge FR | CSS variable | Colour |
+|---|---|---|---|---|
+| `results` | Results | Résultats | `--teal` | Teal |
+| `announcement` | Announcement | Annonce | `--crimson` | Crimson |
+| `registration` | Registration | Inscription | `--cat-training` | Green |
+| `community` | Community | Communauté | `--cat-national` | Navy |
+
+The `results` category also triggers loading of `results-table.js` — the check is `eq .Params.category "results"`, so the ID must match exactly.
 
 ---
 
@@ -187,13 +189,15 @@ Each category drives three visual elements: the date badge on the event card, th
 | `meeting` | `"FENB Meeting"` | `--cat-meeting` | Grey |
 | `announcement` | `"Announcement"` | `--teal` | Teal |
 
-`category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces). Each non-brand category also has a `--cat-*-pale` variant used for tag backgrounds.
+`category` is the canonical ID and CSS hook — must match exactly (lowercase, no spaces) and must be listed in `data/event_categories.yaml` (which drives the calendar legend and schedule filter buttons). `category_label` is a fallback display string used when the i18n key is missing. Each non-brand category also has a `--cat-*-pale` variant used for tag backgrounds.
+
+To add a new category: add the ID to `data/event_categories.yaml`, add i18n keys to `en.yaml` and `fr.yaml`, and add CSS colour rules for `fenb-cal-bar--{id}`, `fenb-tag--{id}`, and their dark-mode and pale variants in `fenb-events.css`.
 
 ---
 
 ## Results tables (news articles)
 
-Results news articles (`category: Results` / `Résultats`) use an enhanced table pattern driven by `static/js/results-table.js`, which is loaded automatically by `layouts/news/single.html` for those categories only.
+Results news articles (`category: results`) use an enhanced table pattern driven by `static/js/results-table.js`, which is loaded automatically by `layouts/news/single.html` when `category` equals `results`.
 
 **Column order:** always `Name | Club | Place` — Place must be the last column so the JS can target it by index.
 

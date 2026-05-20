@@ -348,3 +348,20 @@
 .fenb-announcement__text {
   margin: 0;
 }
+
+/* ── Footer RSS link ─────────────────────────── */
+.fenb-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fenb-footer-rss {
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255,255,255,0.7);
+  transition: color 0.15s;
+  padding: 0.5rem;
+}
+
+.fenb-footer-rss:hover { color: #fff; }

@@ -1,0 +1,11 @@
+# Canonical event category IDs — used by the calendar legend, schedule filters,
+# and CSS classes. Order here controls display order in the legend and filter bar.
+# Each id must have a matching i18n key and fenb-cal-bar--{id} CSS class.
+event_categories:
+  - competition
+  - training
+  - national
+  - provincial
+  - clinic
+  - meeting
+  - announcement

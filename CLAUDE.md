@@ -37,6 +37,10 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 
 When adding a new skill, name the file `fenb-{name}.md` in `.claude/commands/`.
 
+## Content creation — use skills, not `hugo new`
+
+`/fenb-new-news` and `/fenb-new-results` are the correct entry points for news articles. They enforce bilingual pair creation, correct filename format (`{mon}-{dd}-{slug}.{lang}.md`), year subfolder existence, and required front matter fields. `hugo new` with the `news` archetype works but only creates a single file — it cannot enforce the bilingual pair or the naming convention. Never use `hugo new` directly for news content.
+
 ## Development workflow
 
 See **`DEVELOPMENT.md`** for the full branch strategy and build commands.
@@ -124,16 +128,101 @@ title: "..."
 
 HTML comments in the body of a layout-driven page are never output — they exist only for editors who open the file expecting to find editable content.
 
-## Hugo `absURL` with leading slash
+## URL paths — the no-leading-slash rule
 
-`absURL` treats a leading `/` as **domain-root-relative** and ignores the base path. With `baseURL = "https://ejamer.github.io/hugo-testing/"`:
+Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as **host-root-relative**, stripping the base URL's path component. With the development `baseURL` `"https://ejamer.github.io/hugo-testing/"` (set in `config/development/hugo.toml`):
 
-- `"/pagefind/x.js" | absURL` → `https://ejamer.github.io/pagefind/x.js` ❌ (subpath lost)
+- `"/events/" | relLangURL` → `/events/` ❌ (base path `/hugo-testing/` lost)
+- `"events/" | relLangURL` → `/hugo-testing/events/` ✓
+- `"/pagefind/x.js" | absURL` → `https://ejamer.github.io/pagefind/x.js` ❌
 - `"pagefind/x.js" | absURL` → `https://ejamer.github.io/hugo-testing/pagefind/x.js` ✓
 
-Always omit the leading slash when using `absURL` for site-root-relative paths that must include the base path.
+**Rule: never use a leading `/` with any Hugo URL function.** This applies to:
+- Hardcoded strings in templates: `"events/" | relLangURL`, `"js/hero-slider.js" | absURL`
+- Paths stored in data YAML files (`data/*.yaml`) that are piped through `relURL` or `relLangURL` in templates — store them without a leading slash (e.g. `logo: images/clubs/foo.png`, not `logo: /images/clubs/foo.png`)
 
-This is especially important for paths embedded in `<script>` strings, where `canonifyURLs` does **not** apply post-processing.
+## Internal links in article Markdown body
+
+Use Hugo's `relref` shortcode for links between content pages. It resolves the correct URL at build time (including language prefix) and fails the build if the target doesn't exist:
+
+```markdown
+Visit our [club directory]({{< relref "clubs/" >}}) for details.
+```
+
+Do **not** hardcode root-relative paths (`/clubs/` or `/fr/clubs/`) in article body text — they skip the base URL and silently break on subpath deployments.
+
+For links to static assets (PDFs in `static/documents/`), a plain Markdown path is acceptable: `[Report](/documents/about/agm-minutes/2024.pdf)`. This is correct for production at `fencingnb.ca/` (no subpath). On the GitHub Pages test deployment the path will be wrong, but that is an acceptable test-environment limitation for static file links.
+
+## Verify output content, not just output existence
+
+After generating any file output (RSS feed, JSON endpoint, sitemap), inspect the actual content before declaring done:
+
+```bash
+cat public/news/index.xml        # check for <item> elements, not just file existence
+cat -A public/news/index.xml | head -3  # check for hidden leading whitespace (BOM, newlines)
+```
+
+An empty feed, a missing field, or a leading whitespace character are all silent failures that only surface when a user opens the output. A `cat` takes 2 seconds.
+
+## Hugo XML template — no whitespace before the XML declaration
+
+Hugo can emit a leading newline before `<?xml` even when `{{- ... -}}` whitespace trimming is used on preceding lines. A leading character before `<?xml` breaks XML parsers with "Start tag expected, '<' not found".
+
+Fix: emit the declaration via `printf | safeHTML` so it's in the same template action chain, with no gap:
+
+```xml
+{{- $var := .Something -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss ...>
+```
+
+See `layouts/news/rss.xml` for the established pattern.
+
+## Sweep rule — before any structural git or template change
+
+Before a structural change (renaming a field, moving a file, restoring a submodule), grep for related tracked files and references first:
+
+```bash
+# Template/JS field changes
+grep -rn 'field_name' fenb-1/layouts/ fenb-1/static/js/ .claude/commands/
+
+# Git structural changes (submodule, .gitmodules, tracked file moves)
+git ls-files | grep -i 'relevant_name'
+```
+
+Missing one location has consistently required a second round trip. The grep takes 5 seconds.
+
+## Restoring a git submodule gitlink
+
+When a submodule's files have been committed as regular tracked files (mode `100644`) instead of a gitlink (mode `160000`), `git rm --cached` + `git add` alone will re-track the files rather than create the gitlink. Use `git update-index` to force the gitlink:
+
+```bash
+# 1. Remove regular-file tracking
+git rm -r --cached path/to/submodule/
+
+# 2. Create .gitmodules at repo root (not inside a subdirectory)
+
+# 3. Force-register the gitlink at the pinned commit hash
+git update-index --add --cacheinfo 160000,<sha1>,path/to/submodule
+
+# 4. Verify
+git ls-files --stage path/to/submodule   # should show mode 160000
+git submodule status                      # should show the hash
+```
+
+Also verify that the `.git` file inside the submodule directory has the correct relative `gitdir:` depth to reach the repo root's `.git/modules/` directory, and that the `worktree` in `.git/modules/<name>/config` includes any intermediate path components.
+
+## Return-value partials for computed display strings
+
+When display text must be computed from data (e.g. a bilingual date from `date` + `end_date`), extract the logic into a return-value partial rather than duplicating it inline:
+
+```go
+{{- return $computedString -}}
+```
+
+Called as: `{{ partial "event-date.html" . }}`
+
+This keeps the logic in one file regardless of how many templates render the same thing (`event-card.html`, `events/schedule.html`, future widgets). `layouts/partials/event-date.html` is the established example — follow this pattern for any similar computed display value.
 
 ## Hugo template `sort` syntax
 
@@ -158,7 +247,9 @@ var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.event
 
 ## TOML subtable ordering in hugo.toml
 
-`[params.subtable]` changes the active TOML context — every key that follows it (until the next `[…]` header) belongs to the subtable, not the parent. Place all flat `[params]` keys (`custom_css`, `background_color_class`, etc.) **before** any `[params.child]` subtable headers. Placing a subtable header first silently swallows subsequent flat keys into the wrong table with no build error.
+`[params.subtable]` changes the active TOML context — every key that follows it (until the next `[…]` header) belongs to the subtable, not the parent. Place all flat `[params]` keys (`background_color_class`, etc.) **before** any `[params.child]` subtable headers. Placing a subtable header first silently swallows subsequent flat keys into the wrong table with no build error.
+
+Note: `custom_css` belongs under `[params.ananke]` (not `[params]`) — this is the Ananke-namespace convention for CSS files to be processed by Ananke's pipeline.
 
 ## Hugo deprecated front matter and template APIs
 
@@ -183,7 +274,7 @@ The language name itself (`.Language.Label`) comes from the translation page and
 
 ## Page header band
 
-`site-header.html` renders a coloured `.fenb-page-header` band below the nav for all non-home pages. By default it shows the page's own `.Title`.
+`page-header.html` renders a coloured `.fenb-page-header` band below the nav for all non-home pages. By default it shows the page's own `.Title`.
 
 If a section's single pages should show the **section title** in the band instead (e.g. "News & Results" on every news article), add this cascade to the section's `_index.md` and `_index.fr.md`:
 
@@ -194,7 +285,7 @@ cascade:
     page_header_uses_section: true
 ```
 
-`site-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description` when set. The `_target: kind: page` scoping means the section's list page is unaffected.
+`page-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description` when set. The `_target: kind: page` scoping means the section's list page is unaffected.
 
 **Preferred approach for a subtitle:** set `description:` in the section's `_index.md` / `_index.fr.md` front matter. The partial already reads `.Params.description` and renders it as the page subtitle — no template changes needed.
 

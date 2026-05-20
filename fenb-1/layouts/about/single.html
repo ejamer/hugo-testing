@@ -39,8 +39,8 @@
                 {{- index . (printf "name_%s" $.Site.Language.Lang) | default .name_en -}}
               </span>
               <span class="fenb-policy-links">
-                <a href="{{ .url_en }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
-                <a href="{{ .url_fr }}" class="fenb-policy-link">{{ i18n "policies_link_fr" }}</a>
+                <a href="{{ .url_en | relURL }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
+                <a href="{{ .url_fr | relURL }}" class="fenb-policy-link">{{ i18n "policies_link_fr" }}</a>
               </span>
             </li>
             {{ end }}
@@ -58,8 +58,8 @@
                 {{- index . (printf "name_%s" $.Site.Language.Lang) | default .name_en -}}
               </span>
               <span class="fenb-policy-links">
-                <a href="{{ .url_en }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
-                <a href="{{ .url_fr }}" class="fenb-policy-link">{{ i18n "policies_link_fr" }}</a>
+                <a href="{{ .url_en | relURL }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
+                <a href="{{ .url_fr | relURL }}" class="fenb-policy-link">{{ i18n "policies_link_fr" }}</a>
               </span>
             </li>
             {{ end }}
@@ -75,7 +75,7 @@
             <li class="fenb-policy-item">
               <span class="fenb-policy-name">{{ i18n "policies_agm_season" (dict "Start" .year "End" (add .year 1)) }}</span>
               <span class="fenb-policy-links">
-                <a href="{{ .url }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
+                <a href="{{ .url | relURL }}" class="fenb-policy-link">{{ i18n "policies_link_en" }}</a>
               </span>
             </li>
             {{ end }}

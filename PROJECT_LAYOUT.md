@@ -15,7 +15,10 @@ hugo-testing/
 │   ├── output/            Generated JSON output — gitignored, not committed
 │   └── .browser-profile/  Saved Chrome session for fencingtimelive.com login — gitignored
 └── fenb-1/                Hugo site root
-    ├── hugo.toml           Site config, languages, nav menus
+    ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)
+    ├── config/
+    │   ├── development/hugo.toml   baseURL for local dev (ejamer.github.io/hugo-testing)
+    │   └── production/hugo.toml    baseURL for production (fencingnb.ca)
     ├── assets/
     │   └── ananke/css/
     │       ├── fenb-base.css       Variables, reset, shared utilities, buttons
@@ -83,14 +86,20 @@ hugo-testing/
     │           ├── apr-05-nb-athletes-nationals.en.md
     │           └── apr-05-nb-athletes-nationals.fr.md
     ├── data/
-    │   ├── events.yaml        Current season's event calendar (drives homepage + /events/)
-    │   ├── events_archive/    Past seasons — moved here at season rollover (see plans/)
-    │   ├── clubs.yaml         Member club data (drives /clubs/ page)
-    │   ├── board.yaml         Board of directors; also holds founder photo info and affiliations (drives /about/)
-    │   ├── programs.yaml      Homepage quick-link cards (URLs + accent flag for the join card)
-    │   ├── policies.yaml      Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
-    │   ├── join.yaml          Join section seasonal URLs (2MEV membership portal, club registration form)
-    │   └── hero_slides.yaml   Hero carousel image list (drives homepage slider)
+    │   ├── events.yaml             Current season's event calendar (drives homepage + /events/)
+    │   ├── events_archive/         Past seasons — moved here at season rollover (see plans/)
+    │   ├── event_categories.yaml   Canonical category IDs — drives calendar legend and schedule filters
+    │   ├── clubs.yaml              Member club data (drives /clubs/ page)
+    │   ├── board_members.yaml      Board of directors and affiliations (drives /about/)
+    │   ├── program_cards.yaml      Programs landing page cards
+    │   ├── quick_links.yaml        Homepage quick-link cards
+    │   ├── join_paths.yaml         Join landing page cards
+    │   ├── join.yaml               Join section seasonal URLs (2MEV portal, club form)
+    │   ├── policies.yaml           Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
+    │   └── hero_slides.yaml        Hero carousel image list (drives homepage slider)
+    ├── archetypes/
+    │   ├── default.md      Default front matter template (YAML; title auto-generated from filename)
+    │   └── news.md         News article template (adds category and summary fields)
     ├── i18n/
     │   ├── en.yaml         English UI strings
     │   └── fr.yaml         French UI strings
@@ -125,7 +134,9 @@ hugo-testing/
     │   │   └── single.html News article (2-col: article | recent-news sidebar)
     │   └── partials/
     │       ├── site-announcement.html  Site-wide announcement banner — controlled via [params.announcement] in hugo.toml
-    │       ├── site-header.html  Sticky nav, search overlay, language switcher, page header band
+    │       ├── site-header.html  Entry point called by Ananke — delegates to nav.html and page-header.html
+    │       ├── nav.html          Sticky nav, search overlay, language switcher, hamburger, theme toggle
+    │       ├── page-header.html  Coloured band below the nav (title + optional subtitle; absent on homepage)
     │       ├── event-card.html   Single event card — accepts a YAML event object as context
     │       ├── icon.html         Inline SVG renderer — call with (dict "name" "file.svg" "w" 24 "h" 24 "class" "…")
     │       ├── news-card.html    Single news card — call with (dict "page" . "heading" "h2" "truncate" 160)

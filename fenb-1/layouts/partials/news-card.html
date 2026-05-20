@@ -9,11 +9,15 @@
 {{- $heading  := .heading  | default "h2" -}}
 {{- $truncate := .truncate | default 160  -}}
 <article class="fenb-news-card">
-  <div class="fenb-news-card-top{{ with $page.Params.category }} fenb-news-card-top--{{ . | urlize }}{{ end }}"></div>
+  <div class="fenb-news-card-top{{ with $page.Params.category }} fenb-news-card-top--{{ . }}{{ end }}"></div>
   <div class="fenb-news-card-body">
     <div class="fenb-news-card-meta">
-      {{ with $page.Params.category }}<span class="fenb-news-category fenb-news-category--{{ . | urlize }}">{{ . }}</span>{{ end }}
-      <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "January 2, 2006" }}</time>
+      {{ with $page.Params.category }}<span class="fenb-news-category fenb-news-category--{{ . }}">{{ i18n . }}</span>{{ end }}
+      {{- $day   := $page.Date.Format "2" -}}
+      {{- $month := i18n (printf "cal_month_%s" ($page.Date.Format "Jan" | lower)) | default ($page.Date.Format "January") -}}
+      {{- $year  := $page.Date.Format "2006" -}}
+      {{- $dateStr := cond (eq $page.Site.Language.Lang "fr") (printf "%s %s %s" $day ($month | lower) $year) (printf "%s %s, %s" $month $day $year) -}}
+      <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $dateStr }}</time>
     </div>
     {{ if eq $heading "h3" }}
     <h3 class="fenb-news-title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>

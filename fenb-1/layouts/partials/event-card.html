@@ -1,15 +1,16 @@
 {{- /* Renders a single event card. Expects a YAML event object as context (.). */ -}}
-{{ $dateObj := time .date }}
+{{- $dateObj := time .date -}}
+{{- $month   := i18n (printf "month_%s" ($dateObj.Format "Jan")) | default ($dateObj.Format "Jan") -}}
 <article class="fenb-event-card fenb-event-card--{{ .category }}">
   <div class="fenb-event-date-badge">
     <span class="fenb-event-day">{{ $dateObj.Format "02" }}</span>
-    <span class="fenb-event-month">{{ i18n (printf "month_%s" ($dateObj.Format "Jan")) | default ($dateObj.Format "Jan") }}</span>
+    <span class="fenb-event-month">{{ $month }}</span>
     <span class="fenb-event-year">{{ $dateObj.Format "2006" }}</span>
   </div>
   <div class="fenb-event-body">
     <span class="fenb-tag fenb-tag--{{ .category }}">{{ i18n .category | default .category_label }}</span>
     <h3 class="fenb-event-title">{{ .title }}</h3>
-    <p class="fenb-event-date-range">{{ .display_date }}</p>
+    <p class="fenb-event-date-range">{{ partial "event-date.html" . }}</p>
     <p class="fenb-event-meta">
       {{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}
       {{ .venue }}, {{ .location }}

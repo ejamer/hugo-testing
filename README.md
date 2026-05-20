@@ -109,25 +109,35 @@ Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 ---
 title: "Post title"
 date: 2026-06-01
-category: "Results"   # badge label — drives card accent colour AND article divider colour
+category: results   # canonical ID — drives CSS colour, badge label (via i18n), and results table
 summary: "One-sentence summary shown on the homepage card."
 ---
 
 Full post body here (Markdown).
 ```
 
-**Category colours:**
+**Category values:**
 
-| Value | Colour | French equivalent |
-|---|---|---|
-| `Results` | Teal | `Résultats` |
-| `Announcement` | Crimson | `Annonce` |
-| `Registration` | Green | `Inscription` |
-| `Community` | Navy | `Communauté` |
+| `category` | Badge label (EN) | Badge label (FR) | Colour | Notes |
+|---|---|---|---|---|
+| `results` | Results | Résultats | Teal | Also loads the interactive results table |
+| `announcement` | Announcement | Annonce | Crimson | |
+| `registration` | Registration | Inscription | Green | |
+| `community` | Community | Communauté | Navy | |
 
 The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 
 **New year folder:** when the first article of a new calendar year is created, add a year subfolder with `_index.md` and `_index.fr.md` (copy from the previous year folder).
+
+**Internal links in article body:** use Hugo's `relref` shortcode rather than hardcoded paths. `relref` resolves to the correct URL at build time (including language prefix) and produces a build error if the target page doesn't exist.
+
+```markdown
+Visit our [club directory]({{< relref "clubs/" >}}) for more information.
+```
+
+Do **not** write `[clubs](/clubs/)` or `[clubs](/fr/clubs/)` — root-relative paths skip the base URL and will silently break if the site is ever served from a subdirectory. `relref` is language-aware: in a French article it automatically resolves to the French version of the target page.
+
+Note: `relref` only works for Hugo content pages (`content/`). For links to static files (PDFs in `static/documents/`), use a plain Markdown link with a site-root-relative path: `[Annual Report](/documents/about/agm-minutes/2024.pdf)` — this is correct for production at `fencingnb.ca/` where there is no subpath.
 
 ---
 
@@ -140,11 +150,10 @@ Add an entry to `data/events.yaml`.
 | Field | Required | Notes |
 |---|---|---|
 | `title` | ✅ | |
-| `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter only |
-| `display_date` | ✅ | Free-form string shown on the card. Use `"TBA"` or `"July 2026"` for uncertain dates |
-| `end_date` | — | Optional. ISO `YYYY-MM-DD`. If set and greater than `date`, the calendar draws bars across the full range (inclusive). Leave blank or omit for single-day events. |
-| `category` | ✅ | See categories below |
-| `category_label` | ✅ | Fallback label if i18n key missing |
+| `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
+| `end_date` | — | ISO `YYYY-MM-DD`. Omit or leave blank for single-day events. If set, the displayed date shows as a range (`Sep 20–21` or `Nov 29 – Dec 1`) and the calendar draws bars across the full range. |
+| `category` | ✅ | See categories below — must be a canonical ID from `data/event_categories.yaml` |
+| `category_label` | ✅ | Fallback label shown if the i18n key is missing (keep in sync with the i18n value) |
 | `venue` | ✅ | Short venue name shown on card |
 | `location` | ✅ | City / province |
 | `description` | — | Optional. Not shown on homepage cards |
@@ -156,9 +165,9 @@ Add an entry to `data/events.yaml`.
 
 ```yaml
 - title: "Event Name"
-  date: "2026-06-01"              # ISO — sort/filter only; use first-of-month for uncertain dates
-  display_date: "June 1, 2026"    # free-form; use "TBA" or "June 2026" if date is uncertain
-  category: competition           # see categories below
+  date: "2026-06-01"      # ISO — also drives the displayed date label
+  end_date: "2026-06-02"  # optional; omit for single-day events
+  category: competition   # see categories below
   category_label: "Competition"
   venue: "Venue Name"
   location: "City, NB"
@@ -172,7 +181,7 @@ Add an entry to `data/events.yaml`.
 
 Each category drives three visual elements: the date badge on the event card, the tag pill, and the calendar bar on the month grid.
 
-| `category` | Example `category_label` | Colour |
+| `category` | `category_label` | Colour |
 |---|---|---|
 | `competition` | `"Competition"` | Teal |
 | `training` | `"Training Camp"` | Dark green |
@@ -182,7 +191,9 @@ Each category drives three visual elements: the date badge on the event card, th
 | `meeting` | `"FENB Meeting"` | Grey |
 | `announcement` | `"Announcement"` | Teal |
 
-`category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces).
+`category` is the canonical ID — must match exactly (lowercase, no spaces) and must exist in `data/event_categories.yaml`. `category_label` is a fallback display string used if the i18n key is missing.
+
+**Adding a new category:** add the ID to `data/event_categories.yaml`, add i18n keys to both `i18n/en.yaml` and `i18n/fr.yaml`, and add the corresponding CSS colour rules to `fenb-events.css`.
 
 The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today), falling back to the most recent past events if fewer than 4 are upcoming. When the season ends, add an off-season placeholder entry (category `announcement`) so the section stays populated through the summer gap.
 
@@ -212,18 +223,10 @@ description: "Calendrier de la saison 2026–2027"
 
 ### Board of Directors
 
-Edit `data/board.yaml`. Top-level keys:
+Edit `data/board_members.yaml`. Top-level keys:
 
 - `season` — display label (e.g. `"2025–2026"`); update at the start of each season
 - `contact` — board inquiry email shown on the About contact section
-- `founder` — founder photo and bilingual caption shown in the history section:
-  ```yaml
-  founder:
-    name: "Alfred Knappe"
-    photo: "/images/alfred-knappe.png"
-    caption_en: "Alfred Knappe — founding president, 1969"
-    caption_fr: "Alfred Knappe — président fondateur, 1969"
-  ```
 - `affiliations` — provincial/national affiliations shown in the About sidebar:
   ```yaml
   affiliations:
@@ -261,18 +264,18 @@ Edit `data/board.yaml`. Top-level keys:
    ```yaml
    - name_en: "Policy Name"
      name_fr: "Nom de la politique"
-     url_en: "/about/policies/{slug}/"
-     url_fr: "/fr/about/policies/{slug}/"
+     url_en: about/policies/{slug}/
+     url_fr: fr/about/policies/{slug}/
    ```
 
 #### Add a new AGM minutes year
 
-1. Drop the PDF in `static/docs/agm-minutes/YYYY.pdf` where `YYYY` is the **season start year** (e.g. `2025.pdf` = the 2025–2026 season).
+1. Drop the PDF in `static/documents/about/agm-minutes/YYYY.pdf` where `YYYY` is the **season start year** (e.g. `2025.pdf` = the 2025–2026 season).
 2. Add an entry at the top of `annual_reports` in `data/policies.yaml`:
 
    ```yaml
    - year: 2025
-     url: "/docs/agm-minutes/2025.pdf"
+     url: documents/about/agm-minutes/2025.pdf
    ```
 
 The season label ("2025–2026 Season AGM Minutes") is computed automatically from `year` in the layout.
@@ -286,7 +289,7 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
 ```yaml
 - id: XYZ
   name: "Club Name"
-  logo: "/images/clubs/club-logo-XYZ.png"
+  logo: images/clubs/club-logo-XYZ.png
   email: "club@example.com"
   website: "https://example.com"   # omit if none
   city: "City, NB"
@@ -300,9 +303,9 @@ Drop replacement images into `static/images/hero/` and update `data/hero_slides.
 
 ```yaml
 slides:
-  - src: /images/hero/hero1.jpg
+  - src: images/hero/hero1.jpg
     alt: "Alt text for accessibility"
-  - src: /images/hero/hero2.jpg
+  - src: images/hero/hero2.jpg
     alt: ""
 ```
 

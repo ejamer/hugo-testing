@@ -234,6 +234,28 @@
       .replace(/"/g, '&quot;');
   }
 
+  function formatEventDate(e) {
+    var fr   = document.documentElement.lang === 'fr';
+    var sD   = new Date(e.date + 'T00:00:00');
+    var eD   = (e.end_date && e.end_date > e.date) ? new Date(e.end_date + 'T00:00:00') : sD;
+    var isRange   = sD.toDateString() !== eD.toDateString();
+    var sameMonth = sD.getMonth() === eD.getMonth() && sD.getFullYear() === eD.getFullYear();
+    var sMon = cal.monthsShort[sD.getMonth()];
+    var eMon = cal.monthsShort[eD.getMonth()];
+    var sDay = sD.getDate();
+    var eDay = eD.getDate();
+    var yr   = sD.getFullYear();
+    if (!isRange) {
+      return fr ? (sDay + ' ' + sMon + ' ' + yr) : (sMon + ' ' + sDay + ', ' + yr);
+    }
+    if (sameMonth) {
+      return fr ? (sDay + '–' + eDay + ' ' + sMon + ' ' + yr)
+                : (sMon + ' ' + sDay + '–' + eDay + ', ' + yr);
+    }
+    return fr ? (sDay + ' ' + sMon + ' – ' + eDay + ' ' + eMon + ' ' + yr)
+              : (sMon + ' ' + sDay + ' – ' + eMon + ' ' + eDay + ', ' + yr);
+  }
+
   function renderEventList() {
     var listEl = document.getElementById('cal-events');
     listEl.innerHTML = '';
@@ -280,7 +302,7 @@
         '<div class="fenb-event-body">' +
           '<span class="fenb-tag fenb-tag--' + e.category + '">' + esc(e.category_label) + '</span>' +
           '<h3 class="fenb-event-title">' + esc(e.title) + '</h3>' +
-          '<p class="fenb-event-date-range">' + esc(e.display_date) + '</p>' +
+          '<p class="fenb-event-date-range">' + esc(formatEventDate(e)) + '</p>' +
           '<p class="fenb-event-meta">' +
             '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
               '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>' +
