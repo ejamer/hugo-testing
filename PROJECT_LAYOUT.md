@@ -129,6 +129,8 @@ hugo-testing/
     │   ├── events/
     │   │   ├── list.html     Events calendar (JS month grid + category legend sidebar)
     │   │   └── schedule.html Season schedule (server-rendered list + filter sidebar)
+    │   ├── _default/
+    │   │   └── sitemap.xml Pretty-printed per-language sitemap (urlset + xhtml hreflang alternates); overrides Hugo built-in to add newlines so browsers render it correctly
     │   ├── news/
     │   │   ├── list.html   News index (card grid, paginates recursively across year folders)
     │   │   └── single.html News article (2-col: article | recent-news sidebar)

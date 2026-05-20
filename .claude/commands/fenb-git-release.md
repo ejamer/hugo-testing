@@ -1,14 +1,21 @@
 ---
 description: Prepare and open a release PR from `dev` into `main` for the FencingNB Hugo site. Runs a production build check, bilingual parity check, and opens a PR.
 disable-model-invocation: true
-allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(script *) Read AskUserQuestion
+allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(script *) Read Write AskUserQuestion
 ---
 
 Run through this checklist in order, pausing to report the result of each step before continuing:
 
-1. **Branch check** — confirm the current branch is `dev`. If not, stop and tell the user.
+1. **Tag lookup** — run `git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1` to find the current latest semver tag. If none exists, treat the current version as `v0.0.0` (no tags yet). Compute the three candidate versions:
+   - **Patch bump:** increment the last component, reset nothing (e.g. `v1.2.3 → v1.2.4`; from `v0.0.0` → `v0.0.1`)
+   - **Minor bump:** increment the middle component, reset patch to 0 (e.g. `v1.2.3 → v1.3.0`; from `v0.0.0` → `v0.1.0`)
+   - **Major bump:** increment the first component, reset minor and patch to 0 (e.g. `v1.2.3 → v2.0.0`; from `v0.0.0` → `v1.0.0`)
 
-2. **Remote sync** — run `git fetch origin` then `git status` to confirm:
+   Store these three candidates and the current tag — they are used in Step 8. Report the current tag to the user (e.g. "Current release tag: v1.2.3" or "No release tags exist yet").
+
+2. **Branch check** — confirm the current branch is `dev`. If not, stop and tell the user.
+
+3. **Remote sync** — run `git fetch origin` then `git status` to confirm:
    - `dev` is not behind `origin/dev` — if it is, stop and ask the user to pull first.
    - The working tree is clean (no uncommitted changes) — if it isn't, describe the changes found (list the modified/untracked files), then use the `AskUserQuestion` tool with:
      - **Question:** "The working tree has uncommitted changes. How would you like to proceed?"
@@ -22,64 +29,105 @@ Run through this checklist in order, pausing to report the result of each step b
 
      If the user picks **"Cancel release"**: stop and tell the user: "Release cancelled. You can run `/fenb-git-commit` to commit your changes, or `git stash` to set them aside, then re-run `/fenb-git-release`."
 
-3. **Production build** — run `make build-prod` from the repo root. Report any errors or warnings. A clean build is required to proceed. If the build fails, pop the stash (if one was taken) before stopping.
+4. **Production build** — run `make build-prod` from the repo root. Report any errors or warnings. A clean build is required to proceed. If the build fails, pop the stash (if one was taken) before stopping.
 
-4. **Bilingual parity check** — run from the repo root:
+5. **Bilingual parity check** — run from the repo root:
    ```
    make check-parity
    ```
    This checks that every `.en.md` has a `.fr.md` counterpart and vice versa (accepting `_index.md` as a valid English counterpart for section index files). Report any `MISSING FR:` or `MISSING EN:` lines in the output. No output means all files are paired.
 
-5. **Commit summary** — run `git log main..dev --oneline` to list what will land in this release. Show it to the user.
+6. **Commit summary** — run `git log main..dev --oneline` to list what will land in this release. Show it to the user.
 
-6. **TODO.md review** — read `TODO.md`. Flag any unchecked items that appear to be addressed or affected by the commits above.
+7. **TODO.md review** — read `TODO.md`. Flag any unchecked items that appear to be addressed or affected by the commits above.
 
-7. **User approval** — present the full checklist results, then use the `AskUserQuestion` tool with:
+8. **Tag selection** — using the current tag and candidate versions computed in Step 1, use the `AskUserQuestion` tool with:
+   - **Question:** "Apply a release version tag to this release?"
+   - **Option 1 (default):** label `"Yes — Content Update (→ <patch-candidate>)"`, description `"Content updates and fixes"`
+   - **Option 2:** label `"Yes — New Feature Added (→ <minor-candidate>)"`, description `"New sections or features"`
+   - **Option 3:** label `"Yes — Major Redesign (→ <major-candidate>)"`, description `"Major redesigns or restructures"`
+   - **Option 4:** label `"No"`, description `"Skip tagging — no version tag applied to this release"`
+
+   Substitute the actual computed version strings into the option labels (e.g. `"Yes — Content Update (→ v1.2.4)"`). Store the user's choice and the corresponding target version for use in Step 10.
+
+9. **User approval** — present the full checklist results, then use the `AskUserQuestion` tool with:
    - **Question:** "Ready to open the PR?"
    - **Option 1 (default):** label `"Open PR"`, description `"Create the pull request from dev into main"`
    - **Option 2:** label `"Cancel"`, description `"Stop here without opening a PR"`
 
    If the user picks "Cancel", pop the stash (if one was taken), then stop. Do not open the PR without explicit user approval.
 
-8. **Open PR** — run:
-   ```
-   gh pr create --base main --head dev --title "Release: {summary of changes}" --body "..."
-   ```
-   Include the commit summary in the PR body. Use the `gh` CLI.
+10. **Open PR** — first check for an existing open PR: `gh pr list --base main --head dev --state open --json url,number`. If one already exists, use its URL and number (skip creating a new one and report "Using existing PR #N"). Otherwise run:
+    ```
+    gh pr create --base main --head dev --title "Release: {summary of changes}" --body "..."
+    ```
+    Include the commit summary in the PR body. Use the `gh` CLI. Capture the PR URL from the output.
 
-   If the `gh` command fails, pop the stash (if one was taken) before stopping and report the error.
+    If the `gh pr create` command fails, pop the stash (if one was taken) before stopping and report the error.
 
-   On success, capture the PR URL from the command output. Then use the `AskUserQuestion` tool with:
-   - **Question:** "PR created. Merge it now?"
-   - **Option 1:** label `"Merge now"`, description `"Merge the PR into main immediately (regular merge commit, dev branch kept)"`
-   - **Option 2:** label `"Leave open"`, description `"Leave the PR open to review or merge later in GitHub"`
+11. **Write version.json** — compute the following values using bash, then write `fenb-1/static/version.json` using the Write tool:
 
-   If the user picks **"Merge now"**: run `script -q -c "gh pr merge --merge --body ''" /dev/null` to merge using a regular merge commit. Never use `--delete-branch` — `dev` is the permanent development branch. Report success or failure.
+    - **`version`** — depends on whether a tag was selected in Step 8:
+      - **Tagged release:** use the selected version string (e.g. `"v0.1.0"`)
+      - **Untagged release:** append `-dev` to the current tag from Step 1 (e.g. `"v1.2.3-dev"`). If no tags exist at all, use `"v0.0.0-dev"`.
+    - **`released_at`** — run `date -u +"%Y-%m-%dT%H:%M:%SZ"`
+    - **`released_by`** — run `git config user.name` and `git config user.email`, then anonymize the email:
+      ```bash
+      email=$(git config user.email)
+      local="${email%%@*}"
+      domain="${email#*@}"
+      anon_email="${local:0:3}*****@${domain:0:1}*****.${domain#*.}"
+      ```
+      Format as `"Name <anon_email>"` (e.g. `"Ed Jamer <edw*****@g*****.com>"`)
+    - **`pr`** — the PR URL captured in Step 10
+    - **`commits_since_tag`** — cumulative commit count since the last semver tag, computed as follows:
+      - **Tagged release:** `git log <prev-tag>..HEAD --oneline | wc -l | tr -d ' '` where `<prev-tag>` is the current tag from Step 1 (the one before this release). If no previous tag exists, use `git log --oneline | wc -l | tr -d ' '` (all commits).
+      - **Untagged release:** same as above — commits since the last tag (or all commits if no tags). This makes the counter cumulative across consecutive untagged releases.
 
-   After a successful merge, run `git fetch origin` to update remote refs locally. Do not merge or reset `dev` — GitHub's merge commit will leave `dev` showing "1 behind main" in the UI, but the content is identical and collaborators can use normal `git pull`. It resolves naturally when the next commit lands on `dev`.
+    Write the file as valid JSON:
+    ```json
+    {
+      "version": "...",
+      "released_at": "...",
+      "released_by": "...",
+      "pr": "...",
+      "commits_since_tag": N
+    }
+    ```
 
-   **Release tagging** — use the `AskUserQuestion` tool with:
-   - **Question:** "Apply a release version tag to this release?"
-   - **Option 1 (default):** label `"Yes — Content Update"`, description `"Bump patch version (e.g. v1.2.3 → v1.2.4) — content updates and fixes"`
-   - **Option 2:** label `"Yes — New Feature Added"`, description `"Bump minor version (e.g. v1.2.3 → v1.3.0) — new sections or features"`
-   - **Option 3:** label `"Yes — Major Redesign"`, description `"Bump major version (e.g. v1.2.3 → v2.0.0) — major redesigns or restructures"`
-   - **Option 4:** label `"No"`, description `"Skip tagging — no version tag applied to this release"`
+    Then stage, commit, and push:
+    ```
+    git add fenb-1/static/version.json
+    git commit -m "Update version.json for release <version>"
+    git push
+    ```
 
-   If the user picks any "Yes" option:
-   - Run `git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1` to find the latest semver tag. If none exists, treat the base as `v0.0.0`.
-   - Compute the new version by bumping the appropriate component and resetting lower components to zero (e.g. minor bump: `v1.2.3 → v1.3.0`).
-   - Create an annotated tag pointing at the merge commit on `main`: `git tag -a vX.Y.Z -m "Release vX.Y.Z" origin/main`
-   - Push the tag: `git push origin vX.Y.Z`
-   - Record the tag name for the summary (e.g. `v1.2.4`).
+    Report that version.json has been committed and the PR has been updated automatically.
 
-   If the user picks "No": record tag as `None` for the summary.
+12. **Merge** — use the `AskUserQuestion` tool with:
+    - **Question:** "PR updated with version.json. Merge it now?"
+    - **Option 1:** label `"Merge now"`, description `"Merge the PR into main immediately (regular merge commit, dev branch kept)"`
+    - **Option 2:** label `"Leave open"`, description `"Leave the PR open to review or merge later in GitHub"`
 
-   Pop the stash (if one was taken), then show the following as plain text (not a code block):
+    If the user picks **"Merge now"**: extract the PR number from the PR URL captured in Step 10 and run `script -q -c "gh pr merge <PR-number> --merge --body ''" /dev/null`. Never use `--delete-branch` — `dev` is the permanent development branch. Report success or failure.
 
-   ┌─ Release Summary ────────────────────────────
-   │  PR:      <PR URL>
-   │  Commits: <N commits from git log main..dev --oneline | wc -l>
-   │  Target:  dev → main
-   │  Tag:     <vX.Y.Z or "None">
-   │  Status:  Merged ✓  (or "Open — merge when ready")
-   └─────────────────────────────────────────────
+    After a successful merge, run `git fetch origin` to update remote refs locally. Do not merge or reset `dev` — GitHub's merge commit will leave `dev` showing "1 behind main" in the UI, but the content is identical and collaborators can use normal `git pull`. It resolves naturally when the next commit lands on `dev`.
+
+    **Apply tag** — if the user selected a "Yes" option in Step 8:
+    - Create an annotated tag pointing at the merge commit on `main`: `git tag -a <target-version> -m "Release <target-version>" origin/main`
+    - Push the tag: `git push origin <target-version>`
+    - Record the applied tag name for the summary.
+
+    If the user selected "No" in Step 8: record tag as `None` for the summary.
+
+    Pop the stash (if one was taken), then show the following as plain text (not a code block):
+
+    ┌─ Release Summary ────────────────────────────
+    │  PR:      <PR URL>
+    │  Commits: <commits_since_tag> since last tag
+    │  Target:  dev → main
+    │  Tag:     <vX.Y.Z>  — or —  None  (existing: <current-tag>)
+    │  Status:  Merged ✓  (or "Open — merge when ready")
+    └─────────────────────────────────────────────
+
+    For the Tag line: if a tag was applied show it (e.g. `v1.2.4`). If no tag was applied, show `None  (existing: <current-tag-from-step-1>)` — if no tags exist at all, show `None  (no tags yet)`.
