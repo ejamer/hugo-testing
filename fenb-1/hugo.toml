@@ -22,19 +22,6 @@ theme = 'ananke'
     endLevel   = 4
 
 [params]
-  custom_css = [
-    "fenb-base.css",
-    "fenb-nav.css",
-    "fenb-hero.css",
-    "fenb-events.css",
-    "fenb-news.css",
-    "fenb-clubs.css",
-    "fenb-about.css",
-    "fenb-schedule.css",
-    "fenb-join.css",
-    "fenb-programs.css",
-    "fenb-responsive.css",
-  ]
   background_color_class = "bg-fenb-teal"
 
   [params.announcement]
@@ -46,6 +33,19 @@ theme = 'ananke'
 
   [params.ananke]
     show_recent_posts = false
+    custom_css = [
+      "fenb-base.css",
+      "fenb-nav.css",
+      "fenb-hero.css",
+      "fenb-events.css",
+      "fenb-news.css",
+      "fenb-clubs.css",
+      "fenb-about.css",
+      "fenb-schedule.css",
+      "fenb-join.css",
+      "fenb-programs.css",
+      "fenb-responsive.css",
+    ]
 
   [params.ananke.social.follow]
     networks = ["facebook"]

@@ -32,7 +32,7 @@ Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped t
 | `fenb-join.css` | Join & Register section (landing page, membership, club registration, volunteer) |
 | `fenb-responsive.css` | All `@media` breakpoints and print query — loaded last |
 
-The load order is declared in `hugo.toml` under `params.custom_css`.
+The load order is declared in `hugo.toml` under `params.ananke.custom_css`.
 
 - No inline styles for anything reusable — add a class to the appropriate file instead
 - Use CSS custom properties defined at `:root` rather than raw hex values: `--teal`, `--crimson`, `--shadow-sm`, `--radius`, category colours (`--cat-training`, `--cat-national`, `--cat-clinic`, `--cat-meeting` and their `--cat-*-pale` variants), brand colour channels for `rgba()` (`--teal-rgb`, `--crimson-rgb`)

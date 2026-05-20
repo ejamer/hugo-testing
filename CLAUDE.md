@@ -247,7 +247,9 @@ var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.event
 
 ## TOML subtable ordering in hugo.toml
 
-`[params.subtable]` changes the active TOML context — every key that follows it (until the next `[…]` header) belongs to the subtable, not the parent. Place all flat `[params]` keys (`custom_css`, `background_color_class`, etc.) **before** any `[params.child]` subtable headers. Placing a subtable header first silently swallows subsequent flat keys into the wrong table with no build error.
+`[params.subtable]` changes the active TOML context — every key that follows it (until the next `[…]` header) belongs to the subtable, not the parent. Place all flat `[params]` keys (`background_color_class`, etc.) **before** any `[params.child]` subtable headers. Placing a subtable header first silently swallows subsequent flat keys into the wrong table with no build error.
+
+Note: `custom_css` belongs under `[params.ananke]` (not `[params]`) — this is the Ananke-namespace convention for CSS files to be processed by Ananke's pipeline.
 
 ## Hugo deprecated front matter and template APIs
 
