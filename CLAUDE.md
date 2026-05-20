@@ -274,7 +274,7 @@ The language name itself (`.Language.Label`) comes from the translation page and
 
 ## Page header band
 
-`site-header.html` renders a coloured `.fenb-page-header` band below the nav for all non-home pages. By default it shows the page's own `.Title`.
+`page-header.html` renders a coloured `.fenb-page-header` band below the nav for all non-home pages. By default it shows the page's own `.Title`.
 
 If a section's single pages should show the **section title** in the band instead (e.g. "News & Results" on every news article), add this cascade to the section's `_index.md` and `_index.fr.md`:
 
@@ -285,7 +285,7 @@ cascade:
     page_header_uses_section: true
 ```
 
-`site-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description` when set. The `_target: kind: page` scoping means the section's list page is unaffected.
+`page-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description` when set. The `_target: kind: page` scoping means the section's list page is unaffected.
 
 **Preferred approach for a subtitle:** set `description:` in the section's `_index.md` / `_index.fr.md` front matter. The partial already reads `.Params.description` and renders it as the page subtitle — no template changes needed.
 

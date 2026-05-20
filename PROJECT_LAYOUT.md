@@ -134,7 +134,9 @@ hugo-testing/
     │   │   └── single.html News article (2-col: article | recent-news sidebar)
     │   └── partials/
     │       ├── site-announcement.html  Site-wide announcement banner — controlled via [params.announcement] in hugo.toml
-    │       ├── site-header.html  Sticky nav, search overlay, language switcher, page header band
+    │       ├── site-header.html  Entry point called by Ananke — delegates to nav.html and page-header.html
+    │       ├── nav.html          Sticky nav, search overlay, language switcher, hamburger, theme toggle
+    │       ├── page-header.html  Coloured band below the nav (title + optional subtitle; absent on homepage)
     │       ├── event-card.html   Single event card — accepts a YAML event object as context
     │       ├── icon.html         Inline SVG renderer — call with (dict "name" "file.svg" "w" 24 "h" 24 "class" "…")
     │       ├── news-card.html    Single news card — call with (dict "page" . "heading" "h2" "truncate" 160)

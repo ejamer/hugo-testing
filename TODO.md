@@ -113,9 +113,9 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 - [x] **Add `errorf` guard in `icon.html`** — missing SVG now fails the build with a clear message rather than silently producing blank output.
 - [x] **Make Hugo path configurable in Makefile** — `HUGO ?= /snap/bin/hugo` variable added; all targets use `$(HUGO)`; override with `make serve HUGO=/usr/local/bin/hugo`.
 - [x] **Restore Ananke as proper submodule** — `.gitmodules` moved from `fenb-1/` to repo root with corrected path; 606 tracked theme files replaced with gitlink at `dc0a8223`; URL updated to new repo (`gohugo-ananke/ananke`); `.git` file and worktree paths corrected. Ananke is pinned at `dc0a8223` — update deliberately with `git submodule update --remote` when needed.
-- [ ] **Document CSS pipeline location in README** — custom CSS belongs in `assets/ananke/css/` (not `static/`), but this is non-obvious. Add a note explaining the Ananke pipeline mechanism and the requirement to also list files in `hugo.toml`'s `custom_css` array.
+- [x] **Document CSS pipeline location** — added to STYLE_GUIDE.md: CSS files must live in `assets/ananke/css/` (not `static/`), listed under `params.ananke.custom_css` in `hugo.toml`; explains pipeline concatenation, minification, and fingerprinting.
 
-- [ ] **Split `site-header.html` partial** — currently conflates navigation and page header band into one file. Split into `partials/nav.html` (sticky nav, search overlay, language switcher, hamburger) and `partials/page-header.html` (the coloured band below the nav). Deferred from the May 2026 design review (H3). See `plans/archive/design-review.md` for the original finding.
+- [x] **Split `site-header.html` partial** — nav moved to `nav.html`; page header band moved to `page-header.html`; `site-header.html` is now a two-line wrapper (Ananke calls it, so it must stay as the entry point).
 
 ## Events data
 
