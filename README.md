@@ -150,9 +150,8 @@ Add an entry to `data/events.yaml`.
 | Field | Required | Notes |
 |---|---|---|
 | `title` | ✅ | |
-| `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter only |
-| `display_date` | — | Override for the date shown on the card. **Omit for single-day events** — the date is computed automatically in the current language. Set only for multi-day ranges (e.g. `"Apr 11–12, 2026"`), uncertain dates (`"TBA"`), or free-form text (`"Opening Summer 2026"`). |
-| `end_date` | — | Optional. ISO `YYYY-MM-DD`. If set and greater than `date`, the calendar draws bars across the full range (inclusive). Leave blank or omit for single-day events. |
+| `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
+| `end_date` | — | ISO `YYYY-MM-DD`. Omit or leave blank for single-day events. If set, the displayed date shows as a range (`Sep 20–21` or `Nov 29 – Dec 1`) and the calendar draws bars across the full range. |
 | `category` | ✅ | See categories below |
 | `category_label` | ✅ | Fallback label if i18n key missing |
 | `venue` | ✅ | Short venue name shown on card |
@@ -166,9 +165,9 @@ Add an entry to `data/events.yaml`.
 
 ```yaml
 - title: "Event Name"
-  date: "2026-06-01"              # ISO — sort/filter only; use first-of-month for uncertain dates
-  # display_date: "Jun 1–2, 2026" # omit for single-day events; set only for ranges, TBA, or free-form text
-  category: competition           # see categories below
+  date: "2026-06-01"      # ISO — also drives the displayed date label
+  end_date: "2026-06-02"  # optional; omit for single-day events
+  category: competition   # see categories below
   category_label: "Competition"
   venue: "Venue Name"
   location: "City, NB"

@@ -52,15 +52,9 @@
                 <ul class="fenb-schedule-list">
                   {{- range $seasonEvents -}}
                     {{- if eq ((time .date).Format "2006-01") $mk -}}
-                    {{- $evDateObj := time .date -}}
-                    {{- $evMonth := i18n (printf "month_%s" ($evDateObj.Format "Jan")) | default ($evDateObj.Format "Jan") -}}
-                    {{- $evDispDate := .display_date -}}
-                    {{- if not $evDispDate -}}
-                      {{- $evDispDate = cond (eq site.Language.Lang "fr") (printf "%s %s %s" ($evDateObj.Format "2") $evMonth ($evDateObj.Format "2006")) (printf "%s %s, %s" $evMonth ($evDateObj.Format "2") ($evDateObj.Format "2006")) -}}
-                    {{- end -}}
                     <li class="fenb-schedule-item" data-category="{{ .category }}">
                       <div class="fenb-schedule-row fenb-schedule-row--primary">
-                        <span class="fenb-schedule-date">{{ $evDispDate }}</span>
+                        <span class="fenb-schedule-date">{{ partial "event-date.html" . }}</span>
                         <strong class="fenb-schedule-title">{{ .title }}</strong>
                         <span class="fenb-schedule-category fenb-cal-bar--{{ .category }}">{{ i18n .category | default .category_label }}</span>
                       </div>
