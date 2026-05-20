@@ -6,7 +6,8 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 
 ## Reference files
 
-- **`README.md`** — site structure, file layout, and how to add/update each content type (news, events, clubs). Read it when starting work on a new section or when unsure about data schemas.
+- **`README.md`** — how to add/update each content type (news, events, clubs). Read it when starting work on a new section or when unsure about data schemas.
+- **`PROJECT_LAYOUT.md`** — full directory tree with file-by-file descriptions. Read it when navigating an unfamiliar part of the repo.
 - **`STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colour reference. Read it before implementing any new visual element or content type.
 - **`TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
 - **`plans/`** — detailed implementation plans for multi-session features. Files here are referenced from TODO.md items when a task is too detailed for the checklist itself. Read the relevant plan file before starting any TODO item that links to one.

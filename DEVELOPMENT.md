@@ -1,5 +1,7 @@
 # Development Guide
 
+See [PROJECT_LAYOUT.md](PROJECT_LAYOUT.md) for the full directory tree.
+
 ## Live site
 
 Hosted on **GitHub Pages**: <https://ejamer.github.io/hugo-testing/>
