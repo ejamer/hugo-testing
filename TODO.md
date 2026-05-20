@@ -68,21 +68,21 @@ Test each project skill end-to-end at least once to verify it works correctly.
 
 | Skill | Status | Notes |
 |---|---|---|
-| `/fenb-commit` | ✅ Tested | |
-| `/fenb-release` | ✅ Tested | |
-| `/fenb-new-news` | ❌ Untested | |
-| `/fenb-new-page` | ✅ Tested | Used to scaffold the join section (May 2026) |
-| `/fenb-season-rollover` | ❌ Untested | |
-| `/fenb-merge-features` | ✅ Tested | PR number bug found and fixed during first run |
-| `/fenb-get-results` | ✅ Tested | Ran against Mississauga Open and Championnat provincial des Jeunes 2026 (May 2026) |
-| `/fenb-new-results` | ✅ Tested | Ran against May Nationals 2026 (May 2026); results tables, medal icons, top-16 summary all working |
+| `/fenb-git-commit` | ✅ Tested | |
+| `/fenb-git-release` | ✅ Tested | |
+| `/fenb-git-merge` | ✅ Tested | PR number bug found and fixed during first run |
+| `/fenb-content-add-news` | ❌ Untested | |
+| `/fenb-content-add-page` | ✅ Tested | Used to scaffold the join section (May 2026) |
+| `/fenb-content-add-results` | ✅ Tested | Ran against May Nationals 2026 (May 2026); results tables, medal icons, top-16 summary all working |
+| `/fenb-data-get-results` | ✅ Tested | Ran against Mississauga Open and Championnat provincial des Jeunes 2026 (May 2026) |
+| `/fenb-data-season-rollover` | ❌ Untested | |
 
-### `/fenb-new-results` — follow-up items
+### `/fenb-content-add-results` — follow-up items
 
-Bilingual article creation is handled by `/fenb-new-results`. Enhancements still outstanding:
+Bilingual article creation is handled by `/fenb-content-add-results`. Enhancements still outstanding:
 
-- [x] Add `results_url` links to the matching event(s) in `fenb-1/data/events.yaml` so the event card on the site links directly to the FTL results page — field added to schema; event-card, schedule, and calendar JS all render "View Results →" when set; `/fenb-get-results` now offers to populate it automatically after a scrape
-- [ ] After writing the article files, prompt the user to run `/fenb-commit` to stage and push
+- [x] Add `results_url` links to the matching event(s) in `fenb-1/data/events.yaml` so the event card on the site links directly to the FTL results page — field added to schema; event-card, schedule, and calendar JS all render "View Results →" when set; `/fenb-data-get-results` now offers to populate it automatically after a scrape
+- [ ] After writing the article files, prompt the user to run `/fenb-git-commit` to stage and push
 - [ ] **May Nationals 2026 article** — Cadet Men's Foil (SINGH RANGER Sammy / Damocles) was still in the elimination round at time of writing; Place shows `—` in both `may-18-2026-05-15-may-nationals.en.md` and `.fr.md`. Update once final results are posted on fencingtimelive.com.
 
 ## Code quality
@@ -109,7 +109,7 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 ### Low priority
 
 - [x] **Extract event categories to a data file** — `data/event_categories.yaml` created; calendar legend (`events/list.html`) and schedule filter slice (`events/schedule.html`) both now iterate over `hugo.Data.event_categories.event_categories`.
-- [x] **Update archetypes** — `default.md` switched to YAML front matter; `archetypes/news.md` created with `category` and `summary` pre-filled. Note: bilingual pair creation still requires `/fenb-new-news` — archetypes can't enforce that.
+- [x] **Update archetypes** — `default.md` switched to YAML front matter; `archetypes/news.md` created with `category` and `summary` pre-filled. Note: bilingual pair creation still requires `/fenb-content-add-news` — archetypes can't enforce that.
 - [x] **Add `errorf` guard in `icon.html`** — missing SVG now fails the build with a clear message rather than silently producing blank output.
 - [x] **Make Hugo path configurable in Makefile** — `HUGO ?= /snap/bin/hugo` variable added; all targets use `$(HUGO)`; override with `make serve HUGO=/usr/local/bin/hugo`.
 - [x] **Restore Ananke as proper submodule** — `.gitmodules` moved from `fenb-1/` to repo root with corrected path; 606 tracked theme files replaced with gitlink at `dc0a8223`; URL updated to new repo (`gohugo-ananke/ananke`); `.git` file and worktree paths corrected. Ananke is pinned at `dc0a8223` — update deliberately with `git submodule update --remote` when needed.

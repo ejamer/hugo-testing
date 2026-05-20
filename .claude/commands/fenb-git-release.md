@@ -12,15 +12,15 @@ Run through this checklist in order, pausing to report the result of each step b
    - `dev` is not behind `origin/dev` — if it is, stop and ask the user to pull first.
    - The working tree is clean (no uncommitted changes) — if it isn't, describe the changes found (list the modified/untracked files), then use the `AskUserQuestion` tool with:
      - **Question:** "The working tree has uncommitted changes. How would you like to proceed?"
-     - **Option 1:** label `"Commit first"`, description `"Run the fenb-commit skill to commit the changes, then continue the release"`
+     - **Option 1:** label `"Commit first"`, description `"Run the fenb-git-commit skill to commit the changes, then continue the release"`
      - **Option 2:** label `"Stash and release"`, description `"Stash changes, complete the release, then restore the stash afterward"`
      - **Option 3:** label `"Cancel release"`, description `"Stop here without opening a PR"`
 
-     If the user picks **"Commit first"**: invoke the `fenb-commit` skill. After it completes, run `git status` again. If the working tree is still not clean (commit failed or was cancelled), stop and tell the user: "The working tree still has uncommitted changes — release cancelled. You can run `/fenb-commit` to commit them, or `git stash` to set them aside, then re-run `/fenb-release`."
+     If the user picks **"Commit first"**: invoke the `fenb-git-commit` skill. After it completes, run `git status` again. If the working tree is still not clean (commit failed or was cancelled), stop and tell the user: "The working tree still has uncommitted changes — release cancelled. You can run `/fenb-git-commit` to commit them, or `git stash` to set them aside, then re-run `/fenb-git-release`."
 
-     If the user picks **"Stash and release"**: run `git stash push -m "fenb-release: pre-release stash"`, confirm the stash succeeded, then continue with the checklist. **IMPORTANT: from this point on, no matter how or where the skill exits — build failure, parity issues, user cancellation, PR error, or success — always run `git stash pop` before stopping and tell the user "Stashed changes have been restored."**
+     If the user picks **"Stash and release"**: run `git stash push -m "fenb-git-release: pre-release stash"`, confirm the stash succeeded, then continue with the checklist. **IMPORTANT: from this point on, no matter how or where the skill exits — build failure, parity issues, user cancellation, PR error, or success — always run `git stash pop` before stopping and tell the user "Stashed changes have been restored."**
 
-     If the user picks **"Cancel release"**: stop and tell the user: "Release cancelled. You can run `/fenb-commit` to commit your changes, or `git stash` to set them aside, then re-run `/fenb-release`."
+     If the user picks **"Cancel release"**: stop and tell the user: "Release cancelled. You can run `/fenb-git-commit` to commit your changes, or `git stash` to set them aside, then re-run `/fenb-git-release`."
 
 3. **Production build** — run `make build-prod` from the repo root. Report any errors or warnings. A clean build is required to proceed. If the build fails, pop the stash (if one was taken) before stopping.
 
@@ -58,11 +58,28 @@ Run through this checklist in order, pausing to report the result of each step b
 
    After a successful merge, run `git fetch origin` to update remote refs locally. Do not merge or reset `dev` — GitHub's merge commit will leave `dev` showing "1 behind main" in the UI, but the content is identical and collaborators can use normal `git pull`. It resolves naturally when the next commit lands on `dev`.
 
+   **Release tagging** — use the `AskUserQuestion` tool with:
+   - **Question:** "Apply a release version tag to this release?"
+   - **Option 1 (default):** label `"Yes — Content Update"`, description `"Bump patch version (e.g. v1.2.3 → v1.2.4) — content updates and fixes"`
+   - **Option 2:** label `"Yes — New Feature Added"`, description `"Bump minor version (e.g. v1.2.3 → v1.3.0) — new sections or features"`
+   - **Option 3:** label `"Yes — Major Redesign"`, description `"Bump major version (e.g. v1.2.3 → v2.0.0) — major redesigns or restructures"`
+   - **Option 4:** label `"No"`, description `"Skip tagging — no version tag applied to this release"`
+
+   If the user picks any "Yes" option:
+   - Run `git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1` to find the latest semver tag. If none exists, treat the base as `v0.0.0`.
+   - Compute the new version by bumping the appropriate component and resetting lower components to zero (e.g. minor bump: `v1.2.3 → v1.3.0`).
+   - Create an annotated tag pointing at the merge commit on `main`: `git tag -a vX.Y.Z -m "Release vX.Y.Z" origin/main`
+   - Push the tag: `git push origin vX.Y.Z`
+   - Record the tag name for the summary (e.g. `v1.2.4`).
+
+   If the user picks "No": record tag as `None` for the summary.
+
    Pop the stash (if one was taken), then show the following as plain text (not a code block):
 
    ┌─ Release Summary ────────────────────────────
    │  PR:      <PR URL>
    │  Commits: <N commits from git log main..dev --oneline | wc -l>
    │  Target:  dev → main
+   │  Tag:     <vX.Y.Z or "None">
    │  Status:  Merged ✓  (or "Open — merge when ready")
    └─────────────────────────────────────────────

@@ -24,7 +24,7 @@ Scan `events_with_nb_fencers` for any entry where `source` is `"competitors"` (p
 - A list of the in-progress events (name, day, start time).
 
 Then ask the user via `AskUserQuestion` whether to:
-- **Wait** — stop here; re-run `/fenb-new-results` once all events are complete.
+- **Wait** — stop here; re-run `/fenb-content-add-results` once all events are complete.
 - **Proceed anyway** — continue with the in-progress events included, showing "—" for placement; the article may need updating once final results are posted.
 
 Stop if the user chooses to wait. Otherwise continue.
