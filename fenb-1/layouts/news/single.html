@@ -6,11 +6,11 @@
     <div class="fenb-article-layout">
 
       <div class="fenb-article-main">
-        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . | urlize }}{{ end }}"></div>
+        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . }}{{ end }}"></div>
         <h1 class="fenb-article-title">{{ .Title }}</h1>
-        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . | urlize }}{{ end }}"></div>
+        <div class="fenb-article-divider{{ with .Params.category }} fenb-article-divider--{{ . }}{{ end }}"></div>
         <div class="fenb-article-meta">
-          {{ with .Params.category }}<span class="fenb-news-category fenb-news-category--{{ . | urlize }}">{{ . }}</span>{{ end }}
+          {{ with .Params.category }}<span class="fenb-news-category fenb-news-category--{{ . }}">{{ i18n . }}</span>{{ end }}
           {{- $day := .Date.Format "2" -}}
           {{- $month := i18n (printf "cal_month_%s" (.Date.Format "Jan" | lower)) | default (.Date.Format "January") -}}
           {{- $year := .Date.Format "2006" -}}
@@ -20,7 +20,7 @@
         <div class="fenb-article-body">
           {{ .Content }}
         </div>
-        {{ if in (slice "Results" "Résultats") .Params.category }}
+        {{ if eq .Params.category "results" }}
         <script src="{{ "js/results-table.js" | absURL }}" defer></script>
         {{ end }}
         <nav class="fenb-article-back">

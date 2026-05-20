@@ -9,10 +9,10 @@
 {{- $heading  := .heading  | default "h2" -}}
 {{- $truncate := .truncate | default 160  -}}
 <article class="fenb-news-card">
-  <div class="fenb-news-card-top{{ with $page.Params.category }} fenb-news-card-top--{{ . | urlize }}{{ end }}"></div>
+  <div class="fenb-news-card-top{{ with $page.Params.category }} fenb-news-card-top--{{ . }}{{ end }}"></div>
   <div class="fenb-news-card-body">
     <div class="fenb-news-card-meta">
-      {{ with $page.Params.category }}<span class="fenb-news-category fenb-news-category--{{ . | urlize }}">{{ . }}</span>{{ end }}
+      {{ with $page.Params.category }}<span class="fenb-news-category fenb-news-category--{{ . }}">{{ i18n . }}</span>{{ end }}
       {{- $day   := $page.Date.Format "2" -}}
       {{- $month := i18n (printf "cal_month_%s" ($page.Date.Format "Jan" | lower)) | default ($page.Date.Format "January") -}}
       {{- $year  := $page.Date.Format "2006" -}}

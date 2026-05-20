@@ -1,7 +1,7 @@
 ---
 title: "Three NB Athletes Selected for Canadian Championships"
 date: 2026-04-05
-category: "Announcement"
+category: announcement
 summary: "Fencing New Brunswick is proud to announce that three athletes have qualified to represent the province at the 2026 Canadian Fencing Championships in Montreal."
 ---
 

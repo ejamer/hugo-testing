@@ -162,14 +162,16 @@ When the first article of a new calendar year arrives, create the year subfolder
 
 ## News category colours
 
-The `category` front matter field drives the card top stripe, category badge colour, and article divider colour.
+The `category` front matter field is a **canonical ID** (lowercase, no spaces) — the same convention used by event categories. The badge label is looked up via i18n at render time; never put a display string or translated label in the front matter.
 
-| Value | CSS variable | Colour | French equivalent |
-|---|---|---|---|
-| `Results` | `--teal` | Teal | `Résultats` |
-| `Announcement` | `--crimson` | Crimson | `Annonce` |
-| `Registration` | `--cat-training` | Green | `Inscription` |
-| `Community` | `--cat-national` | Navy | `Communauté` |
+| `category` | Badge EN | Badge FR | CSS variable | Colour |
+|---|---|---|---|---|
+| `results` | Results | Résultats | `--teal` | Teal |
+| `announcement` | Announcement | Annonce | `--crimson` | Crimson |
+| `registration` | Registration | Inscription | `--cat-training` | Green |
+| `community` | Community | Communauté | `--cat-national` | Navy |
+
+The `results` category also triggers loading of `results-table.js` — the check is `eq .Params.category "results"`, so the ID must match exactly.
 
 ---
 
@@ -193,7 +195,7 @@ Each category drives three visual elements: the date badge on the event card, th
 
 ## Results tables (news articles)
 
-Results news articles (`category: Results` / `Résultats`) use an enhanced table pattern driven by `static/js/results-table.js`, which is loaded automatically by `layouts/news/single.html` for those categories only.
+Results news articles (`category: results`) use an enhanced table pattern driven by `static/js/results-table.js`, which is loaded automatically by `layouts/news/single.html` when `category` equals `results`.
 
 **Column order:** always `Name | Club | Place` — Place must be the last column so the JS can target it by index.
 

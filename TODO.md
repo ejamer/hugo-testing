@@ -95,7 +95,7 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 - [x] **Fix French date formatting** — both issues resolved:
   - `layouts/news/single.html`: article date now uses `cal_month_*` i18n keys with language-conditional order ("May 18, 2026" / "18 mai 2026"); sidebar uses abbreviated `month_*` keys.
   - `data/events.yaml` + `event-card.html` + `events/schedule.html`: single-day events (13) had `display_date` removed; templates compute a bilingual date from `date` field when `display_date` is absent. Multi-day ranges and free-form overrides (22) keep `display_date` unchanged.
-- [ ] **Replace locale-string category detection** (`layouts/news/single.html:19`) — `if in (slice "Results" "Résultats") .Params.category` is fragile; breaks silently if translation wording changes. Add a canonical `category_id` field to news front matter (e.g. `category_id: results`) and check that instead. Update archetypes and existing articles.
+- [x] **Replace locale-string category detection** — `category` front matter is now a canonical ID (`results`, `announcement`, `community`, `registration`); display labels come from i18n lookup; templates use `if eq .Params.category "results"` for script loading and `i18n .Params.category` for badge text. All 10 articles updated; `category_id` field removed.
 
 ### Medium priority
 

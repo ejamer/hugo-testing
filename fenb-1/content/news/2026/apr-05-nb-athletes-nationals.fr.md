@@ -1,7 +1,7 @@
 ---
 title: "Trois athlètes du N.-B. sélectionnés pour les Championnats canadiens"
 date: 2026-04-05
-category: "Annonce"
+category: announcement
 summary: "Escrime-Fencing NB est fière d'annoncer que trois athlètes ont été qualifiés pour représenter la province aux Championnats canadiens d'escrime 2026 à Montréal."
 ---
 

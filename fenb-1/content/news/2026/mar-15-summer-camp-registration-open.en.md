@@ -1,7 +1,7 @@
 ---
 title: "Registration Now Open: Junior Development Camp"
 date: 2026-03-15
-category: "Registration"
+category: registration
 summary: "Registration is now open for the 2026 Junior Development Camp, running June 6–7 in Moncton. Spots are limited — register early to secure your place."
 ---
 

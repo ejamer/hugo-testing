@@ -109,21 +109,21 @@ Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 ---
 title: "Post title"
 date: 2026-06-01
-category: "Results"   # badge label — drives card accent colour AND article divider colour
+category: results   # canonical ID — drives CSS colour, badge label (via i18n), and results table
 summary: "One-sentence summary shown on the homepage card."
 ---
 
 Full post body here (Markdown).
 ```
 
-**Category colours:**
+**Category values:**
 
-| Value | Colour | French equivalent |
-|---|---|---|
-| `Results` | Teal | `Résultats` |
-| `Announcement` | Crimson | `Annonce` |
-| `Registration` | Green | `Inscription` |
-| `Community` | Navy | `Communauté` |
+| `category` | Badge label (EN) | Badge label (FR) | Colour | Notes |
+|---|---|---|---|---|
+| `results` | Results | Résultats | Teal | Also loads the interactive results table |
+| `announcement` | Announcement | Annonce | Crimson | |
+| `registration` | Registration | Inscription | Green | |
+| `community` | Community | Communauté | Navy | |
 
 The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 

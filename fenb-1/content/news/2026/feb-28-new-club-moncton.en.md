@@ -1,7 +1,7 @@
 ---
 title: "New Club Joins the Federation: Dieppe Fencing Academy"
 date: 2026-02-28
-category: "Community"
+category: community
 summary: "Fencing New Brunswick warmly welcomes the Dieppe Fencing Academy as its newest member club, bringing fencing to the Dieppe–Moncton region for the first time."
 ---
 

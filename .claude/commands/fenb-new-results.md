@@ -117,7 +117,7 @@ Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée se
    ---
    title: "{English title}"
    date: {YYYY-MM-DD}
-   category: "Results"
+   category: results
    summary: "{One-sentence English summary for the homepage card}"
    ---
 
@@ -128,7 +128,7 @@ Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée se
    ---
    title: "{French title}"
    date: {YYYY-MM-DD}
-   category: "Résultats"
+   category: results
    summary: "{One-sentence French summary for the homepage card}"
    ---
 

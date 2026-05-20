@@ -149,6 +149,28 @@ Do **not** hardcode root-relative paths (`/clubs/` or `/fr/clubs/`) in article b
 
 For links to static assets (PDFs in `static/documents/`), a plain Markdown path is acceptable: `[Report](/documents/about/agm-minutes/2024.pdf)`. This is correct for production at `fencingnb.ca/` (no subpath). On the GitHub Pages test deployment the path will be wrong, but that is an acceptable test-environment limitation for static file links.
 
+## Sweep rule — changing a field or function used across templates
+
+Before declaring any template change complete, grep every place the old field or function is used:
+
+```bash
+grep -rn 'field_name' fenb-1/layouts/ fenb-1/static/js/ .claude/commands/
+```
+
+Missing one location (a second partial, a JS file, a skill) has consistently required a second bug-report round trip. The grep takes 5 seconds; the round trip costs much more.
+
+## Return-value partials for computed display strings
+
+When display text must be computed from data (e.g. a bilingual date from `date` + `end_date`), extract the logic into a return-value partial rather than duplicating it inline:
+
+```go
+{{- return $computedString -}}
+```
+
+Called as: `{{ partial "event-date.html" . }}`
+
+This keeps the logic in one file regardless of how many templates render the same thing (`event-card.html`, `events/schedule.html`, future widgets). `layouts/partials/event-date.html` is the established example — follow this pattern for any similar computed display value.
+
 ## Hugo template `sort` syntax
 
 Pipe passes the value as the **last** argument, but `sort` expects the collection first — so `collection | sort "Key" "dir"` silently sorts the string `"Key"` instead of the collection. Always write it positionally: `sort .MyCollection "FieldName" "desc"`.

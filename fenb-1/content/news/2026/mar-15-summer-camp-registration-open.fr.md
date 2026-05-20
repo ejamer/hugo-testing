@@ -1,7 +1,7 @@
 ---
 title: "Inscriptions ouvertes : Camp de développement junior"
 date: 2026-03-15
-category: "Inscription"
+category: registration
 summary: "Les inscriptions sont maintenant ouvertes pour le Camp de développement junior 2026, qui se tient les 6 et 7 juin à Moncton. Les places sont limitées — inscrivez-vous tôt."
 ---
 
