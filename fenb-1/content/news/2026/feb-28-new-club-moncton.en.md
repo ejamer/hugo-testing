@@ -1,7 +1,7 @@
 ---
 title: "New Club Joins the Federation: Dieppe Fencing Academy"
 date: 2026-02-28
-category: "Community"
+category: community
 summary: "Fencing New Brunswick warmly welcomes the Dieppe Fencing Academy as its newest member club, bringing fencing to the Dieppe–Moncton region for the first time."
 ---
 
@@ -17,4 +17,4 @@ Founded by coach Renée Comeau, the Dieppe Fencing Academy opens its doors this 
 - Adult Learn-to-Fence — Thursday evenings
 - Competitive Stream — by assessment
 
-For more information on the Dieppe Fencing Academy, visit their page in our [club directory](/clubs/).
+For more information on the Dieppe Fencing Academy, visit their page in our [club directory]({{< relref "clubs/" >}}).

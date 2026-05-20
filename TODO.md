@@ -87,7 +87,35 @@ Bilingual article creation is handled by `/fenb-new-results`. Enhancements still
 
 ## Code quality
 
-- [ ] **Split `site-header.html` partial** — currently conflates navigation and page header band into one file. Split into `partials/nav.html` (sticky nav, search overlay, language switcher, hamburger) and `partials/page-header.html` (the coloured band below the nav). Deferred from the May 2026 design review (H3). See `plans/archive/design-review.md` for the original finding.
+See `plans/hugo-code-review.html` for the full Hugo code review report with detailed analysis and rationale for each item below.
+
+### High priority
+
+- [x] **Remove `canonifyURLs = true`** (`hugo.toml:3`) — removed; fixed all templates and data files to use `relURL`/`relLangURL` without leading slashes. One hardcoded bare path remains in article Markdown content (`feb-28-new-club-moncton.fr.md`) which is correct for production.
+- [x] **Fix French date formatting** — both issues resolved:
+  - `layouts/news/single.html`: article date now uses `cal_month_*` i18n keys with language-conditional order ("May 18, 2026" / "18 mai 2026"); sidebar uses abbreviated `month_*` keys.
+  - `data/events.yaml` + `event-card.html` + `events/schedule.html`: single-day events (13) had `display_date` removed; templates compute a bilingual date from `date` field when `display_date` is absent. Multi-day ranges and free-form overrides (22) keep `display_date` unchanged.
+- [x] **Replace locale-string category detection** — `category` front matter is now a canonical ID (`results`, `announcement`, `community`, `registration`); display labels come from i18n lookup; templates use `if eq .Params.category "results"` for script loading and `i18n .Params.category` for badge text. All 10 articles updated; `category_id` field removed.
+
+### Medium priority
+
+- [x] **Move `baseURL` to environment config files** — `config/production/hugo.toml` (fencingnb.ca) and `config/development/hugo.toml` (ejamer.github.io) created; `baseURL` removed from root `hugo.toml`; `make build` and `make serve` updated to pass `--environment development` (bare `hugo` defaults to production).
+- [x] **Add explicit date sort to news sidebar** — wrapped `where` result with `sort ... "Date" "desc"` before `first 6`.
+- [x] **Add `defer` to non-deferred script tags** — added `defer` to `hero-slider.js`, `events-calendar.js`, and `events-schedule.js` (schedule was also missing it).
+- [x] **Map `summary` to `<meta name="description">`** — already handled by Ananke's `baseof.html`; `summary` front matter maps to Hugo's `.Summary` which the theme emits as the meta description. No code change needed.
+- [x] **Add RSS output for the news section** — `[outputs]` added to `hugo.toml`; feeds at `/news/index.xml` and `/fr/news/index.xml`; RSS icon link added to footer alongside social icons (bilingual aria-label).
+- [x] **Add explicit `[markup]` config block** — added to `hugo.toml` with `unsafe = false` (explicit, with comment), and `tableOfContents` start/end levels.
+
+### Low priority
+
+- [x] **Extract event categories to a data file** — `data/event_categories.yaml` created; calendar legend (`events/list.html`) and schedule filter slice (`events/schedule.html`) both now iterate over `hugo.Data.event_categories.event_categories`.
+- [x] **Update archetypes** — `default.md` switched to YAML front matter; `archetypes/news.md` created with `category` and `summary` pre-filled. Note: bilingual pair creation still requires `/fenb-new-news` — archetypes can't enforce that.
+- [x] **Add `errorf` guard in `icon.html`** — missing SVG now fails the build with a clear message rather than silently producing blank output.
+- [x] **Make Hugo path configurable in Makefile** — `HUGO ?= /snap/bin/hugo` variable added; all targets use `$(HUGO)`; override with `make serve HUGO=/usr/local/bin/hugo`.
+- [x] **Restore Ananke as proper submodule** — `.gitmodules` moved from `fenb-1/` to repo root with corrected path; 606 tracked theme files replaced with gitlink at `dc0a8223`; URL updated to new repo (`gohugo-ananke/ananke`); `.git` file and worktree paths corrected. Ananke is pinned at `dc0a8223` — update deliberately with `git submodule update --remote` when needed.
+- [x] **Document CSS pipeline location** — added to STYLE_GUIDE.md: CSS files must live in `assets/ananke/css/` (not `static/`), listed under `params.ananke.custom_css` in `hugo.toml`; explains pipeline concatenation, minification, and fingerprinting.
+
+- [x] **Split `site-header.html` partial** — nav moved to `nav.html`; page header band moved to `page-header.html`; `site-header.html` is now a two-line wrapper (Ananke calls it, so it must stay as the entry point).
 
 ## Events data
 

@@ -7,6 +7,7 @@
     class (optional) — CSS class(es) injected into the <svg> tag
 */ -}}
 {{- $svg := readFile (printf "static/images/svg/%s" .name) -}}
+{{- if not $svg }}{{ errorf "icon.html: SVG not found: static/images/svg/%s" .name }}{{ end -}}
 {{- $inject := "" -}}
 {{- if and .w .h -}}
   {{- $inject = printf `width="%d" height="%d" ` .w .h -}}

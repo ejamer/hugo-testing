@@ -1,7 +1,7 @@
 ---
 title: "Un nouveau club rejoint la fédération : Académie d'escrime de Dieppe"
 date: 2026-02-28
-category: "Communauté"
+category: community
 summary: "Escrime-Fencing NB accueille chaleureusement l'Académie d'escrime de Dieppe comme son plus récent club membre, apportant l'escrime dans la région de Dieppe–Moncton pour la première fois."
 ---
 
@@ -17,4 +17,4 @@ Fondée par l'entraîneur Renée Comeau, l'Académie d'escrime de Dieppe ouvre s
 - Adultes — Apprendre à faire de l'escrime — soirs de jeudi
 - Volet compétitif — sur évaluation
 
-Pour plus d'informations sur l'Académie d'escrime de Dieppe, visitez leur page dans notre [répertoire de clubs](/fr/clubs/).
+Pour plus d'informations sur l'Académie d'escrime de Dieppe, visitez leur page dans notre [répertoire de clubs]({{< relref "clubs/" >}}).

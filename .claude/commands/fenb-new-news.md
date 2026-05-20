@@ -9,11 +9,11 @@ Ask the user for:
 2. Article slug — short kebab-case, no year (e.g. `provincial-results`)
 3. English title
 4. French title
-5. Category:
-   - `Results` (EN) / `Résultats` (FR) — teal
-   - `Announcement` (EN) / `Annonce` (FR) — crimson
-   - `Registration` (EN) / `Inscription` (FR) — green
-   - `Community` (EN) / `Communauté` (FR) — navy
+5. Category ID — one of:
+   - `results` — teal; also loads the interactive results table
+   - `announcement` — crimson
+   - `registration` — green
+   - `community` — navy
 6. English summary — one sentence shown on the homepage card
 7. French summary
 
@@ -26,7 +26,7 @@ Then:
    ---
    title: "{English title}"
    date: {YYYY-MM-DD}
-   category: "{English category}"
+   category: {category-id}
    summary: "{English summary}"
    ---
    ```
@@ -35,9 +35,11 @@ Then:
    ---
    title: "{French title}"
    date: {YYYY-MM-DD}
-   category: "{French category}"
+   category: {category-id}
    summary: "{French summary}"
    ---
    ```
+
+Both files get the same `category` value — it's a canonical ID, not a display string. The badge label is derived from i18n at render time.
 
 **Critical:** the language code is separated by a **dot** (`.en.md`, `.fr.md`), never a dash (`-en.md`). A dash breaks Hugo's translation linking between the two files.

@@ -20,7 +20,7 @@
       <article class="fenb-club-card">
         <div class="fenb-club-logo-wrap">
           <img
-            src="{{ .logo }}"
+            src="{{ .logo | relURL }}"
             alt="{{ .name }} logo"
             class="fenb-club-logo"
             loading="lazy"
@@ -103,7 +103,7 @@
       </div>
     </div>
     <div class="fenb-clubs-cta-action">
-      <a href="{{ "/join/clubs/" | relLangURL }}" class="fenb-btn fenb-btn-crimson">{{ i18n "clubs_cta_btn" }}</a>
+      <a href="{{ "join/clubs/" | relLangURL }}" class="fenb-btn fenb-btn-crimson">{{ i18n "clubs_cta_btn" }}</a>
     </div>
   </div>
 </section>

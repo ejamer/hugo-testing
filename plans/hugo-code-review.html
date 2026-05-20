@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hugo Code Review — Fencing-Escrime NB</title>
+  <style>
+    :root {
+      --teal: #1a7a7a;
+      --teal-light: #e8f5f5;
+      --navy: #1a2744;
+      --crimson: #b91c1c;
+      --gold: #b45309;
+      --green: #15803d;
+      --blue: #1d4ed8;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-700: #374151;
+      --gray-900: #111827;
+
+      --badge-good-bg: #dcfce7;
+      --badge-good-fg: #15803d;
+      --badge-warn-bg: #fef9c3;
+      --badge-warn-fg: #854d0e;
+      --badge-issue-bg: #fee2e2;
+      --badge-issue-fg: #991b1b;
+      --badge-info-bg: #dbeafe;
+      --badge-info-fg: #1e40af;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--gray-900);
+      background: var(--gray-50);
+    }
+
+    /* ── Header ── */
+    .report-header {
+      background: var(--navy);
+      color: #fff;
+      padding: 2.5rem 2rem;
+    }
+    .report-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .report-header .subtitle {
+      opacity: 0.75;
+      font-size: 0.95rem;
+    }
+    .report-header .meta {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+      opacity: 0.6;
+    }
+
+    /* ── Layout ── */
+    .report-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* ── Score band ── */
+    .score-band {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .score-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+    .score-card .score-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-700);
+      margin-bottom: 0.5rem;
+    }
+    .score-card .score-value {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .score-card.good  .score-value { color: var(--green); }
+    .score-card.warn  .score-value { color: var(--gold); }
+    .score-card.issue .score-value { color: var(--crimson); }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 2.5rem;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--navy);
+      border-bottom: 2px solid var(--teal);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── Finding cards ── */
+    .findings {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .finding {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      border-left: 4px solid var(--gray-200);
+    }
+    .finding.good  { border-left-color: var(--green); }
+    .finding.warn  { border-left-color: var(--gold); }
+    .finding.issue { border-left-color: var(--crimson); }
+    .finding.info  { border-left-color: var(--blue); }
+
+    .finding-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+    .badge {
+      flex-shrink: 0;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      margin-top: 0.15rem;
+    }
+    .badge.good  { background: var(--badge-good-bg);  color: var(--badge-good-fg); }
+    .badge.warn  { background: var(--badge-warn-bg);  color: var(--badge-warn-fg); }
+    .badge.issue { background: var(--badge-issue-bg); color: var(--badge-issue-fg); }
+    .badge.info  { background: var(--badge-info-bg);  color: var(--badge-info-fg); }
+
+    .finding-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .finding-body {
+      font-size: 0.9rem;
+      color: var(--gray-700);
+      line-height: 1.55;
+    }
+    .finding-body p { margin-top: 0.4rem; }
+    .finding-body p:first-child { margin-top: 0; }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.85em;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 3px;
+      padding: 0.1em 0.35em;
+    }
+    pre {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Recommendations table ── */
+    .rec-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      font-size: 0.88rem;
+    }
+    .rec-table thead {
+      background: var(--navy);
+      color: #fff;
+    }
+    .rec-table th {
+      padding: 0.7rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .rec-table td {
+      padding: 0.65rem 1rem;
+      vertical-align: top;
+      border-bottom: 1px solid var(--gray-200);
+      line-height: 1.5;
+    }
+    .rec-table tr:last-child td { border-bottom: none; }
+    .rec-table tr:nth-child(even) { background: var(--gray-50); }
+    .pri-high   { color: var(--crimson); font-weight: 700; }
+    .pri-medium { color: var(--gold);    font-weight: 700; }
+    .pri-low    { color: var(--blue);    font-weight: 700; }
+
+    /* ── Executive summary box ── */
+    .exec-summary {
+      background: var(--teal-light);
+      border: 1px solid var(--teal);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+    .exec-summary strong { color: var(--teal); }
+
+    /* ── Two-col grid ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 700px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="report-header">
+  <h1>Hugo Code Review — Fencing-Escrime NB</h1>
+  <div class="subtitle">fenb-1/ site · Hugo v0.161.1 Extended · Theme: Ananke</div>
+  <div class="meta">
+    <span>Reviewed: 2026-05-20</span>
+    <span>Reviewer: Claude Code (lead developer perspective)</span>
+    <span>Branch: dev</span>
+  </div>
+</header>
+
+<div class="report-body">
+
+  <div class="exec-summary">
+    <strong>Overall assessment:</strong> This is a well-constructed Hugo site that correctly applies many of the framework's key features — data-driven layouts, bilingual routing, Hugo Pipes CSS processing, and no-JS fallbacks. The architecture is coherent and the separation of concerns between templates, data, and content is sound. The main areas for improvement are: leaning on Ananke's CSS pipeline more transparently, eliminating data-entry duplication (manual display dates), hardening the bilingual workflow at the archetype level, and adopting a small number of missing Hugo conventions (deferred scripts, RSS output, `markup` config). None of the identified issues are architectural failures; they are refinements that would improve maintainability and correctness.
+  </div>
+
+  <!-- ── SCORE SUMMARY ── -->
+  <div class="score-band">
+    <div class="score-card good">
+      <div class="score-label">Data Architecture</div>
+      <div class="score-value">A</div>
+    </div>
+    <div class="score-card good">
+      <div class="score-label">i18n / Bilingual</div>
+      <div class="score-value">A−</div>
+    </div>
+    <div class="score-card good">
+      <div class="score-label">Layout & Partials</div>
+      <div class="score-value">B+</div>
+    </div>
+    <div class="score-card warn">
+      <div class="score-label">Asset Pipeline</div>
+      <div class="score-value">B</div>
+    </div>
+    <div class="score-card warn">
+      <div class="score-label">JS Patterns</div>
+      <div class="score-value">B−</div>
+    </div>
+    <div class="score-card warn">
+      <div class="score-label">Configuration</div>
+      <div class="score-value">B−</div>
+    </div>
+    <div class="score-card warn">
+      <div class="score-label">Content Workflow</div>
+      <div class="score-value">C+</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       1. CONFIGURATION
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">1. Configuration (hugo.toml)</h2>
+    <div class="findings">
+
+      <div class="finding issue">
+        <div class="finding-header">
+          <span class="badge issue">Issue</span>
+          <span class="finding-title"><code>canonifyURLs = true</code> — deprecated and conflict-prone</span>
+        </div>
+        <div class="finding-body">
+          <p><code>canonifyURLs</code> (line 3) is a post-processing rewrite that absolutizes all relative URLs in the generated HTML. Hugo's own docs call it a "last resort" and it is effectively deprecated. More critically, it conflicts with <code>absURL</code> and <code>relURL</code> template functions, which the site uses throughout. CLAUDE.md even documents a bug this caused: <code>"/pagefind/x.js" | absURL</code> was producing the wrong URL because of the interaction between the base path and this setting. The templates already use <code>relLangURL</code> correctly everywhere — removing <code>canonifyURLs</code> is safe once you verify all links use proper Hugo URL functions.</p>
+          <p><strong>Fix:</strong> Remove <code>canonifyURLs = true</code> from <code>hugo.toml</code>. Run <code>make build</code>, then search the output for any broken relative links. There should be none given the consistent <code>relLangURL</code> / <code>absURL</code> usage.</p>
+        </div>
+      </div>
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">Production <code>baseURL</code> is commented out</span>
+        </div>
+        <div class="finding-body">
+          <p>The production URL <code>https://fencingnb.ca/</code> is commented out (line 1) and the GitHub Pages test URL is active (line 2). This is understandable for a draft site, but it is fragile: a developer could accidentally build for production using the wrong base URL.</p>
+          <p><strong>Fix:</strong> Move the base URL to environment-specific config files. Create <code>config/production/hugo.toml</code> with <code>baseURL = "https://fencingnb.ca/"</code> and <code>config/development/hugo.toml</code> with the test URL. Hugo automatically merges these when <code>--environment production</code> is passed (which <code>make build-prod</code> already does). The single <code>hugo.toml</code> can then omit <code>baseURL</code> entirely or set it to localhost.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">Language configuration is complete and well-structured</span>
+        </div>
+        <div class="finding-body">
+          <p>Both <code>[languages.en]</code> and <code>[languages.fr]</code> are fully specified with locale, label, title, and description. Menus are defined per-language with localized names and identical paths, delegating the language prefix to <code>relLangURL</code> in templates — the correct Hugo pattern. The comment on line 91 (<em>"French menu URLs omit the /fr/ prefix; relLangURL in the nav template adds it"</em>) is exactly the right approach and shows clear understanding of how Hugo handles multilingual routing.</p>
+        </div>
+      </div>
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">No <code>[markup]</code> configuration block</span>
+        </div>
+        <div class="finding-body">
+          <p>Hugo defaults to safe Goldmark rendering, which strips raw HTML from Markdown. The policies section serves PDFs and documents — if any body content ever needs embedded iframes, HTML tables, or raw links, they will be silently stripped. Additionally, table-of-contents settings and code highlight themes are at their defaults.</p>
+          <p><strong>Fix:</strong> Add an explicit <code>[markup]</code> section to make the intent clear, even if defaults are acceptable:
+          <pre><code>[markup]
+  [markup.goldmark.renderer]
+    unsafe = false  # set true only if content authors need raw HTML
+
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel   = 4</code></pre>
+          </p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">TOML flat-key ordering is correct</span>
+        </div>
+        <div class="finding-body">
+          <p>All flat <code>[params]</code> keys (<code>custom_css</code>, <code>background_color_class</code>) appear <em>before</em> nested subtable headers like <code>[params.announcement]</code> and <code>[params.ananke]</code>. This is the correct TOML ordering — placing a subtable header first silently swallows subsequent flat keys into the wrong table. The CLAUDE.md correctly documents this pitfall, and the config correctly avoids it.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       2. THEME & LAYOUT ARCHITECTURE
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">2. Theme &amp; Layout Architecture</h2>
+    <div class="findings">
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">Heavy Ananke dependency with near-total override</span>
+        </div>
+        <div class="finding-body">
+          <p>The project declares <code>theme = 'ananke'</code> but overrides virtually every layout. The root <code>layouts/</code> directory contains 28 HTML files spanning all sections; the only things Ananke provides in practice are: (1) the base template structure (<code>baseof.html</code>), (2) the CSS asset pipeline (<code>GetMainCSS.html</code>), and (3) the menu system. This is a maintenance risk: Ananke updates could break the CSS pipeline or template block contracts without warning.</p>
+          <p><strong>Recommendation:</strong> Consider one of two paths:
+            <br>• <strong>Minimal theme</strong>: Replace Ananke with a minimal <code>themes/fenb-base/</code> that contains only <code>baseof.html</code>, the CSS pipeline partial, and no visual opinions. Eliminates surprise breakage on Ananke updates.
+            <br>• <strong>Keep Ananke, pin the version</strong>: Pin the Ananke submodule to a specific commit so updates are controlled. Add a <code>git submodule update</code> step to the release checklist.
+          </p>
+          <p>The current approach works, but the dependency surface is misleadingly large.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">Partial system is well-designed and reusable</span>
+        </div>
+        <div class="finding-body">
+          <p>The custom partials demonstrate clear thinking about reuse:
+            <br>• <code>event-card.html</code> — single source of truth for event rendering, used on homepage and calendar fallback
+            <br>• <code>news-card.html</code> — parameterized heading level (<code>h2</code>/<code>h3</code>) and truncation length; correct application of the caller/callee pattern
+            <br>• <code>section-header.html</code> — one partial drives homepage section headers across four sections
+            <br>• <code>icon.html</code> — SVG inline renderer with attribute injection; avoids icon fonts and external HTTP requests
+          </p>
+          <p>The parameter passing via <code>dict</code> is idiomatic Hugo: <code>{{ partial "news-card.html" (dict "page" . "heading" "h3" "truncate" 130) }}</code>.</p>
+        </div>
+      </div>
+
+      <div class="finding issue">
+        <div class="finding-header">
+          <span class="badge issue">Issue</span>
+          <span class="finding-title">Category detection by locale-specific string (news/single.html:19)</span>
+        </div>
+        <div class="finding-body">
+          <p>Results articles load <code>results-table.js</code> conditionally:</p>
+          <pre><code>{{ if in (slice "Results" "Résultats") .Params.category }}</code></pre>
+          <p>This checks both English and French strings in a single template, which is fragile. If the French translation of "Results" changes in <code>fr.yaml</code> (or a typo is introduced in a content file), the JS will silently not load for French articles.</p>
+          <p><strong>Fix:</strong> Use a canonical category ID in front matter rather than the display label. Add a <code>category_id: results</code> field (or rename <code>category</code> to carry the ID), and check <code>.Params.category_id</code>. The display label can then be an i18n lookup on the ID, keeping templates locale-agnostic.</p>
+        </div>
+      </div>
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">Events calendar legend is hardcoded, not data-driven</span>
+        </div>
+        <div class="finding-body">
+          <p>The category legend in <code>events/list.html</code> (lines 49–56) lists seven hardcoded categories with their CSS swatch classes. If a new event category is added to <code>events.yaml</code>, the legend must be manually updated in the template — a silent omission that is easy to miss.</p>
+          <p><strong>Fix:</strong> Create a <code>data/event_categories.yaml</code> file listing the canonical category IDs. Both the legend and the event card could iterate over it, ensuring they are always in sync. Alternatively, extract the unique categories from <code>hugo.Data.events.events</code> using Hugo's <code>uniq</code> and <code>slice</code> functions at render time.</p>
+        </div>
+      </div>
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">News sidebar not sorted by date (news/single.html:32)</span>
+        </div>
+        <div class="finding-body">
+          <p>The recent news sidebar uses:</p>
+          <pre><code>{{ range first 6 (where .Site.RegularPages "Section" "news") }}</code></pre>
+          <p><code>.Site.RegularPages</code> is sorted by date descending by default, but the <code>where</code> filter does not guarantee sort order is preserved in all Hugo versions.</p>
+          <p><strong>Fix:</strong> Be explicit:
+          <pre><code>{{ $sortedNews := sort (where .Site.RegularPages "Section" "news") "Date" "desc" }}
+{{ range first 6 $sortedNews }}</code></pre>
+          </p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">No-JS fallback on the events calendar</span>
+        </div>
+        <div class="finding-body">
+          <p>The <code>&lt;noscript&gt;</code> block in <code>events/list.html</code> (lines 35–41) renders a full chronological event grid using the <code>event-card</code> partial. This is the correct progressive enhancement pattern: the JS calendar is an enhancement, not a requirement. The schedule page takes this further — it uses Hugo to server-render every event with <code>data-season</code> and <code>data-category</code> attributes, and JavaScript only handles visibility toggling. This gives print support and a no-JS baseline for free.</p>
+        </div>
+      </div>
+
+      <div class="finding info">
+        <div class="finding-header">
+          <span class="badge info">Info</span>
+          <span class="finding-title"><code>readFile</code> in a loop vs. Hugo Pipes (index.html:78)</span>
+        </div>
+        <div class="finding-body">
+          <p>Quick-link SVG icons are inlined via <code>readFile</code> inside a <code>range</code> loop:</p>
+          <pre><code>{{ readFile (printf "static/images/svg/%s" .icon) | safeHTML }}</code></pre>
+          <p>The <code>icon.html</code> partial (used elsewhere) does the same but with attribute injection. Both call <code>readFile</code> per iteration. Hugo caches file reads within a build, so this is not a correctness problem. However, if the named file is missing, there is no error — the output is silently empty. The icon partial could benefit from a guard:</p>
+          <pre><code>{{- $svg := readFile (printf "static/images/svg/%s" .name) -}}
+{{- if not $svg }}{{ errorf "icon.html: file not found: %s" .name }}{{ end -}}</code></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       3. DATA ARCHITECTURE
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">3. Data Architecture (YAML &amp; hugo.Data)</h2>
+    <div class="findings">
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">YAML data files as the single source of truth</span>
+        </div>
+        <div class="finding-body">
+          <p>Events, clubs, board members, hero slides, programs, and join paths all live in <code>data/</code> and are accessed via <code>hugo.Data.*</code>. Layouts read from data; content files are used only for markdown articles and section index pages. This is the correct separation: structured, maintainable data is in YAML; prose is in Markdown. The consistent snake_case naming convention for files and keys (<code>board_members.yaml</code> → <code>hugo.Data.board_members.members</code>) correctly avoids the Go template dot-notation limitation with hyphens.</p>
+        </div>
+      </div>
+
+      <div class="finding issue">
+        <div class="finding-header">
+          <span class="badge issue">Issue</span>
+          <span class="finding-title">Manually entered <code>display_date</code> duplicates the <code>date</code> field</span>
+        </div>
+        <div class="finding-body">
+          <p>Every event in <code>events.yaml</code> has both a machine-readable <code>date: "2025-09-06"</code> and a manually formatted <code>display_date: "Sept 6, 2025"</code>. These can drift (a date gets corrected but the display string is not updated). More critically, French pages receive an English-formatted date string — "Sept 6, 2025" rather than "6 sept. 2025".</p>
+          <p><strong>Fix:</strong> Remove <code>display_date</code> from the YAML schema entirely. In <code>event-card.html</code>, compute the display date from <code>date</code> using Hugo's date formatting and the existing i18n month name lookup the partial already does:
+          <pre><code>{{- $dateObj := time .date -}}
+{{- $day   := $dateObj.Format "2" -}}
+{{- $month := i18n (printf "month_%s" ($dateObj.Format "Jan")) -}}
+{{- $year  := $dateObj.Format "2006" -}}</code></pre>
+          Then compose the locale-appropriate string (day-month-year for French, month-day-year for English) using a simple conditional on <code>$.Site.Language.Lang</code>. This eliminates data duplication and makes French dates actually French.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">Bilingual data fields use a clear, consistent suffix convention</span>
+        </div>
+        <div class="finding-body">
+          <p>Bilingual data fields (e.g., <code>role_en</code>/<code>role_fr</code>, <code>name_en</code>/<code>name_fr</code>) use a consistent <code>_en</code>/<code>_fr</code> suffix pattern. Templates access them idiomatically with dynamic key construction:</p>
+          <pre><code>{{ index . (printf "role_%s" $.Site.Language.Lang) }}</code></pre>
+          <p>This is the correct Hugo approach for bilingual YAML data that does not warrant full content files. The pattern is applied consistently across <code>board_members.yaml</code>, affiliations, and policies.</p>
+        </div>
+      </div>
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">ISO dates compared as strings — relies on a format invariant</span>
+        </div>
+        <div class="finding-body">
+          <p>The homepage upcoming-events filter uses string comparison on dates:</p>
+          <pre><code>{{ $upcoming := first 4 (where hugo.Data.events.events "date" "ge" $today) }}</code></pre>
+          <p>This works correctly because ISO 8601 (<code>YYYY-MM-DD</code>) is lexicographically sortable. However, this is an implicit invariant: if someone enters a date in a different format (e.g., <code>Sept 6, 2025</code>), the comparison silently produces wrong results. The YAML schema has no enforcement.</p>
+          <p><strong>Fix:</strong> Either add a comment in <code>events.yaml</code> schema docs making this invariant explicit, or convert dates to <code>time</code> objects before comparing:
+          <pre><code>{{ $upcoming := where hugo.Data.events.events "date" "ge" $today }}</code></pre>
+          is fine as-is — just document the ISO 8601 requirement clearly in README.md.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       4. INTERNATIONALIZATION
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">4. Internationalization &amp; Bilingual Routing</h2>
+    <div class="findings">
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">Consistent use of <code>relLangURL</code> for all internal links</span>
+        </div>
+        <div class="finding-body">
+          <p>Every internal link in every template uses <code>| relLangURL</code>. This is the correct Hugo function for multilingual sites — it prepends the language prefix (e.g., <code>/fr/</code>) for non-default languages and leaves the default language URL unchanged. Hardcoded <code>/fr/</code> prefixes would break language-switching; missing the filter would serve French users English URLs. The consistent application across all 28 layout files is notable.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">Language switcher handles both translated and untranslated pages</span>
+        </div>
+        <div class="finding-body">
+          <p>The language switcher in <code>site-header.html</code> first checks <code>.Translations</code> (the current page's translated sibling, if it exists) before falling back to the other language's home page. This prevents dead links when a page only exists in one language — the switcher gracefully degrades to the home page rather than a 404.</p>
+        </div>
+      </div>
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">Article date in <code>news/single.html</code> is always formatted in English</span>
+        </div>
+        <div class="finding-body">
+          <p>The article date is rendered as:</p>
+          <pre><code>&lt;time datetime="..."&gt;{{ .Date.Format "January 2, 2006" }}&lt;/time&gt;</code></pre>
+          <p>Hugo's <code>.Date.Format</code> uses Go's time formatting, which always produces English month names ("January", "February", etc.). French articles therefore display "January 2, 2026" instead of "2 janvier 2026".</p>
+          <p><strong>Fix:</strong> Apply the same i18n month lookup already used in <code>event-card.html</code>. Build the date string from parts using <code>i18n (printf "month_%s" ...)</code>, then compose it in the appropriate order for the current language.</p>
+        </div>
+      </div>
+
+      <div class="finding info">
+        <div class="finding-header">
+          <span class="badge info">Info</span>
+          <span class="finding-title">Month name i18n keys are duplicated (abbreviated vs. full)</span>
+        </div>
+        <div class="finding-body">
+          <p>The i18n files define two sets of month keys: <code>month_Jan</code> (abbreviated, used in event cards) and <code>cal_month_jan</code> (full, used in the calendar JS data). Both sets exist in both language files. This is not wrong, but the two sets serve similar purposes and could be unified — abbreviated months are derivable from full names in most contexts, and the duplication increases translation maintenance overhead.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       5. ASSET PIPELINE & CSS
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">5. Asset Pipeline &amp; CSS</h2>
+    <div class="findings">
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">CSS is processed through Hugo Pipes via Ananke's pipeline</span>
+        </div>
+        <div class="finding-body">
+          <p>Custom CSS files in <code>assets/ananke/css/</code> are picked up by Ananke's <code>GetMainCSS.html</code> partial, which:
+            <br>1. Concatenates all CSS into a single resource via <code>resources.Concat</code>
+            <br>2. Minifies via <code>css.Sass</code> (which handles plain CSS on Hugo Extended)
+            <br>3. Fingerprints the output in production via <code>resources.Fingerprint</code> for cache busting
+          </p>
+          <p>Hugo Extended (v0.161.1) is confirmed on this machine, so the pipeline runs correctly. The end result is one minified, versioned CSS file in production — the right approach.</p>
+        </div>
+      </div>
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">CSS pipeline location is non-obvious to maintainers</span>
+        </div>
+        <div class="finding-body">
+          <p>CSS files live in <code>assets/ananke/css/</code> — a path that looks like it belongs to the Ananke theme's internal assets. There is nothing in the README or comments explaining why custom CSS files must be placed in an Ananke-namespaced directory. A future maintainer could reasonably place a new CSS file in <code>static/css/</code> instead, where it would be served as a separate uncached file rather than being bundled and minified.</p>
+          <p><strong>Fix:</strong> Add a comment to README.md under the CSS conventions section explaining that <code>assets/ananke/css/</code> is the correct location for custom CSS (not <code>static/</code>), and that files must also be listed in <code>hugo.toml</code>'s <code>custom_css</code> array. This is already partly in STYLE_GUIDE.md but deserves explicit explanation of the build mechanism.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">CSS custom properties enable dark mode without FOUC</span>
+        </div>
+        <div class="finding-body">
+          <p><code>fenb-base.css</code> defines all colour tokens as CSS custom properties at <code>:root</code> and overrides them in <code>[data-theme="dark"]</code>. A small inline script in <code>head-additions.html</code> reads <code>localStorage</code> and sets <code>data-theme</code> before the page renders, preventing flash-of-unstyled-content. The system-preference fallback (<code>prefers-color-scheme</code>) is correctly implemented as a media query. This is the modern, correct approach.</p>
+        </div>
+      </div>
+
+      <div class="finding info">
+        <div class="finding-header">
+          <span class="badge info">Info</span>
+          <span class="finding-title">No SCSS — plain CSS limits future maintainability</span>
+        </div>
+        <div class="finding-body">
+          <p>All 11 CSS files are plain CSS. Hugo Extended supports SCSS natively via <code>css.Sass</code>, and Ananke's pipeline even handles SCSS files transparently (it checks <code>.MediaType.SubType</code> and compiles them). The project already uses CSS custom properties for variables, so the loss is mainly nesting and mixins. At the current scale (3,500 lines of CSS), this is manageable — but as the site grows, plain CSS becomes harder to maintain. Migrating individual section files to SCSS when they need refactoring would be low-risk.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       6. JAVASCRIPT
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">6. JavaScript Patterns</h2>
+    <div class="findings">
+
+      <div class="finding issue">
+        <div class="finding-header">
+          <span class="badge issue">Issue</span>
+          <span class="finding-title">Most <code>&lt;script&gt;</code> tags lack <code>defer</code> or <code>async</code></span>
+        </div>
+        <div class="finding-body">
+          <p>Scripts are loaded at the bottom of the <code>main</code> block, which avoids render-blocking for body content. However, only <code>results-table.js</code> uses <code>defer</code>. <code>hero-slider.js</code> and <code>events-calendar.js</code> have no attribute, meaning they execute synchronously when encountered — blocking the parser until the script downloads and runs.</p>
+          <p><strong>Fix:</strong> Add <code>defer</code> to all <code>&lt;script src="..."&gt;</code> tags. Scripts already placed at the end of <code>main</code> are safe to defer since the DOM they depend on is above them:
+          <pre><code>&lt;script src="{{ "js/hero-slider.js" | absURL }}" defer&gt;&lt;/script&gt;</code></pre>
+          </p>
+        </div>
+      </div>
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">i18n strings embedded inline in a <code>&lt;script&gt;</code> block as a long array literal</span>
+        </div>
+        <div class="finding-body">
+          <p>The calendar's <code>window.FENB_CAL</code> object in <code>events/list.html</code> (lines 67–69) embeds month and weekday names as an inline array of <code>i18n</code> calls spread across one very long line. This is valid but makes the template harder to read and update, and couples i18n maintenance to the template.</p>
+          <p>The event data itself correctly uses <code>| jsonify | safeJS</code> and is handled in JavaScript with a <code>JSON.parse()</code> guard — the CLAUDE.md documents this correctly.</p>
+          <p><strong>Refactor option:</strong> Extract the month/weekday arrays into a dedicated i18n JSON output. Create a <code>data/</code> template or a Hugo custom output format that emits translated strings as JSON. This keeps the template lean and the translations in the i18n files where they belong.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">All JavaScript is vanilla, dependency-free, and scoped</span>
+        </div>
+        <div class="finding-body">
+          <p>No jQuery, no framework, no CDN dependencies. All four JS files (<code>hero-slider.js</code>, <code>events-calendar.js</code>, <code>events-schedule.js</code>, <code>results-table.js</code>) are vanilla JavaScript using IIFEs to avoid global scope pollution. <code>results-table.js</code> conditionally loads only on Results articles, avoiding unnecessary execution. Total JS payload is minimal.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">Conditional script loading based on content type</span>
+        </div>
+        <div class="finding-body">
+          <p><code>results-table.js</code> is loaded only on news articles whose <code>category</code> matches "Results"/"Résultats". This is a correct and efficient pattern — the script is not loaded globally but injected only when needed. The mechanism is a Hugo template conditional, which is evaluated at build time, so there is no runtime overhead.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       7. CONTENT & ARCHETYPES
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">7. Content Structure &amp; Archetypes</h2>
+    <div class="findings">
+
+      <div class="finding issue">
+        <div class="finding-header">
+          <span class="badge issue">Issue</span>
+          <span class="finding-title">Default archetype is too minimal for a bilingual site</span>
+        </div>
+        <div class="finding-body">
+          <p>The only archetype is <code>archetypes/default.md</code> with three fields (<code>date</code>, <code>draft</code>, <code>title</code>) in TOML format, while all content files use YAML front matter. It does not enforce:
+            <br>• Required fields for news articles (<code>category</code>, <code>summary</code>)
+            <br>• Language-pair creation (easy to create <code>.en.md</code> without <code>.fr.md</code>)
+            <br>• Correct filename format (<code>mon-dd-title.lang.md</code>)
+          </p>
+          <p><strong>Fix:</strong> Create section-specific archetypes in <code>archetypes/news/</code>:
+          <pre><code>---
+title: "{{ replace .File.ContentBaseName "-" " " | title }}"
+date: {{ .Date }}
+draft: true
+category: "Announcement"
+summary: ""
+---</code></pre>
+          Also, update the default archetype to YAML (removing the TOML <code>+++</code> delimiters) to match the rest of the content. The bilingual pairing cannot be enforced by archetypes alone — a <code>/fenb-new-news</code> skill already handles this workflow correctly, so the solution is to document that <code>hugo new</code> should not be used directly; the skill should be the entry point.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">Bilingual content file naming is correct and consistent</span>
+        </div>
+        <div class="finding-body">
+          <p>News articles use the <code>{mon}-{dd}-{title}.{lang}.md</code> pattern throughout (e.g., <code>apr-05-nb-athletes-nationals.en.md</code> / <code>apr-05-nb-athletes-nationals.fr.md</code>). The dot before the language code is required for Hugo's translation linking — CLAUDE.md correctly documents that a dash would break it. All 10+ article pairs in <code>content/news/2026/</code> follow this pattern correctly.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">Layout-driven pages contain explanatory comments</span>
+        </div>
+        <div class="finding-body">
+          <p>Section index pages whose content is driven by <code>hugo.Data</code> (not the <code>.Content</code> field) contain HTML comments directing editors to the actual data source:
+          <pre><code>&lt;!-- Page content is not read from this file. Edit in data/clubs.yaml. --&gt;</code></pre>
+          This is the correct pattern for preventing confusion when a content editor opens a file expecting to find the displayed text. The CLAUDE.md also documents this convention.</p>
+        </div>
+      </div>
+
+      <div class="finding warn">
+        <div class="finding-header">
+          <span class="badge warn">Warning</span>
+          <span class="finding-title">No SEO front matter on news articles</span>
+        </div>
+        <div class="finding-body">
+          <p>News articles have minimal front matter: <code>title</code>, <code>date</code>, <code>category</code>, <code>summary</code>. There are no <code>description</code>, <code>keywords</code>, or Open Graph fields. Hugo generates a <code>&lt;meta name="description"&gt;</code> from the page's <code>.Description</code> front matter field; without it, search engines see no description tag for news articles.</p>
+          <p><strong>Fix:</strong> Map <code>summary</code> to the meta description. In the <code>head</code> template (or the Ananke head partial), add:
+          <pre><code>{{ with .Params.summary }}
+  &lt;meta name="description" content="{{ . }}"&gt;
+{{ else }}
+  &lt;meta name="description" content="{{ .Site.Params.description }}"&gt;
+{{ end }}</code></pre>
+          No front matter changes needed — <code>summary</code> already exists and contains the right content.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       8. BUILD & DEPLOYMENT
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">8. Build &amp; Deployment (Makefile)</h2>
+    <div class="findings">
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title">Pagefind integration is correctly wired into the build</span>
+        </div>
+        <div class="finding-body">
+          <p>The <code>build-prod</code> target runs <code>npx pagefind --site public</code> after Hugo, creating the search index as a post-build step. The dev server pre-builds pagefind before starting (<code>make serve</code>), then uses <code>--renderStaticToDisk</code> so the pagefind files are accessible on disk during development. This is the correct Pagefind integration pattern for Hugo.</p>
+        </div>
+      </div>
+
+      <div class="finding good">
+        <div class="finding-header">
+          <span class="badge good">Good</span>
+          <span class="finding-title"><code>check-parity</code> target enforces bilingual completeness</span>
+        </div>
+        <div class="finding-body">
+          <p>The Makefile includes a <code>check-parity</code> target that scans <code>content/</code> for <code>.en.md</code> files missing their <code>.fr.md</code> partner and vice versa. Running this before a release catches translation gaps. The script exits 0 (non-blocking) so it can be added to CI without failing builds — it reports rather than blocks, which is the right default for a content team that may stage translations separately.</p>
+        </div>
+      </div>
+
+      <div class="finding info">
+        <div class="finding-header">
+          <span class="badge info">Info</span>
+          <span class="finding-title">No RSS output configured — news articles have no feed</span>
+        </div>
+        <div class="finding-body">
+          <p>Hugo generates RSS by default, but only if <code>outputs</code> is configured to include <code>"RSS"</code>. Without explicit configuration, the news section has no feed. A provincial sports organization's news section is a natural candidate for RSS — coaches and clubs subscribe to updates.</p>
+          <p><strong>Fix:</strong> Add to <code>hugo.toml</code>:
+          <pre><code>[outputs]
+  home    = ["HTML"]
+  section = ["HTML", "RSS"]
+  page    = ["HTML"]</code></pre>
+          Hugo will automatically generate <code>/news/index.xml</code> and <code>/fr/news/index.xml</code>. Add a <code>&lt;link rel="alternate"&gt;</code> in the head template to advertise the feed.</p>
+        </div>
+      </div>
+
+      <div class="finding info">
+        <div class="finding-header">
+          <span class="badge info">Info</span>
+          <span class="finding-title">Hugo path is hard-coded to <code>/snap/bin/hugo</code></span>
+        </div>
+        <div class="finding-body">
+          <p>All Makefile targets use the absolute path <code>/snap/bin/hugo</code>. This breaks for any developer who installed Hugo via a different method (apt, brew, binary download). In CI, it would also fail unless the snap path is explicitly available.</p>
+          <p><strong>Fix:</strong> Use <code>hugo</code> (without the path) and rely on <code>PATH</code>, or define it once as a Makefile variable:
+          <pre><code>HUGO ?= /snap/bin/hugo
+# or simply:
+HUGO := hugo</code></pre>
+          This lets developers override it with <code>make serve HUGO=/usr/local/bin/hugo</code>.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       9. RECOMMENDATIONS SUMMARY
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">9. Prioritized Recommendations</h2>
+
+    <table class="rec-table">
+      <thead>
+        <tr>
+          <th>Priority</th>
+          <th>Area</th>
+          <th>Action</th>
+          <th>File(s)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pri-high">High</span></td>
+          <td>Config</td>
+          <td>Remove <code>canonifyURLs = true</code> — it is deprecated and actively conflicts with <code>absURL</code> / <code>relURL</code> usage throughout the site.</td>
+          <td><code>hugo.toml:3</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-high">High</span></td>
+          <td>i18n / Data</td>
+          <td>Fix date formatting in <code>news/single.html</code> and remove <code>display_date</code> from <code>events.yaml</code> — both currently produce English-only date strings on French pages.</td>
+          <td><code>layouts/news/single.html:14</code>, <code>layouts/partials/event-card.html</code>, <code>data/events.yaml</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-high">High</span></td>
+          <td>Layouts</td>
+          <td>Replace locale-string category detection with a canonical category ID field to avoid silent breakage when translations change.</td>
+          <td><code>layouts/news/single.html:19</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-medium">Medium</span></td>
+          <td>Config</td>
+          <td>Move <code>baseURL</code> to environment config files (<code>config/production/hugo.toml</code>, <code>config/development/hugo.toml</code>) to prevent accidental production builds with the test URL.</td>
+          <td><code>hugo.toml:1-2</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-medium">Medium</span></td>
+          <td>Layouts</td>
+          <td>Add explicit date sort to news sidebar: <code>sort (where ...) "Date" "desc"</code> to guarantee order.</td>
+          <td><code>layouts/news/single.html:32</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-medium">Medium</span></td>
+          <td>JS</td>
+          <td>Add <code>defer</code> attribute to <code>hero-slider.js</code> and <code>events-calendar.js</code> script tags.</td>
+          <td><code>layouts/index.html:89</code>, <code>layouts/events/list.html:77</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-medium">Medium</span></td>
+          <td>Content</td>
+          <td>Map <code>summary</code> front matter to <code>&lt;meta name="description"&gt;</code> in the head partial so news articles have search engine descriptions.</td>
+          <td>Ananke head partial or custom <code>head-additions.html</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-medium">Medium</span></td>
+          <td>Config</td>
+          <td>Add <code>[outputs]</code> config to generate RSS for the news section.</td>
+          <td><code>hugo.toml</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-medium">Medium</span></td>
+          <td>Config</td>
+          <td>Add explicit <code>[markup]</code> block to document (and control) Goldmark rendering settings.</td>
+          <td><code>hugo.toml</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-low">Low</span></td>
+          <td>Data</td>
+          <td>Extract event categories into a <code>data/event_categories.yaml</code> file so the calendar legend and event card styles stay automatically in sync.</td>
+          <td><code>layouts/events/list.html:49-56</code>, <code>data/</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-low">Low</span></td>
+          <td>Archetypes</td>
+          <td>Update <code>archetypes/default.md</code> to YAML front matter; create <code>archetypes/news.md</code> with <code>category</code> and <code>summary</code> fields pre-filled.</td>
+          <td><code>archetypes/default.md</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-low">Low</span></td>
+          <td>Layouts</td>
+          <td>Add <code>{{ errorf }}</code> guard in <code>icon.html</code> when <code>readFile</code> returns empty, so missing SVG files produce a build error rather than a blank icon.</td>
+          <td><code>layouts/partials/icon.html:9</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-low">Low</span></td>
+          <td>Build</td>
+          <td>Replace hard-coded <code>/snap/bin/hugo</code> with a <code>HUGO ?= hugo</code> Makefile variable for portability.</td>
+          <td><code>Makefile</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-low">Low</span></td>
+          <td>Theme</td>
+          <td>Pin Ananke to a specific git commit (in <code>.gitmodules</code>) so theme updates do not silently affect the CSS pipeline. Document the pinned version in README.</td>
+          <td><code>.gitmodules</code></td>
+        </tr>
+        <tr>
+          <td><span class="pri-low">Low</span></td>
+          <td>Docs</td>
+          <td>Add a note in README.md explaining that custom CSS must go in <code>assets/ananke/css/</code> (not <code>static/</code>) and be listed in <code>hugo.toml</code>'s <code>custom_css</code> array, with a brief explanation of why.</td>
+          <td><code>README.md</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       10. THINGS DONE ESPECIALLY WELL
+  ════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">10. What This Project Does Especially Well</h2>
+    <div class="two-col">
+      <div class="findings">
+        <div class="finding good">
+          <div class="finding-header">
+            <span class="badge good">Best Practice</span>
+            <span class="finding-title">Data-driven architecture</span>
+          </div>
+          <div class="finding-body">Events, clubs, board, programs, and hero content all live in typed YAML data files. Layouts read from <code>hugo.Data</code>; Markdown is reserved for prose. Clean separation of content and structure.</div>
+        </div>
+        <div class="finding good">
+          <div class="finding-header">
+            <span class="badge good">Best Practice</span>
+            <span class="finding-title">Progressive enhancement</span>
+          </div>
+          <div class="finding-body">Every JS-dependent feature has a working <code>&lt;noscript&gt;</code> fallback. The schedule page server-renders all events as HTML with data attributes; JS adds filtering on top. Accessible and print-friendly.</div>
+        </div>
+        <div class="finding good">
+          <div class="finding-header">
+            <span class="badge good">Best Practice</span>
+            <span class="finding-title">CSS custom properties + dark mode</span>
+          </div>
+          <div class="finding-body">Entire colour system uses CSS variables. Dark mode via <code>[data-theme="dark"]</code> overrides with a FOUC-prevention inline script. System preference respected as fallback.</div>
+        </div>
+        <div class="finding good">
+          <div class="finding-header">
+            <span class="badge good">Best Practice</span>
+            <span class="finding-title">Consistent <code>relLangURL</code> usage</span>
+          </div>
+          <div class="finding-body">Every internal link in every template uses <code>| relLangURL</code>. Zero hardcoded language prefixes. Language routing works correctly for both languages throughout the site.</div>
+        </div>
+      </div>
+      <div class="findings">
+        <div class="finding good">
+          <div class="finding-header">
+            <span class="badge good">Best Practice</span>
+            <span class="finding-title">Reusable, parameterized partials</span>
+          </div>
+          <div class="finding-body"><code>news-card.html</code>, <code>event-card.html</code>, <code>section-header.html</code>, and <code>icon.html</code> are cleanly parameterized via <code>dict</code>. No copy-paste rendering code. Single source of truth for each component.</div>
+        </div>
+        <div class="finding good">
+          <div class="finding-header">
+            <span class="badge good">Best Practice</span>
+            <span class="finding-title">Hugo Pipes CSS pipeline</span>
+          </div>
+          <div class="finding-body">Custom CSS is concatenated, minified (via Ananke's <code>GetMainCSS</code>), and fingerprinted in production. One network request for all styles. Cache-busted automatically on any CSS change.</div>
+        </div>
+        <div class="finding good">
+          <div class="finding-header">
+            <span class="badge good">Best Practice</span>
+            <span class="finding-title">Zero external JS dependencies</span>
+          </div>
+          <div class="finding-body">All JavaScript is vanilla, scoped with IIFEs, and totals well under 20KB. No CDN dependencies, no framework overhead. Conditional loading of <code>results-table.js</code> only on relevant pages.</div>
+        </div>
+        <div class="finding good">
+          <div class="finding-header">
+            <span class="badge good">Best Practice</span>
+            <span class="finding-title">Bilingual parity enforcement</span>
+          </div>
+          <div class="finding-body"><code>make check-parity</code> reports missing translation pairs. <code>/fenb-new-news</code> skill creates both language files as a single operation. The workflow makes orphaned single-language articles hard to accidentally create.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.report-body -->
+</body>
+</html>

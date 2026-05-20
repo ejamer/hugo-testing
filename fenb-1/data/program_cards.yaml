@@ -4,25 +4,25 @@
 # Text comes from i18n keys: programs_card_{id}_title / _desc / _cta
 program_cards:
   - id: athlete
-    url: /programs/athlete-development/
+    url: programs/athlete-development/
     icon: fencing-weapon.svg
     icon_size: 50
   - id: coach
-    url: /programs/coach-training/
+    url: programs/coach-training/
     icon: users.svg
     icon_size: 46
   - id: cwg
-    url: /programs/canada-games-2027/
+    url: programs/canada-games-2027/
     img: images/canada-games/qc2027-logo-horizontal.png
   - id: referee
-    url: /programs/referee-development/
+    url: programs/referee-development/
     icon: referee-cards.svg
     icon_size: 46
   - id: secretariat
-    url: /programs/secretariat-development/
+    url: programs/secretariat-development/
     icon: file-text.svg
     icon_size: 46
   - id: armourer
-    url: /programs/armourer-development/
+    url: programs/armourer-development/
     icon: wrench.svg
     icon_size: 46

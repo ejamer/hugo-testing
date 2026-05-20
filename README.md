@@ -11,6 +11,7 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 | [DEVELOPMENT.md](DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
 | [STYLE_GUIDE.md](STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
 | [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code; lists available `/fenb-*` skills |
+| [PROJECT_LAYOUT.md](PROJECT_LAYOUT.md) | Full directory tree with file-by-file descriptions |
 | [TODO.md](TODO.md) | Outstanding items |
 
 ### Claude Code skills
@@ -108,25 +109,35 @@ Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 ---
 title: "Post title"
 date: 2026-06-01
-category: "Results"   # badge label — drives card accent colour AND article divider colour
+category: results   # canonical ID — drives CSS colour, badge label (via i18n), and results table
 summary: "One-sentence summary shown on the homepage card."
 ---
 
 Full post body here (Markdown).
 ```
 
-**Category colours:**
+**Category values:**
 
-| Value | Colour | French equivalent |
-|---|---|---|
-| `Results` | Teal | `Résultats` |
-| `Announcement` | Crimson | `Annonce` |
-| `Registration` | Green | `Inscription` |
-| `Community` | Navy | `Communauté` |
+| `category` | Badge label (EN) | Badge label (FR) | Colour | Notes |
+|---|---|---|---|---|
+| `results` | Results | Résultats | Teal | Also loads the interactive results table |
+| `announcement` | Announcement | Annonce | Crimson | |
+| `registration` | Registration | Inscription | Green | |
+| `community` | Community | Communauté | Navy | |
 
 The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 
 **New year folder:** when the first article of a new calendar year is created, add a year subfolder with `_index.md` and `_index.fr.md` (copy from the previous year folder).
+
+**Internal links in article body:** use Hugo's `relref` shortcode rather than hardcoded paths. `relref` resolves to the correct URL at build time (including language prefix) and produces a build error if the target page doesn't exist.
+
+```markdown
+Visit our [club directory]({{< relref "clubs/" >}}) for more information.
+```
+
+Do **not** write `[clubs](/clubs/)` or `[clubs](/fr/clubs/)` — root-relative paths skip the base URL and will silently break if the site is ever served from a subdirectory. `relref` is language-aware: in a French article it automatically resolves to the French version of the target page.
+
+Note: `relref` only works for Hugo content pages (`content/`). For links to static files (PDFs in `static/documents/`), use a plain Markdown link with a site-root-relative path: `[Annual Report](/documents/about/agm-minutes/2024.pdf)` — this is correct for production at `fencingnb.ca/` where there is no subpath.
 
 ---
 
@@ -139,11 +150,10 @@ Add an entry to `data/events.yaml`.
 | Field | Required | Notes |
 |---|---|---|
 | `title` | ✅ | |
-| `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter only |
-| `display_date` | ✅ | Free-form string shown on the card. Use `"TBA"` or `"July 2026"` for uncertain dates |
-| `end_date` | — | Optional. ISO `YYYY-MM-DD`. If set and greater than `date`, the calendar draws bars across the full range (inclusive). Leave blank or omit for single-day events. |
-| `category` | ✅ | See categories below |
-| `category_label` | ✅ | Fallback label if i18n key missing |
+| `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
+| `end_date` | — | ISO `YYYY-MM-DD`. Omit or leave blank for single-day events. If set, the displayed date shows as a range (`Sep 20–21` or `Nov 29 – Dec 1`) and the calendar draws bars across the full range. |
+| `category` | ✅ | See categories below — must be a canonical ID from `data/event_categories.yaml` |
+| `category_label` | ✅ | Fallback label shown if the i18n key is missing (keep in sync with the i18n value) |
 | `venue` | ✅ | Short venue name shown on card |
 | `location` | ✅ | City / province |
 | `description` | — | Optional. Not shown on homepage cards |
@@ -155,9 +165,9 @@ Add an entry to `data/events.yaml`.
 
 ```yaml
 - title: "Event Name"
-  date: "2026-06-01"              # ISO — sort/filter only; use first-of-month for uncertain dates
-  display_date: "June 1, 2026"    # free-form; use "TBA" or "June 2026" if date is uncertain
-  category: competition           # see categories below
+  date: "2026-06-01"      # ISO — also drives the displayed date label
+  end_date: "2026-06-02"  # optional; omit for single-day events
+  category: competition   # see categories below
   category_label: "Competition"
   venue: "Venue Name"
   location: "City, NB"
@@ -171,7 +181,7 @@ Add an entry to `data/events.yaml`.
 
 Each category drives three visual elements: the date badge on the event card, the tag pill, and the calendar bar on the month grid.
 
-| `category` | Example `category_label` | Colour |
+| `category` | `category_label` | Colour |
 |---|---|---|
 | `competition` | `"Competition"` | Teal |
 | `training` | `"Training Camp"` | Dark green |
@@ -181,7 +191,9 @@ Each category drives three visual elements: the date badge on the event card, th
 | `meeting` | `"FENB Meeting"` | Grey |
 | `announcement` | `"Announcement"` | Teal |
 
-`category_label` is the visible string on the card. `category` is the CSS hook — must match exactly (lowercase, no spaces).
+`category` is the canonical ID — must match exactly (lowercase, no spaces) and must exist in `data/event_categories.yaml`. `category_label` is a fallback display string used if the i18n key is missing.
+
+**Adding a new category:** add the ID to `data/event_categories.yaml`, add i18n keys to both `i18n/en.yaml` and `i18n/fr.yaml`, and add the corresponding CSS colour rules to `fenb-events.css`.
 
 The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today), falling back to the most recent past events if fewer than 4 are upcoming. When the season ends, add an off-season placeholder entry (category `announcement`) so the section stays populated through the summer gap.
 
@@ -211,18 +223,10 @@ description: "Calendrier de la saison 2026–2027"
 
 ### Board of Directors
 
-Edit `data/board.yaml`. Top-level keys:
+Edit `data/board_members.yaml`. Top-level keys:
 
 - `season` — display label (e.g. `"2025–2026"`); update at the start of each season
 - `contact` — board inquiry email shown on the About contact section
-- `founder` — founder photo and bilingual caption shown in the history section:
-  ```yaml
-  founder:
-    name: "Alfred Knappe"
-    photo: "/images/alfred-knappe.png"
-    caption_en: "Alfred Knappe — founding president, 1969"
-    caption_fr: "Alfred Knappe — président fondateur, 1969"
-  ```
 - `affiliations` — provincial/national affiliations shown in the About sidebar:
   ```yaml
   affiliations:
@@ -260,18 +264,18 @@ Edit `data/board.yaml`. Top-level keys:
    ```yaml
    - name_en: "Policy Name"
      name_fr: "Nom de la politique"
-     url_en: "/about/policies/{slug}/"
-     url_fr: "/fr/about/policies/{slug}/"
+     url_en: about/policies/{slug}/
+     url_fr: fr/about/policies/{slug}/
    ```
 
 #### Add a new AGM minutes year
 
-1. Drop the PDF in `static/docs/agm-minutes/YYYY.pdf` where `YYYY` is the **season start year** (e.g. `2025.pdf` = the 2025–2026 season).
+1. Drop the PDF in `static/documents/about/agm-minutes/YYYY.pdf` where `YYYY` is the **season start year** (e.g. `2025.pdf` = the 2025–2026 season).
 2. Add an entry at the top of `annual_reports` in `data/policies.yaml`:
 
    ```yaml
    - year: 2025
-     url: "/docs/agm-minutes/2025.pdf"
+     url: documents/about/agm-minutes/2025.pdf
    ```
 
 The season label ("2025–2026 Season AGM Minutes") is computed automatically from `year` in the layout.
@@ -285,7 +289,7 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
 ```yaml
 - id: XYZ
   name: "Club Name"
-  logo: "/images/clubs/club-logo-XYZ.png"
+  logo: images/clubs/club-logo-XYZ.png
   email: "club@example.com"
   website: "https://example.com"   # omit if none
   city: "City, NB"
@@ -299,9 +303,9 @@ Drop replacement images into `static/images/hero/` and update `data/hero_slides.
 
 ```yaml
 slides:
-  - src: /images/hero/hero1.jpg
+  - src: images/hero/hero1.jpg
     alt: "Alt text for accessibility"
-  - src: /images/hero/hero2.jpg
+  - src: images/hero/hero2.jpg
     alt: ""
 ```
 
@@ -341,154 +345,3 @@ Two URLs in `data/join.yaml` need updating at the start of each season:
 - `membership_url` — the 2MEV registration portal URL (includes the season slug, e.g. `fencing-nb-2025-2026`); update when 2MEV creates the new season's registration page
 - `club_form_url` — the Google Form URL for club registration; leave blank to fall back to an email CTA (the clubs layout handles the empty case automatically)
 
----
-
-## Project layout
-
-```
-hugo-testing/
-├── CLAUDE.md              Process instructions for Claude
-├── DEVELOPMENT.md         Branch strategy and build commands
-├── STYLE_GUIDE.md         Brand, CSS, and content conventions
-├── TODO.md                Outstanding items — keep current
-├── plans/                 Design decisions and deferred plans
-├── README.md              This file
-├── scripts/               Utility scripts (see Scripts section below)
-│   ├── fencingtimelive-results.py   Fetch tournament results and find NB fencers
-│   ├── output/            Generated JSON output — gitignored, not committed
-│   └── .browser-profile/  Saved Chrome session for fencingtimelive.com login — gitignored
-└── fenb-1/                Hugo site root
-    ├── hugo.toml           Site config, languages, nav menus
-    ├── assets/
-    │   └── ananke/css/
-    │       ├── fenb-base.css       Variables, reset, shared utilities, buttons
-    │       ├── fenb-nav.css        Nav, search overlay, page header band
-    │       ├── fenb-hero.css       Hero section and animations
-    │       ├── fenb-events.css     Event cards, tags, calendar page
-    │       ├── fenb-news.css       News cards, article layout, 404 page
-    │       ├── fenb-clubs.css      Programs quick-links, clubs page
-    │       ├── fenb-about.css      About page, policies page
-    │       ├── fenb-schedule.css   Season schedule page
-    │       ├── fenb-join.css       Join & Register section (landing, membership, clubs, volunteer)
-    │       ├── fenb-programs.css   Programs & Development section (landing, 6 sub-pages)
-    │       └── fenb-responsive.css All breakpoints and print query (loaded last)
-    ├── content/            Section indexes: _index.md (EN) + _index.fr.md (FR)
-    │   │                   Article files: {name}.en.md (EN) + {name}.fr.md (FR)
-    │   ├── _index.md       Homepage (EN)
-    │   ├── _index.fr.md    Homepage (FR)
-    │   ├── about/
-    │   │   ├── _index.md               About section (EN)
-    │   │   ├── _index.fr.md            About section (FR)
-    │   │   ├── policies-and-reports.en.md
-    │   │   ├── policies-and-reports.fr.md
-    │   │   └── policies/               Individual policy pages (EN + FR pairs)
-    │   │       ├── safe-sport.en.md
-    │   │       ├── safe-sport.fr.md
-    │   │       └── … (one slug.en.md + slug.fr.md per policy)
-    │   ├── clubs/
-    │   │   ├── _index.md      Clubs list page (EN)
-    │   │   └── _index.fr.md   Clubs list page (FR)
-    │   ├── join/
-    │   │   ├── _index.md           Join landing page (EN)
-    │   │   ├── _index.fr.md        Join landing page (FR)
-    │   │   ├── membership.en.md    Individual membership (EN) — layout: membership
-    │   │   ├── membership.fr.md    Individual membership (FR) — layout: membership
-    │   │   ├── clubs.en.md         Club registration (EN) — layout: clubs
-    │   │   ├── clubs.fr.md         Club registration (FR) — layout: clubs
-    │   │   ├── volunteer.en.md     Volunteer (EN) — layout: volunteer
-    │   │   └── volunteer.fr.md     Volunteer (FR) — layout: volunteer
-    │   ├── programs/
-    │   │   ├── _index.md                      Programs landing page (EN)
-    │   │   ├── _index.fr.md                   Programs landing page (FR)
-    │   │   ├── athlete-development.en.md       Athlete Development / LTAD (EN) — layout: athlete-development
-    │   │   ├── athlete-development.fr.md       Athlete Development / LTAD (FR) — layout: athlete-development
-    │   │   ├── coach-training.en.md            Coach Training & Certification (EN) — layout: coach-training
-    │   │   ├── coach-training.fr.md            Coach Training & Certification (FR) — layout: coach-training
-    │   │   ├── canada-winter-games.en.md       Canada Winter Games 2027 (EN) — layout: canada-winter-games
-    │   │   ├── canada-winter-games.fr.md       Canada Winter Games 2027 (FR) — layout: canada-winter-games
-    │   │   ├── referee-development.en.md       Referee Development (EN) — layout: referee-development
-    │   │   ├── referee-development.fr.md       Referee Development (FR) — layout: referee-development
-    │   │   ├── secretariat-development.en.md   Secretariat Development (EN) — layout: secretariat-development
-    │   │   ├── secretariat-development.fr.md   Secretariat Development (FR) — layout: secretariat-development
-    │   │   ├── armourer-development.en.md      Armourer Development (EN) — layout: armourer-development
-    │   │   └── armourer-development.fr.md      Armourer Development (FR) — layout: armourer-development
-    │   ├── events/
-    │   │   ├── _index.md         Events section (EN)
-    │   │   ├── _index.fr.md      Events section (FR)
-    │   │   ├── schedule.en.md    Season schedule page (EN)
-    │   │   └── schedule.fr.md    Season schedule page (FR)
-    │   └── news/
-    │       ├── _index.md      News section (EN)
-    │       ├── _index.fr.md   News section (FR)
-    │       └── 2026/          One subfolder per calendar year
-    │           ├── _index.md
-    │           ├── _index.fr.md
-    │           ├── apr-05-nb-athletes-nationals.en.md
-    │           └── apr-05-nb-athletes-nationals.fr.md
-    ├── data/
-    │   ├── events.yaml        Current season's event calendar (drives homepage + /events/)
-    │   ├── events_archive/    Past seasons — moved here at season rollover (see plans/)
-    │   ├── clubs.yaml         Member club data (drives /clubs/ page)
-    │   ├── board.yaml         Board of directors; also holds founder photo info and affiliations (drives /about/)
-    │   ├── programs.yaml      Homepage quick-link cards (URLs + accent flag for the join card)
-    │   ├── policies.yaml      Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
-    │   ├── join.yaml          Join section seasonal URLs (2MEV membership portal, club registration form)
-    │   └── hero_slides.yaml   Hero carousel image list (drives homepage slider)
-    ├── i18n/
-    │   ├── en.yaml         English UI strings
-    │   └── fr.yaml         French UI strings
-    ├── layouts/
-    │   ├── index.html      Custom homepage (hero, events, news, programs)
-    │   ├── 404.html        Custom 404 (JS detects /fr/ and switches language)
-    │   ├── about/
-    │   │   ├── list.html   About page (overview, history, mission, board grid, contact)
-    │   │   ├── single.html Policies & Reports page (sidebar TOC + policy/report lists)
-    │   │   └── policies/
-    │   │       └── single.html  Individual policy page (sidebar back-link + language switcher)
-    │   ├── clubs/
-    │   │   └── list.html   Custom clubs page (grid + map + registration CTA)
-    │   ├── join/
-    │   │   ├── list.html        Join landing page (three path cards)
-    │   │   ├── membership.html  Individual membership (2MEV CTA, type cards, steps)
-    │   │   ├── clubs.html       Club registration (requirements, benefits, form CTA)
-    │   │   └── volunteer.html   Volunteer opportunities (role groups, apply CTA)
-    │   ├── programs/
-    │   │   ├── list.html                    Programs landing page (six path cards)
-    │   │   ├── athlete-development.html     LTAD overview, ten key factors, armband program
-    │   │   ├── coach-training.html          Three coaching streams (community, instructional, competition)
-    │   │   ├── canada-winter-games.html     CWG 2027 selection program, documents, rankings, funding
-    │   │   ├── referee-development.html     Club and provincial referee certification levels
-    │   │   ├── secretariat-development.html Secretariat roles and responsibilities
-    │   │   └── armourer-development.html    Armourer responsibilities (pre-comp, during, safety, club)
-    │   ├── events/
-    │   │   ├── list.html     Events calendar (JS month grid + category legend sidebar)
-    │   │   └── schedule.html Season schedule (server-rendered list + filter sidebar)
-    │   ├── news/
-    │   │   ├── list.html   News index (card grid, paginates recursively across year folders)
-    │   │   └── single.html News article (2-col: article | recent-news sidebar)
-    │   └── partials/
-    │       ├── site-announcement.html  Site-wide announcement banner — controlled via [params.announcement] in hugo.toml
-    │       ├── site-header.html  Sticky nav, search overlay, language switcher, page header band
-    │       ├── event-card.html   Single event card — accepts a YAML event object as context
-    │       ├── icon.html         Inline SVG renderer — call with (dict "name" "file.svg" "w" 24 "h" 24 "class" "…")
-    │       ├── news-card.html    Single news card — call with (dict "page" . "heading" "h2" "truncate" 160)
-    │       └── section-header.html  Section label + h2 + optional "see all" link — call with (dict "label" … "title" … "linkURL" … "linkText" …)
-    └── static/
-        ├── docs/
-        │   ├── policy-manual-en.pdf / policy-manual-fr.pdf
-        │   ├── bylaws-en.pdf / bylaws-fr.pdf
-        │   ├── strategic-plan-en.pdf / strategic-plan-fr.pdf
-        │   ├── agm-minutes/    2012.pdf … YYYY.pdf (one per season start year)
-        │   └── archived/       Previous combined policy manual — stored, not linked
-        ├── images/
-        │   ├── logo-color.svg    Used on light backgrounds
-        │   ├── logo-white.svg    Used on dark/teal backgrounds (hero, etc.) and in dark mode nav
-        │   ├── clubs/            Member club logos (club-logo-{ID}.{ext})
-        │   ├── hero/             Hero carousel images (hero1.jpg … heroN.jpg)
-        │   └── svg/              Decorative icon SVGs — viewBox only, aria-hidden, rendered via icon.html partial
-        └── js/
-            ├── hero-slider.js       Homepage hero carousel (auto-advance + prev/next)
-            ├── events-calendar.js   Events calendar page (JS month grid)
-            ├── events-schedule.js   Season schedule page (season toggle + category filters)
-            └── results-table.js     Results news articles — sortable columns, hidden Place column, "Show placements" toggle
-```

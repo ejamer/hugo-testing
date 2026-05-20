@@ -3,55 +3,55 @@
 clubs:
   - id: BSE
     name: "Beaches Sabre Club East"
-    logo: "/images/clubs/club-logo-BSE.png"
+    logo: images/clubs/club-logo-BSE.png
     email: "beaches.east@gmail.com"
     website: "https://sabrebrain.com/"
     city: "Fredericton, NB"
 
   - id: CHA
     name: "Chaleur Fencing Club"
-    logo: "/images/clubs/club-logo-CHA.jpg"
+    logo: images/clubs/club-logo-CHA.jpg
     email: "chaleur.sabre@gmail.com"
     website: "https://www.facebook.com/chaleurfencing/"
     city: "Bathurst, NB"
 
   - id: DAM
     name: "Damocles Fencing Club"
-    logo: "/images/clubs/club-logo-DAM.avif"
+    logo: images/clubs/club-logo-DAM.avif
     email: "damoclesfencing@gmail.com"
     website: "https://www.damoclesfencing.ca/"
     city: "Fredericton, NB"
 
   - id: EAM
     name: "École Antonine-Maillet"
-    logo: "/images/clubs/club-logo-EAM.png"
+    logo: images/clubs/club-logo-EAM.png
     email: "guy.l.gautreau@nbed.nb.ca"
     city: "Dieppe, NB"
 
   - id: FFC
     name: "Fundy Fencing Club"
-    logo: "/images/clubs/club-logo-FFC.avif"
+    logo: images/clubs/club-logo-FFC.avif
     email: "fundyfencingclubsj@gmail.com"
     website: "http://www.fundyfencingclubsj.com"
     city: "Saint John, NB"
 
   - id: KV
     name: "Escrime KV Fencing"
-    logo: "/images/clubs/club-logo-KV.jpg"
+    logo: images/clubs/club-logo-KV.jpg
     email: "diraiche@outlook.com"
     website: "https://www.facebook.com/FundyFencingFilmFun/"
     city: "Kennebecasis Valley, NB"
 
   - id: RST
     name: "Escrime La Résistance Fencing"
-    logo: "/images/clubs/club-logo-RST.png"
+    logo: images/clubs/club-logo-RST.png
     email: "monctonfencing@gmail.com"
     website: "https://sites.google.com/view/escrimelaresistancefencing"
     city: "Moncton, NB"
 
   - id: UNB
     name: "UNB Fencing Club"
-    logo: "/images/clubs/club-logo-UNB.png"
+    logo: images/clubs/club-logo-UNB.png
     email: "fencing.unb@gmail.com"
     website: "http://unbfencing.com/"
     city: "Fredericton, NB"

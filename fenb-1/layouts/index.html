@@ -10,7 +10,7 @@
     <div class="fenb-hero-slider" id="fenb-hero-slider">
       {{ range $i, $slide := hugo.Data.hero_slides.slides }}
       <div class="fenb-hero-slide{{ if eq $i 0 }} is-active{{ end }}">
-        <img src="{{ $slide.src }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
+        <img src="{{ $slide.src | relURL }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
       </div>
       {{ end }}
       <button class="fenb-hero-slider-btn fenb-hero-slider-btn--prev" aria-label="Previous slide">
@@ -22,8 +22,8 @@
     </div>
     <p class="fenb-hero-tagline">{{ i18n "hero_tagline" }}</p>
     <div class="fenb-hero-ctas">
-      <a href="{{ "/events/" | relLangURL }}" class="fenb-btn fenb-btn-crimson">{{ i18n "cta_events" }}</a>
-      <a href="{{ "/about/"  | relLangURL }}" class="fenb-btn fenb-btn-outline">{{ i18n "cta_about" }}</a>
+      <a href="{{ "events/" | relLangURL }}" class="fenb-btn fenb-btn-crimson">{{ i18n "cta_events" }}</a>
+      <a href="{{ "about/"  | relLangURL }}" class="fenb-btn fenb-btn-outline">{{ i18n "cta_about" }}</a>
     </div>
   </div>
   <a href="#fenb-events" class="fenb-hero-scroll" aria-label="Scroll down">
@@ -34,7 +34,7 @@
 {{/* ── UPCOMING EVENTS ──────────────────────────────────── */}}
 <section class="fenb-section fenb-events-section" id="fenb-events">
   <div class="fenb-container">
-    {{ partial "section-header.html" (dict "label" (i18n "section_label_events") "title" (i18n "section_title_events") "linkURL" "/events/" "linkText" (i18n "view_all_events")) }}
+    {{ partial "section-header.html" (dict "label" (i18n "section_label_events") "title" (i18n "section_title_events") "linkURL" "events/" "linkText" (i18n "view_all_events")) }}
     <div class="fenb-events-grid">
       {{/* ISO 8601 strings are lexicographically sortable, so string "ge"/"lt" comparisons work. */}}
       {{ $today    := now.Format "2006-01-02" }}
@@ -58,7 +58,7 @@
 {{ if $news }}
 <section class="fenb-section fenb-news-section">
   <div class="fenb-container">
-    {{ partial "section-header.html" (dict "label" (i18n "section_label_news") "title" (i18n "section_title_news") "linkURL" "/news/" "linkText" (i18n "view_all_news")) }}
+    {{ partial "section-header.html" (dict "label" (i18n "section_label_news") "title" (i18n "section_title_news") "linkURL" "news/" "linkText" (i18n "view_all_news")) }}
     <div class="fenb-news-grid">
       {{ range first 3 $news }}
       {{ partial "news-card.html" (dict "page" . "heading" "h3" "truncate" 130) }}
@@ -86,6 +86,6 @@
   </div>
 </section>
 
-<script src="{{ "js/hero-slider.js" | absURL }}"></script>
+<script src="{{ "js/hero-slider.js" | absURL }}" defer></script>
 
 {{ end }}

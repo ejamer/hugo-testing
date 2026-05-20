@@ -1,0 +1,27 @@
+{{- /*
+  Returns a localized event date string computed from .date and .end_date.
+  Handles single-day, same-month range, and cross-month range in EN and FR.
+  Call with the event YAML object as context.
+*/ -}}
+{{- $startObj := time .date -}}
+{{- $endObj   := $startObj -}}
+{{- if and .end_date (ne .end_date "") -}}
+  {{- $endObj = time .end_date -}}
+{{- end -}}
+{{- $isRange   := ne ($startObj.Format "2006-01-02") ($endObj.Format "2006-01-02") -}}
+{{- $sameMonth := eq ($startObj.Format "2006-01")   ($endObj.Format "2006-01") -}}
+{{- $sMon := i18n (printf "month_%s" ($startObj.Format "Jan")) | default ($startObj.Format "Jan") -}}
+{{- $eMon := i18n (printf "month_%s" ($endObj.Format   "Jan")) | default ($endObj.Format   "Jan") -}}
+{{- $sDay := $startObj.Format "2" -}}
+{{- $eDay := $endObj.Format   "2" -}}
+{{- $year := $startObj.Format "2006" -}}
+{{- $fr   := eq site.Language.Lang "fr" -}}
+{{- $out  := "" -}}
+{{- if not $isRange -}}
+  {{- $out = cond $fr (printf "%s %s %s" $sDay $sMon $year) (printf "%s %s, %s" $sMon $sDay $year) -}}
+{{- else if $sameMonth -}}
+  {{- $out = cond $fr (printf "%s–%s %s %s" $sDay $eDay $sMon $year) (printf "%s %s–%s, %s" $sMon $sDay $eDay $year) -}}
+{{- else -}}
+  {{- $out = cond $fr (printf "%s %s – %s %s %s" $sDay $sMon $eDay $eMon $year) (printf "%s %s – %s %s, %s" $sMon $sDay $eMon $eDay $year) -}}
+{{- end -}}
+{{- return $out -}}
