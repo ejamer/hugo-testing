@@ -6,6 +6,11 @@ defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = false
 theme = 'ananke'
 
+[outputs]
+  home    = ["HTML"]
+  section = ["HTML", "RSS"]
+  page    = ["HTML"]
+
 [params]
   custom_css = [
     "fenb-base.css",

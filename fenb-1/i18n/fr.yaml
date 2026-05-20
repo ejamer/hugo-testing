@@ -442,3 +442,5 @@ programs_armourer_safety_body:        "L'armurier empêche l'utilisation d'équi
 programs_armourer_club_label:         "Niveau club"
 programs_armourer_club_title:         "Armurerie au niveau du club"
 programs_armourer_club_body:          "Au niveau du club, l'armurier entretient l'inventaire d'équipement et éduque les escrimeurs sur les soins appropriés et l'inspection du matériel."
+
+rss_feed_label: "Fil RSS des nouvelles"

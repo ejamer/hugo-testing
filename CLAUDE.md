@@ -149,6 +149,31 @@ Do **not** hardcode root-relative paths (`/clubs/` or `/fr/clubs/`) in article b
 
 For links to static assets (PDFs in `static/documents/`), a plain Markdown path is acceptable: `[Report](/documents/about/agm-minutes/2024.pdf)`. This is correct for production at `fencingnb.ca/` (no subpath). On the GitHub Pages test deployment the path will be wrong, but that is an acceptable test-environment limitation for static file links.
 
+## Verify output content, not just output existence
+
+After generating any file output (RSS feed, JSON endpoint, sitemap), inspect the actual content before declaring done:
+
+```bash
+cat public/news/index.xml        # check for <item> elements, not just file existence
+cat -A public/news/index.xml | head -3  # check for hidden leading whitespace (BOM, newlines)
+```
+
+An empty feed, a missing field, or a leading whitespace character are all silent failures that only surface when a user opens the output. A `cat` takes 2 seconds.
+
+## Hugo XML template — no whitespace before the XML declaration
+
+Hugo can emit a leading newline before `<?xml` even when `{{- ... -}}` whitespace trimming is used on preceding lines. A leading character before `<?xml` breaks XML parsers with "Start tag expected, '<' not found".
+
+Fix: emit the declaration via `printf | safeHTML` so it's in the same template action chain, with no gap:
+
+```xml
+{{- $var := .Something -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss ...>
+```
+
+See `layouts/news/rss.xml` for the established pattern.
+
 ## Sweep rule — changing a field or function used across templates
 
 Before declaring any template change complete, grep every place the old field or function is used:

@@ -102,8 +102,8 @@ See `plans/hugo-code-review.html` for the full Hugo code review report with deta
 - [x] **Move `baseURL` to environment config files** — `config/production/hugo.toml` (fencingnb.ca) and `config/development/hugo.toml` (ejamer.github.io) created; `baseURL` removed from root `hugo.toml`; `make build` and `make serve` updated to pass `--environment development` (bare `hugo` defaults to production).
 - [x] **Add explicit date sort to news sidebar** — wrapped `where` result with `sort ... "Date" "desc"` before `first 6`.
 - [x] **Add `defer` to non-deferred script tags** — added `defer` to `hero-slider.js`, `events-calendar.js`, and `events-schedule.js` (schedule was also missing it).
-- [ ] **Map `summary` to `<meta name="description">`** — news articles have a `summary` front matter field but it is not emitted as a meta description tag. Add a `<meta name="description">` in the head partial that falls back to `site.Params.description` when `summary` is absent.
-- [ ] **Add RSS output for the news section** — add `[outputs]` config to `hugo.toml` so Hugo generates `/news/index.xml` and `/fr/news/index.xml`. Add `<link rel="alternate">` in the head partial to advertise the feed.
+- [x] **Map `summary` to `<meta name="description">`** — already handled by Ananke's `baseof.html`; `summary` front matter maps to Hugo's `.Summary` which the theme emits as the meta description. No code change needed.
+- [x] **Add RSS output for the news section** — `[outputs]` added to `hugo.toml`; feeds at `/news/index.xml` and `/fr/news/index.xml`; RSS icon link added to footer alongside social icons (bilingual aria-label).
 - [ ] **Add explicit `[markup]` config block** (`hugo.toml`) — document (and control) Goldmark rendering settings; current behaviour relies on undocumented defaults.
 
 ### Low priority
