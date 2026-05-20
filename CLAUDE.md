@@ -39,7 +39,14 @@ When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/comma
 
 ## version.json
 
-`fenb-1/static/version.json` is managed automatically by `/fenb-git-release` — do not edit it manually. It is written and committed to `dev` as part of every release, and records the version tag, timestamp, author, PR URL, and commit count for the release. Served at `/version.json` on the live site.
+`fenb-1/static/version.json` is managed automatically by `/fenb-git-release` — do not edit it manually. It is written and committed to `dev` as part of every release, and served at `/version.json` on the live site.
+
+Fields:
+- **`version`** — the semver tag if this release was tagged (e.g. `"v0.1.0"`); otherwise `"<last-tag>-dev"` (e.g. `"v0.0.0-dev"` if no tags exist yet)
+- **`released_at`** — UTC timestamp of the release
+- **`released_by`** — name and anonymized email of the releaser
+- **`pr`** — URL of the release PR
+- **`commits_since_tag`** — cumulative commit count since the last semver tag (or all commits if no tags exist). For consecutive untagged releases this counter grows — it is not reset between untagged releases, only when a new tag is applied.
 
 ## Content creation — use skills, not `hugo new`
 
@@ -93,6 +100,17 @@ Also update the events calendar page subtitle in `content/events/_index.md` and 
 **Event link fields:** `details_url`, `registration_url`, and `results_url` are all optional strings. `registration_url` is only rendered when the event date ≥ today. `results_url` is rendered regardless of date and is populated automatically by `/fenb-data-get-results` Step 5.5. All three use specific CSS classes (`fenb-event-details-link`, `fenb-event-register-link`, `fenb-event-results-link`) — any new layout rendering these links must use those classes so print and dark-mode styles apply automatically.
 
 **Schedule page filter pattern:** `/events/schedule/` uses SSR + JS visibility toggling. Hugo renders every event with `data-season` and `data-category` HTML attributes; `static/js/events-schedule.js` shows/hides them in response to the season dropdown and category filter buttons. Print always reflects the current filtered state. Prefer this pattern over JS-only rendering for any future filterable list page — it gives a no-JS fallback and print support for free.
+
+## `gh` CLI — TTY and output quirks
+
+All `gh` commands that produce output (lists, JSON, status) must be wrapped with `script -q -c "..." /dev/null` to get visible output in non-TTY environments. Without the wrapper, commands silently return nothing — including `--json` flag variants, not just interactive commands.
+
+```bash
+script -q -c "gh pr list --state open" /dev/null
+script -q -c "gh pr merge 33 --merge --body ''" /dev/null
+```
+
+Use `--input` for complex `gh api` payloads that contain special characters.
 
 ## `gh pr merge` requires an explicit PR number
 
