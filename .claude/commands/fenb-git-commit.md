@@ -1,6 +1,5 @@
 ---
 description: Stage, commit, and push changes for the FencingNB Hugo site, following the project's branch strategy.
-disable-model-invocation: true
 allowed-tools: Bash(git *) AskUserQuestion
 ---
 
