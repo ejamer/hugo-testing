@@ -37,6 +37,10 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 
 When adding a new skill, name the file `fenb-{name}.md` in `.claude/commands/`.
 
+## Content creation — use skills, not `hugo new`
+
+`/fenb-new-news` and `/fenb-new-results` are the correct entry points for news articles. They enforce bilingual pair creation, correct filename format (`{mon}-{dd}-{slug}.{lang}.md`), year subfolder existence, and required front matter fields. `hugo new` with the `news` archetype works but only creates a single file — it cannot enforce the bilingual pair or the naming convention. Never use `hugo new` directly for news content.
+
 ## Development workflow
 
 See **`DEVELOPMENT.md`** for the full branch strategy and build commands.

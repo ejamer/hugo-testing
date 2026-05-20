@@ -97,6 +97,9 @@ hugo-testing/
     │   ├── join.yaml               Join section seasonal URLs (2MEV portal, club form)
     │   ├── policies.yaml           Policy documents, strategic plan, annual reports (drives /about/policies-and-reports/)
     │   └── hero_slides.yaml        Hero carousel image list (drives homepage slider)
+    ├── archetypes/
+    │   ├── default.md      Default front matter template (YAML; title auto-generated from filename)
+    │   └── news.md         News article template (adds category and summary fields)
     ├── i18n/
     │   ├── en.yaml         English UI strings
     │   └── fr.yaml         French UI strings
