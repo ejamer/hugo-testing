@@ -71,6 +71,29 @@ python3 scripts/fencingtimelive-results.py --help
 
 ## Adding content
 
+### Site-wide announcement banner
+
+A sticky red banner can be shown across all pages to alert visitors (e.g. "draft site", maintenance notices). It sticks with the nav so it never scrolls out of view.
+
+All settings live in `fenb-1/hugo.toml` under `[params.announcement]`:
+
+```toml
+[params.announcement]
+  enabled    = true          # false = banner hidden, no layout impact
+  bg_color   = "#cc0000"    # background colour (any CSS colour value)
+  text_color = "#ffffff"    # text colour
+  text_en    = "DRAFT — EXPLORING WEBSITE UPDATE OPTIONS"
+  text_fr    = "BROUILLON — EXPLORATION DES OPTIONS DE MISE À JOUR DU SITE"
+```
+
+**To hide the banner:** set `enabled = false`.  
+**To change the message:** edit `text_en` and `text_fr`.  
+**To change colours:** edit `bg_color` and `text_color`.
+
+The banner is rendered by `layouts/partials/site-announcement.html` and hidden from print output automatically.
+
+---
+
 ### New news post
 
 > **Skill available:** run `/fenb-new-news` in Claude Code — it prompts for date, slug, titles, category, and summaries, then creates both language files with correct front matter and filenames.
@@ -444,6 +467,7 @@ hugo-testing/
     │   │   ├── list.html   News index (card grid, paginates recursively across year folders)
     │   │   └── single.html News article (2-col: article | recent-news sidebar)
     │   └── partials/
+    │       ├── site-announcement.html  Site-wide announcement banner — controlled via [params.announcement] in hugo.toml
     │       ├── site-header.html  Sticky nav, search overlay, language switcher, page header band
     │       ├── event-card.html   Single event card — accepts a YAML event object as context
     │       ├── icon.html         Inline SVG renderer — call with (dict "name" "file.svg" "w" 24 "h" 24 "class" "…")

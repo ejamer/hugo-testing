@@ -122,4 +122,6 @@
 
   .fenb-schedule-item    { break-inside: avoid; }
   .fenb-schedule-month   { break-inside: avoid; }
+
+  .fenb-announcement { display: none; }
 }

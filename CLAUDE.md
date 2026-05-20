@@ -155,6 +155,10 @@ var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.event
 
 `safeJS` does **not** bypass this — it only prevents double-escaping of already-safe JS values, not the context-aware string-wrapping. Go straight to `JSON.parse()`.
 
+## TOML subtable ordering in hugo.toml
+
+`[params.subtable]` changes the active TOML context — every key that follows it (until the next `[…]` header) belongs to the subtable, not the parent. Place all flat `[params]` keys (`custom_css`, `background_color_class`, etc.) **before** any `[params.child]` subtable headers. Placing a subtable header first silently swallows subsequent flat keys into the wrong table with no build error.
+
 ## Hugo deprecated front matter and template APIs
 
 These were caught as build errors in this project:
