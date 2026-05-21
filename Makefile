@@ -7,7 +7,7 @@ HUGO ?= /snap/bin/hugo
 # --renderStaticToDisk + --disableFastRender ensures pagefind files are on disk so the
 # search UI works locally. --noHTTPCache prevents stale assets during development.
 serve:
-	cd fenb-1 && $(HUGO) --environment development && npx pagefind --site public && $(HUGO) server --renderStaticToDisk --disableFastRender --noHTTPCache --watch
+	cd fenb-1 && $(HUGO) --environment development && npx pagefind --site public --root-selector "main" && $(HUGO) server --renderStaticToDisk --disableFastRender --noHTTPCache --watch
 
 # Quick local build (no minification, no pagefind). Useful for checking output.
 build: clean
@@ -16,7 +16,7 @@ build: clean
 # Production build: minifies output and generates the pagefind search index.
 # Used by /fenb-release before opening a dev→main PR.
 build-prod: clean
-	cd fenb-1 && $(HUGO) --environment production --minify && npx pagefind --site public
+	cd fenb-1 && $(HUGO) --environment production --minify && npx pagefind --site public --root-selector "main"
 
 # Remove Hugo's output and cache directories so the next build starts clean.
 clean:

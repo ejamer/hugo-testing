@@ -107,7 +107,6 @@
   line-height: 1.75;
   margin: 0.75rem 0 3rem;
 }
-
 /* ── Contact / CTA banner ─────────────────────────── */
 .fenb-program-contact-cta {
   background: var(--teal);
@@ -164,6 +163,57 @@
   line-height: 1.55;
   padding-left: 0.25rem;
 }
+
+.fenb-program-body {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 680px;
+  margin: 0 0 2rem;
+}
+
+.fenb-program-pathway {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.75rem 0 2rem;
+}
+
+.fenb-program-pathway-step {
+  background: var(--teal-pale);
+  border: 1.5px solid var(--teal);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+.fenb-program-pathway-step--elite {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--teal);
+}
+
+.fenb-program-pathway-arrow {
+  color: var(--teal);
+  font-size: 1.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .fenb-program-pathway-step {
+  background: transparent;
+  border-color: var(--teal-light);
+  color: var(--teal-light);
+}
+[data-theme="dark"] .fenb-program-pathway-step--elite {
+  background: var(--teal-light);
+  color: var(--text-dark);
+  border-color: var(--teal-light);
+}
+[data-theme="dark"] .fenb-program-pathway-arrow { color: var(--teal-light); }
 
 .fenb-program-resource-links {
   list-style: none;

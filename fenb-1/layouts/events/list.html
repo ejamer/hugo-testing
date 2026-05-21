@@ -60,9 +60,23 @@
 <script>
 window.FENB_CAL = {
   events: {{ hugo.Data.events.events | jsonify | safeJS }},
-  months: ["{{ i18n "cal_month_jan" }}","{{ i18n "cal_month_feb" }}","{{ i18n "cal_month_mar" }}","{{ i18n "cal_month_apr" }}","{{ i18n "cal_month_may" }}","{{ i18n "cal_month_jun" }}","{{ i18n "cal_month_jul" }}","{{ i18n "cal_month_aug" }}","{{ i18n "cal_month_sep" }}","{{ i18n "cal_month_oct" }}","{{ i18n "cal_month_nov" }}","{{ i18n "cal_month_dec" }}"],
-  monthsShort: ["{{ i18n "month_Jan" }}","{{ i18n "month_Feb" }}","{{ i18n "month_Mar" }}","{{ i18n "month_Apr" }}","{{ i18n "month_May" }}","{{ i18n "month_Jun" }}","{{ i18n "month_Jul" }}","{{ i18n "month_Aug" }}","{{ i18n "month_Sep" }}","{{ i18n "month_Oct" }}","{{ i18n "month_Nov" }}","{{ i18n "month_Dec" }}"],
-  weekdays: ["{{ i18n "cal_wd_sun" }}","{{ i18n "cal_wd_mon" }}","{{ i18n "cal_wd_tue" }}","{{ i18n "cal_wd_wed" }}","{{ i18n "cal_wd_thu" }}","{{ i18n "cal_wd_fri" }}","{{ i18n "cal_wd_sat" }}"],
+  months: [
+    "{{ i18n "cal_month_jan" }}", "{{ i18n "cal_month_feb" }}", "{{ i18n "cal_month_mar" }}",
+    "{{ i18n "cal_month_apr" }}", "{{ i18n "cal_month_may" }}", "{{ i18n "cal_month_jun" }}",
+    "{{ i18n "cal_month_jul" }}", "{{ i18n "cal_month_aug" }}", "{{ i18n "cal_month_sep" }}",
+    "{{ i18n "cal_month_oct" }}", "{{ i18n "cal_month_nov" }}", "{{ i18n "cal_month_dec" }}"
+  ],
+  monthsShort: [
+    "{{ i18n "month_Jan" }}", "{{ i18n "month_Feb" }}", "{{ i18n "month_Mar" }}",
+    "{{ i18n "month_Apr" }}", "{{ i18n "month_May" }}", "{{ i18n "month_Jun" }}",
+    "{{ i18n "month_Jul" }}", "{{ i18n "month_Aug" }}", "{{ i18n "month_Sep" }}",
+    "{{ i18n "month_Oct" }}", "{{ i18n "month_Nov" }}", "{{ i18n "month_Dec" }}"
+  ],
+  weekdays: [
+    "{{ i18n "cal_wd_sun" }}", "{{ i18n "cal_wd_mon" }}", "{{ i18n "cal_wd_tue" }}",
+    "{{ i18n "cal_wd_wed" }}", "{{ i18n "cal_wd_thu" }}", "{{ i18n "cal_wd_fri" }}",
+    "{{ i18n "cal_wd_sat" }}"
+  ],
   noEvents: "{{ i18n "events_cal_no_events" }}",
   detailsLabel: "{{ i18n "event_details" }}",
   registerLabel: "{{ i18n "event_register" }}",
