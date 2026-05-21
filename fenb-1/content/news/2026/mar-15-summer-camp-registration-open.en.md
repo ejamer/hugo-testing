@@ -23,4 +23,4 @@ The camp features two full days of technical coaching, conditioning, and team bo
 
 Registration is through Sport NB's online portal. Spaces are limited to 24 athletes. Early registration is strongly encouraged.
 
-Questions? Contact us at [programs@fencingnb.ca](mailto:programs@fencingnb.ca).
+Questions? Contact us at [programs@fenb.ca](mailto:programs@fenb.ca).

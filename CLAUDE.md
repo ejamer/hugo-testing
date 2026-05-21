@@ -173,7 +173,7 @@ Visit our [club directory]({{< relref "clubs/" >}}) for details.
 
 Do **not** hardcode root-relative paths (`/clubs/` or `/fr/clubs/`) in article body text — they skip the base URL and silently break on subpath deployments.
 
-For links to static assets (PDFs in `static/documents/`), a plain Markdown path is acceptable: `[Report](/documents/about/agm-minutes/2024.pdf)`. This is correct for production at `fencingnb.ca/` (no subpath). On the GitHub Pages test deployment the path will be wrong, but that is an acceptable test-environment limitation for static file links.
+For links to static assets (PDFs in `static/documents/`), a plain Markdown path is acceptable: `[Report](/documents/about/agm-minutes/2024.pdf)`. This is correct for production at `fenb.ca/` (no subpath). On the GitHub Pages test deployment the path will be wrong, but that is an acceptable test-environment limitation for static file links.
 
 ## Verify output content, not just output existence
 
