@@ -34,6 +34,10 @@ All seven pages need a full review pass for both style and content quality befor
 - [ ] **`/programs/secretariat-development/`** 
 - [ ] **HONOURS & AWARDS** — the old site's programs page listed "FENB Honours & Awards" as a 7th program area; not yet built here. Add as a sub-page if/when content is ready.
 
+## Release workflow
+
+- [ ] **GitHub Releases** — consider adding a `gh release create --generate-notes` step to `/fenb-git-release` after the tag push. Low effort; auto-generates notes from PR/commit titles. Revisit when the project has stakeholders who want a changelog on GitHub.
+
 ## Project skills
 
 Test each project skill end-to-end at least once to verify it works correctly.
