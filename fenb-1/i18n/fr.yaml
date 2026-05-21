@@ -54,7 +54,9 @@ event_details:   "En savoir plus"
 event_register:  "S'inscrire"
 event_results:   "Voir les résultats"
 
-# ── Abréviations des mois (pour l'affichage localisé des dates des événements) ─
+# ── Abréviations des mois — utilisées dans event-card.html (rendu serveur) et
+#    comme FENB_CAL.monthsShort dans le JS du calendrier (badges de date, plages).
+#    Distinctes des cal_month_* ci-dessous, qui sont les noms complets pour le menu.
 month_Jan: "janv."
 month_Feb: "févr."
 month_Mar: "mars"
@@ -95,6 +97,8 @@ events_cal_month_label: "Mois"
 events_cal_year_label:  "Année"
 events_cal_grid_label:  "Calendrier mensuel"
 cal_legend_title:       "Types d'événements"
+# ── Noms complets des mois — utilisés comme FENB_CAL.months dans le JS du
+#    calendrier (menu déroulant et en-tête). Les abréviations sont month_* ci-dessus.
 cal_month_jan: "Janvier"
 cal_month_feb: "Février"
 cal_month_mar: "Mars"
@@ -287,17 +291,14 @@ programs_athlete_factor_7:            "Périodisation"
 programs_athlete_factor_8:            "Planification des compétitions"
 programs_athlete_factor_9:            "Alignement et intégration du système"
 programs_athlete_factor_10:           "Amélioration continue"
-programs_athlete_cff_label:           "Développement propre à l'escrime"
-programs_athlete_cff_title:           "Programme de brassards d'instruction"
-programs_athlete_cff_body:            "La Fédération canadienne d'escrime a créé un parcours de développement sportif basé sur les principes du DALS. Le programme de brassards d'instruction fournit des repères structurés sur les aspects techniques, tactiques, réglementaires et arbitraux du sport."
-programs_athlete_cff_links_label:     "Ressources"
-programs_athlete_cff_links_title:     "Documents du programme de brassards"
-programs_athlete_cff_general:         "Informations générales et critères d'évaluation"
-programs_athlete_cff_epee:            "Annexe épée"
-programs_athlete_cff_foil:            "Annexe fleuret"
-programs_athlete_cff_sabre:           "Annexe sabre"
-programs_athlete_cff_note:            "Les liens vers les documents du programme de brassards de la FCE seront ajoutés ici. Communiquez avec la FENB pour obtenir les versions actuelles."
-
+programs_athlete_pathway_label:       "Filières de développement"
+programs_athlete_pathway_title:       "Un sport pour tous les niveaux"
+programs_athlete_pathway_intro:       "L'escrime au Nouveau-Brunswick est ouverte à tous — des personnes qui souhaitent rester actives et découvrir un nouveau sport, aux athlètes qui aspirent à représenter le Canada sur la scène nationale et internationale. Le sport offre une filière de développement claire avec des possibilités à chaque niveau."
+programs_athlete_pathway_step_1:      "Récréatif"
+programs_athlete_pathway_step_2:      "Compétitif"
+programs_athlete_pathway_step_3:      "Équipe provinciale"
+programs_athlete_pathway_step_4:      "Équipe de haute performance"
+programs_athlete_pathway_body:        "Deux de nos programmes phares du DLTA sont les filières de développement de l'équipe provinciale et de l'équipe de haute performance. Les jeunes athlètes invités à joindre ces programmes avancés bénéficient d'occasions supplémentaires de s'entraîner et de compétitionner, et agissent comme ambassadeurs de notre province lors des compétitions nationales et internationales."
 # ── Programmes — Formation des entraîneurs ─────────
 programs_coach_label:                 "Volets d'entraînement"
 programs_coach_intro:                 "Les entraîneurs sont essentiels au développement des athlètes. La FENB appuie trois volets d'entraînement alignés sur le cadre de la Fédération canadienne d'escrime."

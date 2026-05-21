@@ -190,6 +190,9 @@
 .fenb-clubs-map-section {
   background: var(--white);
 }
+.fenb-clubs-map-section .fenb-section-header {
+  margin-bottom: 2rem;
+}
 
 .fenb-clubs-map-wrap {
   border-radius: var(--radius);

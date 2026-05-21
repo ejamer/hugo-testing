@@ -76,6 +76,18 @@
   padding: 3.5rem 1.5rem 5rem;
 }
 
+.fenb-section-label--top {
+  margin-top: 2.5rem;
+}
+
+.fenb-join-page .fenb-clubs-benefits {
+  margin-bottom: 3rem;
+}
+
+.fenb-join-apply-cta .fenb-section-label {
+  color: rgba(255,255,255,0.65);
+}
+
 .fenb-join-back {
   margin-bottom: 2.25rem;
 }
@@ -112,7 +124,7 @@
   min-width: 240px;
 }
 .fenb-join-register-cta-body p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: rgba(255,255,255,0.78);
   margin: 0;
   line-height: 1.65;
@@ -176,7 +188,7 @@
   margin: 0 0 0.5rem;
 }
 .fenb-join-type-card p {
-  font-size: 0.865rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
   margin: 0;
   line-height: 1.65;
@@ -217,7 +229,7 @@
   margin: 0.15rem 0 0.3rem;
 }
 .fenb-join-step-body p {
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
   margin: 0;
   line-height: 1.65;

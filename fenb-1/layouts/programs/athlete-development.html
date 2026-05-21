@@ -29,41 +29,22 @@
       <li>{{ i18n "programs_athlete_factor_10" }}</li>
     </ol>
 
-    {{/* ── Armband Program ── */}}
-    <p class="fenb-section-label">{{ i18n "programs_athlete_cff_label" }}</p>
-    <h2 class="fenb-section-title">{{ i18n "programs_athlete_cff_title" }}</h2>
-    <p class="fenb-program-intro" style="margin-bottom: 1.75rem;">{{ i18n "programs_athlete_cff_body" }}</p>
+    {{/* ── Development Pathways ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_athlete_pathway_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_athlete_pathway_title" }}</h2>
+    <p class="fenb-program-intro">{{ i18n "programs_athlete_pathway_intro" }}</p>
 
-    <p class="fenb-section-label">{{ i18n "programs_athlete_cff_links_label" }}</p>
-    <h3 class="fenb-section-title" style="font-size: 1rem; margin-bottom: 0.5rem;">{{ i18n "programs_athlete_cff_links_title" }}</h3>
-    <ul class="fenb-program-resource-links">
-      <li>
-        <a href="#" aria-label="{{ i18n "programs_athlete_cff_general" }}">
-          {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
-          {{ i18n "programs_athlete_cff_general" }}
-        </a>
-      </li>
-      <li>
-        <a href="#" aria-label="{{ i18n "programs_athlete_cff_epee" }}">
-          {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
-          {{ i18n "programs_athlete_cff_epee" }}
-        </a>
-      </li>
-      <li>
-        <a href="#" aria-label="{{ i18n "programs_athlete_cff_foil" }}">
-          {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
-          {{ i18n "programs_athlete_cff_foil" }}
-        </a>
-      </li>
-      <li>
-        <a href="#" aria-label="{{ i18n "programs_athlete_cff_sabre" }}">
-          {{ partial "icon.html" (dict "name" "document.svg" "w" 14 "h" 14) }}
-          {{ i18n "programs_athlete_cff_sabre" }}
-        </a>
-      </li>
-    </ul>
+    <div class="fenb-program-pathway">
+      <div class="fenb-program-pathway-step">{{ i18n "programs_athlete_pathway_step_1" }}</div>
+      <div class="fenb-program-pathway-arrow" aria-hidden="true">›</div>
+      <div class="fenb-program-pathway-step">{{ i18n "programs_athlete_pathway_step_2" }}</div>
+      <div class="fenb-program-pathway-arrow" aria-hidden="true">›</div>
+      <div class="fenb-program-pathway-step">{{ i18n "programs_athlete_pathway_step_3" }}</div>
+      <div class="fenb-program-pathway-arrow" aria-hidden="true">›</div>
+      <div class="fenb-program-pathway-step fenb-program-pathway-step--elite">{{ i18n "programs_athlete_pathway_step_4" }}</div>
+    </div>
 
-    <div class="fenb-program-note">{{ i18n "programs_athlete_cff_note" }}</div>
+    <p class="fenb-program-body">{{ i18n "programs_athlete_pathway_body" }}</p>
 
   </div>
 </section>
