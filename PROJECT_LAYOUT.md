@@ -18,7 +18,7 @@ hugo-testing/
     ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)
     ├── config/
     │   ├── development/hugo.toml   baseURL for local dev (ejamer.github.io/hugo-testing)
-    │   └── production/hugo.toml    baseURL for production (fencingnb.ca)
+    │   └── production/hugo.toml    baseURL for production (fenb.ca)
     ├── assets/
     │   └── ananke/css/
     │       ├── fenb-base.css       Variables, reset, shared utilities, buttons

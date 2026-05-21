@@ -1,6 +1,6 @@
 # baseURL is set per environment:
 #   config/development/hugo.toml → https://ejamer.github.io/hugo-testing/
-#   config/production/hugo.toml  → https://fencingnb.ca/
+#   config/production/hugo.toml  → https://fenb.ca/
 
 defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = false
