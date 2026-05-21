@@ -87,7 +87,7 @@
 }
 
 .fenb-club-card {
-  background: var(--white);
+  background: var(--teal-pale);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--light-gray);
@@ -102,7 +102,7 @@
 }
 
 .fenb-club-logo-wrap {
-  background: var(--white);
+  background: var(--logo-bg);
   display: flex;
   align-items: center;
   justify-content: center;
