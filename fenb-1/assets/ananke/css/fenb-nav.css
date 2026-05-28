@@ -89,6 +89,15 @@
   transform: rotate(-180deg);
 }
 
+.fenb-nav-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
 .fenb-nav-dropdown {
   display: none;
   position: absolute;
