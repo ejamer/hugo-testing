@@ -7,15 +7,15 @@
     <p class="fenb-section-label">{{ i18n "join_landing_label" }}</p>
     <p class="fenb-join-intro">{{ i18n "join_landing_intro" }}</p>
 
-    <div class="fenb-join-paths">
+    <div class="fenb-landing-cards">
       {{ range hugo.Data.join_paths.join_paths }}
-      <a href="{{ .url | relLangURL }}" class="fenb-join-path-card">
-        <div class="fenb-join-path-icon">
+      <a href="{{ .url | relLangURL }}" class="fenb-landing-card">
+        <div class="fenb-landing-card-icon">
           {{ partial "icon.html" (dict "name" .icon "w" 40 "h" 40) }}
         </div>
         <h2>{{ i18n (printf "join_path_%s_title" .id) }}</h2>
         <p>{{ i18n (printf "join_path_%s_desc" .id) }}</p>
-        <span class="fenb-join-path-cta">{{ i18n (printf "join_path_%s_cta" .id) }} &rarr;</span>
+        <span class="fenb-landing-card-cta">{{ i18n (printf "join_path_%s_cta" .id) }} &rarr;</span>
       </a>
       {{ end }}
     </div>

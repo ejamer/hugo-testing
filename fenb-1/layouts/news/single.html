@@ -23,9 +23,7 @@
         {{ if eq .Params.category "results" }}
         <script src="{{ "js/results-table.js" | absURL }}" defer></script>
         {{ end }}
-        <nav class="fenb-article-back">
-          <a href="{{ "news/" | relLangURL }}">&larr; {{ i18n "back_to_news" }}</a>
-        </nav>
+        {{ partial "back-link.html" (dict "url" "news/" "key" "back_to_news") }}
       </div>
 
       <aside class="fenb-article-sidebar fenb-article-sidebar--right">

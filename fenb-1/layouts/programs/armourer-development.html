@@ -5,9 +5,7 @@
 <section class="fenb-program-page">
   <div class="fenb-container fenb-container--narrow">
 
-    <div class="fenb-program-back">
-      <a href="{{ "programs/" | relLangURL }}">&larr; {{ i18n "programs_back" }}</a>
-    </div>
+    {{ partial "back-link.html" (dict "url" "programs/" "key" "programs_back") }}
 
     {{/* ── Overview ── */}}
     <p class="fenb-section-label">{{ i18n "programs_armourer_label" }}</p>

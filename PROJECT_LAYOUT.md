@@ -21,7 +21,7 @@ hugo-testing/
     │   └── production/hugo.toml    baseURL for production (fenb.ca)
     ├── assets/
     │   └── ananke/css/
-    │       ├── fenb-base.css       Variables, reset, shared utilities, buttons
+    │       ├── fenb-base.css       Variables, reset, shared utilities, buttons, back-link, callout, cta-banner, landing-cards
     │       ├── fenb-nav.css        Nav, search overlay, page header band
     │       ├── fenb-hero.css       Hero section and animations
     │       ├── fenb-events.css     Event cards, tags, calendar page
@@ -139,6 +139,8 @@ hugo-testing/
     │       ├── site-header.html  Entry point called by Ananke — delegates to nav.html and page-header.html
     │       ├── nav.html          Sticky nav, search overlay, language switcher, hamburger, theme toggle
     │       ├── page-header.html  Coloured band below the nav (title + optional subtitle; absent on homepage)
+    │       ├── back-link.html    Shared back-navigation link — call with (dict "url" "section/" "key" "i18n_key")
+    │       ├── clubs-benefits.html  Three-card club benefits grid (shared between clubs/list and join/clubs)
     │       ├── event-card.html   Single event card — accepts a YAML event object as context
     │       ├── icon.html         Inline SVG renderer — call with (dict "name" "file.svg" "w" 24 "h" 24 "class" "…")
     │       ├── news-card.html    Single news card — call with (dict "page" . "heading" "h2" "truncate" 160)

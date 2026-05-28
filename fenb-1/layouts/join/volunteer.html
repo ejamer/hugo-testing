@@ -5,9 +5,7 @@
 <section class="fenb-join-page">
   <div class="fenb-container fenb-container--narrow">
 
-    <div class="fenb-join-back">
-      <a href="{{ "join/" | relLangURL }}">&larr; {{ i18n "join_back" }}</a>
-    </div>
+    {{ partial "back-link.html" (dict "url" "join/" "key" "join_back") }}
 
     <p class="fenb-section-label">{{ i18n "join_volunteer_label" }}</p>
     <p class="fenb-join-page-intro">{{ i18n "join_volunteer_intro" }}</p>
@@ -49,12 +47,15 @@
     </div>
 
     {{/* ── Apply CTA ── */}}
-    <div class="fenb-join-apply-cta">
-      <div class="fenb-join-apply-cta-body">
-        <p class="fenb-section-label">{{ i18n "join_volunteer_apply_label" }}</p>
+    <div class="fenb-cta-banner">
+      <div class="fenb-cta-banner-body">
+        <p class="fenb-section-label">{{ i18n "join_volunteer_label" }}</p>
+        <h3 class="fenb-cta-banner-heading">{{ i18n "join_volunteer_apply_label" }}</h3>
         <p>{{ i18n "join_volunteer_apply_body" }}</p>
       </div>
-      <a href="mailto:fencingnb@gmail.com" class="fenb-btn-white">{{ i18n "join_volunteer_apply_btn" }}</a>
+      <div class="fenb-cta-banner-action">
+        <a href="mailto:fencingnb@gmail.com" class="fenb-btn fenb-btn-white">{{ i18n "join_volunteer_apply_btn" }}</a>
+      </div>
     </div>
 
   </div>

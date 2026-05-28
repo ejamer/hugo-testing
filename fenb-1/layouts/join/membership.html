@@ -5,23 +5,20 @@
 <section class="fenb-join-page">
   <div class="fenb-container fenb-container--narrow">
 
-    <div class="fenb-join-back">
-      <a href="{{ "join/" | relLangURL }}">&larr; {{ i18n "join_back" }}</a>
-    </div>
+    {{ partial "back-link.html" (dict "url" "join/" "key" "join_back") }}
 
-    {{/* ── Intro + registration CTA ── */}}
-    <p class="fenb-section-label">{{ i18n "join_membership_label" }}</p>
-
-    <div class="fenb-join-register-cta">
-      <div class="fenb-join-register-cta-body">
+    <div class="fenb-cta-banner">
+      <div class="fenb-cta-banner-body">
+        <p class="fenb-section-label">{{ i18n "join_membership_label" }}</p>
+        <h3 class="fenb-cta-banner-heading">{{ i18n "join_membership_cta_title" }}</h3>
         <p>{{ i18n "join_membership_intro" }}</p>
       </div>
-      <div class="fenb-join-register-cta-action">
-        <a href="{{ hugo.Data.join.membership_url }}" class="fenb-btn-white" target="_blank" rel="noopener noreferrer">
+      <div class="fenb-cta-banner-action">
+        <a href="{{ hugo.Data.join.membership_url }}" class="fenb-btn fenb-btn-white" target="_blank" rel="noopener noreferrer">
           {{ i18n "join_membership_cta_label" }}
           {{ partial "icon.html" (dict "name" "external-link.svg" "w" 14 "h" 14) }}
         </a>
-        <p class="fenb-join-register-note">{{ i18n "join_membership_cta_note" }}</p>
+        <p class="fenb-cta-banner-note">{{ i18n "join_membership_cta_note" }}</p>
       </div>
     </div>
 
@@ -70,7 +67,7 @@
       </div>
     </div>
 
-    <div class="fenb-join-note">{{ i18n "join_membership_note" }}</div>
+    <div class="fenb-callout">{{ i18n "join_membership_note" }}</div>
 
   </div>
 </section>

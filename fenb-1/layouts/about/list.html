@@ -29,17 +29,12 @@
         <div class="fenb-about-mission-block">
           <span class="fenb-section-label">{{ i18n "about_mission_label" }}</span>
           <h3 class="fenb-section-title">{{ i18n "about_mission_title" }}</h3>
-          <blockquote class="fenb-about-mission-quote">{{ i18n "about_mission_quote" }}</blockquote>
+          <blockquote class="fenb-callout fenb-callout--quote">{{ i18n "about_mission_quote" }}</blockquote>
         </div>
+        <p class="fenb-about-governance-note">{{ i18n "about_governance_note" }} <a href="{{ "about/policies-and-reports/" | relLangURL }}">{{ i18n "about_governance_title" }}</a>.</p>
       </div>
 
       <div class="fenb-about-sidebar">
-        <div class="fenb-about-sidebar-card fenb-about-sidebar-card--governance">
-          <h3>{{ i18n "about_governance_label" }}</h3>
-          <a href="{{ "about/policies-and-reports/" | relLangURL }}" class="fenb-sidebar-gov-link">
-            {{ i18n "about_governance_title" }} &rarr;
-          </a>
-        </div>
         <div class="fenb-about-sidebar-card">
           <h3>{{ i18n "about_affiliations_title" }}</h3>
           <ul>
@@ -81,9 +76,21 @@
   <div class="fenb-container fenb-container--tight">
     <span class="fenb-section-label">{{ i18n "about_contact_label" }}</span>
     <h2 class="fenb-section-title">{{ i18n "about_contact_title" }}</h2>
-    <div class="fenb-contact-card">
-      <a href="mailto:{{ hugo.Data.board_members.contact }}">{{ hugo.Data.board_members.contact }}</a>
-    </div>
+    <form class="fenb-contact-form" action="mailto:{{ hugo.Data.board_members.contact }}" method="POST" enctype="text/plain">
+      <div class="fenb-contact-form-row">
+        <label for="contact-name">{{ i18n "about_contact_name" }}</label>
+        <input type="text" id="contact-name" name="{{ i18n "about_contact_name" }}" required>
+      </div>
+      <div class="fenb-contact-form-row">
+        <label for="contact-email">{{ i18n "about_contact_email" }}</label>
+        <input type="email" id="contact-email" name="{{ i18n "about_contact_email" }}" required>
+      </div>
+      <div class="fenb-contact-form-row">
+        <label for="contact-message">{{ i18n "about_contact_message" }}</label>
+        <textarea id="contact-message" name="{{ i18n "about_contact_message" }}" rows="5" required></textarea>
+      </div>
+      <button type="submit" class="fenb-contact-form-submit">{{ i18n "about_contact_submit" }}</button>
+    </form>
   </div>
 </section>
 

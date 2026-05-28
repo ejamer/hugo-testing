@@ -184,15 +184,7 @@
 .fenb-article-divider--registration  { background: linear-gradient(90deg, var(--cat-training), #3d9a6b); }
 .fenb-article-divider--community     { background: linear-gradient(90deg, var(--cat-national), #2a5a8c); }
 
-.fenb-article-back { margin-top: 2.5rem; }
-
-.fenb-article-back a {
-  color: var(--teal);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-.fenb-article-back a:hover { color: var(--crimson); }
+/* fenb-article-back replaced by shared .fenb-back-link */
 
 .fenb-article-meta {
   display: flex;
@@ -243,8 +235,9 @@
 /* ── News article sidebar ──────────────────────── */
 .fenb-sidebar-block {
   background: var(--off-white);
+  border: 1px solid var(--light-gray);
   border-radius: var(--radius-sm);
-  padding: 1.25rem 1.5rem;
+  padding: 1.5rem;
   position: sticky;
   top: 5rem;
 }
@@ -254,8 +247,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
-  margin: 0 0 1rem;
+  color: var(--teal);
+  margin: 0 0 0.75rem;
 }
 
 .fenb-sidebar-news-list {
@@ -380,9 +373,9 @@
 
 [data-theme="dark"] .fenb-404-code { color: var(--text-dark); }
 
+[data-theme="dark"] .fenb-sidebar-heading { color: var(--teal-light); }
 [data-theme="dark"] .fenb-sidebar-events-link,
 [data-theme="dark"] .fenb-sidebar-news-item.is-current a,
 [data-theme="dark"] .fenb-sidebar-news-item a:hover { color: var(--teal-light); }
 [data-theme="dark"] .fenb-article-body a { color: var(--teal-light); }
-[data-theme="dark"] .fenb-article-back a { color: var(--teal-light); }
 [data-theme="dark"] .fenb-read-more { color: var(--teal-light); }
