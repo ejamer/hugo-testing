@@ -32,17 +32,11 @@
   margin: 0 0 1.25rem;
 }
 
-.fenb-about-mission-quote {
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
-  font-style: italic;
-  color: var(--teal-dark);
-  background: var(--teal-pale);
-  border-left: 4px solid var(--teal);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 1rem 1.5rem;
-  margin: 2rem 0 0;
-  line-height: 1.7;
-}
+.fenb-about-governance-note a { color: var(--teal); font-weight: 600; text-decoration: none; }
+.fenb-about-governance-note a:hover { text-decoration: underline; }
+[data-theme="dark"] .fenb-about-governance-note a { color: var(--teal-light); }
+
+/* fenb-about-mission-quote replaced by shared .fenb-callout.fenb-callout--quote */
 
 .fenb-about-sidebar {
   display: flex;
@@ -203,25 +197,6 @@
   background: linear-gradient(135deg, var(--teal-dark), var(--teal-light));
 }
 
-/* ── Governance sidebar card ─────────────────────── */
-.fenb-about-sidebar-card--governance {
-  background: var(--teal-pale);
-  border-color: var(--teal);
-}
-
-.fenb-about-sidebar-card--governance h3 { color: var(--teal-dark); }
-
-.fenb-sidebar-gov-link {
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--teal-dark);
-  text-decoration: none;
-  margin-top: 0.25rem;
-}
-
-.fenb-sidebar-gov-link:hover { text-decoration: underline; }
-
 /* ── Contact ─────────────────────────────────────── */
 .fenb-about-contact-section {
   background: var(--off-white);
@@ -250,6 +225,72 @@
 
 .fenb-contact-card a:hover { color: var(--teal); }
 
+.fenb-contact-form {
+  max-width: 480px;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.fenb-contact-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.fenb-contact-form-row label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.fenb-contact-form-row input,
+.fenb-contact-form-row textarea {
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-dark);
+  background: var(--white);
+  border: 1.5px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.85rem;
+  transition: border-color var(--transition);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fenb-contact-form-row input:focus,
+.fenb-contact-form-row textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+}
+
+.fenb-contact-form-row textarea {
+  resize: vertical;
+}
+
+.fenb-contact-form-submit {
+  align-self: flex-start;
+  background: var(--teal);
+  color: var(--white);
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.5rem;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.fenb-contact-form-submit:hover { background: var(--teal-dark); }
+
+[data-theme="dark"] .fenb-contact-form-row input,
+[data-theme="dark"] .fenb-contact-form-row textarea {
+  background: var(--surface-dark, #1e2a2a);
+  border-color: var(--border-dark, #3a4a4a);
+  color: var(--text-light, #e8e8e8);
+}
+
 /* ═══════════════════════════════════════════════════
    Policies & Reports page
    ═══════════════════════════════════════════════════ */
@@ -260,7 +301,7 @@
 
 .fenb-policy-layout {
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 1fr 200px;
   gap: 3rem;
   align-items: start;
 }
@@ -359,17 +400,10 @@
 [data-theme="dark"] .fenb-board-card-role--teal { color: var(--text-muted); }
 
 /* ── Dark mode contrast fixes ────────────────────── */
-[data-theme="dark"] .fenb-about-mission-quote {
-  color: var(--text-dark);
-}
-
 [data-theme="dark"] .fenb-about-sidebar-card h3,
 [data-theme="dark"] .fenb-about-sidebar-card li::before,
 [data-theme="dark"] .fenb-about-sidebar-card a {
   color: var(--teal-light);
 }
 
-[data-theme="dark"] .fenb-about-sidebar-card--governance h3,
-[data-theme="dark"] .fenb-sidebar-gov-link {
-  color: var(--teal-light);
-}
+

@@ -4,24 +4,9 @@
 
 <section class="fenb-policy-section">
   <div class="fenb-container fenb-container--narrow">
-    <div class="fenb-policy-layout">
+    {{ partial "back-link.html" (dict "url" "about/" "key" "policies_back_about") }}
 
-      {{/* ── Sidebar ───────────────────────────────────── */}}
-      <aside class="fenb-about-sidebar">
-        <div class="fenb-about-sidebar-card fenb-about-sidebar-card--governance">
-          <a href="{{ "about/" | relLangURL }}" class="fenb-sidebar-gov-link">
-            &larr; {{ i18n "policies_back_about" }}
-          </a>
-        </div>
-        <div class="fenb-about-sidebar-card">
-          <h3>{{ i18n "policies_toc_title" }}</h3>
-          <ul class="fenb-policy-toc">
-            <li><a href="#board-governance">{{ i18n "policies_gov_title" }}</a></li>
-            <li><a href="#official-policies">{{ i18n "policies_docs_title" }}</a></li>
-            <li><a href="#annual-reports">{{ i18n "policies_reports_title" }}</a></li>
-          </ul>
-        </div>
-      </aside>
+    <div class="fenb-policy-layout">
 
       {{/* ── Main content ──────────────────────────────── */}}
       <div>
@@ -83,6 +68,19 @@
         </div>
 
       </div>
+
+      {{/* ── Sidebar ───────────────────────────────────── */}}
+      <aside class="fenb-about-sidebar">
+        <div class="fenb-about-sidebar-card">
+          <h3>{{ i18n "policies_toc_title" }}</h3>
+          <ul class="fenb-policy-toc">
+            <li><a href="#board-governance">{{ i18n "policies_gov_title" }}</a></li>
+            <li><a href="#official-policies">{{ i18n "policies_docs_title" }}</a></li>
+            <li><a href="#annual-reports">{{ i18n "policies_reports_title" }}</a></li>
+          </ul>
+        </div>
+      </aside>
+
     </div>
   </div>
 </section>

@@ -79,29 +79,7 @@
       <h2 class="fenb-section-title">{{ i18n "clubs_cta_title" }}</h2>
       <p class="fenb-clubs-cta-intro">{{ i18n "clubs_cta_intro" }}</p>
     </div>
-    <div class="fenb-clubs-benefits">
-      <div class="fenb-clubs-benefit">
-        <div class="fenb-clubs-benefit-icon">
-          {{ partial "icon.html" (dict "name" "box.svg" "w" 28 "h" 28) }}
-        </div>
-        <h3>{{ i18n "clubs_benefit_1_title" }}</h3>
-        <p>{{ i18n "clubs_benefit_1_desc" }}</p>
-      </div>
-      <div class="fenb-clubs-benefit">
-        <div class="fenb-clubs-benefit-icon">
-          {{ partial "icon.html" (dict "name" "star.svg" "w" 28 "h" 28) }}
-        </div>
-        <h3>{{ i18n "clubs_benefit_2_title" }}</h3>
-        <p>{{ i18n "clubs_benefit_2_desc" }}</p>
-      </div>
-      <div class="fenb-clubs-benefit">
-        <div class="fenb-clubs-benefit-icon">
-          {{ partial "icon.html" (dict "name" "calendar.svg" "w" 28 "h" 28) }}
-        </div>
-        <h3>{{ i18n "clubs_benefit_3_title" }}</h3>
-        <p>{{ i18n "clubs_benefit_3_desc" }}</p>
-      </div>
-    </div>
+    {{ partial "clubs-benefits.html" . }}
     <div class="fenb-clubs-cta-action">
       <a href="{{ "join/clubs/" | relLangURL }}" class="fenb-btn fenb-btn-crimson">{{ i18n "clubs_cta_btn" }}</a>
     </div>

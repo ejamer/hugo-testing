@@ -4,6 +4,12 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ---
 
+## Non-technical content maintenance
+
+- [ ] **Editor tooling** — build shell scripts, editor guide, staging preview, and optionally Decap CMS to allow a non-technical administrator to maintain events, board members, news, and join URLs without developer involvement. See `plans/non-technical-maintenance.md` for the full plan and implementation order.
+
+---
+
 ## Join section — data maintenance
 
 - [ ] **Club registration form URL** — add Google Form URL to `fenb-1/data/join.yaml` → `club_form_url` when available; clubs page currently falls back to email contact

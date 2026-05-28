@@ -75,6 +75,21 @@ See **`STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingu
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
 - **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see STYLE_GUIDE.md)
 
+## Pattern reuse — check before creating
+
+Before adding any new visual element (a card, banner, callout, sidebar, heading style), **first check whether a shared component already exists** in `fenb-base.css` and the shared partials in `layouts/partials/`. Creating a one-off version of a pattern that already exists fragments the visual language and makes future consistency fixes harder.
+
+Shared components documented in `STYLE_GUIDE.md` (under "Shared UI components"):
+- **`fenb-cta-banner`** — teal call-to-action banner with heading and button
+- **`fenb-callout`** — left-border note block (and `--quote` variant)
+- **`fenb-about-sidebar-card`** — informational sidebar card
+- **`fenb-landing-card`** — nav/path card grid
+- **`fenb-btn-*`** — button variants (`-teal`, `-crimson`, `-white`, `-outline`)
+- **`back-link.html` partial** — back-navigation link
+- **`clubs-benefits.html` partial** — three-card benefits grid
+
+If the existing component almost fits but needs a small variation, use a CSS modifier class (e.g. `fenb-callout--quote`) rather than a new component. Only introduce a new shared component when the pattern will genuinely appear in multiple places.
+
 ## Post-mortem
 
 After completing a feature, ask the user whether a post-mortem is needed. A post-mortem covers:

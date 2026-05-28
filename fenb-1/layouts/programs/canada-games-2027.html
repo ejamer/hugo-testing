@@ -5,9 +5,7 @@
 <section class="fenb-program-page fenb-cwg-page">
   <div class="fenb-container fenb-container--narrow">
 
-    <div class="fenb-program-back">
-      <a href="{{ "programs/" | relLangURL }}">&larr; {{ i18n "programs_back" }}</a>
-    </div>
+    {{ partial "back-link.html" (dict "url" "programs/" "key" "programs_back") }}
 
     {{/* ── Logos (full-width above columns) ── */}}
     <div class="fenb-cwg-logos">
@@ -146,7 +144,7 @@
       {{/* ── Sidebar ── */}}
       <aside class="fenb-cwg-sidebar">
         <div class="fenb-cwg-sidebar-card">
-          <p class="fenb-cwg-sidebar-label">{{ i18n "programs_cwg_sidebar_label" }}</p>
+          <h3 class="fenb-cwg-sidebar-label">{{ i18n "programs_cwg_sidebar_label" }}</h3>
           <ul class="fenb-cwg-sidebar-links">
             <li>
               <a href="https://www.canadagames.ca/" target="_blank" rel="noopener noreferrer">

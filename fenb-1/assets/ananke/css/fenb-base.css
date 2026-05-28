@@ -190,6 +190,17 @@ main.pb7 { padding-bottom: 0 !important; }
   color: #fff;
 }
 
+.fenb-btn-white {
+  background: #fff;
+  color: var(--teal);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+}
+.fenb-btn-white:hover {
+  background: var(--off-white);
+  color: var(--teal-dark);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+}
+
 /* ── Dark mode: shared utilities ──────────────── */
 [data-theme="dark"] .fenb-section-label { color: var(--teal-light); }
 [data-theme="dark"] .fenb-see-all { color: var(--teal-light); }
@@ -198,3 +209,172 @@ main.pb7 { padding-bottom: 0 !important; }
 /* ── Ananke background_color_class overrides ──── */
 .bg-fenb-teal { background-color: var(--teal); }
 [data-theme="dark"] .bg-near-white { background-color: var(--white); }
+
+/* ── Back-link (shared across join, programs, news sub-pages) ── */
+.fenb-back-link {
+  margin-bottom: 2.25rem;
+}
+.fenb-back-link a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--teal);
+  text-decoration: none;
+}
+.fenb-back-link a:hover { text-decoration: underline; }
+[data-theme="dark"] .fenb-back-link a { color: var(--teal-light); }
+
+/* ── Callout / note block ──────────────────────── */
+.fenb-callout {
+  background: var(--teal-pale);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 1.75rem 0;
+}
+
+.fenb-callout--quote {
+  font-style: italic;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  padding: 1.25rem 1.5rem;
+  color: var(--teal-dark);
+  border-left-width: 4px;
+  line-height: 1.7;
+}
+
+[data-theme="dark"] .fenb-callout { border-left-color: var(--teal-light); }
+[data-theme="dark"] .fenb-callout--quote { color: var(--text-dark); }
+
+/* ── CTA banner (teal background, text left + button right) ── */
+.fenb-cta-banner {
+  background: var(--teal);
+  border-radius: var(--radius);
+  padding: 2.25rem;
+  margin: 2.5rem 0 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.fenb-cta-banner-body {
+  flex: 1;
+  min-width: 240px;
+}
+
+.fenb-cta-banner-body .fenb-section-label { color: rgba(255,255,255,0.65); }
+
+.fenb-cta-banner-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0.2rem 0 0.5rem;
+  line-height: 1.3;
+}
+
+.fenb-cta-banner-body p {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.78);
+  margin: 0;
+  line-height: 1.65;
+}
+
+.fenb-cta-banner-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.fenb-cta-banner-note {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .fenb-cta-banner { flex-direction: column; }
+  .fenb-cta-banner-action { width: 100%; }
+  .fenb-cta-banner .fenb-btn-white { width: 100%; justify-content: center; }
+}
+
+/* ── Landing nav-cards (join/programs section landing pages) ── */
+.fenb-landing-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.fenb-landing-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius);
+  padding: 2.25rem 1.75rem;
+  text-decoration: none;
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.fenb-landing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--teal);
+  color: var(--text-dark);
+}
+
+.fenb-landing-card-icon {
+  color: var(--teal);
+  margin-bottom: 0.35rem;
+}
+
+.fenb-landing-card-icon--pill {
+  background: var(--white);
+  border: 1.5px solid var(--teal-pale);
+  border-radius: 24px;
+  width: 72px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+[data-theme="dark"] .fenb-landing-card-icon--pill { border-color: transparent; }
+
+.fenb-landing-card h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.fenb-landing-card > p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.65;
+  flex: 1;
+}
+
+.fenb-landing-card-cta {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-top: 0.5rem;
+  transition: color var(--transition);
+}
+.fenb-landing-card:hover .fenb-landing-card-cta { color: var(--teal-dark); }
+
+[data-theme="dark"] .fenb-landing-card { background: var(--off-white); }
+[data-theme="dark"] .fenb-landing-card:hover { border-color: var(--teal-light); }
+[data-theme="dark"] .fenb-landing-card-icon { color: var(--teal-light); }
+[data-theme="dark"] .fenb-landing-card-cta { color: var(--teal-light); }
+[data-theme="dark"] .fenb-landing-card:hover .fenb-landing-card-cta { color: var(--teal-light); }
+
+@media (max-width: 900px) { .fenb-landing-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .fenb-landing-cards { grid-template-columns: 1fr; } }

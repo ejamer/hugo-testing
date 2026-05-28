@@ -58,14 +58,17 @@ margin: 0 calc((100% - Xvw) / 2);
 
 ### Two-column sidebar layout
 
-Several pages use a main-content + right-sidebar layout. Follow this pattern when adding any new list page that needs a filter or legend panel.
+Several pages use a main-content + right-sidebar layout. **The sidebar always goes on the right** — HTML order should be main content first, then `<aside>`, and the CSS grid column order should be `1fr <sidebar-width>`.
+
+#### Functional sidebars (controls/filters)
+
+Used on Events calendar and Season schedule. These contain active UI controls and use a teal-bordered style.
 
 | Page | Wrapper | Main column | Sidebar | Sidebar width |
 |---|---|---|---|---|
 | Events calendar | `.fenb-cal-layout` | `.fenb-cal-main` | `.fenb-cal-legend` | 185px |
 | Season schedule | `.fenb-schedule-layout` | `.fenb-schedule-main` | `.fenb-schedule-sidebar` | 200px |
 
-**Sidebar visual style** — apply to any new sidebar to stay consistent:
 ```css
 border: 1px solid var(--teal);
 border-radius: var(--radius);
@@ -73,7 +76,104 @@ padding: 1rem 1.25rem;
 background: var(--off-white);
 ```
 
-**Responsive:** both layouts collapse to a single column at ≤720px (`flex-direction: column`). If the sidebar contains controls (filters, selectors), move it *above* the main content using `order: -1` on mobile so users see the controls before the list. If the sidebar is passive information (legend, key), leave it in natural order so it falls below.
+**Responsive:** collapse to single column at ≤720px. Move controls sidebars *above* main content with `order: -1`; leave passive sidebars in natural order (falls below).
+
+#### Informational sidebars (links/metadata)
+
+Used on About, Policies & Reports, individual policy pages, Canada Winter Games, and news articles. These display supplementary links or metadata.
+
+Reference style — `fenb-about-sidebar-card` (defined in `fenb-about.css`):
+```css
+background: var(--off-white);
+border: 1px solid var(--light-gray);
+border-radius: var(--radius-sm);
+padding: 1.5rem;
+```
+Heading (`h3`): `font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); margin: 0 0 0.75rem`.
+
+Use `.fenb-about-sidebar-card` directly when possible. When the sidebar needs its own layout wrapper (sticky positioning, specific column width), define page-specific layout CSS but style the card to match this reference. Dark mode: heading and links use `var(--teal-light)`.
+
+**Responsive:** sidebar collapses below main content at the page's single-column breakpoint.
+
+---
+
+## Shared UI components
+
+Before adding any new visual element, check whether one of these existing shared components already fits. Creating one-off versions fragments the visual language. If the component almost fits, add a CSS modifier class rather than a new component.
+
+### `fenb-cta-banner` — call-to-action banner
+
+A teal background banner with text on the left and a button on the right. Defined in `fenb-base.css`.
+
+**Required structure — all four parts must be present:**
+```html
+<div class="fenb-cta-banner">
+  <div class="fenb-cta-banner-body">
+    <p class="fenb-section-label">{{ i18n "section_label_key" }}</p>
+    <h3 class="fenb-cta-banner-heading">{{ i18n "heading_key" }}</h3>
+    <p>{{ i18n "body_text_key" }}</p>
+  </div>
+  <div class="fenb-cta-banner-action">
+    <a href="…" class="fenb-btn fenb-btn-white">{{ i18n "button_label_key" }}</a>
+    <!-- optional: <p class="fenb-cta-banner-note">…</p> -->
+  </div>
+</div>
+```
+
+The `fenb-cta-banner-heading` class sets `font-size: 1.25rem` — do not use `fenb-section-title` inside a banner (it's too large at `clamp(1.6rem, 3.5vw, 2.1rem)`). The button is always `fenb-btn fenb-btn-white` on the teal background. Omitting the label, heading, or action wrapper produces visual inconsistency.
+
+### `fenb-callout` — note block
+
+A left-border block for supplementary notes, caveats, or explanatory asides. Defined in `fenb-base.css`.
+
+```html
+<div class="fenb-callout">Supplementary note text.</div>
+```
+
+Modifier `--quote` for pull-quotes and mission statements:
+```html
+<blockquote class="fenb-callout fenb-callout--quote">…</blockquote>
+```
+
+**Use for:** rules, caveats, important asides — content the reader needs but that sits outside the main flow.
+
+**Do not use for:** navigation sentences (inline text + link is correct), promotional links, or anything that is just a styled box for visual interest.
+
+### `fenb-landing-card` — nav/path card grid
+
+A grid of clickable cards linking to sub-pages. Defined in `fenb-base.css`. Used on the Join and Programs landing pages.
+
+```html
+<div class="fenb-landing-cards">
+  <a href="…" class="fenb-landing-card">
+    <div class="fenb-landing-card-icon">…</div>  <!-- or --pill variant for logo badges -->
+    <h2>Card title</h2>
+    <p>Card description</p>
+    <span class="fenb-landing-card-cta">Label →</span>
+  </a>
+</div>
+```
+
+### Button variants (`fenb-btn-*`)
+
+All buttons share `fenb-btn` as the base class. Always pair with a variant modifier.
+
+| Modifier | Appearance | Use on |
+|---|---|---|
+| `fenb-btn-teal` | Teal bg, white text | Light/white backgrounds |
+| `fenb-btn-crimson` | Crimson bg, white text | High-emphasis CTAs |
+| `fenb-btn-white` | White bg, teal text | Teal/coloured backgrounds (e.g. inside `fenb-cta-banner`) |
+| `fenb-btn-outline` | Transparent bg, white border | Hero section or dark backgrounds |
+
+### `back-link.html` partial — back-navigation link
+
+Use this partial for all back-navigation links. Never add a new page-specific back-link style.
+
+```html
+{{ partial "back-link.html" (dict "url" "section/" "key" "i18n_back_key") }}
+```
+
+Place it at the top of the page, above all content, outside any grid or two-column layout wrapper.
 
 ---
 
