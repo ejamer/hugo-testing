@@ -77,6 +77,43 @@ theme = 'ananke'
   name = "Programs"
   url = "programs/"
   weight = 3
+  identifier = "programs"
+
+[[languages.en.menus.main]]
+  name = "Athlete Development (LTAD)"
+  url = "programs/athlete-development/"
+  weight = 1
+  parent = "programs"
+
+[[languages.en.menus.main]]
+  name = "Coach Training & Certification"
+  url = "programs/coach-training/"
+  weight = 2
+  parent = "programs"
+
+[[languages.en.menus.main]]
+  name = "Referee Development"
+  url = "programs/referee-development/"
+  weight = 3
+  parent = "programs"
+
+[[languages.en.menus.main]]
+  name = "Armourer Development"
+  url = "programs/armourer-development/"
+  weight = 4
+  parent = "programs"
+
+[[languages.en.menus.main]]
+  name = "Secretariat Development"
+  url = "programs/secretariat-development/"
+  weight = 5
+  parent = "programs"
+
+[[languages.en.menus.main]]
+  name = "Canada Winter Games: Québec 2027"
+  url = "programs/canada-games-2027/"
+  weight = 6
+  parent = "programs"
 
 [[languages.en.menus.main]]
   name = "Clubs"
@@ -87,6 +124,13 @@ theme = 'ananke'
   name = "About"
   url = "about/"
   weight = 5
+  identifier = "about"
+
+[[languages.en.menus.main]]
+  name = "Policies, Plans & Reports"
+  url = "about/policies-and-reports/"
+  weight = 1
+  parent = "about"
 
 [[languages.en.menus.main]]
   name = "Join"
@@ -118,6 +162,43 @@ theme = 'ananke'
   name = "Programmes"
   url = "programs/"
   weight = 3
+  identifier = "programs"
+
+[[languages.fr.menus.main]]
+  name = "Développement des athlètes (DALS)"
+  url = "programs/athlete-development/"
+  weight = 1
+  parent = "programs"
+
+[[languages.fr.menus.main]]
+  name = "Formation et certification des entraîneurs"
+  url = "programs/coach-training/"
+  weight = 2
+  parent = "programs"
+
+[[languages.fr.menus.main]]
+  name = "Développement des arbitres"
+  url = "programs/referee-development/"
+  weight = 3
+  parent = "programs"
+
+[[languages.fr.menus.main]]
+  name = "Développement des armuriers"
+  url = "programs/armourer-development/"
+  weight = 4
+  parent = "programs"
+
+[[languages.fr.menus.main]]
+  name = "Développement du secrétariat"
+  url = "programs/secretariat-development/"
+  weight = 5
+  parent = "programs"
+
+[[languages.fr.menus.main]]
+  name = "Jeux d'hiver du Canada : Québec 2027"
+  url = "programs/canada-games-2027/"
+  weight = 6
+  parent = "programs"
 
 [[languages.fr.menus.main]]
   name = "Clubs"
@@ -128,6 +209,13 @@ theme = 'ananke'
   name = "À propos"
   url = "about/"
   weight = 5
+  identifier = "about"
+
+[[languages.fr.menus.main]]
+  name = "Politiques, plans et rapports"
+  url = "about/policies-and-reports/"
+  weight = 1
+  parent = "about"
 
 [[languages.fr.menus.main]]
   name = "Adhérer"

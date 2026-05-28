@@ -10,7 +10,18 @@
         {{ if .Site.Menus.main }}
         <ul>
           {{ range .Site.Menus.main }}
+          {{ if .Children }}
+          <li class="fenb-nav-has-dropdown">
+            <a href="{{ .URL | relLangURL }}">{{ .Name }}<span class="fenb-nav-chevron" aria-hidden="true"></span></a>
+            <ul class="fenb-nav-dropdown">
+              {{ range .Children }}
+              <li><a href="{{ .URL | relLangURL }}">{{ .Name }}</a></li>
+              {{ end }}
+            </ul>
+          </li>
+          {{ else }}
           <li><a href="{{ .URL | relLangURL }}">{{ .Name }}</a></li>
+          {{ end }}
           {{ end }}
         </ul>
         {{ end }}
