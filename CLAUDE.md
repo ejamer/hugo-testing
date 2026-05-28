@@ -143,6 +143,10 @@ Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the
 
 Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.
 
+After any nav change, verify the result in the browser before reporting done. Template and CSS changes can look correct in isolation but produce broken output (e.g. always-visible dropdowns, mis-coloured links) that only surfaces when rendered.
+
+**Direct-child selectors in nav CSS:** whenever you add a nested `<ul>` or `<li>` inside `.fenb-nav-links`, check whether existing descendant selectors (`ul`, `li`, `a`, `li:last-child`) will reach into the new element unintentionally. Use direct-child selectors (`> ul`, `> ul > li`, `> ul > li:last-child`) to prevent bleed-through. The established selectors in `fenb-nav.css` already use this pattern — follow it when adding new rules.
+
 ## Hugo data file naming
 
 **Never use hyphens in data filenames. Use underscores as word separators** (e.g. `board_members.yaml`, `join_paths.yaml`). Hugo stores the data key as the literal filename (without extension), so `program-cards.yaml` produces a key of `program-cards`. Go templates cannot use hyphens in dot-notation identifiers, meaning `hugo.Data.program-cards` is a syntax error and `hugo.Data.program_cards` silently returns nil. The page renders empty with no error. `hero_slides.yaml` is the established pattern in this repo.

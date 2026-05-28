@@ -196,25 +196,6 @@
   align-items: start;
 }
 
-.fenb-cwg-financial-link {
-  margin-top: 0.85rem;
-  display: inline-flex;
-  align-items: center;
-  padding: 0.65rem 1.4rem;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  letter-spacing: 0.025em;
-  color: var(--teal);
-  border: 2px solid var(--teal);
-  background: transparent;
-  transition: background var(--transition), color var(--transition);
-}
-.fenb-cwg-financial-link:hover {
-  background: var(--teal);
-  color: #fff;
-}
 
 .fenb-cwg-sublabel {
   margin-top: 0.25rem;
@@ -563,8 +544,6 @@
 [data-theme="dark"] .fenb-cwg-sidebar-card { background: var(--off-white); border-color: var(--light-gray); }
 [data-theme="dark"] .fenb-cwg-sidebar-label { color: var(--teal-light); }
 [data-theme="dark"] .fenb-cwg-sidebar-links li a { color: var(--teal-light); border-color: var(--light-gray); }
-[data-theme="dark"] .fenb-cwg-financial-link { color: var(--teal-light); border-color: var(--teal-light); }
-[data-theme="dark"] .fenb-cwg-financial-link:hover { background: var(--teal-light); color: var(--white); }
 [data-theme="dark"] .fenb-cwg-points-heading { color: var(--teal-light); }
 
 [data-theme="dark"] .fenb-program-note { border-left-color: var(--teal-light); }

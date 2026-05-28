@@ -43,7 +43,7 @@
   align-items: center;
 }
 
-.fenb-nav-links ul {
+.fenb-nav-links > ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -70,14 +70,61 @@
   color: var(--teal);
 }
 
+/* Dropdown nav items */
+.fenb-nav-has-dropdown {
+  position: relative;
+}
+
+.fenb-nav-chevron::after {
+  content: '▾';
+  margin-left: 0.2em;
+  font-size: 0.75em;
+  vertical-align: 0.05em;
+  display: inline-block;
+  transition: transform var(--transition);
+}
+
+.fenb-nav-has-dropdown:hover .fenb-nav-chevron::after,
+.fenb-nav-has-dropdown:focus-within .fenb-nav-chevron::after {
+  transform: rotate(-180deg);
+}
+
+.fenb-nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  padding: 0.25rem;
+  min-width: 260px;
+  flex-direction: column;
+  z-index: 30;
+  list-style: none;
+  margin: 0;
+}
+
+.fenb-nav-has-dropdown:hover .fenb-nav-dropdown,
+.fenb-nav-has-dropdown:focus-within .fenb-nav-dropdown {
+  display: flex;
+}
+
+.fenb-nav-dropdown a {
+  font-size: 1rem;
+  padding: 0.45rem 0.8rem;
+  white-space: normal;
+}
+
 /* Last link ("Join") gets a crimson pill */
-.fenb-nav-links li:last-child a {
+.fenb-nav-links > ul > li:last-child a {
   background: var(--crimson);
   color: #fff;
   padding: 0.4rem 1rem;
   margin-left: 0.5rem;
 }
-.fenb-nav-links li:last-child a:hover {
+.fenb-nav-links > ul > li:last-child a:hover {
   background: var(--crimson-dark);
   color: #fff;
 }
@@ -319,6 +366,11 @@
 }
 
 /* ── Dark mode ────────────────────────────────── */
+[data-theme="dark"] .fenb-nav-dropdown {
+  background: var(--white);
+  border-color: var(--light-gray);
+}
+
 [data-theme="dark"] .fenb-lang-btn { color: var(--text-body); }
 
 [data-theme="dark"] .fenb-nav-links a:hover,

@@ -97,6 +97,38 @@ Use `.fenb-about-sidebar-card` directly when possible. When the sidebar needs it
 
 ---
 
+## Nav dropdown menus
+
+A top-level nav item can show a hover dropdown listing its sub-pages. The template (`layouts/partials/nav.html`) already handles any item whose Hugo menu entry has children — no template changes are needed to add a new dropdown.
+
+**To add a dropdown to a top-level nav item:**
+
+1. Add `identifier = "slug"` to the parent entry in `hugo.toml` (both EN and FR blocks).
+2. Add child entries with `parent = "slug"` pointing to the sub-page URLs. Use `weight` to control order.
+
+```toml
+[[languages.en.menus.main]]
+  name   = "Programs"
+  url    = "programs/"
+  weight = 3
+  identifier = "programs"
+
+[[languages.en.menus.main]]
+  name   = "Athlete Development (LTAD)"
+  url    = "programs/athlete-development/"
+  weight = 1
+  parent = "programs"
+```
+
+The template renders the chevron, dropdown panel, and hover/focus behaviour automatically via the `fenb-nav-has-dropdown` / `fenb-nav-dropdown` CSS classes in `fenb-nav.css`.
+
+**CSS rules to keep in mind:**
+- `.fenb-nav-links > ul` and `.fenb-nav-links > ul > li:last-child` use direct-child selectors deliberately — this prevents the crimson Join pill and the flex layout from bleeding into nested dropdown `<ul>` elements. Any new nav list rules must also use `> ul` rather than the bare descendant selector `ul`.
+- The dropdown `min-width` is currently `260px` — increase it if you add items with long translated labels.
+- On mobile (≤ 860px), dropdown items are always visible as indented sub-items inside the open hamburger menu.
+
+---
+
 ## Shared UI components
 
 Before adding any new visual element, check whether one of these existing shared components already fits. Creating one-off versions fragments the visual language. If the component almost fits, add a CSS modifier class rather than a new component.
