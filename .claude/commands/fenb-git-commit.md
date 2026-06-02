@@ -7,6 +7,18 @@ Walk through each step below in order. After each step, report the result clearl
 
 ---
 
+## Step 0 — Confirm intent
+
+Before running any git commands, use the `AskUserQuestion` tool:
+
+- **Question:** "Commit and push pending changes to the FencingNB site?"
+- **Option 1 (default):** label `"Yes, proceed"`, description `"Stage, commit, and push pending changes"`
+- **Option 2:** label `"Cancel"`, description `"Stop without making any changes"`
+
+If the user picks **"Cancel"**: stop immediately. Do not run any git commands.
+
+---
+
 ## Step 1 — Identify current branch
 
 Run `git branch --show-current` and `git status --short`.

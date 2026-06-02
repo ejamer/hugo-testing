@@ -6,6 +6,13 @@ allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(script *) Read Write Ask
 
 Run through this checklist in order, pausing to report the result of each step before continuing:
 
+0. **Confirm intent** — before running any git or build commands, use the `AskUserQuestion` tool:
+   - **Question:** "Prepare and open a release PR for the FencingNB site?"
+   - **Option 1 (default):** label `"Yes, proceed"`, description `"Run build checks, open a release PR, and commit version.json"`
+   - **Option 2:** label `"Cancel"`, description `"Stop without making any changes"`
+
+   If the user picks **"Cancel"**: stop immediately.
+
 1. **Tag lookup** — run `git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1` to find the current latest semver tag. If none exists, treat the current version as `v0.0.0` (no tags yet). Compute the three candidate versions:
    - **Patch bump:** increment the last component, reset nothing (e.g. `v1.2.3 → v1.2.4`; from `v0.0.0` → `v0.0.1`)
    - **Minor bump:** increment the middle component, reset patch to 0 (e.g. `v1.2.3 → v1.3.0`; from `v0.0.0` → `v0.1.0`)

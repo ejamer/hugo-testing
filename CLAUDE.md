@@ -68,6 +68,12 @@ Clean build artifacts: `make clean`
 
 All `make` commands run from the repo root.
 
+## Git commit and push — skills only
+
+`git commit`, `git push`, and `git push -u` are **never run autonomously**. They may only execute inside the `/fenb-git-commit` or `/fenb-git-release` skills, which start with an explicit user confirmation gate.
+
+If you find yourself about to run any of these commands outside those skills — stop, and tell the user to invoke the skill instead. There are no exceptions: not for "small fixes", not for updating version files, not for anything. The skill invocation is the approval.
+
 ## Key conventions
 
 See **`STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, and page header band usage.
