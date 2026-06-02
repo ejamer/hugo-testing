@@ -1,2 +1,6 @@
 baseURL = "https://fenb.ca/"
 # baseURL = "https://ejamer.github.io/hugo-testing/"
+
+[services]
+  [services.googleAnalytics]
+    id = "G-BKG2E2SKZF"
