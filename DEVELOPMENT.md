@@ -38,6 +38,44 @@ Hugo defaults to `production` for the bare `hugo` command and `development` for 
 
 ---
 
+## Google Analytics
+
+The site uses **Google Analytics 4 (GA4)**, tag `G-BKG2E2SKZF`. The tag ID is stored in `fenb-1/config/production/hugo.toml` under `[services.googleAnalytics]`. Hugo's built-in template emits the gtag.js snippet automatically; it is wired into the Ananke base layout behind a `{{ if hugo.IsProduction }}` guard.
+
+**Analytics only fires on production builds** (`make build-prod`). Local dev (`make serve`, `make build`) never sends tracking data. To change the tag ID, edit `config/production/hugo.toml` only.
+
+To view reports, open [analytics.google.com](https://analytics.google.com) and select the Fencing NB property.
+
+### Access management
+
+GA4 access is granted at the **account** or **property** level — not per data stream. To add or review users:
+
+1. Open [analytics.google.com](https://analytics.google.com) and select the correct property.
+2. Click **Admin** (gear icon, bottom left).
+3. Under **Account** or **Property**, choose **Access Management**.
+4. Click **+** → **Add users**, enter the person's Google account email, and assign a role:
+
+   | Role | Can do |
+   |---|---|
+   | **Viewer** | View reports only |
+   | **Analyst** | Create explorations and custom analyses |
+   | **Editor** | Modify settings and configurations |
+   | **Administrator** | Full control, including managing other users |
+
+   For most collaborators, **Viewer** or **Analyst** is sufficient.
+
+### Organizational ownership
+
+The GA4 property was created under a personal Google account. For long-term maintainability:
+
+- Add a shared organizational account (e.g. `analytics@fencingnb.ca` or a shared board email) as **Administrator**.
+- Add individual volunteers or board members through that account as needed.
+- Keep the personal account as a backup admin until the organizational account is confirmed working.
+
+This ensures future volunteers can access analytics without needing the personal account holder's credentials. See the [Google Analytics TODO item](TODO.md) for the outstanding action on this.
+
+---
+
 ## Claude Code skills
 
 Git and release workflows are automated as Claude Code skills (invoked with `/fenb-*` in the CLI):

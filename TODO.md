@@ -10,6 +10,12 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ---
 
+## Google Analytics
+
+- [ ] **Analytics access management** — review who has access to the GA4 property and ensure an organizational account (e.g. a shared FENB admin email) is added as Administrator so access isn't tied solely to a personal Google account. See the Access Management section in `DEVELOPMENT.md` for instructions.
+
+---
+
 ## Join section — data maintenance
 
 - [ ] **Club registration form URL** — add Google Form URL to `fenb-1/data/join.yaml` → `club_form_url` when available; clubs page currently falls back to email contact
