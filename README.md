@@ -8,11 +8,11 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 
 | File | Covers |
 |------|--------|
-| [DEVELOPMENT.md](DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
-| [STYLE_GUIDE.md](STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
+| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
+| [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
 | [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code; lists available `/fenb-*` skills |
-| [PROJECT_LAYOUT.md](PROJECT_LAYOUT.md) | Full directory tree with file-by-file descriptions |
-| [TODO.md](TODO.md) | Outstanding items |
+| [docs/PROJECT_LAYOUT.md](docs/PROJECT_LAYOUT.md) | Full directory tree with file-by-file descriptions |
+| [docs/TODO.md](docs/TODO.md) | Outstanding items |
 
 ### Claude Code skills
 
@@ -26,7 +26,7 @@ Content and data workflows are available as Claude Code skills (invoked with `/f
 | `/fenb-data-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
 | `/fenb-data-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
 
-For git and release workflow skills (`/fenb-git-commit`, `/fenb-git-merge`, `/fenb-git-release`), see `DEVELOPMENT.md`.
+For git and release workflow skills (`/fenb-git-commit`, `/fenb-git-merge`, `/fenb-git-release`), see `docs/DEVELOPMENT.md`.
 
 ---
 
@@ -99,7 +99,7 @@ The banner is rendered by `layouts/partials/site-announcement.html` and hidden f
 
 > **Skill available:** run `/fenb-content-add-news` in Claude Code — it prompts for date, slug, titles, category, and summaries, then creates both language files with correct front matter and filenames.
 
-**File naming:** `{mon}-{dd}-{title}.{lang}.md` inside the year subfolder — see [STYLE_GUIDE.md](STYLE_GUIDE.md) for the full naming convention.
+**File naming:** `{mon}-{dd}-{title}.{lang}.md` inside the year subfolder — see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full naming convention.
 
 Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 
@@ -150,14 +150,14 @@ Add an entry to `data/events.yaml`.
 | Field | Required | Notes |
 |---|---|---|
 | `title` | ✅ | |
-| `date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
+| `start_date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
 | `end_date` | — | ISO `YYYY-MM-DD`. Omit or leave blank for single-day events. If set, the displayed date shows as a range (`Sep 20–21` or `Nov 29 – Dec 1`) and the calendar draws bars across the full range. |
 | `category` | ✅ | See categories below — must be a canonical ID from `data/event_categories.yaml` |
-| `category_label` | ✅ | Fallback label shown if the i18n key is missing (keep in sync with the i18n value) |
-| `venue` | ✅ | Short venue name shown on card |
-| `location` | ✅ | City / province |
-| `description` | — | Optional. Not shown on homepage cards |
-| `details_url` | — | If set, a teal **Learn More →** badge appears on the card (opens in new tab) |
+| `location` | ✅ | Display string shown on the card. Use `"City, Province"` when there is no specific venue, or `"Venue Name, City, Province"` when there is one. |
+| `description_en` | — | Optional English description. Shown on the schedule page; not shown on homepage cards |
+| `description_fr` | — | Optional French description. Falls back to `description_en` if blank |
+| `details_url_en` | — | English URL for the **Learn More →** badge. Used for both languages when `details_url_fr` is blank |
+| `details_url_fr` | — | Optional French URL override for the **Learn More →** badge |
 | `registration_url` | — | If set, a crimson **Register Now →** badge appears on the card (opens in new tab). Hidden for past events (date < today). |
 | `results_url` | — | If set, a navy **View Results →** badge appears on the card (opens in new tab). Populated automatically by `/fenb-data-get-results` after a tournament scrape. |
 
@@ -165,33 +165,33 @@ Add an entry to `data/events.yaml`.
 
 ```yaml
 - title: "Event Name"
-  date: "2026-06-01"      # ISO — also drives the displayed date label
-  end_date: "2026-06-02"  # optional; omit for single-day events
-  category: competition   # see categories below
-  category_label: "Competition"
-  venue: "Venue Name"
-  location: "City, NB"
-  description: "Optional details not shown on homepage."
-  details_url: ""                 # URL for a Learn More badge; leave blank or omit if none
-  registration_url: ""            # URL for a Register Now badge; leave blank or omit if none
-  results_url: ""                 # URL for a View Results badge; leave blank or omit if none
+  start_date: "2026-06-01"         # ISO YYYY-MM-DD
+  end_date: "2026-06-02"           # optional; omit for single-day events
+  category: competition            # see categories below
+  location: "Venue Name, City, NB" # or just "City, NB" if no specific venue
+  description_en: ""               # optional; shown on schedule page, not homepage
+  description_fr: ""               # optional; falls back to description_en if blank
+  details_url_en: ""               # optional Learn More link (used for both languages if _fr is blank)
+  details_url_fr: ""               # optional French override for the Learn More link
+  registration_url: ""             # optional; hidden once event date has passed
+  results_url: ""                  # optional; populated by /fenb-data-get-results
 ```
 
 **Category colours:**
 
 Each category drives three visual elements: the date badge on the event card, the tag pill, and the calendar bar on the month grid.
 
-| `category` | `category_label` | Colour |
+| `category` | Display label (via i18n) | Colour |
 |---|---|---|
-| `competition` | `"Competition"` | Teal |
-| `training` | `"Training Camp"` | Dark green |
-| `national` | `"National Event"` | Navy |
-| `provincial` | `"Provincial Championship"` | Crimson |
-| `clinic` | `"Clinic"` | Olive |
-| `meeting` | `"FENB Meeting"` | Grey |
-| `announcement` | `"Announcement"` | Teal |
+| `competition` | Competition / Compétition | Teal |
+| `training` | Training Camp / Camp d'entraînement | Dark green |
+| `national` | National Event / Événement national | Navy |
+| `provincial` | NB Provincial / Provincial NB | Crimson |
+| `clinic` | Clinic / Clinique | Olive |
+| `meeting` | FENB Meeting / Réunion FENB | Grey |
+| `announcement` | Announcement / Annonce | Teal |
 
-`category` is the canonical ID — must match exactly (lowercase, no spaces) and must exist in `data/event_categories.yaml`. `category_label` is a fallback display string used if the i18n key is missing.
+`category` is the canonical ID — must match exactly (lowercase, no spaces) and must exist in `data/event_categories.yaml`. The display label is looked up from `i18n/en.yaml` and `i18n/fr.yaml` automatically.
 
 **Adding a new category:** add the ID to `data/event_categories.yaml`, add i18n keys to both `i18n/en.yaml` and `i18n/fr.yaml`, and add the corresponding CSS colour rules to `fenb-events.css`.
 

@@ -36,16 +36,16 @@ Then:
 
    d. **Placeholder links in related layouts** — grep `fenb-1/layouts/{section}/` for placeholder hrefs (`mailto:`, `href="#"`, `href=""`) that might now be intended to point to the new page. Report any found.
 
-   e. **TODO.md** — grep `TODO.md` for the section name or slug. Report any open items that reference this area so the user can decide if any are now addressed.
+   e. **TODO.md** — grep `docs/TODO.md` for the section name or slug. Report any open items that reference this area so the user can decide if any are now addressed.
 
    Report all findings clearly. Don't silently skip any check — if nothing is found, say so briefly.
 
 6. **Review project docs and skills for needed updates** — check each of the following and report whether it needs updating:
 
    - **`README.md`** — does the content tree, layouts tree, or data file list need a new entry for this section or page?
-   - **`STYLE_GUIDE.md`** — does the new section introduce any CSS files, layout patterns, or conventions not yet documented?
+   - **`docs/STYLE_GUIDE.md`** — does the new section introduce any CSS files, layout patterns, or conventions not yet documented?
    - **`CLAUDE.md`** — do the project conventions, data schemas, or skill descriptions need updating?
-   - **`DEVELOPMENT.md`** — does the release checklist or any build step need updating?
+   - **`docs/DEVELOPMENT.md`** — does the release checklist or any build step need updating?
    - **Other skills** (`fenb-data-season-rollover`, `fenb-git-release`, etc.) — does the new section introduce any seasonal maintenance steps or release checks that should be added to an existing skill?
 
    For each item, state clearly: needs update / no update needed, and why. Get user approval before making any changes to these files.

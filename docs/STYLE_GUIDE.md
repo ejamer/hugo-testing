@@ -311,17 +311,17 @@ The `results` category also triggers loading of `results-table.js` — the check
 
 Each category drives three visual elements: the date badge on the event card, the tag pill, and the calendar bar on the month grid.
 
-| `category` | Example `category_label` | CSS variable | Colour |
-|---|---|---|---|
-| `competition` | `"Competition"` | `--teal` | Teal |
-| `training` | `"Training Camp"` | `--cat-training` | Dark green |
-| `national` | `"National Event"` | `--cat-national` | Navy |
-| `provincial` | `"Provincial Championship"` | `--crimson` | Crimson |
-| `clinic` | `"Clinic"` | `--cat-clinic` | Olive |
-| `meeting` | `"FENB Meeting"` | `--cat-meeting` | Grey |
-| `announcement` | `"Announcement"` | `--teal` | Teal |
+| `category` | CSS variable | Colour |
+|---|---|---|
+| `competition` | `--teal` | Teal |
+| `training` | `--cat-training` | Dark green |
+| `national` | `--cat-national` | Navy |
+| `provincial` | `--crimson` | Crimson |
+| `clinic` | `--cat-clinic` | Olive |
+| `meeting` | `--cat-meeting` | Grey |
+| `announcement` | `--teal` | Teal |
 
-`category` is the canonical ID and CSS hook — must match exactly (lowercase, no spaces) and must be listed in `data/event_categories.yaml` (which drives the calendar legend and schedule filter buttons). `category_label` is a fallback display string used when the i18n key is missing. Each non-brand category also has a `--cat-*-pale` variant used for tag backgrounds.
+`category` is the canonical ID and CSS hook — must match exactly (lowercase, no spaces) and must be listed in `data/event_categories.yaml` (which drives the calendar legend and schedule filter buttons). Display labels are looked up from `i18n/en.yaml` and `i18n/fr.yaml` automatically; the raw category key is shown as a fallback. Each non-brand category also has a `--cat-*-pale` variant used for tag backgrounds.
 
 To add a new category: add the ID to `data/event_categories.yaml`, add i18n keys to `en.yaml` and `fr.yaml`, and add CSS colour rules for `fenb-cal-bar--{id}`, `fenb-tag--{id}`, and their dark-mode and pale variants in `fenb-events.css`.
 

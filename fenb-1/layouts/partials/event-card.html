@@ -1,5 +1,5 @@
 {{- /* Renders a single event card. Expects a YAML event object as context (.). */ -}}
-{{- $dateObj := time .date -}}
+{{- $dateObj := time .start_date -}}
 {{- $month   := i18n (printf "month_%s" ($dateObj.Format "Jan")) | default ($dateObj.Format "Jan") -}}
 <article class="fenb-event-card fenb-event-card--{{ .category }}">
   <div class="fenb-event-date-badge">
@@ -8,15 +8,17 @@
     <span class="fenb-event-year">{{ $dateObj.Format "2006" }}</span>
   </div>
   <div class="fenb-event-body">
-    <span class="fenb-tag fenb-tag--{{ .category }}">{{ i18n .category | default .category_label }}</span>
+    <span class="fenb-tag fenb-tag--{{ .category }}">{{ i18n .category | default .category }}</span>
     <h3 class="fenb-event-title">{{ .title }}</h3>
     <p class="fenb-event-date-range">{{ partial "event-date.html" . }}</p>
     <p class="fenb-event-meta">
       {{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}
-      {{ .venue }}, {{ .location }}
+      {{ .location }}
     </p>
-    {{ if .details_url }}
-    <a class="fenb-event-details-link" href="{{ .details_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>
+    {{- $detailsUrl := .details_url_en -}}
+    {{- if and (eq site.Language.Lang "fr") .details_url_fr -}}{{- $detailsUrl = .details_url_fr -}}{{- end -}}
+    {{ if $detailsUrl }}
+    <a class="fenb-event-details-link" href="{{ $detailsUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>
     {{ end }}
     {{- $todayMidnight := time (now.Format "2006-01-02") -}}
     {{ if and .registration_url (not ($dateObj.Before $todayMidnight)) }}
