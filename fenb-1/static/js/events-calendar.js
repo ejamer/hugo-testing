@@ -5,9 +5,11 @@
   // Hugo's html/template JS-context escaping serializes the array as a JSON string;
   // parse it back to a real array if needed.
   var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.events;
+  var categoryLabels = typeof cal.categoryLabels === 'string' ? JSON.parse(cal.categoryLabels) : cal.categoryLabels;
   // today at midnight, for future-date checks
   var today = cal.today ? new Date(cal.today + 'T00:00:00') : (function () { var d = new Date(); d.setHours(0,0,0,0); return d; }());
 
+  var fr = document.documentElement.lang === 'fr';
   var year, month; // current display state (month is 0-indexed)
 
   function init() {
@@ -23,7 +25,7 @@
   function populateSelectors() {
     var yearSet = {};
     events.forEach(function (e) {
-      yearSet[parseInt(e.date.substring(0, 4), 10)] = true;
+      yearSet[parseInt(e.start_date.substring(0, 4), 10)] = true;
     });
     var years = Object.keys(yearSet).map(Number).sort();
 
@@ -84,9 +86,9 @@
 
     var result = [];
     events.forEach(function (e, idx) {
-      var effectiveEnd = (e.end_date && e.end_date > e.date) ? e.end_date : e.date;
+      var effectiveEnd = (e.end_date && e.end_date > e.start_date) ? e.end_date : e.start_date;
       // Overlaps if event starts on/before last day of month AND ends on/after first day
-      if (e.date <= monthLast && effectiveEnd >= monthFirst) {
+      if (e.start_date <= monthLast && effectiveEnd >= monthFirst) {
         result.push({ e: e, idx: idx });
       }
     });
@@ -122,8 +124,8 @@
     // Build day -> [{e, idx}] map, expanding multi-day events across the month
     var byDay = {};
     getMonthEventsWithIndex().forEach(function (item) {
-      var startD = new Date(item.e.date + 'T00:00:00');
-      var endD   = (item.e.end_date && item.e.end_date > item.e.date)
+      var startD = new Date(item.e.start_date + 'T00:00:00');
+      var endD   = (item.e.end_date && item.e.end_date > item.e.start_date)
                    ? new Date(item.e.end_date + 'T00:00:00')
                    : startD;
 
@@ -235,9 +237,8 @@
   }
 
   function formatEventDate(e) {
-    var fr   = document.documentElement.lang === 'fr';
-    var sD   = new Date(e.date + 'T00:00:00');
-    var eD   = (e.end_date && e.end_date > e.date) ? new Date(e.end_date + 'T00:00:00') : sD;
+    var sD   = new Date(e.start_date + 'T00:00:00');
+    var eD   = (e.end_date && e.end_date > e.start_date) ? new Date(e.end_date + 'T00:00:00') : sD;
     var isRange   = sD.toDateString() !== eD.toDateString();
     var sameMonth = sD.getMonth() === eD.getMonth() && sD.getFullYear() === eD.getFullYear();
     var sMon = cal.monthsShort[sD.getMonth()];
@@ -276,12 +277,13 @@
     items.forEach(function (item) {
       var e   = item.e;
       var idx = item.idx;
-      var d   = new Date(e.date + 'T00:00:00');
+      var d   = new Date(e.start_date + 'T00:00:00');
 
-      var eventDate = new Date(e.date + 'T00:00:00');
+      var eventDate = new Date(e.start_date + 'T00:00:00');
       var linksHtml = '';
-      if (e.details_url) {
-        linksHtml += '<a href="' + esc(e.details_url) + '" class="fenb-event-details-link" target="_blank" rel="noopener noreferrer">' + esc(cal.detailsLabel) + ' →</a>';
+      var detailsUrl = (fr && e.details_url_fr) ? e.details_url_fr : e.details_url_en;
+      if (detailsUrl) {
+        linksHtml += '<a href="' + esc(detailsUrl) + '" class="fenb-event-details-link" target="_blank" rel="noopener noreferrer">' + esc(cal.detailsLabel) + ' →</a>';
       }
       if (e.registration_url && eventDate >= today) {
         linksHtml += '<a href="' + esc(e.registration_url) + '" class="fenb-event-register-link" target="_blank" rel="noopener noreferrer">' + esc(cal.registerLabel) + ' →</a>';
@@ -300,7 +302,7 @@
           '<span class="fenb-event-year">' + d.getFullYear() + '</span>' +
         '</div>' +
         '<div class="fenb-event-body">' +
-          '<span class="fenb-tag fenb-tag--' + e.category + '">' + esc(e.category_label) + '</span>' +
+          '<span class="fenb-tag fenb-tag--' + e.category + '">' + esc(categoryLabels[e.category] || e.category) + '</span>' +
           '<h3 class="fenb-event-title">' + esc(e.title) + '</h3>' +
           '<p class="fenb-event-date-range">' + esc(formatEventDate(e)) + '</p>' +
           '<p class="fenb-event-meta">' +
@@ -308,7 +310,7 @@
               '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>' +
               '<circle cx="12" cy="10" r="3"></circle>' +
             '</svg>' +
-            esc(e.venue) + ', ' + esc(e.location) +
+            esc(e.location) +
           '</p>' +
           linksHtml +
         '</div>';

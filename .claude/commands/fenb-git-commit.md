@@ -124,7 +124,7 @@ Run:
 ```
 git add <files confirmed in Step 4>
 git commit -m "$(cat <<'EOF'
-<message from Step 5>
+<message from Step 5 draft>
 
 Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 EOF

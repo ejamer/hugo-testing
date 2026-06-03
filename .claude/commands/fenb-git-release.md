@@ -30,7 +30,7 @@ Run through this checklist in order, pausing to report the result of each step b
      - **Option 2:** label `"Stash and release"`, description `"Stash changes, complete the release, then restore the stash afterward"`
      - **Option 3:** label `"Cancel release"`, description `"Stop here without opening a PR"`
 
-     If the user picks **"Commit first"**: invoke the `fenb-git-commit` skill. After it completes, run `git status` again. If the working tree is still not clean (commit failed or was cancelled), stop and tell the user: "The working tree still has uncommitted changes — release cancelled. You can run `/fenb-git-commit` to commit them, or `git stash` to set them aside, then re-run `/fenb-git-release`."
+     If the user picks **"Commit first"**: stop and tell the user: "Run `/fenb-git-commit` to commit your changes, then re-run `/fenb-git-release` to continue."
 
      If the user picks **"Stash and release"**: run `git stash push -m "fenb-git-release: pre-release stash"`, confirm the stash succeeded, then continue with the checklist. **IMPORTANT: from this point on, no matter how or where the skill exits — build failure, parity issues, user cancellation, PR error, or success — always run `git stash pop` before stopping and tell the user "Stashed changes have been restored."**
 
@@ -46,7 +46,7 @@ Run through this checklist in order, pausing to report the result of each step b
 
 6. **Commit summary** — run `git log main..dev --oneline` to list what will land in this release. Show it to the user.
 
-7. **TODO.md review** — read `TODO.md`. Flag any unchecked items that appear to be addressed or affected by the commits above.
+7. **TODO.md review** — read `docs/TODO.md`. Flag any unchecked items that appear to be addressed or affected by the commits above.
 
 8. **Tag selection** — using the current tag and candidate versions computed in Step 1, use the `AskUserQuestion` tool with:
    - **Question:** "Apply a release version tag to this release?"

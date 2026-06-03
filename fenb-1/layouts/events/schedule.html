@@ -35,7 +35,7 @@
 
           {{- $months := slice -}}
           {{- range $seasonEvents -}}
-            {{- $mk := (time .date).Format "2006-01" -}}
+            {{- $mk := (time .start_date).Format "2006-01" -}}
             {{- if not (in $months $mk) -}}
               {{- $months = $months | append $mk -}}
             {{- end -}}
@@ -51,23 +51,27 @@
                 <h2 class="fenb-schedule-month-heading">{{ $monthName }} {{ $monthDate.Format "2006" }}</h2>
                 <ul class="fenb-schedule-list">
                   {{- range $seasonEvents -}}
-                    {{- if eq ((time .date).Format "2006-01") $mk -}}
+                    {{- if eq ((time .start_date).Format "2006-01") $mk -}}
+                    {{- $detailsUrl := .details_url_en -}}
+                    {{- if and (eq site.Language.Lang "fr") .details_url_fr -}}{{- $detailsUrl = .details_url_fr -}}{{- end -}}
+                    {{- $desc := .description_en -}}
+                    {{- if and (eq site.Language.Lang "fr") .description_fr -}}{{- $desc = .description_fr -}}{{- end -}}
                     <li class="fenb-schedule-item" data-category="{{ .category }}">
                       <div class="fenb-schedule-row fenb-schedule-row--primary">
                         <span class="fenb-schedule-date">{{ partial "event-date.html" . }}</span>
                         <strong class="fenb-schedule-title">{{ .title }}</strong>
-                        <span class="fenb-schedule-category fenb-cal-bar--{{ .category }}">{{ i18n .category | default .category_label }}</span>
+                        <span class="fenb-schedule-category fenb-cal-bar--{{ .category }}">{{ i18n .category | default .category }}</span>
                       </div>
                       <div class="fenb-schedule-row fenb-schedule-row--secondary">
-                        <span class="fenb-schedule-location">{{ .venue }}, {{ .location }}</span>
-                        {{ with .description }}<span class="fenb-schedule-description">{{ . }}</span>{{ end }}
+                        <span class="fenb-schedule-location">{{ .location }}</span>
+                        {{ with $desc }}<span class="fenb-schedule-description">{{ . }}</span>{{ end }}
                       </div>
-                      {{- $evDate := time .date -}}
+                      {{- $evDate := time .start_date -}}
                       {{- $todayMidnight := time (now.Format "2006-01-02") -}}
                       {{- $showRegister := and .registration_url (not ($evDate.Before $todayMidnight)) -}}
-                      {{ if or .details_url $showRegister .results_url }}
+                      {{ if or $detailsUrl $showRegister .results_url }}
                       <div class="fenb-schedule-links">
-                        {{ with .details_url }}<a class="fenb-event-details-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>{{ end }}
+                        {{ with $detailsUrl }}<a class="fenb-event-details-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>{{ end }}
                         {{ if $showRegister }}<a class="fenb-event-register-link" href="{{ .registration_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>{{ end }}
                         {{ with .results_url }}<a class="fenb-event-results-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_results" }} &rarr;</a>{{ end }}
                       </div>

@@ -1,9 +1,9 @@
 {{- /*
-  Returns a localized event date string computed from .date and .end_date.
+  Returns a localized event date string computed from .start_date and .end_date.
   Handles single-day, same-month range, and cross-month range in EN and FR.
   Call with the event YAML object as context.
 */ -}}
-{{- $startObj := time .date -}}
+{{- $startObj := time .start_date -}}
 {{- $endObj   := $startObj -}}
 {{- if and .end_date (ne .end_date "") -}}
   {{- $endObj = time .end_date -}}

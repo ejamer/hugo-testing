@@ -7,16 +7,16 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 ## Reference files
 
 - **`README.md`** — how to add/update each content type (news, events, clubs). Read it when starting work on a new section or when unsure about data schemas.
-- **`PROJECT_LAYOUT.md`** — full directory tree with file-by-file descriptions. Read it when navigating an unfamiliar part of the repo.
-- **`STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colour reference. Read it before implementing any new visual element or content type.
-- **`TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
-- **`plans/`** — detailed implementation plans for multi-session features. Files here are referenced from TODO.md items when a task is too detailed for the checklist itself. Read the relevant plan file before starting any TODO item that links to one.
+- **`docs/PROJECT_LAYOUT.md`** — full directory tree with file-by-file descriptions. Read it when navigating an unfamiliar part of the repo.
+- **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colour reference. Read it before implementing any new visual element or content type.
+- **`docs/TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
+- **`plans/`** — detailed implementation plans for multi-session features. Files here are referenced from docs/TODO.md items when a task is too detailed for the checklist itself. Read the relevant plan file before starting any TODO item that links to one.
 
 ## Outstanding TODOs
 
-**At the start of every session, read `TODO.md`** in the repo root. Review each open item and flag to the user if any work in the session addresses or alters an item.
+**At the start of every session, read `docs/TODO.md`**. Review each open item and flag to the user if any work in the session addresses or alters an item.
 
-**When creating or modifying content**, check whether any new placeholder links, missing pages, or deferred decisions arise. If so, add a `- [ ]` entry to `TODO.md` under the relevant section before finishing. Mark items `- [x]` (and note the fix) when they are resolved.
+**When creating or modifying content**, check whether any new placeholder links, missing pages, or deferred decisions arise. If so, add a `- [ ]` entry to `docs/TODO.md` under the relevant section before finishing. Mark items `- [x]` (and note the fix) when they are resolved.
 
 ## Claude Code skills
 
@@ -27,6 +27,7 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 | Skill | What it does |
 |---|---|
 | `/fenb-git-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
+| `/fenb-docs-update` | Review current git changes and assess whether system docs (CLAUDE.md, README.md, docs/*.md) need updating |
 | `/fenb-git-merge` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
 | `/fenb-git-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
 | `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
@@ -54,7 +55,7 @@ Fields:
 
 ## Development workflow
 
-See **`DEVELOPMENT.md`** for the full branch strategy and build commands.
+See **`docs/DEVELOPMENT.md`** for the full branch strategy and build commands.
 
 Key rules:
 - **`main`** — production; pushing here triggers a GitHub Pages deploy. **Never commit directly.**
@@ -76,16 +77,16 @@ If you find yourself about to run any of these commands outside those skills —
 
 ## Key conventions
 
-See **`STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, and page header band usage.
+See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, and page header band usage.
 
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
-- **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see STYLE_GUIDE.md)
+- **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see docs/STYLE_GUIDE.md)
 
 ## Pattern reuse — check before creating
 
 Before adding any new visual element (a card, banner, callout, sidebar, heading style), **first check whether a shared component already exists** in `fenb-base.css` and the shared partials in `layouts/partials/`. Creating a one-off version of a pattern that already exists fragments the visual language and makes future consistency fixes harder.
 
-Shared components documented in `STYLE_GUIDE.md` (under "Shared UI components"):
+Shared components documented in `docs/STYLE_GUIDE.md` (under "Shared UI components"):
 - **`fenb-cta-banner`** — teal call-to-action banner with heading and button
 - **`fenb-callout`** — left-border note block (and `--quote` variant)
 - **`fenb-about-sidebar-card`** — informational sidebar card
@@ -102,7 +103,7 @@ After completing a feature, ask the user whether a post-mortem is needed. A post
 
 1. **What worked** — approaches that were right first time and worth repeating
 2. **What didn't** — missteps, reversals, or wasted implementation rounds, and why they happened
-3. **Docs** — whether `README.md`, `STYLE_GUIDE.md`, or `CLAUDE.md` need updating to reflect new conventions or schema changes
+3. **Docs** — whether `README.md`, `docs/STYLE_GUIDE.md`, or `CLAUDE.md` need updating to reflect new conventions or schema changes
 
 Always get user approval on the proposed changes before editing any docs.
 
@@ -118,7 +119,9 @@ The events calendar page subtitle (shown in the page header band) is set separat
 
 Also update the events calendar page subtitle in `content/events/_index.md` and `content/events/_index.fr.md` to match the new season label — e.g. `description: "2026–2027 season schedule"`. These files drive the subtitle shown in the page header band.
 
-**Event link fields:** `details_url`, `registration_url`, and `results_url` are all optional strings. `registration_url` is only rendered when the event date ≥ today. `results_url` is rendered regardless of date and is populated automatically by `/fenb-data-get-results` Step 5.5. All three use specific CSS classes (`fenb-event-details-link`, `fenb-event-register-link`, `fenb-event-results-link`) — any new layout rendering these links must use those classes so print and dark-mode styles apply automatically.
+**Event link fields:** `details_url_en`, `details_url_fr`, `registration_url`, and `results_url` are all optional strings. `details_url_en` is the default Learn More URL; `details_url_fr` overrides it on French pages (leave blank to fall back to `_en`). `registration_url` is only rendered when the event date ≥ today. `results_url` is rendered regardless of date and is populated automatically by `/fenb-data-get-results` Step 5.5. All use specific CSS classes (`fenb-event-details-link`, `fenb-event-register-link`, `fenb-event-results-link`) — any new layout rendering these links must use those classes so print and dark-mode styles apply automatically.
+
+**Event description fields:** `description_en` is the English description shown on the schedule page (not homepage cards). `description_fr` overrides it on French pages; leave blank to fall back to `description_en`. Both are optional — events without either show no description.
 
 **Schedule page filter pattern:** `/events/schedule/` uses SSR + JS visibility toggling. Hugo renders every event with `data-season` and `data-category` HTML attributes; `static/js/events-schedule.js` shows/hides them in response to the season dropdown and category filter buttons. Print always reflects the current filtered state. Prefer this pattern over JS-only rendering for any future filterable list page — it gives a no-JS fallback and print support for free.
 
@@ -261,7 +264,7 @@ Also verify that the `.git` file inside the submodule directory has the correct 
 
 ## Return-value partials for computed display strings
 
-When display text must be computed from data (e.g. a bilingual date from `date` + `end_date`), extract the logic into a return-value partial rather than duplicating it inline:
+When display text must be computed from data (e.g. a bilingual date from `start_date` + `end_date`), extract the logic into a return-value partial rather than duplicating it inline:
 
 ```go
 {{- return $computedString -}}
