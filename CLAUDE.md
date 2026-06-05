@@ -81,6 +81,7 @@ See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bi
 
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
 - **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see docs/STYLE_GUIDE.md)
+- **Recurring event slugs:** for tournaments that repeat annually, include the year in the slug — e.g. `east-coast-games-2026-registration`. This prevents cross-season collisions in the archive. One-off announcements or community articles don't need it.
 
 ## Pattern reuse — check before creating
 

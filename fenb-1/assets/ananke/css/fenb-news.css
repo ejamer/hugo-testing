@@ -364,6 +364,21 @@
   border-color: var(--teal-light);
 }
 
+/* ── Article event logo ───────────────────────── */
+.fenb-article-event-logo {
+  margin: 0 0 1.5rem;
+}
+.fenb-article-event-logo img {
+  display: block;
+  max-width: 220px;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+[data-theme="dark"] .fenb-article-event-logo img {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
 /* ── Dark mode ────────────────────────────────── */
 [data-theme="dark"] .fenb-news-category                          { background: var(--teal);        color: #fff; }
 [data-theme="dark"] .fenb-news-category--announcement { background: var(--crimson);      color: #fff; }

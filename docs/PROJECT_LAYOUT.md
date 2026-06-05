@@ -87,7 +87,8 @@ hugo-testing/
     │                         page-header.html      Coloured band below the nav (title + subtitle)
     │                         section-header.html   Section label + h2 + "see all" link
     │                         site-announcement.html  Site-wide banner (controlled via hugo.toml)
-    │                         site-footer.html      Site footer
+    │                         site-favicon.html     SVG + PNG favicon link tags
+                        site-footer.html      Site footer
     │                         site-header.html      Entry point — delegates to nav.html + page-header.html
     └── static/
         ├── documents/      PDFs served at /documents/ — subfolders: about/agm-minutes/,

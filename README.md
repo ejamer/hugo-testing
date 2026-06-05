@@ -99,7 +99,7 @@ The banner is rendered by `layouts/partials/site-announcement.html` and hidden f
 
 > **Skill available:** run `/fenb-content-add-news` in Claude Code — it prompts for date, slug, titles, category, and summaries, then creates both language files with correct front matter and filenames.
 
-**File naming:** `{mon}-{dd}-{title}.{lang}.md` inside the year subfolder — see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full naming convention.
+**File naming:** `{mon}-{dd}-{title}.{lang}.md` inside the year subfolder — see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full naming convention. For recurring annual events (same tournament each season), include the year in the slug to prevent cross-season collisions: e.g. `east-coast-games-2026-registration`.
 
 Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 

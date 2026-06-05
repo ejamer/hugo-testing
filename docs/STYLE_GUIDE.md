@@ -7,8 +7,10 @@
 - **Accent:** `#79242f` (crimson) — CSS var `--crimson` — CTA buttons, hero badge, event category badges
 
 ### Logos
-- `static/images/logo-color.svg` — light backgrounds
-- `static/images/logo-white.svg` — dark/teal backgrounds (hero, teal sections)
+- `static/images/fenb-logo` — folder contains the FENB-Logo-Standards.html guidelines, and subfolders with different official logo files
+- `FENB-Logo-Landscape-FullColour` — logo for light backgrounds
+- `FENB-Logo-Landscape-White` — logo for dark/teal backgrounds (hero, teal sections)
+ 
 
 ### Fonts
 Avenir, Nunito Sans, system-ui
@@ -208,6 +210,16 @@ Use this partial for all back-navigation links. Never add a new page-specific ba
 
 Place it at the top of the page, above all content, outside any grid or two-column layout wrapper.
 
+### `fenb-article-event-logo` — event logo in a news article
+
+Use this class on the Hugo `figure` shortcode to display a centred event logo at the top of a news article body. It caps the image at 220 px wide, centres it, adds rounded corners, and applies a drop shadow in dark mode so white-background logos don't look jarring.
+
+```markdown
+{{</* figure src="/images/event-logos/ecg.png" alt="East Coast Games 2026" class="fenb-article-event-logo" */>}}
+```
+
+The `class` attribute applies to the `<figure>` element; CSS targets `figure.fenb-article-event-logo img`.
+
 ---
 
 ## Dark mode
@@ -280,7 +292,7 @@ Files go inside a year subfolder: `content/news/{year}/{mon}-{dd}-{title}.{lang}
 
 - `{mon}` — 3-letter lowercase month (`jan`–`dec`)
 - `{dd}` — zero-padded day
-- `{title}` — short kebab-case slug; omit the year (the folder provides it)
+- `{title}` — short kebab-case slug; omit the year (the folder provides it) — **exception:** for recurring annual events, include the year to prevent cross-season collisions (e.g. `east-coast-games-2026-registration`)
 - `{lang}` — `en` or `fr`, separated by a **dot** — Hugo uses `.en.md` / `.fr.md` to link translations automatically; a dash (`-en.md`) breaks that link
 
 Example:
