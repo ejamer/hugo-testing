@@ -229,6 +229,27 @@ Fix: emit the declaration via `printf | safeHTML` so it's in the same template a
 
 See `layouts/news/rss.xml` for the established pattern.
 
+**XML processing instructions also require `printf | safeHTML`.** Hugo's template engine escapes `<` to `&lt;` in XML context, so a bare `<?xml-stylesheet ...?>` line in a `.xml` template is emitted as `&lt;?xml-stylesheet...` and ignored by parsers. Chain it into the same `printf | safeHTML` as the declaration:
+
+```xml
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"../sitemap.xsl\"?>" | safeHTML }}
+```
+
+**Relative `../sitemap.xsl` path for language sitemaps.** Language sitemaps are output at `/en/sitemap.xml` and `/fr/sitemap.xml`. A relative `href="../sitemap.xsl"` resolves to `/sitemap.xsl` from both paths, and works correctly across all three environments (localhost dev server, GitHub Pages subpath deployment, production root domain). The XSL file lives in `static/sitemap.xsl` so it is served at the root.
+
+## Sitemap exclusion for no-render pages
+
+Any content page with `build: render: never` has no permalink. Hugo still includes it in the sitemap, emitting `<url><loc/></url>` (empty `<loc>`). Chrome interprets `<xhtml:link>` elements in the XHTML namespace as an XHTML document and renders it as HTML, stripping XML tags — an empty `<loc>` in the same file triggers this. Always pair `build: render: never` with `sitemap: disable: true`:
+
+```yaml
+build:
+  render: never
+sitemap:
+  disable: true
+```
+
+The sitemap template also guards defensively: `{{- if not .Permalink }}{{- continue }}{{- end }}` skips any page that slips through without a permalink.
+
 ## Sweep rule — before any structural git or template change
 
 Before a structural change (renaming a field, moving a file, restoring a submodule), grep for related tracked files and references first:

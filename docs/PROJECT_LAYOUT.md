@@ -100,5 +100,7 @@ hugo-testing/
         │                     hero-slider.js       Homepage hero carousel
         │                     hof-table.js         Sort + category-filter dropdown for the Hall of Fame table
         │                     results-table.js     Sortable results table in news articles
+        ├── sitemap.xsl     XSLT stylesheet for language sitemaps — makes /en/ and /fr/ sitemaps
+        │                   render as styled HTML in browsers (referenced via PI in sitemap.xml)
         └── version.json    Build version metadata — managed by /fenb-git-release, do not edit
 ```
