@@ -1,0 +1,2 @@
+horizontal skew: -3.5 degrees
+font: Proxima Nova Condensed Black Italic

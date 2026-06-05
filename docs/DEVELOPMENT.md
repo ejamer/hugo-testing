@@ -23,7 +23,7 @@ make build-prod   # production build — minified + pagefind index
 > [!TIP]
 > `make serve` runs three steps in order: builds the site, generates the search index with Pagefind, then starts the dev server. Using just `hugo server` inside the `fenb-1` folder skips the Pagefind step, so the search overlay will silently fail to load — always use `make serve` when you need a full-featured test.
 
-The site builds in ~100 ms. Open `http://localhost:1313/hugo-testing/` in your browser.
+The site builds in ~100 ms. Open `http://localhost:1313/` in your browser.
 
 ### Environment configuration
 
@@ -35,6 +35,8 @@ The site builds in ~100 ms. Open `http://localhost:1313/hugo-testing/` in your b
 | `config/production/` | `production` | `https://fenb.ca/` | `make build-prod` |
 
 Hugo defaults to `production` for the bare `hugo` command and `development` for `hugo server`. `make build` and `make serve` explicitly pass `--environment development` so local builds always use the test URL. Never put `baseURL` in the root `hugo.toml` — it belongs only in these environment files.
+
+`make serve` also passes `--baseURL http://localhost:1313/` to override the GitHub Pages subpath (`/hugo-testing/`) at runtime. Without this, root-relative static file links (e.g. `/documents/events/…`) would 404 locally because the path would resolve without the subpath prefix. This flag has no effect on production builds.
 
 ---
 
