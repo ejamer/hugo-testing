@@ -27,6 +27,7 @@ hugo-testing/
     │                         fenb-news.css        News cards, article layout, 404 page
     │                         fenb-clubs.css       Clubs page, programs quick-links
     │                         fenb-about.css       About page, policies page
+    │                         fenb-hof.css         Hall of Fame landing table + inductee profile
     │                         fenb-schedule.css    Season schedule page
     │                         fenb-join.css        Join & Register section
     │                         fenb-programs.css    Programs & Development section
@@ -37,7 +38,8 @@ hugo-testing/
     ├── content/            Bilingual content files: _index.md + _index.fr.md per section,
     │   │                   slug.en.md + slug.fr.md per article/page
     │   ├── _index.md / _index.fr.md    Homepage
-    │   ├── about/          About section, policies-and-reports page, policies/ sub-pages
+    │   ├── about/          About section, policies-and-reports page, policies/ sub-pages,
+    │   │                   hall-of-fame/ (inductee bilingual pairs)
     │   ├── clubs/          Clubs list page (content from data/clubs.yaml)
     │   ├── events/         Events section index + schedule.en.md / schedule.fr.md
     │   ├── join/           Join landing page + membership, clubs, volunteer sub-pages
@@ -46,6 +48,7 @@ hugo-testing/
     │                         coach, referee, secretariat sub-pages
     ├── data/               YAML files that drive page content — each maps to a specific page or feature:
     │   ├── board_members.yaml      Board of directors grid on /about/
+    │   ├── hof_categories.yaml     Canonical Hall of Fame category IDs (drives filter dropdown + CSS badge classes)
     │   ├── clubs.yaml              Member club cards on /clubs/
     │   ├── event_categories.yaml   Canonical category IDs for calendar legend and schedule filters
     │   ├── events.yaml             Current season event list (homepage + /events/)
@@ -65,7 +68,8 @@ hugo-testing/
     │   ├── _default/
     │   │   └── sitemap.xml Custom sitemap with hreflang alternates
     │   ├── about/          list.html (About), single.html (Policies & Reports),
-    │   │                   policies/single.html (individual policy page)
+    │   │                   policies/single.html (individual policy page),
+    │   │                   hall-of-fame/list.html (inductee table), hall-of-fame/single.html (profile)
     │   ├── clubs/          list.html (club grid + map)
     │   ├── events/         list.html (JS calendar), schedule.html (filterable list)
     │   ├── join/           list.html, membership.html, clubs.html, volunteer.html
@@ -88,11 +92,12 @@ hugo-testing/
     └── static/
         ├── documents/      PDFs served at /documents/ — subfolders: about/agm-minutes/,
         │                   about/governance/, canada-games/
-        ├── images/         Site images — subfolders: canada-games/, clubs/, hero/, svg/
+        ├── images/         Site images — subfolders: canada-games/, clubs/, hall-of-fame/, hero/, svg/
         ├── js/             Client-side scripts:
         │                     events-calendar.js   JS month grid for the events calendar
         │                     events-schedule.js   Season toggle + category filters for schedule page
         │                     hero-slider.js       Homepage hero carousel
+        │                     hof-table.js         Sort + category-filter dropdown for the Hall of Fame table
         │                     results-table.js     Sortable results table in news articles
         └── version.json    Build version metadata — managed by /fenb-git-release, do not edit
 ```

@@ -1,0 +1,542 @@
+/* ===================================================
+   fenb-hof.css — Hall of Fame landing + profile pages
+   =================================================== */
+
+/* ── Landing page ────────────────────────────────── */
+.fenb-hof-section {
+  padding: 4rem 1.5rem;
+}
+
+/* ── About section ────────────────────────────────── */
+.fenb-hof-about {
+  margin-bottom: 3rem;
+}
+
+.fenb-hof-about-body {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.fenb-hof-about-heading {
+  margin-bottom: 1.25rem;
+}
+
+.fenb-hof-about-text p {
+  font-size: 1.025rem;
+  line-height: 1.8;
+  color: var(--text-body);
+  margin: 0 0 1rem;
+}
+
+.fenb-hof-about-text p:last-child {
+  margin-bottom: 0;
+}
+
+.fenb-hof-about-figure {
+  margin: 0;
+}
+
+.fenb-hof-about-photo {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.fenb-hof-photo-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--off-white);
+  border: 2px dashed var(--light-gray);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* ── Inductees table heading ──────────────────────── */
+.fenb-hof-table-heading {
+  margin: 0 0 1.25rem;
+}
+
+/* ── Inductee table ───────────────────────────────── */
+.fenb-hof-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  font-size: 0.93rem;
+}
+
+.fenb-hof-table thead tr {
+  background: var(--off-white);
+}
+
+.fenb-hof-table th {
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+/* ── Sortable column headers ──────────────────────── */
+.fenb-hof-th-sort {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.fenb-hof-th-sort:hover {
+  color: var(--text-dark);
+}
+
+.fenb-hof-th-sort::after {
+  content: " \2195"; /* ↕ */
+  opacity: 0.35;
+  font-size: 0.7rem;
+}
+
+.fenb-hof-th-sort[aria-sort="ascending"]::after {
+  content: " \2191"; /* ↑ */
+  opacity: 1;
+  color: var(--teal);
+}
+
+.fenb-hof-th-sort[aria-sort="descending"]::after {
+  content: " \2193"; /* ↓ */
+  opacity: 1;
+  color: var(--teal);
+}
+
+/* ── Filter column header ─────────────────────────── */
+.fenb-hof-th-filter {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.fenb-hof-th-filter:hover {
+  color: var(--text-dark);
+}
+
+.fenb-hof-filter-icon {
+  vertical-align: middle;
+  margin-left: 0.2rem;
+  opacity: 0.5;
+  transition: opacity var(--transition);
+}
+
+.fenb-hof-th-filter:hover .fenb-hof-filter-icon,
+.fenb-hof-th-filter[aria-expanded="true"] .fenb-hof-filter-icon {
+  opacity: 1;
+  stroke: var(--teal);
+}
+
+.fenb-hof-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: var(--teal);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-weight: 700;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+}
+
+.fenb-hof-filter-badge[hidden] {
+  display: none;
+}
+
+/* ── Table rows ───────────────────────────────────── */
+.fenb-hof-row {
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  transition: background var(--transition);
+}
+
+.fenb-hof-row--alt {
+  background: var(--off-white);
+}
+
+.fenb-hof-row:last-child {
+  border-bottom: none;
+}
+
+.fenb-hof-row:hover {
+  background: var(--teal-pale);
+}
+
+.fenb-hof-table td {
+  padding: 1rem 1.25rem;
+  vertical-align: middle;
+}
+
+.fenb-hof-year {
+  font-weight: 700;
+  color: var(--text-dark);
+  white-space: nowrap;
+  width: 8rem;
+}
+
+.fenb-hof-name {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.fenb-hof-category {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.fenb-hof-table .fenb-hof-badge-group {
+  flex-wrap: nowrap;
+}
+
+.fenb-hof-th-link {
+  text-align: right;
+}
+
+.fenb-hof-link {
+  text-align: right;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.fenb-hof-profile-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--teal);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.fenb-hof-profile-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Category badge ───────────────────────────────── */
+.fenb-hof-badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.fenb-hof-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.fenb-hof-badge--athlete {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.fenb-hof-badge--coach {
+  background: var(--teal-pale);
+  color: var(--teal-dark);
+}
+
+.fenb-hof-badge--builder {
+  background: var(--crimson-pale);
+  color: var(--crimson-dark);
+}
+
+/* ── Category filter dropdown ─────────────────────── */
+.fenb-hof-cat-dropdown {
+  position: absolute;
+  z-index: 200;
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  padding: 0.75rem;
+  min-width: 170px;
+}
+
+.fenb-hof-filter-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.fenb-hof-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.15rem 0;
+}
+
+.fenb-hof-filter-option input[type="checkbox"] {
+  cursor: pointer;
+  width: 0.9rem;
+  height: 0.9rem;
+  flex-shrink: 0;
+  accent-color: var(--teal);
+}
+
+.fenb-hof-clear-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: none;
+  border: 1px solid var(--light-gray);
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.fenb-hof-clear-btn:hover {
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+/* ── Profile page ─────────────────────────────────── */
+.fenb-hof-profile-section {
+  padding: 4rem 1.5rem;
+}
+
+.fenb-hof-profile {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+/* ── Profile aside ────────────────────────────────── */
+.fenb-hof-profile-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fenb-hof-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy-light));
+}
+
+.fenb-hof-avatar--athlete {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+}
+
+.fenb-hof-avatar--coach {
+  background: linear-gradient(135deg, var(--teal-dark), var(--teal-light));
+}
+
+.fenb-hof-avatar--builder {
+  background: linear-gradient(135deg, var(--crimson-dark), var(--crimson-light));
+}
+
+.fenb-hof-profile-photo {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.fenb-hof-profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fenb-hof-inducted-year {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.fenb-hof-posthumous {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.fenb-hof-recipient {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.fenb-hof-related-links h3 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  margin: 0 0 0.6rem;
+}
+
+.fenb-hof-related-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fenb-hof-related-links li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.875rem;
+}
+
+.fenb-hof-related-links li::before {
+  content: "\2192"; /* → */
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font-size: 0.75rem;
+}
+
+.fenb-hof-related-links a {
+  color: var(--teal);
+  text-decoration: none;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.fenb-hof-related-links a:hover {
+  text-decoration: underline;
+}
+
+/* ── Profile bio ──────────────────────────────────── */
+.fenb-hof-profile-name {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--text-dark);
+  margin: 0 0 1.5rem;
+  line-height: 1.2;
+}
+
+.fenb-hof-bio-body p {
+  font-size: 1.025rem;
+  line-height: 1.8;
+  color: var(--text-body);
+  margin: 0 0 1.25rem;
+}
+
+.fenb-hof-bio-body p:last-child {
+  margin-bottom: 0;
+}
+
+.fenb-hof-placeholder {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── Dark mode ────────────────────────────────────── */
+[data-theme="dark"] .fenb-hof-filter-badge {
+  background: #e6f2f0;
+  color: #004840;
+}
+
+[data-theme="dark"] .fenb-hof-badge--athlete {
+  background: #1e3a8a;
+  color: #bfdbfe;
+}
+
+[data-theme="dark"] .fenb-hof-badge--coach {
+  background: #003830;
+  color: #7ecdc6;
+}
+
+[data-theme="dark"] .fenb-hof-badge--builder {
+  background: #4a1520;
+  color: #f0b8be;
+}
+
+[data-theme="dark"] .fenb-hof-row:hover {
+  background: rgba(0, 97, 86, 0.15);
+}
+
+[data-theme="dark"] .fenb-hof-cat-dropdown {
+  background: var(--surface-dark, #1e2a2a);
+  border-color: var(--border-dark, #3a4a4a);
+}
+
+[data-theme="dark"] .fenb-hof-related-links a,
+[data-theme="dark"] .fenb-hof-related-links li::before,
+[data-theme="dark"] .fenb-hof-related-links h3,
+[data-theme="dark"] .fenb-hof-profile-link {
+  color: var(--teal-light);
+}
+
+[data-theme="dark"] .fenb-hof-photo-placeholder {
+  border-color: var(--border-dark, #3a4a4a);
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 700px) {
+  .fenb-hof-about-body {
+    grid-template-columns: 1fr;
+  }
+
+  .fenb-hof-about-figure {
+    max-width: 280px;
+  }
+
+  .fenb-hof-profile {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .fenb-hof-profile-aside {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .fenb-hof-avatar {
+    width: 64px;
+    height: 64px;
+    font-size: 1.4rem;
+  }
+
+  /* hide category column on small screens — filter th is also hidden */
+  .fenb-hof-table th:nth-child(3),
+  .fenb-hof-table td:nth-child(3) {
+    display: none;
+  }
+}

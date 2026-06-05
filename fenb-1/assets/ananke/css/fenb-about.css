@@ -2,6 +2,12 @@
    fenb-about.css — About page and Policies page
    =================================================== */
 
+/* ── About sub-section nav cards ─────────────────── */
+.fenb-about-nav-cards {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin: 2rem 0 0;
+}
+
 /* ── Overview / mission ──────────────────────────── */
 .fenb-about-overview-section {
   background: var(--white);

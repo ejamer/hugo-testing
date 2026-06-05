@@ -12,6 +12,26 @@
         <h2 class="fenb-section-title">{{ i18n "about_overview_title" }}</h2>
         <p>{{ i18n "about_overview_body" }}</p>
 
+        {{/* ── Sub-section nav cards ─────────────────── */}}
+        <div class="fenb-landing-cards fenb-about-nav-cards">
+          <a href="{{ "about/policies-and-reports/" | relLangURL }}" class="fenb-landing-card">
+            <div class="fenb-landing-card-icon">
+              {{ partial "icon.html" (dict "name" "document.svg" "w" 40 "h" 40) }}
+            </div>
+            <h2>{{ i18n "about_nav_policies_title" }}</h2>
+            <p>{{ i18n "about_nav_policies_desc" }}</p>
+            <span class="fenb-landing-card-cta">{{ i18n "about_nav_policies_cta" }} &rarr;</span>
+          </a>
+          <a href="{{ "about/hall-of-fame/" | relLangURL }}" class="fenb-landing-card">
+            <div class="fenb-landing-card-icon">
+              {{ partial "icon.html" (dict "name" "star.svg" "w" 40 "h" 40) }}
+            </div>
+            <h2>{{ i18n "about_nav_hof_title" }}</h2>
+            <p>{{ i18n "about_nav_hof_desc" }}</p>
+            <span class="fenb-landing-card-cta">{{ i18n "about_nav_hof_cta" }} &rarr;</span>
+          </a>
+        </div>
+
         <div class="fenb-about-history-content">
           <span class="fenb-section-label">{{ i18n "about_history_label" }}</span>
           <h3 class="fenb-section-title">{{ i18n "about_history_title" }}</h3>
