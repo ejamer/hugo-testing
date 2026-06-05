@@ -301,6 +301,25 @@ var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.event
 
 Note: `custom_css` belongs under `[params.ananke]` (not `[params]`) — this is the Ananke-namespace convention for CSS files to be processed by Ananke's pipeline.
 
+## CSS `display` property overrides the `hidden` attribute
+
+Any element with an explicit `display` property set via a class selector (e.g. `display: inline-flex`, `display: grid`) will remain visible even when the HTML `hidden` attribute is present. This is because the class selector has higher specificity than the browser's user-agent rule `[hidden] { display: none }`.
+
+**Fix:** add a `[hidden]` companion rule in the same CSS block:
+
+```css
+.your-element {
+  display: inline-flex; /* or grid, block, etc. */
+  …
+}
+
+.your-element[hidden] {
+  display: none;
+}
+```
+
+This was caught on `.fenb-hof-filter-badge`, which used `display: inline-flex` and remained visible despite JS setting `hidden`. The companion rule restores correct behaviour.
+
 ## Hugo deprecated front matter and template APIs
 
 These were caught as build errors in this project:

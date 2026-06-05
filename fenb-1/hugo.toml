@@ -41,6 +41,7 @@ theme = 'ananke'
       "fenb-news.css",
       "fenb-clubs.css",
       "fenb-about.css",
+      "fenb-hof.css",
       "fenb-schedule.css",
       "fenb-join.css",
       "fenb-programs.css",
@@ -133,6 +134,12 @@ theme = 'ananke'
   parent = "about"
 
 [[languages.en.menus.main]]
+  name = "Hall of Fame"
+  url = "about/hall-of-fame/"
+  weight = 2
+  parent = "about"
+
+[[languages.en.menus.main]]
   name = "Join"
   url = "join/"
   weight = 6
@@ -215,6 +222,12 @@ theme = 'ananke'
   name = "Politiques, plans et rapports"
   url = "about/policies-and-reports/"
   weight = 1
+  parent = "about"
+
+[[languages.fr.menus.main]]
+  name = "Temple de la renommée"
+  url = "about/hall-of-fame/"
+  weight = 2
   parent = "about"
 
 [[languages.fr.menus.main]]

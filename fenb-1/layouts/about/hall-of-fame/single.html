@@ -1,0 +1,66 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<section class="fenb-hof-profile-section">
+  <div class="fenb-container fenb-container--narrow">
+    {{ partial "back-link.html" (dict "url" "about/hall-of-fame/" "key" "hof_back") }}
+
+    <div class="fenb-hof-profile">
+
+      {{/* ── Sidebar: avatar + meta + links ──────────────── */}}
+      <aside class="fenb-hof-profile-aside">
+
+        {{ if .Params.photo }}
+        <img class="fenb-hof-profile-photo" src="{{ .Params.photo | relURL }}" alt="{{ .Title }}" loading="lazy">
+        {{ else }}
+        {{ $initials := "" }}
+        {{ $parts := split .Title " " }}
+        {{ range $parts }}{{ $initials = printf "%s%s" $initials (substr . 0 1) }}{{ end }}
+        {{ $primaryCat := index .Params.category 0 | lower }}
+        <div class="fenb-hof-avatar fenb-hof-avatar--{{ $primaryCat }}">{{ $initials }}</div>
+        {{ end }}
+
+        <div class="fenb-hof-profile-meta">
+          <div class="fenb-hof-badge-group">
+            {{ range .Params.category }}
+            <span class="fenb-hof-badge fenb-hof-badge--{{ lower . }}">
+              {{ i18n (printf "hof_cat_%s" (lower .)) }}
+            </span>
+            {{ end }}
+          </div>
+          <p class="fenb-hof-inducted-year">{{ i18n "hof_inducted" }} {{ .Params.year_inducted }}</p>
+          {{ if .Params.posthumous }}
+          <p class="fenb-hof-posthumous">{{ i18n "hof_posthumous" }}</p>
+          {{ with .Params.award_recipient }}
+          <p class="fenb-hof-recipient">{{ i18n "hof_received_by" }}: {{ . }}</p>
+          {{ end }}
+          {{ end }}
+        </div>
+
+        {{ with .Params.links }}
+        <div class="fenb-hof-related-links">
+          <h3>{{ i18n "hof_links_heading" }}</h3>
+          <ul>
+            {{ range . }}
+            <li><a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .label }}</a></li>
+            {{ end }}
+          </ul>
+        </div>
+        {{ end }}
+
+      </aside>
+
+      {{/* ── Main: name + biography ───────────────────────── */}}
+      <div class="fenb-hof-profile-bio">
+        <h1 class="fenb-hof-profile-name">{{ .Title }}</h1>
+        {{ if .Content }}
+        <div class="fenb-hof-bio-body">{{ .Content }}</div>
+        {{ else }}
+        <p class="fenb-hof-placeholder">{{ i18n "hof_placeholder" }}</p>
+        {{ end }}
+      </div>
+
+    </div>
+  </div>
+</section>
+{{ end }}

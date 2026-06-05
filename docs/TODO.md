@@ -44,7 +44,14 @@ All seven pages need a full review pass for both style and content quality befor
 - [ ] **`/programs/canada-games-2027/`** 
 - [ ] **`/programs/referee-development/`** 
 - [ ] **`/programs/secretariat-development/`** 
-- [ ] **HONOURS & AWARDS** — the old site's programs page listed "FENB Honours & Awards" as a 7th program area; not yet built here. Add as a sub-page if/when content is ready.
+- [x] **HONOURS & AWARDS** — built as `/about/hall-of-fame/` with 5 inductees (2025 + 2026 cohorts).
+
+## Hall of Fame
+
+- [ ] **Marc-André LeBlanc bio** — `content/about/hall-of-fame/marc-andre-leblanc.{en,fr}.md` currently have no body content; update both files when his biography is published on the original site.
+- [ ] **Marc-André LeBlanc category** — his category is currently set to `"Athlete"` as a placeholder; confirm and correct in both language files.
+- [ ] **French bio review** — the French bios for Alfred Knappe, Rick Gosselin, and Kara Grant were machine-translated; have a French speaker review and correct `*.fr.md` files in `content/about/hall-of-fame/`.
+- [ ] **Inductee photos** — add individual photos to `static/images/hall-of-fame/` when available; set the `photo` front matter field in the corresponding `.en.md` and `.fr.md` files (the `"Builder"` class renders an initials avatar as a placeholder).
 
 ## Release workflow
 

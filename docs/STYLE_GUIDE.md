@@ -28,6 +28,7 @@ Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped t
 | `fenb-news.css` | News cards, article layout, article sidebar, results tables, 404 page |
 | `fenb-clubs.css` | Programs quick-links, clubs grid/map/CTA |
 | `fenb-about.css` | About page, policies page |
+| `fenb-hof.css` | Hall of Fame landing table and inductee profile pages |
 | `fenb-schedule.css` | Season schedule page |
 | `fenb-join.css` | Join & Register section (landing page, membership, club registration, volunteer) |
 | `fenb-responsive.css` | All `@media` breakpoints and print query — loaded last |
@@ -217,7 +218,7 @@ The toggle sets `data-theme="dark"` on `<html>`; a `[data-theme="dark"]` block i
 - **`--teal-pale`** resolves to `#1e3632` — a dark hover background, not a visible tint.
 - **`--navy-light`** resolves to `#6aabdf` in dark mode. **Use it instead of `var(--navy)` for any navy text or border in a `[data-theme="dark"]` rule** — `var(--navy)` (#1e3a5f) is near-black on the dark background and fails contrast.
 
-**Badge/pill swap:** light mode uses pale-tint bg + brand-colour text. In dark mode the pale tints are near-black, so invert to full brand-colour bg + `#fff` text (`var(--teal)` bg + white = ~7.5:1 ✓).
+**Badge/pill swap:** light mode uses pale-tint bg + brand-colour text. In dark mode the pale tints are near-black, so invert to full brand-colour bg + `#fff` text (`var(--teal)` bg + white = ~7.5:1 ✓). **Exception — count/indicator badges** (e.g. `fenb-hof-filter-badge`) where `var(--teal)` itself is the light-mode background: `var(--teal)` (#006156) is too dark on a dark surface for white text to pass contrast. Use hardcoded hex values instead of CSS variables in the dark-mode rule — `--teal-pale` and similar variables are themselves remapped in dark mode and cannot be relied on to stay light. Confirmed values: `background: #e6f2f0; color: #004840`.
 
 **Hardcoded values to watch:** semi-transparent darks (`rgba(0,0,0,0.05)` borders) become invisible on dark surfaces — use `var(--light-gray)` instead. Tachyons utility classes like `bg-near-white` hardcode a hex value that ignores CSS variables; override them explicitly in `[data-theme="dark"]`. Conversely, use `#fff` (not `var(--white)`) for text on coloured backgrounds — `--white` remaps to `#141f1d` in dark mode, so `color: var(--white)` on a teal button silently produces dark text.
 

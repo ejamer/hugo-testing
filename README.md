@@ -8,9 +8,9 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 
 | File | Covers |
 |------|--------|
+| [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code; lists available `/fenb-*` skills |
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
 | [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
-| [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code; lists available `/fenb-*` skills |
 | [docs/PROJECT_LAYOUT.md](docs/PROJECT_LAYOUT.md) | Full directory tree with file-by-file descriptions |
 | [docs/TODO.md](docs/TODO.md) | Outstanding items |
 
@@ -279,6 +279,42 @@ Edit `data/board_members.yaml`. Top-level keys:
    ```
 
 The season label ("2025–2026 Season AGM Minutes") is computed automatically from `year` in the layout.
+
+---
+
+### Hall of Fame inductees
+
+Inductees are bilingual Markdown pairs in `content/about/hall-of-fame/`. File naming follows the standard bilingual convention: `{slug}.en.md` + `{slug}.fr.md`.
+
+**Front matter:**
+
+```yaml
+---
+title: "Full Name"
+year_inducted: 2025
+category:              # YAML array — one or more canonical IDs from data/hof_categories.yaml
+  - "Athlete"
+  - "Coach"
+posthumous: false      # true if the award was given posthumously
+award_recipient: ""    # name of person who accepted on the inductee's behalf (if posthumous)
+links: []              # optional array of related links
+  - label: "Link label"
+    url: "https://…"
+---
+
+Biographical text in Markdown.
+```
+
+The body is the inductee's biography. Leave the body empty (no content after the `---`) to show a "Full biography coming soon." placeholder on the profile page.
+
+**Category IDs** are defined in `data/hof_categories.yaml`. Currently: `athlete`, `coach`, `builder`. To add a new category:
+1. Add the ID to `data/hof_categories.yaml`
+2. Add `hof_cat_{id}` keys to both `i18n/en.yaml` and `i18n/fr.yaml`
+3. Add `.fenb-hof-badge--{id}` CSS rules (light mode + dark mode) to `fenb-hof.css`
+
+The landing page table at `/about/hall-of-fame/` is generated automatically from all `.en.md` / `.fr.md` file pairs in the directory — no layout changes needed when adding a new inductee.
+
+**Inductee photos:** store in `static/images/hall-of-fame/{slug}.jpg` and set `photo: images/hall-of-fame/{slug}.jpg` in the front matter. If `photo` is omitted, a coloured circle with the inductee's initials is shown instead (colour driven by the first category).
 
 ---
 
