@@ -63,7 +63,7 @@ Test each project skill end-to-end at least once to verify it works correctly.
 
 | Skill | Status | Notes |
 |---|---|---|
-| `/fenb-content-add-news` | ❌ Untested | |
+| `/fenb-content-add-news` | ✅ Tested | |
 | `/fenb-content-add-page` | ❌ Untested | |
 | `/fenb-content-add-results` | ❌ Untested | |
 | `/fenb-data-get-results` | ❌ Untested | |
