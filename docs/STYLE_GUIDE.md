@@ -258,6 +258,20 @@ Any layout that renders event links (card partial, schedule list, future widgets
 
 Never hardcode display text in a layout. Add keys to **both** `i18n/en.yaml` and `i18n/fr.yaml`. Use `{{ i18n "key" }}` in templates. For strings with dynamic values: `{{ i18n "key" (dict "Var" value) }}` with `{{ .Var }}` in the YAML value.
 
+### Language-switcher labels
+
+When rendering an "also available in [language]" link, the label text must be in the **target language** (the one you're switching *to*), not the current page's language. Achieve this by storing the label in the *opposite* language's i18n file:
+
+```yaml
+# en.yaml — shown on EN pages, so write it in French
+policies_also_in: "Aussi disponible en"
+
+# fr.yaml — shown on FR pages, so write it in English
+policies_also_in: "Also available in"
+```
+
+The language name itself (`.Language.Label`) comes from the translation page and is already correct — only the surrounding label text needs this treatment.
+
 ---
 
 ## Per-page layouts within a section
@@ -425,6 +439,42 @@ For simple one-off uses where no size or class override is needed, `readFile` is
 | `data/quicklinks.yaml` | `layouts/index.html` | `icon` |
 | `data/joinpaths.yaml` | `layouts/join/list.html` | `icon` |
 | `data/programcards.yaml` | `layouts/programs/list.html` | `icon` (SVG) or `img` (raster) |
+
+---
+
+## Layout-driven section pages
+
+If a section's `_index.md` body is never rendered (the layout uses i18n strings or `hugo.Data` exclusively and never calls `.Content`), add an HTML comment naming the actual content source:
+
+```markdown
+---
+title: "..."
+---
+
+<!-- Page content is not read from this file. Edit in data/clubs.yaml. -->
+```
+
+HTML comments in the body are never output — they exist only for editors who open the file expecting editable content.
+
+---
+
+## Template patterns
+
+### Return-value partials for computed display strings
+
+When display text must be computed from data (e.g. a bilingual date from `start_date` + `end_date`), extract the logic into a return-value partial:
+
+```go
+{{- return $computedString -}}
+```
+
+Called as: `{{ partial "event-date.html" . }}`
+
+This keeps the logic in one file regardless of how many templates render the same thing. `layouts/partials/event-date.html` is the established example.
+
+### Filterable list pages — SSR + JS visibility pattern
+
+For filterable lists (e.g. `/events/schedule/`), prefer SSR + JS visibility toggling over JS-only rendering: Hugo renders every item with `data-*` HTML attributes; JS shows/hides them in response to filter controls. This gives a no-JS fallback and print support for free. `static/js/events-schedule.js` is the established example.
 
 ---
 

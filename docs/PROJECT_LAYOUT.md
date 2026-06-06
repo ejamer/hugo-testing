@@ -10,6 +10,7 @@ hugo-testing/
 ├── README.md              How to add/update each content type
 ├── docs/
 │   ├── DEVELOPMENT.md     Branch strategy and build commands
+│   ├── GOTCHAS.md         Past build/template gotchas and their fixes
 │   ├── PROJECT_LAYOUT.md  This file — full directory tree
 │   ├── STYLE_GUIDE.md     Brand, CSS, and content conventions
 │   └── TODO.md            Outstanding items — keep current

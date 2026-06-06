@@ -8,9 +8,10 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 
 - **`README.md`** — how to add/update each content type (news, events, clubs). Read it when starting work on a new section or when unsure about data schemas.
 - **`docs/PROJECT_LAYOUT.md`** — full directory tree with file-by-file descriptions. Read it when navigating an unfamiliar part of the repo.
-- **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colour reference. Read it before implementing any new visual element or content type.
+- **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, shared components, and page header band usage.
 - **`docs/TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
-- **`plans/`** — detailed implementation plans for multi-session features. Files here are referenced from docs/TODO.md items when a task is too detailed for the checklist itself. Read the relevant plan file before starting any TODO item that links to one.
+- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, or git submodules.
+- **`plans/`** — detailed implementation plans for multi-session features. Read the relevant plan file before starting any TODO item that links to one.
 
 ## Outstanding TODOs
 
@@ -40,18 +41,11 @@ When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/comma
 
 ## version.json
 
-`fenb-1/static/version.json` is managed automatically by `/fenb-git-release` — do not edit it manually. It is written and committed to `dev` as part of every release, and served at `/version.json` on the live site.
-
-Fields:
-- **`version`** — the semver tag if this release was tagged (e.g. `"v0.1.0"`); otherwise `"<last-tag>-dev"` (e.g. `"v0.0.0-dev"` if no tags exist yet)
-- **`released_at`** — UTC timestamp of the release
-- **`released_by`** — name and anonymized email of the releaser
-- **`pr`** — URL of the release PR
-- **`commits_since_tag`** — cumulative commit count since the last semver tag (or all commits if no tags exist). For consecutive untagged releases this counter grows — it is not reset between untagged releases, only when a new tag is applied.
+`fenb-1/static/version.json` is managed automatically by `/fenb-git-release` — do not edit it manually. See `docs/DEVELOPMENT.md` for the field schema.
 
 ## Content creation — use skills, not `hugo new`
 
-`/fenb-content-add-news` and `/fenb-content-add-results` are the correct entry points for news articles. They enforce bilingual pair creation, correct filename format (`{mon}-{dd}-{slug}.{lang}.md`), year subfolder existence, and required front matter fields. `hugo new` with the `news` archetype works but only creates a single file — it cannot enforce the bilingual pair or the naming convention. Never use `hugo new` directly for news content.
+`/fenb-content-add-news` and `/fenb-content-add-results` are the correct entry points for news articles. They enforce bilingual pair creation, correct filename format (`{mon}-{dd}-{slug}.{lang}.md`), year subfolder existence, and required front matter fields. Never use `hugo new` directly for news content.
 
 ## Development workflow
 
@@ -63,40 +57,25 @@ Key rules:
 - **Feature branches** — cut from `dev`, PR back into `dev` when done, then delete.
 - **Release** — PR from `dev` into `main`.
 
-Dev server: `make serve`
-Production build: `make build-prod`
-Clean build artifacts: `make clean`
+Dev server: `make serve` | Production build: `make build-prod` | Clean: `make clean`
 
 All `make` commands run from the repo root.
 
 ## Git commit and push — skills only
 
-`git commit`, `git push`, and `git push -u` are **never run autonomously**. They may only execute inside the `/fenb-git-commit` or `/fenb-git-release` skills, which start with an explicit user confirmation gate.
-
-If you find yourself about to run any of these commands outside those skills — stop, and tell the user to invoke the skill instead. There are no exceptions: not for "small fixes", not for updating version files, not for anything. The skill invocation is the approval.
+`git commit`, `git push`, and `git push -u` are **never run autonomously**. They may only execute inside the `/fenb-git-commit` or `/fenb-git-release` skills, which start with an explicit user confirmation gate. There are no exceptions: not for "small fixes", not for updating version files, not for anything.
 
 ## Key conventions
 
-See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, and page header band usage.
+See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colours.
 
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
 - **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see docs/STYLE_GUIDE.md)
-- **Recurring event slugs:** for tournaments that repeat annually, include the year in the slug — e.g. `east-coast-games-2026-registration`. This prevents cross-season collisions in the archive. One-off announcements or community articles don't need it.
+- **Recurring event slugs:** for tournaments that repeat annually, include the year in the slug — e.g. `east-coast-games-2026-registration`. This prevents cross-season collisions in the archive.
 
 ## Pattern reuse — check before creating
 
-Before adding any new visual element (a card, banner, callout, sidebar, heading style), **first check whether a shared component already exists** in `fenb-base.css` and the shared partials in `layouts/partials/`. Creating a one-off version of a pattern that already exists fragments the visual language and makes future consistency fixes harder.
-
-Shared components documented in `docs/STYLE_GUIDE.md` (under "Shared UI components"):
-- **`fenb-cta-banner`** — teal call-to-action banner with heading and button
-- **`fenb-callout`** — left-border note block (and `--quote` variant)
-- **`fenb-about-sidebar-card`** — informational sidebar card
-- **`fenb-landing-card`** — nav/path card grid
-- **`fenb-btn-*`** — button variants (`-teal`, `-crimson`, `-white`, `-outline`)
-- **`back-link.html` partial** — back-navigation link
-- **`clubs-benefits.html` partial** — three-card benefits grid
-
-If the existing component almost fits but needs a small variation, use a CSS modifier class (e.g. `fenb-callout--quote`) rather than a new component. Only introduce a new shared component when the pattern will genuinely appear in multiple places.
+Before adding any new visual element (card, banner, callout, heading style), **first check `docs/STYLE_GUIDE.md`** (Shared UI components) and shared partials in `layouts/partials/`. If an existing component almost fits, add a CSS modifier class (e.g. `fenb-callout--quote`) rather than a new component.
 
 ## Post-mortem
 
@@ -108,38 +87,19 @@ After completing a feature, ask the user whether a post-mortem is needed. A post
 
 Always get user approval on the proposed changes before editing any docs.
 
-## Events data schema and season archive
-
-`fenb-1/data/events.yaml` holds the current season. Required top-level fields:
-- `season` — display label with en-dash (e.g. `"2025–2026"`); drives the schedule page season dropdown label
-- `events` — list of event objects (see README.md for the full field schema)
-
-The events calendar page subtitle (shown in the page header band) is set separately in `content/events/_index.md` and `content/events/_index.fr.md` via `description:` front matter — update both files at the start of each season.
-
-**Season rollover:** move `data/events.yaml` → `data/events_archive/YYYY-YYYY.yaml` (regular hyphen in the filename), then create a fresh `data/events.yaml` for the new season. The schedule page at `/events/schedule/` picks up all files in `data/events_archive/` automatically via Hugo's data folder — no layout or template changes needed.
-
-Also update the events calendar page subtitle in `content/events/_index.md` and `content/events/_index.fr.md` to match the new season label — e.g. `description: "2026–2027 season schedule"`. These files drive the subtitle shown in the page header band.
-
-**Event link fields:** `details_url_en`, `details_url_fr`, `registration_url`, and `results_url` are all optional strings. `details_url_en` is the default Learn More URL; `details_url_fr` overrides it on French pages (leave blank to fall back to `_en`). `registration_url` is only rendered when the event date ≥ today. `results_url` is rendered regardless of date and is populated automatically by `/fenb-data-get-results` Step 5.5. All use specific CSS classes (`fenb-event-details-link`, `fenb-event-register-link`, `fenb-event-results-link`) — any new layout rendering these links must use those classes so print and dark-mode styles apply automatically.
-
-**Event description fields:** `description_en` is the English description shown on the schedule page (not homepage cards). `description_fr` overrides it on French pages; leave blank to fall back to `description_en`. Both are optional — events without either show no description.
-
-**Schedule page filter pattern:** `/events/schedule/` uses SSR + JS visibility toggling. Hugo renders every event with `data-season` and `data-category` HTML attributes; `static/js/events-schedule.js` shows/hides them in response to the season dropdown and category filter buttons. Print always reflects the current filtered state. Prefer this pattern over JS-only rendering for any future filterable list page — it gives a no-JS fallback and print support for free.
-
 ## `gh` CLI — TTY and output quirks
 
-All `gh` commands that produce output (lists, JSON, status) must be wrapped with `script -q -c "..." /dev/null` to get visible output in non-TTY environments. Without the wrapper, commands silently return nothing — including `--json` flag variants, not just interactive commands.
+All `gh` commands that produce output (lists, JSON, status) must be wrapped with `script -q -c "..." /dev/null` to get visible output in non-TTY environments. Without the wrapper, commands silently return nothing — including `--json` variants.
 
 ```bash
 script -q -c "gh pr list --state open" /dev/null
-script -q -c "gh pr merge 33 --merge --body ''" /dev/null
 ```
 
 Use `--input` for complex `gh api` payloads that contain special characters.
 
 ## `gh pr merge` requires an explicit PR number
 
-Never run `gh pr merge` without specifying a PR number. Without one, `gh` resolves to the PR associated with the *current branch* — which may not be the PR you just created. If you are on `dev` when you run it, it will find the most recent `dev→main` PR and can delete `dev`.
+Never run `gh pr merge` without specifying a PR number. Without one, `gh` resolves to the current branch's PR — if you're on `dev`, it can delete `dev`.
 
 Always capture the PR number from `gh pr create` output and pass it explicitly:
 
@@ -147,239 +107,36 @@ Always capture the PR number from `gh pr create` output and pass it explicitly:
 gh pr merge $PR_NUMBER --merge --delete-branch
 ```
 
-Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the end).
-
 ## Nav chrome changes
 
-Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. The nav has a fixed-height sticky layout and interactions between flex children are non-obvious — a short description or ASCII sketch avoids wasted implementation rounds.
+Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. After any nav change, verify the result in the browser before reporting done.
 
-After any nav change, verify the result in the browser before reporting done. Template and CSS changes can look correct in isolation but produce broken output (e.g. always-visible dropdowns, mis-coloured links) that only surfaces when rendered.
-
-**Direct-child selectors in nav CSS:** whenever you add a nested `<ul>` or `<li>` inside `.fenb-nav-links`, check whether existing descendant selectors (`ul`, `li`, `a`, `li:last-child`) will reach into the new element unintentionally. Use direct-child selectors (`> ul`, `> ul > li`, `> ul > li:last-child`) to prevent bleed-through. The established selectors in `fenb-nav.css` already use this pattern — follow it when adding new rules.
+**Direct-child selectors in nav CSS:** whenever you add a nested `<ul>` or `<li>` inside `.fenb-nav-links`, use direct-child selectors (`> ul`, `> ul > li`, `> ul > li:last-child`) to prevent bleed-through into dropdowns. `fenb-nav.css` already uses this pattern.
 
 ## Hugo data file naming
 
-**Never use hyphens in data filenames. Use underscores as word separators** (e.g. `board_members.yaml`, `join_paths.yaml`). Hugo stores the data key as the literal filename (without extension), so `program-cards.yaml` produces a key of `program-cards`. Go templates cannot use hyphens in dot-notation identifiers, meaning `hugo.Data.program-cards` is a syntax error and `hugo.Data.program_cards` silently returns nil. The page renders empty with no error. `hero_slides.yaml` is the established pattern in this repo.
+**Never use hyphens in data filenames. Use underscores** (e.g. `board_members.yaml`, `join_paths.yaml`). Hugo stores the data key as the literal filename, so `program-cards.yaml` produces key `program-cards` — a syntax error in Go template dot notation. The page renders silently empty with no build error.
 
-Match the top-level YAML key to the filename exactly (e.g. file `join_paths.yaml` → top-level key `join_paths:`).
-
-**Only create a data file for genuinely editable content** — clubs, events, board members, hero slides. Static structural elements (a fixed set of cards, navigation icons) belong directly in the template. Data files add indirection without benefit when the content never changes.
-
-## Layout-driven section pages
-
-If a section's `_index.md` body is never rendered (the layout uses i18n strings or `hugo.Data` exclusively and never calls `.Content`), add an HTML comment in the body naming the actual content source:
-
-```markdown
----
-title: "..."
----
-
-<!-- Page content is not read from this file. Edit in data/clubs.yaml. -->
-```
-
-HTML comments in the body of a layout-driven page are never output — they exist only for editors who open the file expecting to find editable content.
+Match the top-level YAML key to the filename exactly. Only create data files for genuinely editable content — static structural elements belong directly in the template.
 
 ## URL paths — the no-leading-slash rule
 
-Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as **host-root-relative**, stripping the base URL's path component. With the development `baseURL` `"https://ejamer.github.io/hugo-testing/"` (set in `config/development/hugo.toml`):
+Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as host-root-relative, stripping the base URL's path component. With the GitHub Pages `baseURL` (`/hugo-testing/`):
 
-- `"/events/" | relLangURL` → `/events/` ❌ (base path `/hugo-testing/` lost)
+- `"/events/" | relLangURL` → `/events/` ❌ (base path lost)
 - `"events/" | relLangURL` → `/hugo-testing/events/` ✓
-- `"/pagefind/x.js" | absURL` → `https://ejamer.github.io/pagefind/x.js` ❌
-- `"pagefind/x.js" | absURL` → `https://ejamer.github.io/hugo-testing/pagefind/x.js` ✓
 
-**Rule: never use a leading `/` with any Hugo URL function.** This applies to:
-- Hardcoded strings in templates: `"events/" | relLangURL`, `"js/hero-slider.js" | absURL`
-- Paths stored in data YAML files (`data/*.yaml`) that are piped through `relURL` or `relLangURL` in templates — store them without a leading slash (e.g. `logo: images/clubs/foo.png`, not `logo: /images/clubs/foo.png`)
-
-## Internal links in article Markdown body
-
-Use Hugo's `relref` shortcode for links between content pages. It resolves the correct URL at build time (including language prefix) and fails the build if the target doesn't exist:
-
-```markdown
-Visit our [club directory]({{< relref "clubs/" >}}) for details.
-```
-
-Do **not** hardcode root-relative paths (`/clubs/` or `/fr/clubs/`) in article body text — they skip the base URL and silently break on subpath deployments.
-
-For links to static assets (PDFs in `static/documents/`), a plain Markdown path is acceptable: `[Report](/documents/about/agm-minutes/2024.pdf)`. This is correct for production at `fenb.ca/` (no subpath). On the GitHub Pages test deployment the path will be wrong, but that is an acceptable test-environment limitation for static file links.
-
-## Verify output content, not just output existence
-
-After generating any file output (RSS feed, JSON endpoint, sitemap), inspect the actual content before declaring done:
-
-```bash
-cat public/news/index.xml        # check for <item> elements, not just file existence
-cat -A public/news/index.xml | head -3  # check for hidden leading whitespace (BOM, newlines)
-```
-
-An empty feed, a missing field, or a leading whitespace character are all silent failures that only surface when a user opens the output. A `cat` takes 2 seconds.
-
-## Hugo XML template — no whitespace before the XML declaration
-
-Hugo can emit a leading newline before `<?xml` even when `{{- ... -}}` whitespace trimming is used on preceding lines. A leading character before `<?xml` breaks XML parsers with "Start tag expected, '<' not found".
-
-Fix: emit the declaration via `printf | safeHTML` so it's in the same template action chain, with no gap:
-
-```xml
-{{- $var := .Something -}}
-{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
-<rss ...>
-```
-
-See `layouts/news/rss.xml` for the established pattern.
-
-**XML processing instructions also require `printf | safeHTML`.** Hugo's template engine escapes `<` to `&lt;` in XML context, so a bare `<?xml-stylesheet ...?>` line in a `.xml` template is emitted as `&lt;?xml-stylesheet...` and ignored by parsers. Chain it into the same `printf | safeHTML` as the declaration:
-
-```xml
-{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n<?xml-stylesheet type=\"text/xsl\" href=\"../sitemap.xsl\"?>" | safeHTML }}
-```
-
-**Relative `../sitemap.xsl` path for language sitemaps.** Language sitemaps are output at `/en/sitemap.xml` and `/fr/sitemap.xml`. A relative `href="../sitemap.xsl"` resolves to `/sitemap.xsl` from both paths, and works correctly across all three environments (localhost dev server, GitHub Pages subpath deployment, production root domain). The XSL file lives in `static/sitemap.xsl` so it is served at the root.
-
-## Sitemap exclusion for no-render pages
-
-Any content page with `build: render: never` has no permalink. Hugo still includes it in the sitemap, emitting `<url><loc/></url>` (empty `<loc>`). Chrome interprets `<xhtml:link>` elements in the XHTML namespace as an XHTML document and renders it as HTML, stripping XML tags — an empty `<loc>` in the same file triggers this. Always pair `build: render: never` with `sitemap: disable: true`:
-
-```yaml
-build:
-  render: never
-sitemap:
-  disable: true
-```
-
-The sitemap template also guards defensively: `{{- if not .Permalink }}{{- continue }}{{- end }}` skips any page that slips through without a permalink.
+**Rule: never use a leading `/` with any Hugo URL function.** This applies to hardcoded strings in templates and to paths stored in data YAML files piped through URL functions.
 
 ## Sweep rule — before any structural git or template change
 
-Before a structural change (renaming a field, moving a file, restoring a submodule), grep for related tracked files and references first:
+Before renaming a field, moving a file, or restoring a submodule, grep for related references first:
 
 ```bash
-# Template/JS field changes
 grep -rn 'field_name' fenb-1/layouts/ fenb-1/static/js/ .claude/commands/
-
-# Git structural changes (submodule, .gitmodules, tracked file moves)
 git ls-files | grep -i 'relevant_name'
 ```
 
-Missing one location has consistently required a second round trip. The grep takes 5 seconds.
+## Verify output content, not just output existence
 
-## Restoring a git submodule gitlink
-
-When a submodule's files have been committed as regular tracked files (mode `100644`) instead of a gitlink (mode `160000`), `git rm --cached` + `git add` alone will re-track the files rather than create the gitlink. Use `git update-index` to force the gitlink:
-
-```bash
-# 1. Remove regular-file tracking
-git rm -r --cached path/to/submodule/
-
-# 2. Create .gitmodules at repo root (not inside a subdirectory)
-
-# 3. Force-register the gitlink at the pinned commit hash
-git update-index --add --cacheinfo 160000,<sha1>,path/to/submodule
-
-# 4. Verify
-git ls-files --stage path/to/submodule   # should show mode 160000
-git submodule status                      # should show the hash
-```
-
-Also verify that the `.git` file inside the submodule directory has the correct relative `gitdir:` depth to reach the repo root's `.git/modules/` directory, and that the `worktree` in `.git/modules/<name>/config` includes any intermediate path components.
-
-## Return-value partials for computed display strings
-
-When display text must be computed from data (e.g. a bilingual date from `start_date` + `end_date`), extract the logic into a return-value partial rather than duplicating it inline:
-
-```go
-{{- return $computedString -}}
-```
-
-Called as: `{{ partial "event-date.html" . }}`
-
-This keeps the logic in one file regardless of how many templates render the same thing (`event-card.html`, `events/schedule.html`, future widgets). `layouts/partials/event-date.html` is the established example — follow this pattern for any similar computed display value.
-
-## Hugo template `sort` syntax
-
-Pipe passes the value as the **last** argument, but `sort` expects the collection first — so `collection | sort "Key" "dir"` silently sorts the string `"Key"` instead of the collection. Always write it positionally: `sort .MyCollection "FieldName" "desc"`.
-
-## Embedding Hugo data in `<script>` tags
-
-Go's `html/template` applies JS-context escaping inside `<script>` blocks. A slice passed through `| jsonify` is output as a **quoted JSON string** rather than a raw array. Fix: embed normally and parse in JS:
-
-```html
-<script>
-window.MY_DATA = { events: {{ .events | jsonify }} };
-</script>
-```
-
-```js
-// In the JS file:
-var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.events;
-```
-
-`safeJS` does **not** bypass this — it only prevents double-escaping of already-safe JS values, not the context-aware string-wrapping. Go straight to `JSON.parse()`.
-
-## TOML subtable ordering in hugo.toml
-
-`[params.subtable]` changes the active TOML context — every key that follows it (until the next `[…]` header) belongs to the subtable, not the parent. Place all flat `[params]` keys (`background_color_class`, etc.) **before** any `[params.child]` subtable headers. Placing a subtable header first silently swallows subsequent flat keys into the wrong table with no build error.
-
-Note: `custom_css` belongs under `[params.ananke]` (not `[params]`) — this is the Ananke-namespace convention for CSS files to be processed by Ananke's pipeline.
-
-## CSS `display` property overrides the `hidden` attribute
-
-Any element with an explicit `display` property set via a class selector (e.g. `display: inline-flex`, `display: grid`) will remain visible even when the HTML `hidden` attribute is present. This is because the class selector has higher specificity than the browser's user-agent rule `[hidden] { display: none }`.
-
-**Fix:** add a `[hidden]` companion rule in the same CSS block:
-
-```css
-.your-element {
-  display: inline-flex; /* or grid, block, etc. */
-  …
-}
-
-.your-element[hidden] {
-  display: none;
-}
-```
-
-This was caught on `.fenb-hof-filter-badge`, which used `display: inline-flex` and remained visible despite JS setting `hidden`. The companion rule restores correct behaviour.
-
-## Hugo deprecated front matter and template APIs
-
-These were caught as build errors in this project:
-
-- **`_build:`** front matter key was removed in Hugo 0.145.0 — use **`build:`** instead.
-- **`.Language.LanguageName`** was deprecated in Hugo 0.158.0 — use **`.Language.Label`** instead.
-
-## i18n language-switcher labels
-
-When rendering an "also available in [language]" link, the label text must be in the **target language** (the one you're switching *to*), not the current page's language. Achieve this by storing the label in the *opposite* language's i18n file:
-
-```yaml
-# en.yaml — shown on EN pages, so write it in French
-policies_also_in: "Aussi disponible en"
-
-# fr.yaml — shown on FR pages, so write it in English
-policies_also_in: "Also available in"
-```
-
-The language name itself (`.Language.Label`) comes from the translation page and is already correct — only the surrounding label text needs this treatment.
-
-## Page header band
-
-`page-header.html` renders a coloured `.fenb-page-header` band below the nav for all non-home pages. By default it shows the page's own `.Title`.
-
-If a section's single pages should show the **section title** in the band instead (e.g. "News & Results" on every news article), add this cascade to the section's `_index.md` and `_index.fr.md`:
-
-```yaml
-cascade:
-  - target:
-      kind: page
-    page_header_uses_section: true
-```
-
-`page-header.html` checks `.Params.page_header_uses_section` and substitutes `.CurrentSection.Title` / `.CurrentSection.Params.description` when set. The `_target: kind: page` scoping means the section's list page is unaffected.
-
-**Preferred approach for a subtitle:** set `description:` in the section's `_index.md` / `_index.fr.md` front matter. The partial already reads `.Params.description` and renders it as the page subtitle — no template changes needed.
-
-Only use `hide_page_header: true` when the layout must render its own header with **dynamic content** (e.g. the clubs page, which shows the live club count in the subtitle). Pair it with an explicit `<header class="fenb-page-header">` block in the layout. Never use it simply to add a static subtitle — use `description:` instead.
-
-**When a user says "use the same header as page X"**, confirm whether they mean the *content* of the band (which title is shown) or just the *style* (height, colours) — they look similar in words but require completely different fixes.
+After generating any file output (RSS feed, sitemap, JSON endpoint), inspect the actual content before declaring done. An empty feed, missing field, or leading whitespace character are silent failures that only surface when a user opens the output.
