@@ -221,6 +221,47 @@ Releases may optionally be tagged with a semver version (`vMAJOR.MINOR.PATCH`). 
 curl https://fenb.ca/version.json
 ```
 
+### version.json fields
+
+`/fenb-git-release` writes `fenb-1/static/version.json` and commits it to `dev`. Do not edit it manually. Fields:
+
+| Field | Value |
+|---|---|
+| `version` | Semver tag (e.g. `"v0.1.0"`) if tagged; otherwise `"<last-tag>-dev"` |
+| `released_at` | UTC timestamp of the release |
+| `released_by` | Name and anonymized email of the releaser |
+| `pr` | URL of the release PR |
+| `commits_since_tag` | Cumulative commit count since the last semver tag (grows between tags; reset only when a new tag is applied) |
+
+---
+
+## `gh` CLI quirks
+
+### TTY and output
+
+All `gh` commands that produce output (lists, JSON, status) must be wrapped with `script -q -c "..." /dev/null` to get visible output in non-TTY environments. Without the wrapper, commands silently return nothing — including `--json` variants.
+
+```bash
+script -q -c "gh pr list --state open" /dev/null
+script -q -c "gh pr merge 33 --merge --body ''" /dev/null
+```
+
+Use `--input` for complex `gh api` payloads that contain special characters.
+
+### `gh pr merge` requires an explicit PR number
+
+Never run `gh pr merge` without specifying a PR number. Without one, `gh` resolves to the PR associated with the *current branch* — if you're on `dev`, it finds the most recent `dev→main` PR and can delete `dev`.
+
+Always capture the PR number from `gh pr create` output and pass it explicitly:
+
+```bash
+gh pr merge $PR_NUMBER --merge --delete-branch
+```
+
+Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the end).
+
+---
+
 ### Search index
 
 Pagefind runs as a post-build step and writes its index to `public/pagefind/`. This directory is **not tracked in git** — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before serving.

@@ -4,10 +4,13 @@
 HUGO ?= /snap/bin/hugo
 
 # Dev server: pre-builds pagefind search index, then serves with live reload.
+# --baseURL must match on both the index-build and the server step — relURL bakes the
+# baseURL's path into asset links (e.g. club logos), and a mismatch leaves the search
+# index pointing at "/hugo-testing/..." paths that 404 against the localhost server.
 # --renderStaticToDisk + --disableFastRender ensures pagefind files are on disk so the
 # search UI works locally. --noHTTPCache prevents stale assets during development.
 serve:
-	cd fenb-1 && $(HUGO) --environment development && npx pagefind --site public --root-selector "main" && $(HUGO) server --renderStaticToDisk --disableFastRender --noHTTPCache --watch --baseURL http://localhost:1313/
+	cd fenb-1 && $(HUGO) --environment development --baseURL http://localhost:1313/ && npx pagefind --site public --root-selector "main" && $(HUGO) server --renderStaticToDisk --disableFastRender --noHTTPCache --watch --baseURL http://localhost:1313/
 
 # Quick local build (no minification, no pagefind). Useful for checking output.
 build: clean

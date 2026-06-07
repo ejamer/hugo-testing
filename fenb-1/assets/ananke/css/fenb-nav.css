@@ -348,8 +348,13 @@
   --pagefind-ui-border-radius: 6px;
   --pagefind-ui-font:          inherit;
 }
+#fenb-search .pagefind-ui__search-input         { color: var(--pagefind-ui-text); }
 #fenb-search .pagefind-ui__search-input:focus { outline-color: var(--teal); }
-#fenb-search .pagefind-ui__search-clear       { color: var(--teal); }
+#fenb-search .pagefind-ui__search-clear {
+  color: var(--teal);
+  font-size: 0.95rem;
+  padding-left: 0.75rem;
+}
 #fenb-search .pagefind-ui__result-link        { color: var(--teal); }
 #fenb-search .pagefind-ui__result-link:hover  { color: var(--teal-dark); }
 
@@ -389,6 +394,7 @@
 [data-theme="dark"] .fenb-theme-toggle:hover,
 [data-theme="dark"] .fenb-theme-toggle[aria-expanded="true"],
 [data-theme="dark"] .fenb-search-close:hover { color: var(--teal-light); }
+[data-theme="dark"] #fenb-search .pagefind-ui__search-clear { color: var(--teal-light); }
 
 [data-theme="dark"] .fenb-theme-option:hover { color: var(--teal-light); }
 [data-theme="dark"] .fenb-theme-option.is-active { color: var(--teal-light); }

@@ -68,7 +68,7 @@ Test each project skill end-to-end at least once to verify it works correctly.
 | `/fenb-content-add-results` | ❌ Untested | |
 | `/fenb-data-get-results` | ❌ Untested | |
 | `/fenb-data-season-rollover` | ❌ Untested | |
-| `/fenb-docs-update` | ❌ Untested | Blocked in VSCode extension (disable-model-invocation); use terminal CLI |
+| `/fenb-docs-update` | ✅ Tested | |
 
 ## Events data
 

@@ -23,3 +23,8 @@ __pycache__/
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# Claude Code runtime/local files — keep only commands and shared settings
+.claude/*
+!.claude/commands
+!.claude/settings.json
