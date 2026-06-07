@@ -203,10 +203,10 @@
       if (!pagefindReady) {
         var link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = '{{ "pagefind/pagefind-ui.css" | absURL }}';
+        link.href = '{{ "pagefind/pagefind-ui.css" | relURL }}';
         document.head.appendChild(link);
         var script = document.createElement('script');
-        script.src = '{{ "pagefind/pagefind-ui.js" | absURL }}';
+        script.src = '{{ "pagefind/pagefind-ui.js" | relURL }}';
         script.onload = function () {
           new PagefindUI({
             element: '#fenb-search',
