@@ -51,6 +51,7 @@ hugo-testing/
     │   ├── board_members.yaml      Board of directors grid on /about/
     │   ├── hof_categories.yaml     Canonical Hall of Fame category IDs (drives filter dropdown + CSS badge classes)
     │   ├── clubs.yaml              Member club cards on /clubs/
+    │   ├── coach_pathways.yaml     CFF coach certification pathway cards on /programs/coach-training/
     │   ├── event_categories.yaml   Canonical category IDs for calendar legend and schedule filters
     │   ├── events.yaml             Current season event list (homepage + /events/)
     │   ├── events_archive/         Past seasons (picked up automatically by /events/schedule/)
@@ -93,9 +94,11 @@ hugo-testing/
     │                         site-header.html      Entry point — delegates to nav.html + page-header.html
     └── static/
         ├── documents/      PDFs served at /documents/ — subfolders: about/agm-minutes/,
-        │                   about/governance/, canada-games/
-        ├── images/         Site images — subfolders: canada-games/, clubs/, hall-of-fame/, hero/, svg/
+        │                   about/governance/, canada-games/, programs/coach-training/ (CFF pathway PDFs)
+        ├── images/         Site images — subfolders: canada-games/, clubs/, coach-pathways/ (CFF pathway
+        │                   diagram PNGs, EN/FR), hall-of-fame/, hero/, svg/
         ├── js/             Client-side scripts:
+        │                     coach-pathways.js    Pathway diagram modal on /programs/coach-training/
         │                     events-calendar.js   JS month grid for the events calendar
         │                     events-schedule.js   Season toggle + category filters for schedule page
         │                     hero-slider.js       Homepage hero carousel

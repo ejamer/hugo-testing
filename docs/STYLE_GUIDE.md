@@ -220,6 +220,38 @@ Use this class on the Hugo `figure` shortcode to display a centred event logo at
 
 The `class` attribute applies to the `<figure>` element; CSS targets `figure.fenb-article-event-logo img`.
 
+### Image lightbox modal — full-size diagram/image popup
+
+A centred modal dialog showing a full-size image with a title and close button, opened by a trigger button elsewhere on the page. Currently defined in `fenb-programs.css` and `static/js/coach-pathways.js` (built for `/programs/coach-training/`'s pathway diagram cards). If reused on a second page, promote the `.fenb-pathway-modal*` CSS to `fenb-base.css` and generalize the JS filename and `data-pathway-modal-*` attribute names.
+
+**Trigger button** — anywhere on the page:
+```html
+<button type="button" class="fenb-btn fenb-btn-teal"
+  data-pathway-modal-open
+  data-image="{{ $image | relURL }}"
+  data-title="{{ $title }}"
+  data-alt="{{ i18n "..._diagram_alt" (dict "Title" $title) }}">
+  {{ i18n "..._learn_more" }}
+</button>
+```
+
+**Modal markup** — once per page, after the closing `</section>`:
+```html
+<div class="fenb-pathway-modal" id="fenb-pathway-modal" hidden>
+  <div class="fenb-pathway-modal-backdrop" data-pathway-modal-close></div>
+  <div class="fenb-pathway-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="fenb-pathway-modal-title">
+    <button type="button" class="fenb-pathway-modal-close" data-pathway-modal-close aria-label="{{ i18n "..._modal_close" }}">
+      {{ partial "icon.html" (dict "name" "close.svg" "w" 16 "h" 16) }}
+    </button>
+    <h2 id="fenb-pathway-modal-title" class="fenb-pathway-modal-title"></h2>
+    <img class="fenb-pathway-modal-image" src="" alt="">
+  </div>
+</div>
+<script src="{{ "js/coach-pathways.js" | absURL }}" defer></script>
+```
+
+The script reads `data-image` / `data-title` / `data-alt` from the clicked trigger into the modal, and closes on close-button click, backdrop click, or `Escape` — restoring focus to the trigger element on close.
+
 ---
 
 ## Dark mode
