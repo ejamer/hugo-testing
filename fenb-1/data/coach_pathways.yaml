@@ -1,0 +1,29 @@
+# CFF/FCE NCCP coach certification pathways — used by layouts/programs/coach-training.html
+# image_*/pdf_*: relative paths (no leading slash) piped through relURL
+# Text comes from i18n keys: programs_coach_pathway_{id with - replaced by _}_title / _desc
+coach_pathways:
+  - id: overview
+    image_en: "images/coach-pathways/overview-en.png"
+    image_fr: "images/coach-pathways/overview-fr.png"
+    pdf_en: "documents/programs/coach-training/overview-en.pdf"
+    pdf_fr: "documents/programs/coach-training/overview-fr.pdf"
+  - id: community
+    image_en: "images/coach-pathways/community-en.png"
+    image_fr: "images/coach-pathways/community-fr.png"
+    pdf_en: "documents/programs/coach-training/community-en.pdf"
+    pdf_fr: "documents/programs/coach-training/community-fr.pdf"
+  - id: instructor-beginner
+    image_en: "images/coach-pathways/instructor-beginner-en.png"
+    image_fr: "images/coach-pathways/instructor-beginner-fr.png"
+    pdf_en: "documents/programs/coach-training/instructor-beginner-en.pdf"
+    pdf_fr: "documents/programs/coach-training/instructor-beginner-fr.pdf"
+  - id: competition-introduction
+    image_en: "images/coach-pathways/competition-introduction-en.png"
+    image_fr: "images/coach-pathways/competition-introduction-fr.png"
+    pdf_en: "documents/programs/coach-training/competition-introduction-en.pdf"
+    pdf_fr: "documents/programs/coach-training/competition-introduction-fr.pdf"
+  - id: competition-development
+    image_en: "images/coach-pathways/competition-development-en.png"
+    image_fr: "images/coach-pathways/competition-development-fr.png"
+    pdf_en: "documents/programs/coach-training/competition-development-en.pdf"
+    pdf_fr: "documents/programs/coach-training/competition-development-fr.pdf"

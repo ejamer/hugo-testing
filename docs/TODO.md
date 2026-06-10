@@ -40,7 +40,7 @@ All seven pages need a full review pass for both style and content quality befor
 
 - [ ] **`/programs/` (landing)** 
 - [ ] **`/programs/athlete-development/`** 
-- [ ] **`/programs/coach-training/`** 
+- [x] **`/programs/coach-training/`** — content replaced with 5 CFF pathway cards (overview, community, instructor-beginner, competition-introduction, competition-development), each with a "Learn more" PNG modal and "Save this pathway" PDF download, plus a standalone full-guide PDF link and a note on upcoming Instructor-Intermediate/HP Coach pathways. A layout/styling polish pass may still be wanted.
 - [ ] **`/programs/canada-games-2027/`** 
 - [ ] **`/programs/referee-development/`** 
 - [ ] **`/programs/secretariat-development/`** 

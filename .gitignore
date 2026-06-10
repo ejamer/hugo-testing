@@ -28,3 +28,6 @@ __pycache__/
 .claude/*
 !.claude/commands
 !.claude/settings.json
+
+# Resource folder, used to store sources and assets for content generation, not meant to be committed
+resources/
