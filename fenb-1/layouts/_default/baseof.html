@@ -82,6 +82,7 @@
       {{ block "main" . }}{{ end }}
     </main>
     {{ block "footer" . }}{{ partials.IncludeCached "site-footer.html" . }}{{ end }}
+    {{ block "scripts" . }}{{ end }}
   </body>
 </html>
 {{- with (templates.Defer (dict "key" "hooks-collector")) -}}

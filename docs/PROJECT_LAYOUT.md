@@ -103,6 +103,7 @@ hugo-testing/
         │                     events-schedule.js   Season toggle + category filters for schedule page
         │                     hero-slider.js       Homepage hero carousel
         │                     hof-table.js         Sort + category-filter dropdown for the Hall of Fame table
+        │                     lightbox.js          Zoom-in image lightbox for news article images (loaded by layouts/news/single.html)
         │                     results-table.js     Sortable results table in news articles
         ├── sitemap.xsl     XSLT stylesheet for language sitemaps — makes /en/ and /fr/ sitemaps
         │                   render as styled HTML in browsers (referenced via PI in sitemap.xml)

@@ -220,9 +220,25 @@ Use this class on the Hugo `figure` shortcode to display a centred event logo at
 
 The `class` attribute applies to the `<figure>` element; CSS targets `figure.fenb-article-event-logo img`.
 
-### Image lightbox modal — full-size diagram/image popup
+### Article image lightbox — zoom-in viewer for news article images
 
-A centred modal dialog showing a full-size image with a title and close button, opened by a trigger button elsewhere on the page. Currently defined in `fenb-programs.css` and `static/js/coach-pathways.js` (built for `/programs/coach-training/`'s pathway diagram cards). If reused on a second page, promote the `.fenb-pathway-modal*` CSS to `fenb-base.css` and generalize the JS filename and `data-pathway-modal-*` attribute names.
+All `<img>` elements inside `.fenb-article-body` and `.fenb-article-event-logo` get an automatic zoom-in lightbox on click. No markup changes are needed in the article. Behaviour: click the image → full-screen dark overlay showing the image at up to 90vw/90vh. Close via `×`, click outside the image, or Escape.
+
+CSS lives in `fenb-news.css` (`.fenb-lightbox`, `.fenb-lightbox--open`, `.fenb-lightbox-img`, `.fenb-lightbox-close`). JS lives in `static/js/lightbox.js`, loaded via the `{{ block "scripts" }}` slot in `baseof.html`.
+
+Currently enabled only on `layouts/news/single.html`:
+
+```go
+{{ define "scripts" }}
+<script src="{{ "js/lightbox.js" | absURL }}" defer></script>
+{{ end }}
+```
+
+To enable on another layout, add the same `{{ define "scripts" }}` block — do not copy the CSS, it is already in the compiled stylesheet.
+
+### Pathway diagram modal — `/programs/coach-training/` only
+
+A centred modal dialog showing a full-size CFF pathway diagram with a title and close button, opened by a trigger button on the page. Defined in `fenb-programs.css` and `static/js/coach-pathways.js`, scoped exclusively to `/programs/coach-training/`. **This is not the general image lightbox** — for zooming article images use the article image lightbox above.
 
 **Trigger button** — anywhere on the page:
 ```html

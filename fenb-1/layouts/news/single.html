@@ -1,5 +1,9 @@
 {{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
 
+{{ define "scripts" }}
+<script src="{{ "js/lightbox.js" | absURL }}" defer></script>
+{{ end }}
+
 {{ define "main" }}
 <section class="fenb-section fenb-article-section">
   <div class="fenb-container">

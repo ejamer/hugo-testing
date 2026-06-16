@@ -379,7 +379,51 @@
   max-width: 220px;
   border-radius: 8px;
   margin: 0 auto;
+  cursor: zoom-in;
 }
+
+/* ── Article body images ──────────────────────── */
+.fenb-article-body img { cursor: zoom-in; }
+
+/* ── Lightbox ─────────────────────────────────── */
+.fenb-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: zoom-out;
+}
+.fenb-lightbox--open { opacity: 1; }
+
+.fenb-lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+  cursor: default;
+}
+
+.fenb-lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0.25rem 0.5rem;
+  transition: opacity 0.15s;
+}
+.fenb-lightbox-close:hover { opacity: 1; }
 
 [data-theme="dark"] .fenb-article-event-logo img {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);

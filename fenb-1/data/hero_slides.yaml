@@ -1,13 +1,27 @@
 # Homepage hero carousel — used by layouts/index.html
 # Images live in static/images/hero/. alt text is required for accessibility.
+# Optional: add link_en / link_fr to make a slide clickable with a "Read more" badge.
+#   - Internal paths: no leading slash, e.g. "news/2026/jun-16-results/"
+#   - External URLs: full URL, e.g. "https://example.com/page"
+#   - link_fr falls back to link_en if omitted or empty.
 slides:
   - src: images/hero/hero1.jpg
     alt: ""
+    link_en: ""
+    link_fr: ""
   - src: images/hero/hero2.jpg
     alt: ""
+    link_en: ""
+    link_fr: ""
   - src: images/hero/hero3.jpg
     alt: ""
+    link_en: ""
+    link_fr: ""
   - src: images/hero/hero4.jpg
     alt: ""
+    link_en: ""
+    link_fr: ""
   - src: images/hero/hero5.jpg
     alt: ""
+    link_en: ""
+    link_fr: ""

@@ -346,11 +346,20 @@ Drop replacement images into `static/images/hero/` and update `data/hero_slides.
 slides:
   - src: images/hero/hero1.jpg
     alt: "Alt text for accessibility"
+    link_en: "news/2026/jun-16-some-article/"   # optional — makes slide clickable
+    link_fr: ""                                  # leave empty to fall back to link_en
   - src: images/hero/hero2.jpg
     alt: ""
+    link_en: ""
+    link_fr: ""
 ```
 
-Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; prev/next arrows allow manual control.
+**`link_en` / `link_fr`** — optional. When provided, the slide becomes clickable and shows a "Read more →" / "Lire la suite →" badge in the bottom-right corner. Rules:
+- Internal paths: no leading slash, e.g. `news/2026/jun-16-article/`
+- External URLs: full URL, e.g. `https://example.com/page` — opens in a new tab automatically
+- `link_fr` falls back to `link_en` if empty or omitted
+
+Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; click the prev/next arrows or the dot indicators to navigate manually; use the pause/play button (top-right corner) to stop or resume auto-advance.
 
 ---
 
