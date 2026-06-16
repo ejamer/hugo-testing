@@ -1,7 +1,7 @@
 ---
 title: "Finale d'escrime interscolaire du NB 2026 — Résultats"
 date: 2026-06-16
-category: results
+category: community
 summary: "Vingt-cinq escrimeurs étudiants de cinq écoles francophones du sud-est du Nouveau-Brunswick se sont affrontés à Antonine-Maillet à Dieppe le 5 juin — Antonine-Maillet a remporté la bannière d'école championne."
 ---
 
