@@ -101,5 +101,24 @@
   </div>
 </section>
 
+{{/* ── Origins of Fencing in New Brunswick ──────────── */}}
+<section class="fenb-about-overview-section">
+  <div class="fenb-container fenb-container--narrow">
+    <div class="fenb-about-history-content">
+      <span class="fenb-section-label">{{ i18n "about_history_label" }}</span>
+      <h2 class="fenb-section-title">{{ i18n "about_history_title" }}</h2>
+      <div class="fenb-about-history-body">
+        <div class="fenb-about-history-text">
+          {{ i18n "about_history_body" | markdownify }}
+        </div>
+        <figure class="fenb-about-history-photo">
+          <img src="{{ "images/alfred-knappe.png" | relURL }}" alt="Alfred Knappe" loading="lazy">
+          <figcaption>{{ i18n "about_history_founder_caption" }}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
 <script src="{{ "js/hof-table.js" | absURL }}" defer></script>
 {{ end }}

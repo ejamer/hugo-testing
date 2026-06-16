@@ -137,7 +137,7 @@ search_searching:      "Searching for [SEARCH_TERM]…"
 # ── About page ─────────────────────────────────────────────
 about_overview_label:     "Our Organization"
 about_overview_title:     "Fencing-Escrime NB"
-about_overview_body:      "Fencing-Escrime NB (FENB) is the provincial sport organization governing fencing in New Brunswick, operating as the provincial branch of the Canadian Fencing Federation. FENB is a member of Sport New Brunswick and is governed by a seven-member volunteer board under the FENB Bylaws, following Carver policy governance principles."
+about_overview_body:      "Fencing-Escrime NB (FENB) is the provincial sport organization governing fencing in New Brunswick, operating as the provincial branch of the Canadian Fencing Federation. FENB is a member of Sport New Brunswick and is governed by a volunteer board under the FENB Bylaws, following Carver policy governance principles."
 about_affiliations_title: "Affiliations"
 about_mission_label:      "Our Mission"
 about_mission_title:      "FENB's Mission Statement"
@@ -149,9 +149,9 @@ about_history_body:       "The provincial fencing association was officially est
 about_board_label:        "Leadership"
 about_board_title:        "Board of Directors"
 about_board_season:       "2025–2026"
+about_board_vacant:       "Vacant"
 about_governance_label:   "Governance"
 about_governance_title:   "Policies, Plans & Reports"
-about_governance_note:    "Governance documents, strategic plans, and annual reports are available on the"
 about_contact_label:      "Get in Touch"
 about_contact_title:      "Contact FENB"
 about_contact_name:       "Name"
@@ -256,7 +256,7 @@ join_volunteer_role_tourn_2:  "Armoury (equipment testing and repairs)"
 join_volunteer_role_tourn_3:  "Floor Manager (coordination and announcements)"
 join_volunteer_apply_label:   "Ready to Volunteer?"
 join_volunteer_apply_body:    "Tell us about your interests and availability. We'll match you with a role that suits your skills — and provide training if needed."
-join_volunteer_apply_btn:     "Email FENB"
+join_volunteer_apply_btn:     "Contact FENB"
 
 # ── Programs — Landing ─────────────────────────────
 programs_landing_label:               "Training & Development"
@@ -326,7 +326,7 @@ programs_coach_pathway_upcoming_note: "FENB is also preparing to support the Ins
 programs_coach_contact_label:         "Get Started"
 programs_coach_contact_title:         "Begin your coaching pathway"
 programs_coach_contact_body:          "FENB currently offers Instructor-Beginner level coach evaluation. Contact us to learn about the next steps in your coaching pathway — or to download the evaluation checklist."
-programs_coach_contact_btn:           "Email FENB"
+programs_coach_contact_btn:           "Contact FENB"
 
 # ── Programs — Canada Winter Games: Québec 2027 ───
 programs_cwg_label:                   "Canada Winter Games 2027"
@@ -450,12 +450,19 @@ rss_feed_label: "News RSS feed"
 
 # ── Hall of Fame ────────────────────────────────────────────
 # ── About sub-section nav cards ────────────────────────────
+about_landing_intro:      "Learn about Fencing-Escrime NB — our mission, leadership, history, and how to get in touch."
 about_nav_policies_title: "Policies, Plans & Reports"
 about_nav_policies_desc:  "Governance documents, official policies, and annual reports."
 about_nav_policies_cta:   "View documents"
 about_nav_hof_title:      "Hall of Fame"
 about_nav_hof_desc:       "Honouring athletes, coaches, and builders who have shaped fencing in New Brunswick."
 about_nav_hof_cta:        "View inductees"
+about_nav_org_title:      "Mission & Leadership"
+about_nav_org_desc:       "FENB's mission statement, Board of Directors, and organizational affiliations."
+about_nav_org_cta:        "Learn more"
+about_nav_contact_title:  "Contact Us"
+about_nav_contact_desc:   "Send a message to Fencing-Escrime NB."
+about_nav_contact_cta:    "Get in touch"
 
 # ── Hall of Fame ────────────────────────────────────────────
 hof_section_label:   "Recognition"

@@ -39,16 +39,17 @@ hugo-testing/
     ├── content/            Bilingual content files: _index.md + _index.fr.md per section,
     │   │                   slug.en.md + slug.fr.md per article/page
     │   ├── _index.md / _index.fr.md    Homepage
-    │   ├── about/          About section, policies-and-reports page, policies/ sub-pages,
-    │   │                   hall-of-fame/ (inductee bilingual pairs)
+    │   ├── about/          About landing (disambiguation), policies-and-reports page, policies/ sub-pages,
+    │   │                   hall-of-fame/ (inductee bilingual pairs), organization/ (Mission & Leadership)
     │   ├── clubs/          Clubs list page (content from data/clubs.yaml)
     │   ├── events/         Events section index + schedule.en.md / schedule.fr.md
     │   ├── join/           Join landing page + membership, clubs, volunteer sub-pages
     │   ├── news/           News section index + year subfolders (news/2026/, etc.)
+    │   ├── contact/        Contact Us page (_index.md + _index.fr.md)
     │   └── programs/       Programs landing + armourer, athlete, canada-games-2027,
     │                         coach, referee, secretariat sub-pages
     ├── data/               YAML files that drive page content — each maps to a specific page or feature:
-    │   ├── board_members.yaml      Board of directors grid on /about/
+    │   ├── board_members.yaml      Board of directors grid on /about/organization/
     │   ├── hof_categories.yaml     Canonical Hall of Fame category IDs (drives filter dropdown + CSS badge classes)
     │   ├── clubs.yaml              Member club cards on /clubs/
     │   ├── coach_pathways.yaml     CFF coach certification pathway cards on /programs/coach-training/
@@ -69,9 +70,11 @@ hugo-testing/
     │   ├── index.html      Homepage (hero, events, news, programs)
     │   ├── _default/
     │   │   └── sitemap.xml Custom sitemap with hreflang alternates
-    │   ├── about/          list.html (About), single.html (Policies & Reports),
+    │   ├── about/          list.html (About disambiguation), single.html (Policies & Reports),
     │   │                   policies/single.html (individual policy page),
-    │   │                   hall-of-fame/list.html (inductee table), hall-of-fame/single.html (profile)
+    │   │                   hall-of-fame/list.html (inductee table), hall-of-fame/single.html (profile),
+    │   │                   organization/list.html (Mission & Leadership)
+    │   ├── contact/        list.html (Contact Us form)
     │   ├── clubs/          list.html (club grid + map)
     │   ├── events/         list.html (JS calendar), schedule.html (filterable list)
     │   ├── join/           list.html, membership.html, clubs.html, volunteer.html

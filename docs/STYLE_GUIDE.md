@@ -47,7 +47,7 @@ The load order is declared in `hugo.toml` under `params.ananke.custom_css`. File
 | Class | Max-width | Used by |
 |---|---|---|
 | `.fenb-container--narrow` | 1100px | Events calendar, board, about overview, policies |
-| `.fenb-container--tight` | 900px | About contact |
+| `.fenb-container--tight` | 900px | Contact page |
 | `.fenb-container--sched` | 1000px | Season schedule |
 
 ### Hero breakout
@@ -176,7 +176,7 @@ Modifier `--quote` for pull-quotes and mission statements:
 
 ### `fenb-landing-card` — nav/path card grid
 
-A grid of clickable cards linking to sub-pages. Defined in `fenb-base.css`. Used on the Join and Programs landing pages.
+A grid of clickable cards linking to sub-pages. Defined in `fenb-base.css`. Used on the About, Join, and Programs landing pages.
 
 ```html
 <div class="fenb-landing-cards">
