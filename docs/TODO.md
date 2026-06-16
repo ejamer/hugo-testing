@@ -71,8 +71,8 @@ Test each project skill end-to-end at least once to verify it works correctly.
 |---|---|---|
 | `/fenb-content-add-news` | ✅ Tested | |
 | `/fenb-content-add-page` | ❌ Untested | |
-| `/fenb-content-add-results` | ❌ Untested | |
-| `/fenb-data-get-results` | ❌ Untested | |
+| `/fenb-content-add-results` | ✅ Tested | NB Provincials 2026 — hosted format (full podium, medalists only) |
+| `/fenb-data-get-results` | ✅ Tested | NB Provincials 2026 — direct URL, hosted mode, full podium fetch |
 | `/fenb-data-season-rollover` | ❌ Untested | |
 | `/fenb-docs-update` | ✅ Tested | |
 

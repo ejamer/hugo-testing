@@ -1,19 +1,34 @@
 #!/usr/bin/env python3
 """
-Find NB fencer results on fencingtimelive.com.
+Fetch tournament results from fencingtimelive.com.
+
+LOCATION MODES
+--------------
+  --location away
+    NB athletes competed out of province. Scans every event for NB fencer
+    participation (matched against fenb-1/data/clubs.yaml) and saves only
+    events where NB athletes appear.
+
+    Output: scripts/output/{slug}-{date}.json
+    Top-level key: events_with_nb_fencers
+
+  --location hosted
+    Tournament was held in New Brunswick. Fetches the full final standings
+    for every finished event and extracts the top-4 medalists (gold, silver,
+    two tied bronze). NB-club filtering is not applied.
+
+    Output: scripts/output/{slug}-podiums-{date}.json
+    Top-level key: events (each with a podium array)
 
 AUTHENTICATION
 --------------
 fencingtimelive.com uses Google OAuth for login. Google's login flow includes
 bot-detection and CAPTCHA, so it cannot be automated programmatically.
 
-Two modes are supported:
-
   Option A — Browser login (default, recommended for recurring use):
-    Run with no --cookie flag. Your system Chrome opens and navigates to
+    Run without --cookie. Your system Chrome opens and navigates to
     fencingtimelive.com. Complete the Google login normally. Once the script
-    detects an active session, it verifies it with a live API call, captures
-    the cookies, and closes the browser.
+    detects an active session, it captures the cookies and closes the browser.
 
     The login session is saved in scripts/.browser-profile/ so subsequent
     runs reuse it — you only need to sign in again when the session expires.
@@ -33,48 +48,78 @@ Two modes are supported:
 
 USAGE
 -----
-  # Option A (opens browser for login):
-  python3 scripts/fencingtimelive-results.py
+  # Away — search recent CAN tournaments, pick interactively:
+  python3 scripts/fencingtimelive-results.py --location away
 
-  # Option B (provide cookie manually):
-  python3 scripts/fencingtimelive-results.py --cookie "connect.sid=...;AWSALB=..."
+  # Away — search USA, last 30 days:
+  python3 scripts/fencingtimelive-results.py --location away --country USA --days -2
 
-  # Other options:
-  python3 scripts/fencingtimelive-results.py --country USA --days -2
+  # Hosted — search recent tournaments and pick:
+  python3 scripts/fencingtimelive-results.py --location hosted
 
-WORKFLOW
---------
-  1. Obtains session cookies (via browser login or --cookie flag).
-  2. Fetches recent tournaments matching --country and --days.
-  3. Prompts you to select one tournament interactively.
-  4. Fetches the event schedule for that tournament.
-  5. For each event: fetches final results (or the competitor list if the event
-     is not yet finished) and checks for NB fencers by matching their club
-     abbreviation (e.g. "RST", "DAM") against fenb-1/data/clubs.yaml.
-  6. Writes a JSON file to scripts/output/ and prints it to stdout.
-     (scripts/output/ is gitignored — these files are not committed.)
+  # Hosted — use a direct tournament ID (bypasses --days limit):
+  python3 scripts/fencingtimelive-results.py --location hosted --tournament-id 4A78131AF1154821BF95F71B1D4FD913
+
+  # Skip tournament picker (useful for scripting):
+  python3 scripts/fencingtimelive-results.py --location away --select 2
+
+  # Manual cookie:
+  python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid=...;AWSALB=..."
+
+WORKFLOW (away)
+---------------
+  1. Obtain session cookies.
+  2. Fetch recent tournaments matching --country and --days.
+  3. Select a tournament (interactively or via --select N / --tournament-id).
+  4. Fetch the event schedule.
+  5. For each event: fetch final results (or competitor list if not finished)
+     and check for NB fencers by matching against fenb-1/data/clubs.yaml.
+  6. Save JSON to scripts/output/{slug}-{date}.json.
+
+WORKFLOW (hosted)
+-----------------
+  1. Obtain session cookies.
+  2. Select tournament (from list or via --tournament-id).
+  3. Fetch the event schedule.
+  4. For each finished event: fetch full final standings, extract top-4
+     medalists (places 1, 2, 3T, 3T). Unfinished events get an empty podium.
+  5. Save JSON to scripts/output/{slug}-podiums-{date}.json.
 
 OUTPUT
 ------
-JSON structure:
-  {
-    "tournament": { name, location, dates, schedule_url },
-    "nb_clubs_checked": [...],
-    "events_with_nb_fencers": [
-      {
-        "event_name": ...,
-        "day": ..., "start_time": ..., "status": ...,
-        "source": "results" | "competitors",
-        "results_url": "https://www.fencingtimelive.com/events/results/{id}",
-        "nb_fencers": [
-          { "name": ..., "place": ..., "club": ..., "license": ... }
-        ]
-      }
-    ]
-  }
+  away:
+    {
+      "tournament": { name, location, dates, schedule_url },
+      "nb_clubs_checked": [...],
+      "events_with_nb_fencers": [
+        {
+          "event_name": ..., "day": ..., "start_time": ..., "status": ...,
+          "source": "results" | "competitors",
+          "results_url": "https://www.fencingtimelive.com/events/results/{id}",
+          "nb_fencers": [ { "name": ..., "place": ..., "club": ..., "license": ... } ]
+        }
+      ]
+    }
+
+  hosted:
+    {
+      "tournament": { name, location, dates, schedule_url },
+      "events": [
+        {
+          "event_name": ..., "day": ...,
+          "results_url": "https://www.fencingtimelive.com/events/results/{id}",
+          "podium": [
+            { "place": "1",  "name": ..., "club": ... },
+            { "place": "2",  "name": ..., "club": ... },
+            { "place": "3T", "name": ..., "club": ... },
+            { "place": "3T", "name": ..., "club": ... }
+          ]
+        }
+      ]
+    }
 
 Verbose progress is written to stderr; only the JSON goes to stdout:
-  python3 fencingtimelive-results.py > out.json
+  python3 scripts/fencingtimelive-results.py --location away > out.json
 """
 
 import argparse
@@ -118,7 +163,7 @@ BROWSER_PROFILE_DIR = Path(__file__).parent / ".browser-profile"
 
 def log(msg: str, level: str = "info") -> None:
     """
-    Write a timestamped progress message to stderr.
+    Write a progress message to stderr.
 
     Levels and their prefixes:
       info  →  [info]   general progress
@@ -143,7 +188,7 @@ class SessionExpiredError(Exception):
     """
     Raised when the FTL server returns HTTP 401 or 403, indicating the session
     cookies are no longer valid. Caught in main() to fail fast with a clear
-    message rather than producing 35 consecutive confusing HTTP errors.
+    message rather than producing many consecutive confusing HTTP errors.
     """
 
 
@@ -325,7 +370,7 @@ def http_get_html(url: str, cookie: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# NB club matching
+# NB club matching (away mode only)
 # ---------------------------------------------------------------------------
 
 def load_nb_clubs(yaml_path: Path) -> tuple[set[str], set[str], list[dict]]:
@@ -421,23 +466,32 @@ class ScheduleParser(HTMLParser):
     elements with id="ev_{eventId}". Each row has three <td> columns:
     start time, event name, status.
 
-    Produces self.events: list of dicts with keys:
-      id, day, start_time, name, status
+    Also captures the tournament name from the <title> tag, used when the
+    tournament was selected via --tournament-id (no list API call was made).
+
+    Produces:
+      self.events         — list of dicts with keys: id, day, start_time, name, status
+      self.tournament_name — string extracted from <title>, or None
     """
 
     def __init__(self):
         super().__init__()
         self.events: list[dict] = []
-        self._day: str | None = None   # current day heading, e.g. "Saturday May 9, 2026"
+        self.tournament_name: str | None = None
+        self._day: str | None = None
         self._in_h5 = False
         self._in_row = False
+        self._in_title = False
         self._row_id: str | None = None
         self._cols: list[str] = []
-        self._col_buf: str | None = None  # accumulates text inside the current <td>
+        self._col_buf: str | None = None
+        self._title_buf: str = ""
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
-        if tag == "h5":
+        if tag == "title":
+            self._in_title = True
+        elif tag == "h5":
             self._in_h5 = True
         elif tag == "tr" and attrs.get("id", "").startswith("ev_"):
             self._in_row = True
@@ -447,7 +501,12 @@ class ScheduleParser(HTMLParser):
             self._col_buf = ""
 
     def handle_endtag(self, tag):
-        if tag == "h5":
+        if tag == "title":
+            self._in_title = False
+            # FTL page titles look like "Tournament Name | FencingTimeLive"
+            raw = self._title_buf.strip()
+            self.tournament_name = raw.split("|")[0].strip() if "|" in raw else raw or None
+        elif tag == "h5":
             self._in_h5 = False
         elif tag == "td" and self._in_row and self._col_buf is not None:
             self._cols.append(self._col_buf.strip())
@@ -463,18 +522,25 @@ class ScheduleParser(HTMLParser):
             self._in_row = False
 
     def handle_data(self, data):
+        if self._in_title:
+            self._title_buf += data
         if self._in_h5:
             self._day = data.strip()
         if self._in_row and self._col_buf is not None:
             self._col_buf += data
 
 
-def fetch_event_schedule(tournament_id: str, cookie: str) -> list[dict]:
-    """Fetch and parse the event schedule page for a tournament."""
+def fetch_event_schedule(tournament_id: str, cookie: str) -> tuple[list[dict], str | None]:
+    """
+    Fetch and parse the event schedule page for a tournament.
+
+    Returns (events, tournament_name). tournament_name is extracted from the
+    page <title> tag — useful when --tournament-id bypasses the list API.
+    """
     html = http_get_html(f"{BASE_URL}/tournaments/eventSchedule/{tournament_id}", cookie)
     parser = ScheduleParser()
     parser.feed(html)
-    return parser.events
+    return parser.events, parser.tournament_name
 
 
 # ---------------------------------------------------------------------------
@@ -519,6 +585,16 @@ def fetch_event_entries(event: dict, cookie: str) -> tuple[list[dict], str]:
     return entries, "competitors"
 
 
+def numeric_place(place_str) -> int:
+    """Strip trailing 'T' and return the integer place, or 9999 if missing/invalid."""
+    if not place_str:
+        return 9999
+    try:
+        return int(str(place_str).rstrip("T"))
+    except ValueError:
+        return 9999
+
+
 # ---------------------------------------------------------------------------
 # Interactive tournament picker
 # ---------------------------------------------------------------------------
@@ -547,7 +623,15 @@ def pick_tournament(tournaments: list[dict], country: str) -> dict:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Find NB fencers in recent tournaments on fencingtimelive.com"
+        description="Fetch tournament results from fencingtimelive.com."
+    )
+    parser.add_argument(
+        "--location", required=True, choices=["hosted", "away"],
+        help=(
+            "Tournament type. "
+            "'away' — NB athletes competed out of province; reports NB fencer placements. "
+            "'hosted' — tournament held in NB; reports full podium for every event."
+        ),
     )
     parser.add_argument(
         "--cookie", default=None,
@@ -569,10 +653,19 @@ def main():
         ),
     )
     parser.add_argument(
+        "--tournament-id", default=None, metavar="ID",
+        help=(
+            "Bypass the tournament list and use this tournament ID directly. "
+            "Useful for older tournaments outside the --days range or when the "
+            "FTL URL is known. Extract the ID from the schedule URL: "
+            "fencingtimelive.com/tournaments/eventSchedule/{ID}"
+        ),
+    )
+    parser.add_argument(
         "--list", action="store_true",
         help=(
             "Fetch the tournament list and print it as JSON, then exit. "
-            "Used by the fenb-get-results skill to present the list before "
+            "Used by the fenb-data-get-results skill to present the list before "
             "running the full scrape."
         ),
     )
@@ -581,10 +674,16 @@ def main():
         help=(
             "Skip the interactive tournament picker and use tournament number N "
             "(1-indexed, matching the order returned by --list). "
-            "Used by the fenb-get-results skill."
+            "Used by the fenb-data-get-results skill."
         ),
     )
     args = parser.parse_args()
+
+    # --tournament-id is incompatible with --list and --select (they only make
+    # sense when going through the tournament list search).
+    if args.tournament_id and (args.list or args.select):
+        log("--tournament-id cannot be combined with --list or --select.", "error")
+        sys.exit(1)
 
     # Obtain session cookies — browser login (Option A) or manual paste (Option B).
     if args.cookie:
@@ -593,54 +692,68 @@ def main():
     else:
         cookie = get_cookie_via_browser()
 
-    # Load NB club data from the site's own clubs.yaml so the list stays in sync
-    # when clubs are added or removed from the federation.
-    nb_ids, nb_names, nb_clubs = load_nb_clubs(CLUBS_YAML)
-    log(f"Loaded {len(nb_ids)} NB clubs: {', '.join(sorted(nb_ids))}", "info")
+    # -------------------------------------------------------------------------
+    # Select tournament — either via direct ID or from the search list
+    # -------------------------------------------------------------------------
 
-    # Step 1 — fetch tournament list
-    log(f"Fetching {args.country} tournaments (days={args.days})...", "info")
-    try:
-        tournaments = fetch_tournaments(cookie, args.country, args.days)
-    except SessionExpiredError as e:
-        log(str(e), "error")
-        sys.exit(1)
-    except Exception as e:
-        log(f"Failed to fetch tournament list: {e}", "error")
-        sys.exit(1)
-
-    if not tournaments:
-        log(
-            "No tournaments found. Session may have expired (re-run without --cookie "
-            "to log in again), or no tournaments match --country / --days.",
-            "warn",
-        )
-        sys.exit(0)
-
-    log(f"Found {len(tournaments)} tournament(s).", "ok")
-
-    # --list mode: print the tournament list as JSON and exit.
-    # Used by the fenb-get-results skill to present choices before the full scrape.
-    if args.list:
-        print(json.dumps(tournaments, indent=2, ensure_ascii=False))
-        sys.exit(0)
-
-    # Step 2 — select tournament interactively or via --select N
-    if args.select is not None:
-        idx = args.select - 1
-        if not 0 <= idx < len(tournaments):
-            log(f"--select {args.select} is out of range (1–{len(tournaments)}).", "error")
-            sys.exit(1)
-        tourn = tournaments[idx]
-        log(f"Auto-selected tournament {args.select}: {tourn['name']}", "info")
+    if args.tournament_id:
+        # Direct tournament ID: skip the list API entirely.
+        # Tournament name, location, and dates come from the schedule page HTML
+        # (parsed in fetch_event_schedule below). Location and dates are not
+        # available from the page — they'll be filled with empty strings and
+        # the user can note them from context.
+        tourn = {
+            "id": args.tournament_id,
+            "name": "",        # filled after fetch_event_schedule
+            "location": "",
+            "dates": "",
+        }
+        log(f"Using direct tournament ID: {args.tournament_id}", "info")
     else:
-        tourn = pick_tournament(tournaments, args.country)
-    log(f"Selected: {tourn['name']}", "ok")
+        # Standard path: fetch the tournament list and let the user pick.
+        log(f"Fetching {args.country} tournaments (days={args.days})...", "info")
+        try:
+            tournaments = fetch_tournaments(cookie, args.country, args.days)
+        except SessionExpiredError as e:
+            log(str(e), "error")
+            sys.exit(1)
+        except Exception as e:
+            log(f"Failed to fetch tournament list: {e}", "error")
+            sys.exit(1)
 
-    # Step 3 — fetch the event schedule (server-rendered HTML, parsed locally)
+        if not tournaments:
+            log(
+                "No tournaments found. Session may have expired (re-run without --cookie "
+                "to log in again), or no tournaments match --country / --days.",
+                "warn",
+            )
+            sys.exit(0)
+
+        log(f"Found {len(tournaments)} tournament(s).", "ok")
+
+        if args.list:
+            print(json.dumps(tournaments, indent=2, ensure_ascii=False))
+            sys.exit(0)
+
+        if args.select is not None:
+            idx = args.select - 1
+            if not 0 <= idx < len(tournaments):
+                log(f"--select {args.select} is out of range (1–{len(tournaments)}).", "error")
+                sys.exit(1)
+            tourn = tournaments[idx]
+            log(f"Auto-selected tournament {args.select}: {tourn['name']}", "info")
+        else:
+            tourn = pick_tournament(tournaments, args.country)
+
+        log(f"Selected: {tourn['name']}", "ok")
+
+    # -------------------------------------------------------------------------
+    # Fetch event schedule
+    # -------------------------------------------------------------------------
+
     log("Fetching event schedule...", "info")
     try:
-        events = fetch_event_schedule(tourn["id"], cookie)
+        events, page_title = fetch_event_schedule(tourn["id"], cookie)
     except SessionExpiredError as e:
         log(str(e), "error")
         sys.exit(1)
@@ -648,88 +761,183 @@ def main():
         log(f"Failed to fetch event schedule: {e}", "error")
         sys.exit(1)
 
+    # When --tournament-id was used, fill in the name from the page title.
+    if args.tournament_id and page_title:
+        tourn["name"] = page_title
+        log(f"Tournament name from page: {page_title}", "info")
+    elif args.tournament_id and not page_title:
+        tourn["name"] = args.tournament_id  # fallback: use the raw ID
+
     log(f"Found {len(events)} event(s).", "ok")
 
-    # Step 4 — check each event for NB fencers
-    nb_events = []
-    errors = 0
-    for i, event in enumerate(events, 1):
-        # The status string often contains a literal newline between the finish
-        # time and competitor count — normalise it for single-line display.
-        status_oneline = event["status"].replace("\n", " ")
-        log(f"[{i}/{len(events)}] {event['name']} — {status_oneline[:50]}", "info")
+    # -------------------------------------------------------------------------
+    # HOSTED — fetch full podiums for every finished event
+    # -------------------------------------------------------------------------
 
-        try:
-            entries, source = fetch_event_entries(event, cookie)
-        except SessionExpiredError as e:
-            log(str(e), "error")
-            sys.exit(1)
-        except Exception as exc:
-            log(f"Failed to fetch entries: {exc}", "warn")
-            errors += 1
-            time.sleep(RATE_LIMIT_SECS)
-            continue
+    if args.location == "hosted":
+        event_results = []
+        errors = 0
+        for i, event in enumerate(events, 1):
+            status_oneline = event["status"].replace("\n", " ")
+            log(f"[{i}/{len(events)}] {event['name']} — {status_oneline[:50]}", "info")
 
-        nb_fencers = [e for e in entries if is_nb_entry(e, nb_ids, nb_names)]
+            if not is_finished(event["status"]):
+                log("Not finished — skipping (empty podium recorded).", "info")
+                event_results.append({
+                    "event_name": event["name"],
+                    "day": event["day"],
+                    "results_url": f"{BASE_URL}/events/results/{event['id']}",
+                    "podium": [],
+                })
+                time.sleep(RATE_LIMIT_SECS)
+                continue
 
-        if nb_fencers:
-            log(f"{len(nb_fencers)} NB fencer(s) found (source: {source})", "ok")
-            nb_events.append({
+            try:
+                entries = http_get_json(
+                    f"{BASE_URL}/events/results/data/{event['id']}", cookie
+                )
+            except SessionExpiredError as e:
+                log(str(e), "error")
+                sys.exit(1)
+            except Exception as exc:
+                log(f"Failed to fetch results: {exc}", "warn")
+                errors += 1
+                event_results.append({
+                    "event_name": event["name"],
+                    "day": event["day"],
+                    "results_url": f"{BASE_URL}/events/results/{event['id']}",
+                    "podium": [],
+                })
+                time.sleep(RATE_LIMIT_SECS)
+                continue
+
+            # Fencing podium: 1st, 2nd, 3T, 3T = 4 medalists.
+            # Filter (not break) so both 3T entries are always captured.
+            podium_entries = sorted(
+                [e for e in entries if numeric_place(e.get("place", "")) <= 3],
+                key=lambda e: numeric_place(e.get("place", "")),
+            )
+            podium = [
+                {
+                    "place": str(e.get("place", "")).strip(),
+                    "name": e.get("name") or f"{e.get('lastName', '')} {e.get('firstName', '')}".strip(),
+                    "club": e.get("club1") or e.get("clubs") or e.get("clubNames") or "",
+                }
+                for e in podium_entries
+            ]
+
+            log(f"  {len(podium)} medalist(s): {[p['name'] for p in podium]}", "ok")
+            event_results.append({
                 "event_name": event["name"],
                 "day": event["day"],
-                "start_time": event["start_time"],
-                "status": status_oneline,
-                "source": source,
-                "total_fencers": len(entries),
                 "results_url": f"{BASE_URL}/events/results/{event['id']}",
-                "nb_fencers": [
-                    {
-                        "name": e["name"],
-                        # 'place' (string e.g. "3T") is in results data;
-                        # 'rank' (integer) is in competitors data.
-                        # Use explicit None checks so a value of 0 is not skipped.
-                        "place": next(
-                            (e[k] for k in ("place", "rank") if e.get(k) is not None), ""
-                        ),
-                        "club": e.get("club1") or e.get("clubs") or e.get("clubNames") or "",
-                        "license": e.get("memberNum") or "",
-                    }
-                    for e in nb_fencers
-                ],
+                "podium": podium,
             })
-        else:
-            log("No NB fencers.", "info")
+            time.sleep(RATE_LIMIT_SECS)
 
-        time.sleep(RATE_LIMIT_SECS)
+        output = {
+            "tournament": {
+                "name": tourn["name"],
+                "location": tourn["location"],
+                "dates": tourn["dates"],
+                "schedule_url": f"{BASE_URL}/tournaments/eventSchedule/{tourn['id']}",
+            },
+            "events": event_results,
+        }
+        slug = re.sub(r"[^a-z0-9]+", "-", tourn["name"].lower()).strip("-")
+        out_path = OUTPUT_DIR / f"{slug}-podiums-{date.today()}.json"
 
-    # Step 5 — serialise and save output
-    output = {
-        "tournament": {
-            "name": tourn["name"],
-            "location": tourn["location"],
-            "dates": tourn["dates"],
-            "schedule_url": f"{BASE_URL}/tournaments/eventSchedule/{tourn['id']}",
-        },
-        "nb_clubs_checked": nb_clubs,
-        "events_with_nb_fencers": nb_events,
-    }
+        error_note = f", {errors} error(s)" if errors else ""
+        log(
+            f"Done. {len(events)} events checked, "
+            f"{sum(1 for e in event_results if e['podium'])} had podium results{error_note}.",
+            "ok",
+        )
+
+    # -------------------------------------------------------------------------
+    # AWAY — scan every event for NB fencers
+    # -------------------------------------------------------------------------
+
+    else:
+        nb_ids, nb_names, nb_clubs = load_nb_clubs(CLUBS_YAML)
+        log(f"Loaded {len(nb_ids)} NB clubs: {', '.join(sorted(nb_ids))}", "info")
+
+        nb_events = []
+        errors = 0
+        for i, event in enumerate(events, 1):
+            status_oneline = event["status"].replace("\n", " ")
+            log(f"[{i}/{len(events)}] {event['name']} — {status_oneline[:50]}", "info")
+
+            try:
+                entries, source = fetch_event_entries(event, cookie)
+            except SessionExpiredError as e:
+                log(str(e), "error")
+                sys.exit(1)
+            except Exception as exc:
+                log(f"Failed to fetch entries: {exc}", "warn")
+                errors += 1
+                time.sleep(RATE_LIMIT_SECS)
+                continue
+
+            nb_fencers = [e for e in entries if is_nb_entry(e, nb_ids, nb_names)]
+
+            if nb_fencers:
+                log(f"{len(nb_fencers)} NB fencer(s) found (source: {source})", "ok")
+                nb_events.append({
+                    "event_name": event["name"],
+                    "day": event["day"],
+                    "start_time": event["start_time"],
+                    "status": status_oneline,
+                    "source": source,
+                    "total_fencers": len(entries),
+                    "results_url": f"{BASE_URL}/events/results/{event['id']}",
+                    "nb_fencers": [
+                        {
+                            "name": e["name"],
+                            # 'place' (string e.g. "3T") is in results data;
+                            # 'rank' (integer) is in competitors data.
+                            # Use explicit None checks so a value of 0 is not skipped.
+                            "place": next(
+                                (e[k] for k in ("place", "rank") if e.get(k) is not None), ""
+                            ),
+                            "club": e.get("club1") or e.get("clubs") or e.get("clubNames") or "",
+                            "license": e.get("memberNum") or "",
+                        }
+                        for e in nb_fencers
+                    ],
+                })
+            else:
+                log("No NB fencers.", "info")
+
+            time.sleep(RATE_LIMIT_SECS)
+
+        output = {
+            "tournament": {
+                "name": tourn["name"],
+                "location": tourn["location"],
+                "dates": tourn["dates"],
+                "schedule_url": f"{BASE_URL}/tournaments/eventSchedule/{tourn['id']}",
+            },
+            "nb_clubs_checked": nb_clubs,
+            "events_with_nb_fencers": nb_events,
+        }
+        slug = re.sub(r"[^a-z0-9]+", "-", tourn["name"].lower()).strip("-")
+        out_path = OUTPUT_DIR / f"{slug}-{date.today()}.json"
+
+        error_note = f", {errors} error(s)" if errors else ""
+        log(
+            f"Done. {len(events)} events checked, {len(nb_events)} had NB fencers{error_note}.",
+            "ok",
+        )
+
+    # -------------------------------------------------------------------------
+    # Save output
+    # -------------------------------------------------------------------------
+
     json_str = json.dumps(output, indent=2, ensure_ascii=False)
-
-    # Save to scripts/output/<slug>-<date>.json (directory is gitignored).
-    # Running the script twice on the same day for the same tournament overwrites
-    # the earlier file — only the most recent run per day is kept.
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    slug = re.sub(r"[^a-z0-9]+", "-", tourn["name"].lower()).strip("-")
-    out_path = OUTPUT_DIR / f"{slug}-{date.today()}.json"
     out_path.write_text(json_str, encoding="utf-8")
-
-    error_note = f", {errors} error(s)" if errors else ""
-    log(
-        f"Done. {len(events)} events checked, {len(nb_events)} had NB fencers{error_note}.",
-        "ok",
-    )
     log(f"Output saved to {out_path}", "ok")
-
     print(json_str)
 
 

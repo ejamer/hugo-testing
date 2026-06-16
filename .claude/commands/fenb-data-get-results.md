@@ -3,135 +3,127 @@ description: Fetch recent tournament results from fencingtimelive.com and report
 allowed-tools: Bash(python3 scripts/fencingtimelive-results.py *) Bash(python3 -c *) Bash(python3 -m pip *) Bash(pip install *) Bash(pip3 install *) Bash(which *) AskUserQuestion Read
 ---
 
-Fetch recent tournament results from fencingtimelive.com and check for NB fencer participation.
+Fetch tournament results from fencingtimelive.com. Two modes:
+
+- **Away** — NB athletes competed out of province. Scan all events for NB fencer placements; report only events where NB athletes appear.
+- **Hosted** — tournament was held in New Brunswick. Report the full podium (all medalists, any province) for every event. NB fencer filtering is irrelevant.
 
 ---
 
 ## Step 0 — Prerequisites
 
-Check all requirements before running anything. Run checks in parallel where possible.
+Check all requirements in parallel before running anything.
 
-**Check all of the following:**
+1. **Python 3.9+** — `python3 --version`
+2. **PyYAML** — `python3 -c "import yaml; print(yaml.__version__)"`
+3. **Playwright** — `python3 -c "from playwright.sync_api import sync_playwright; print('ok')"`
+4. **System Chrome** — `which google-chrome || which google-chrome-stable || which chromium-browser || which chromium`
+5. **clubs.yaml** — `ls fenb-1/data/clubs.yaml`
 
-1. **Python 3.9+** — `python3 --version`. Required for `str | None` type union syntax used in the script.
+Auto-fix missing dependencies:
+- PyYAML: `pip install pyyaml --break-system-packages`
+- Playwright: `pip install playwright --break-system-packages`
+- Chrome missing: tell user to install Google Chrome and stop.
+- clubs.yaml missing: stop and tell the user.
 
-2. **PyYAML** — `python3 -c "import yaml; print(yaml.__version__)"`. Used to read `fenb-1/data/clubs.yaml`.
-
-3. **Playwright** — `python3 -c "import playwright; print(playwright.__version__)"`. Used to open Chrome for login.
-
-4. **System Chrome** — `which google-chrome || which google-chrome-stable || which chromium-browser || which chromium`. Playwright drives system Chrome (not its bundled browser) to avoid Google's bot detection.
-
-5. **clubs.yaml** — confirm `fenb-1/data/clubs.yaml` exists. This file defines which clubs count as NB clubs.
-
-**For any missing dependency, attempt to install or fix it automatically:**
-
-- PyYAML missing: `pip install pyyaml --break-system-packages`
-- Playwright missing: `pip install playwright --break-system-packages` (no extra browser install needed — system Chrome is used)
-- Chrome missing: cannot auto-install; tell the user to install Google Chrome and stop.
-- clubs.yaml missing: tell the user the file is missing and stop — do not continue without it.
-
-**Report the status of each check** (pass/installed/fail) before continuing. If any prerequisite cannot be satisfied, stop and explain what the user needs to do.
+Report pass/installed/fail for each. Stop if any prerequisite cannot be satisfied.
 
 ---
 
-## Step 1 — Parameters
+## Step 1 — Tournament type and source
 
-Ask the user what search parameters to use:
+Ask the user two questions via `AskUserQuestion`:
 
-- **Question:** "Which tournaments should we search?"
-- **Country:** default `CAN`; offer `USA` as an alternative or let the user type a FIE country code.
-- **Date range:** default "Last 10 days" (`--days -1`); offer "Last 30 days" (`--days -2`).
+1. **Tournament type**: Is this an NB-hosted tournament (held in NB) or an away tournament (NB athletes travelled to compete)?
+   - Options: "NB-hosted" / "Away"
 
-Use `AskUserQuestion` with two questions — one for country, one for date range.
+2. **Tournament source**: Was a direct FTL URL provided, or should we search the tournament list?
+   - If the user already provided a URL in their message (e.g. `https://www.fencingtimelive.com/tournaments/eventSchedule/{id}`), skip this question and note that you'll use the direct URL.
+   - Otherwise ask: "Direct URL" (user pastes it via Other) / "Search recent tournaments"
+
+If "Search recent tournaments": also ask country (default CAN) and date range (default last 10 days / `--days -1`, offer last 30 days / `--days -2`).
 
 ---
 
-## Step 2 — Fetch tournament list
+## HOSTED PATH — Steps H2 through H3
 
-Run the script in list mode to get the available tournaments. This may open a Chrome window for Google login if no saved session exists — tell the user to complete the login in the browser.
+*Follow this path when the user said NB-hosted.*
+
+### Step H2 — Run hosted scrape
+
+If the user provided a direct URL, extract the tournament ID from the path (the hex string after `/eventSchedule/`) and run:
 
 ```bash
-python3 scripts/fencingtimelive-results.py --list --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-list.stderr
+python3 scripts/fencingtimelive-results.py --location hosted --tournament-id {ID} 2>/tmp/ftl-scrape.stderr
 ```
 
-**Important:** do not use `2>&1` — stderr contains log lines that will break JSON parsing. Redirect stderr separately (e.g. `2>/tmp/ftl-list.stderr`) and print it after for context.
-
-The script writes logs to stderr and clean JSON to stdout. Parse the JSON array from stdout.
-
-If the list is empty or the command fails, report the error clearly and stop.
-
----
-
-## Step 3 — Select tournament
-
-**Determine a sensible "already checked" set** by listing `scripts/output/` for files whose date suffix matches today (`<slug>-{today}.json`).
-
-**If there are ≤ 4 tournaments:** use `AskUserQuestion` with one option per tournament, labelled with the name; description shows location and dates.
-
-**If there are > 4 tournaments:** present the full numbered list as a markdown table in your response (columns: #, Name, Location, Dates; mark already-checked ones with a ✓), then ask via `AskUserQuestion` with these four options:
-
-- **"All of them"** — scrape every tournament in the list
-- **"New ones only"** — skip any already checked today (output file exists in `scripts/output/` for today's date)
-- **"Specific tournament(s)"** — user types a number, range, or keyword via the Other field
-- **"Just one"** — show me the list and I'll pick by number (Other field)
-
-When the user picks "All of them" or "New ones only", run the scrapes sequentially (one `--select N` call per tournament) without prompting again.
-
----
-
-## Step 4 — Run full scrape
-
-Run the script with the selected tournament number (1-indexed position in the list from Step 2):
+If no direct URL was provided, run with search parameters and let the user pick interactively, or use `--select N` to skip the picker:
 
 ```bash
-python3 scripts/fencingtimelive-results.py --select {N} --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-scrape.stderr
+python3 scripts/fencingtimelive-results.py --location hosted --select {N} --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-scrape.stderr
 ```
 
-**Important:** do not use `2>&1`. Redirect stderr separately; do not attempt to parse stdout — the script saves clean JSON automatically.
+**Do not use `2>&1`.** The script handles session, schedule fetching, and podium extraction automatically. Output is saved to `scripts/output/{slug}-podiums-{today}.json` (path logged to stderr as `[ ok ] Output saved to …`). This may take a minute or two — keep the user informed.
 
-This may take a minute or two — there is a 2-second rate limit between each event. Keep the user informed that the script is running.
+### Step H3 — Report and publish
 
-**Read results from `scripts/output/<slug>-{today}.json`**, not from stdout. The script logs the exact path to stderr as `[ ok ] Output saved to …`.
+Read the saved `*-podiums-{today}.json` file. Report the podium for each event. For events with an empty `podium` array, note that final results were not posted in the system.
+
+Check whether the tournament matches an event in `fenb-1/data/events.yaml` (same match logic as Step A5.5 below). If matched and `results_url_en` is empty, ask the user to confirm before setting it.
+
+Tell the user: "Run `/fenb-content-add-results scripts/output/{slug}-podiums-{today}.json` to generate the bilingual news article."
 
 ---
 
-## Step 5 — Report results
+## AWAY PATH — Steps A2 through A6
 
-Read the saved JSON output file and present the findings clearly.
+*Follow this path when the user said away tournament.*
 
-**If `events_with_nb_fencers` is empty:**
+### Step A2 — Fetch tournament list
 
-Report that no NB fencers were found at this tournament. Show the tournament name, location, and dates. Note the total number of events checked.
+```bash
+python3 scripts/fencingtimelive-results.py --location away --list --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-list.stderr
+```
 
-**If NB fencers were found:**
+**Do not use `2>&1`** — stderr has log lines that break JSON parsing. Parse the JSON array from stdout. Print stderr after for context. Stop and report clearly if the list is empty or the command fails.
 
-For each event in `events_with_nb_fencers`, show:
+### Step A3 — Select tournament
+
+List `scripts/output/` to find files already checked today (`{slug}-{today}.json`).
+
+**≤ 4 tournaments:** `AskUserQuestion` with one option per tournament (name as label, location + dates as description).
+
+**> 4 tournaments:** print a markdown table (#, Name, Location, Dates; ✓ = already checked today), then ask with four options: "All of them" / "New ones only" / "Specific tournament(s)" (Other field) / "Just one" (Other field).
+
+When "All of them" or "New ones only": run scrapes sequentially without prompting again.
+
+### Step A4 — Run NB-fencer scrape
+
+```bash
+python3 scripts/fencingtimelive-results.py --location away --select {N} --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-scrape.stderr
+```
+
+Do not use `2>&1`. Output is saved to `scripts/output/{slug}-{today}.json` (path logged to stderr as `[ ok ] Output saved to …`). This may take a minute or two — keep the user informed.
+
+### Step A5 — Report NB fencer results
+
+**If `events_with_nb_fencers` is empty:** report no NB fencers found. Show tournament name, location, dates, and total events checked.
+
+**If NB fencers were found:** for each event in `events_with_nb_fencers`, show:
 - Event name, day, start time
-- A table of NB fencer results: Place | Name | Club
-- Direct link to the results page (`results_url`)
+- Table of NB fencer results: Place | Name | Club
+- Direct link to `results_url`
 
-End with a summary: how many events had NB fencers, total NB fencer appearances across all events.
+End with a summary: events with NB fencers, total NB fencer appearances.
 
----
+### Step A5.5 — Update events.yaml results_url
 
-## Step 5.5 — Update events.yaml results_url
+Check whether the tournament matches an event in `fenb-1/data/events.yaml`:
+- Tournament dates overlap the event's `start_date` / `end_date`, AND
+- Event title is a plausible match for the tournament name (case-insensitive substring or fuzzy match)
 
-After reporting results, check whether the tournament matches an event in `fenb-1/data/events.yaml`.
+If matched and `results_url_en` is empty: ask the user before setting it to `{tournament.schedule_url}`. Leave `results_url_fr` empty (FTL links are language-agnostic). If already set, report the existing URL and take no action.
 
-**Match logic:** Read `fenb-1/data/events.yaml`. For each event in the `events` list, check whether:
-- The tournament dates overlap the event's `date` (and `end_date` if set), AND
-- The event title is a plausible match for the tournament name (case-insensitive substring or fuzzy match — e.g. "May Nationals" matching "CC #4 — May Nationals")
+### Step A6 — Publish results
 
-If a match is found:
-- Check whether the event already has a `results_url` field set to a non-empty value.
-- **If empty or missing:** Ask the user: "I found a matching event in events.yaml: `{event title}` ({display_date}). Would you like to set its `results_url_en` to the FTL tournament schedule URL?\n`{tournament.schedule_url}`"
-- **If the user confirms:** Update the matching event in `fenb-1/data/events.yaml` by setting `results_url_en: "{tournament.schedule_url}"` (leave `results_url_fr` empty — the EN URL is language-agnostic for FTL links), preserving all other fields and the file's existing formatting style.
-- **If already set:** Report the existing URL and take no action.
-
-If no match is found, skip silently and proceed to Step 6.
-
----
-
-## Step 6 — Publish results
-
-Once **all** events at the tournament are complete, tell the user: "Run `/fenb-content-add-results` to generate a bilingual news article from the saved JSON output file."
+Tell the user: "Run `/fenb-content-add-results scripts/output/{slug}-{today}.json` to generate the bilingual news article."
