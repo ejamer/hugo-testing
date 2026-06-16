@@ -10,7 +10,18 @@
     <div class="fenb-hero-slider" id="fenb-hero-slider">
       {{ range $i, $slide := hugo.Data.hero_slides.slides }}
       <div class="fenb-hero-slide{{ if eq $i 0 }} is-active{{ end }}">
+        {{- $link := $slide.link_en -}}
+        {{- if and (eq site.Language.Lang "fr") $slide.link_fr -}}{{- $link = $slide.link_fr -}}{{- end -}}
+        {{ if $link }}
+        {{ $isExternal := hasPrefix $link "http" }}
+        {{ $href := cond $isExternal $link ($link | relLangURL) }}
+        <a href="{{ $href }}" class="fenb-hero-slide-link"{{ if $isExternal }} target="_blank" rel="noopener"{{ end }}>
+          <img src="{{ $slide.src | relURL }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
+          <span class="fenb-hero-slide-cta" aria-hidden="true">{{ i18n "read_more" }} &rarr;</span>
+        </a>
+        {{ else }}
         <img src="{{ $slide.src | relURL }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
+        {{ end }}
       </div>
       {{ end }}
       <button class="fenb-hero-slider-btn fenb-hero-slider-btn--prev" aria-label="Previous slide">
@@ -18,6 +29,20 @@
       </button>
       <button class="fenb-hero-slider-btn fenb-hero-slider-btn--next" aria-label="Next slide">
         {{ partial "icon.html" (dict "name" "arrow-right.svg" "w" 16 "h" 16) }}
+      </button>
+      <div class="fenb-hero-dots" role="tablist">
+        {{ range $i, $slide := hugo.Data.hero_slides.slides }}
+        <button class="fenb-hero-dot{{ if eq $i 0 }} is-active{{ end }}" role="tab" aria-label="Slide {{ add $i 1 }}" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" data-index="{{ $i }}"></button>
+        {{ end }}
+      </div>
+      <button class="fenb-hero-pause" aria-label="Pause slideshow" aria-pressed="false">
+        <svg class="fenb-icon-pause" width="10" height="13" viewBox="0 0 10 13" fill="currentColor" aria-hidden="true">
+          <rect x="0" y="0" width="3.5" height="13" rx="1"/>
+          <rect x="6.5" y="0" width="3.5" height="13" rx="1"/>
+        </svg>
+        <svg class="fenb-icon-play" width="11" height="13" viewBox="0 0 11 13" fill="currentColor" aria-hidden="true" style="display:none">
+          <polygon points="0,0 11,6.5 0,13"/>
+        </svg>
       </button>
     </div>
     <p class="fenb-hero-tagline">{{ i18n "hero_tagline" }}</p>

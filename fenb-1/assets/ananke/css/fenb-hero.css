@@ -77,10 +77,12 @@
   inset: 0;
   opacity: 0;
   transition: opacity 0.9s ease;
+  pointer-events: none;
 }
 
 .fenb-hero-slide.is-active {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .fenb-hero-slide img {
@@ -88,6 +90,38 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: filter 0.3s ease;
+}
+
+.fenb-hero-slide-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  text-decoration: none;
+}
+
+.fenb-hero-slide-link:hover img {
+  filter: brightness(0.82);
+}
+
+.fenb-hero-slide-cta {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  background: rgba(0,0,0,0.52);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.28rem 0.72rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s ease;
+  pointer-events: none;
+}
+
+.fenb-hero-slide-link:hover .fenb-hero-slide-cta {
+  background: rgba(0,0,0,0.75);
 }
 
 .fenb-hero-slider-btn {
@@ -114,6 +148,60 @@
 
 .fenb-hero-slider-btn--prev { left: 10px; }
 .fenb-hero-slider-btn--next { right: 10px; }
+
+/* ── Dot navigation ───────────────────────────── */
+.fenb-hero-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+  z-index: 2;
+}
+
+.fenb-hero-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.fenb-hero-dot.is-active {
+  background: rgba(255,255,255,0.85);
+}
+
+.fenb-hero-dot:hover:not(.is-active) {
+  background: rgba(255,255,255,0.6);
+}
+
+/* ── Pause/play button ────────────────────────── */
+.fenb-hero-pause {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.2);
+  border: none;
+  color: rgba(255,255,255,0.6);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background var(--transition), color var(--transition);
+}
+
+.fenb-hero-pause:hover {
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+}
 
 .fenb-hero-tagline {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
