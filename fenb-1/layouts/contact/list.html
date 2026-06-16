@@ -3,6 +3,7 @@
 {{ define "main" }}
 <section class="fenb-about-contact-section">
   <div class="fenb-container fenb-container--tight">
+    {{ partial "back-link.html" (dict "url" "about/" "key" "about_back") }}
     <span class="fenb-section-label">{{ i18n "about_contact_label" }}</span>
     <h2 class="fenb-section-title">{{ i18n "about_contact_title" }}</h2>
     <form class="fenb-contact-form" action="mailto:{{ hugo.Data.board_members.contact }}" method="POST" enctype="text/plain">
