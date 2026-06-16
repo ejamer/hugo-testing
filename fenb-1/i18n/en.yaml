@@ -50,9 +50,10 @@ announcement: "Announcement"
 results:      "Results"
 community:    "Community"
 registration: "Registration"
-event_details:   "Learn More"
-event_register:  "Register Now"
-event_results:   "View Results"
+event_details:      "Learn More"
+event_register:     "Register Now"
+event_results:      "View Results"
+event_more_coming:  "More events coming soon"
 
 # ── Month abbreviations — used in event-card.html (server-side rendering) and
 #    as FENB_CAL.monthsShort in the calendar's JS (date badges, ranges).

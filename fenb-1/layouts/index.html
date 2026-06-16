@@ -39,15 +39,17 @@
       {{/* ISO 8601 strings are lexicographically sortable, so string "ge"/"lt" comparisons work. */}}
       {{ $today    := now.Format "2006-01-02" }}
       {{ $upcoming := first 4 (where hugo.Data.events.events "start_date" "ge" $today) }}
-      {{ $toShow   := $upcoming }}
-      {{ if lt (len $upcoming) 4 }}
-        {{ $past := where hugo.Data.events.events "start_date" "lt" $today }}
-        {{ range last (sub 4 (len $upcoming)) $past }}
-          {{ $toShow = $toShow | append . }}
-        {{ end }}
-      {{ end }}
-      {{ range $toShow }}
+      {{ range $upcoming }}
       {{ partial "event-card.html" . }}
+      {{ end }}
+      {{ $placeholders := sub 4 (len $upcoming) }}
+      {{ range seq $placeholders }}
+      <article class="fenb-event-card fenb-event-card--placeholder" aria-hidden="true">
+        <div class="fenb-event-placeholder-inner">
+          <img src="{{ "images/fenb-logo/FENB-Logo-Landscape-FullColour/FencingNB-Logo-FullColour.svg" | relURL }}" alt="" class="fenb-event-placeholder-logo">
+          <p class="fenb-event-placeholder-text">{{ i18n "event_more_coming" }}</p>
+        </div>
+      </article>
       {{ end }}
     </div>
   </div>

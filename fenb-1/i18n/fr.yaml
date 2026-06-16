@@ -50,9 +50,10 @@ announcement: "Annonce"
 results:      "Résultats"
 community:    "Communauté"
 registration: "Inscription"
-event_details:   "En savoir plus"
-event_register:  "S'inscrire"
-event_results:   "Voir les résultats"
+event_details:      "En savoir plus"
+event_register:     "S'inscrire"
+event_results:      "Voir les résultats"
+event_more_coming:  "D'autres événements à venir"
 
 # ── Abréviations des mois — utilisées dans event-card.html (rendu serveur) et
 #    comme FENB_CAL.monthsShort dans le JS du calendrier (badges de date, plages).
