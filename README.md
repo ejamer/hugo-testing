@@ -4,16 +4,6 @@ This repo is testing a replacement tech stack for [fencingnb.ca](https://fencing
 
 **[► View live site](https://ejamer.github.io/hugo-testing/)**
 
-## Related docs
-
-| File | Covers |
-|------|--------|
-| [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code; lists available `/fenb-*` skills |
-| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
-| [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
-| [docs/PROJECT_LAYOUT.md](docs/PROJECT_LAYOUT.md) | Full directory tree with file-by-file descriptions |
-| [docs/TODO.md](docs/TODO.md) | Outstanding items |
-
 ### Claude Code skills
 
 Content and data workflows are available as Claude Code skills (invoked with `/fenb-*` in the CLI):
@@ -373,3 +363,14 @@ Two URLs in `data/join.yaml` need updating at the start of each season:
 
 </details>
 
+---
+
+## Related docs
+
+| File | Covers |
+|------|--------|
+| [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code; lists available `/fenb-*` skills |
+| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
+| [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
+| [docs/PROJECT_LAYOUT.md](docs/PROJECT_LAYOUT.md) | Full directory tree with file-by-file descriptions |
+| [docs/TODO.md](docs/TODO.md) | Outstanding items |
