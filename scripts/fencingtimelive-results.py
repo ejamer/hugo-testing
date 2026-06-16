@@ -208,54 +208,59 @@ def get_cookie_via_browser() -> str:
             for c in context.cookies(BASE_URL)
         )
 
-        if not already_logged_in:
-            log("Browser open — please complete the Google sign-in.", "info")
-            log("The script will continue automatically once you are logged in.", "info")
-            log(f"Waiting up to {BROWSER_LOGIN_TIMEOUT_SECS // 60} minutes...", "info")
-
-            # Poll for the connect.sid cookie once per second.
-            deadline = time.time() + BROWSER_LOGIN_TIMEOUT_SECS
-            while time.time() < deadline:
-                if any(c["name"] == "connect.sid" for c in context.cookies(BASE_URL)):
-                    break
-                time.sleep(1)
-            else:
+        if already_logged_in:
+            log("Existing session found in saved profile. Verifying...", "info")
+            # Brief pause to let any redirects settle before capturing cookies.
+            time.sleep(1)
+            cookies = context.cookies(BASE_URL)
+            cookie_str = "; ".join(f"{c['name']}={c['value']}" for c in cookies)
+            try:
+                fetch_tournaments(cookie_str)
+                log("Session verified.", "ok")
                 context.close()
-                log(
-                    f"Login timed out after {BROWSER_LOGIN_TIMEOUT_SECS // 60} minutes. "
-                    "Re-run to try again.",
-                    "error",
-                )
-                sys.exit(1)
+                log("Browser closed.", "info")
+                return cookie_str
+            except SessionExpiredError:
+                pass  # fall through to fresh login below
+            except Exception:
+                pass  # empty response / network blip — treat as expired, fall through
+
+            # Saved session is stale. Clear cookies and wait for fresh login.
+            log("Saved session has expired — please log in again.", "warn")
+            context.clear_cookies()
+
+        log("Browser open — please complete the Google sign-in.", "info")
+        log("The script will continue automatically once you are logged in.", "info")
+        log(f"Waiting up to {BROWSER_LOGIN_TIMEOUT_SECS // 60} minutes...", "info")
+
+        # Navigate to the site so the login page is visible.
+        page.goto(BASE_URL)
+
+        # Poll until the session cookie is present AND the API call succeeds.
+        # connect.sid is set on the very first page load (unauthenticated), so
+        # detecting the cookie alone is not enough — we must verify server-side.
+        cookie_str = None
+        deadline = time.time() + BROWSER_LOGIN_TIMEOUT_SECS
+        while time.time() < deadline:
+            cookies = context.cookies(BASE_URL)
+            if any(c["name"] == "connect.sid" for c in cookies):
+                candidate = "; ".join(f"{c['name']}={c['value']}" for c in cookies)
+                try:
+                    fetch_tournaments(candidate)
+                    cookie_str = candidate
+                    log("Session verified.", "ok")
+                    break
+                except Exception:
+                    pass  # OAuth not yet complete; keep waiting
+            time.sleep(2)
         else:
-            log("Existing session found in saved profile.", "info")
-
-        # Brief pause to let any post-login redirects finish before capturing cookies.
-        time.sleep(1)
-
-        cookies = context.cookies(BASE_URL)
-        cookie_str = "; ".join(f"{c['name']}={c['value']}" for c in cookies)
-        log(f"Captured {len(cookies)} cookies. Verifying session...", "info")
-
-        # Verify the session works server-side before closing the browser.
-        # A cookie present in the browser doesn't guarantee the server accepts it
-        # (e.g. if it was captured mid-redirect or has already expired server-side).
-        try:
-            fetch_tournaments(cookie_str)
-            log("Session verified.", "ok")
-        except SessionExpiredError:
             context.close()
-            log("Session verification failed — the server rejected the cookies.", "error")
             log(
-                "This can happen if the session expired between the login and the "
-                "verification call. Delete scripts/.browser-profile/ and re-run to "
-                "force a fresh login.",
+                f"Login timed out after {BROWSER_LOGIN_TIMEOUT_SECS // 60} minutes. "
+                "Re-run to try again.",
                 "error",
             )
             sys.exit(1)
-        except Exception as exc:
-            # Network error during verification — not necessarily a bad session.
-            log(f"Could not verify session ({exc}). Proceeding anyway.", "warn")
 
         context.close()
 

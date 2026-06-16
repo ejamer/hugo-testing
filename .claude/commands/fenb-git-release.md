@@ -36,6 +36,8 @@ Run through this checklist in order, pausing to report the result of each step b
 
      If the user picks **"Cancel release"**: stop and tell the user: "Release cancelled. You can run `/fenb-git-commit` to commit your changes, or `git stash` to set them aside, then re-run `/fenb-git-release`."
 
+   - Sync local `main` with `origin/main`: run `git merge-base --is-ancestor main origin/main`. If it succeeds, run `git fetch origin main:main` to fast-forward the local `main` ref (safe — `main` is never checked out by this skill). If it fails (local `main` has diverged), stop and alert the user. This is needed because `gh pr merge` (Step 12) updates `origin/main` but not the local `main` ref, so without this sync Step 6's `main..dev` diff drifts stale after every release.
+
 4. **Production build** — run `make build-prod` from the repo root. Report any errors or warnings. A clean build is required to proceed. If the build fails, pop the stash (if one was taken) before stopping.
 
 5. **Bilingual parity check** — run from the repo root:
