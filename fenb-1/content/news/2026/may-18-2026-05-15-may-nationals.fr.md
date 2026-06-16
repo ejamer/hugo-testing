@@ -3,6 +3,7 @@ title: "Les escrimeurs du Nouveau-Brunswick aux Championnats nationaux de mai 20
 date: 2026-05-18
 category: national
 results_table: true
+results_hide_placements: true
 summary: "Trente-six escrimeurs néo-brunswickois ont participé à 31 épreuves aux Championnats nationaux de mai 2026 à Québec, Wendy Yano remportant deux médailles d'or en sabre vétéran."
 ---
 

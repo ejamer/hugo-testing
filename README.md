@@ -36,35 +36,44 @@ Utility scripts live in `scripts/`. They are independent of the Hugo build — r
 
 ### fencingtimelive-results.py
 
-Fetches recent tournament results from [fencingtimelive.com](https://www.fencingtimelive.com) and checks each event for NB fencer participation, matching competitors against the club list in `fenb-1/data/clubs.yaml`.
+Fetches tournament results from [fencingtimelive.com](https://www.fencingtimelive.com). Requires `--location` to specify the tournament type — this determines what is fetched and how the output is structured.
 
 > **Skill available:** run `/fenb-data-get-results` in Claude Code — it handles parameters, login, tournament selection, and result reporting interactively.
+
+**`--location away`** — NB athletes competed out of province. Scans every event for NB fencer participation (matched against `fenb-1/data/clubs.yaml`) and saves only events where NB athletes appear. Output: `scripts/output/{slug}-{date}.json` with an `events_with_nb_fencers` key.
+
+**`--location hosted`** — tournament held in NB. Fetches full final standings for every finished event and extracts the top-4 medalists (gold, silver, two tied bronze). NB-club filtering is not applied. Output: `scripts/output/{slug}-podiums-{date}.json` with an `events[].podium` key.
 
 **Usage:**
 
 ```bash
-# Option A — browser login (recommended): opens system Chrome for Google sign-in
-python3 scripts/fencingtimelive-results.py
+# Away — search recent CAN tournaments, pick interactively:
+python3 scripts/fencingtimelive-results.py --location away
 
-# Option B — manual cookie: copy Cookie header from browser DevTools
-python3 scripts/fencingtimelive-results.py --cookie "connect.sid=...;AWSALB=..."
+# Away — USA, last 30 days, skip picker:
+python3 scripts/fencingtimelive-results.py --location away --country USA --days -2 --select 1
 
-# Other options
-python3 scripts/fencingtimelive-results.py --country USA --days -2
-python3 scripts/fencingtimelive-results.py --help
+# Hosted — search and pick interactively:
+python3 scripts/fencingtimelive-results.py --location hosted
+
+# Hosted — direct tournament ID (bypasses --days limit):
+python3 scripts/fencingtimelive-results.py --location hosted --tournament-id 4A78131AF1154821BF95F71B1D4FD913
+
+# Manual cookie instead of browser login:
+python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid=...;AWSALB=..."
 ```
 
 | Flag | Default | Notes |
 |---|---|---|
+| `--location` | *(required)* | `hosted` or `away` — determines fetch mode and output structure |
 | `--cookie` | *(opens browser)* | Full `Cookie:` header string from DevTools; omit to use browser login |
-| `--country` | `CAN` | FIE country code |
+| `--country` | `CAN` | FIE country code (away mode only) |
 | `--days` | `-1` | `-2` last 30 days, `-1` last 10 days, `0` in progress, `1` next 7 days |
+| `--tournament-id` | — | Bypass the tournament list; use this hex ID directly (useful for old tournaments) |
 | `--list` | — | Print tournament list as JSON and exit (used by skill) |
 | `--select N` | — | Skip interactive picker, use tournament N from the list (used by skill) |
 
 **Authentication:** the site uses Google OAuth, which cannot be automated. On first run, system Chrome opens and you complete the Google login normally. The session is saved to `scripts/.browser-profile/` (gitignored) and reused on subsequent runs until it expires.
-
-**Output:** JSON written to `scripts/output/<tournament-slug>-<date>.json` (gitignored) and printed to stdout. Progress logs go to stderr, so `python3 scripts/fencingtimelive-results.py > out.json` captures only the JSON.
 
 **Dependencies:** `pip install playwright pyyaml` — no extra browser install needed; the script uses system Chrome.
 
@@ -130,6 +139,8 @@ Full post body here (Markdown).
 
 **`results_table: true`** — add this field to any article that contains markdown tables of placements; it loads `results-table.js` which makes the tables sortable. It is independent of category.
 
+**`results_hide_placements: true`** — optional companion to `results_table`. When set, the last column (placement) is hidden by default with a "Show placements / Hide placements" toggle button. Use this for **away-tournament** articles where placement context varies across events. Omit it for **hosted-tournament** articles where placements should always be visible.
+
 The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 
 **New year folder:** when the first article of a new calendar year is created, add a year subfolder with `_index.md` and `_index.fr.md` (copy from the previous year folder).
@@ -163,8 +174,10 @@ Add an entry to `data/events.yaml`.
 | `description_fr` | — | Optional French description. Falls back to `description_en` if blank |
 | `details_url_en` | — | English URL for the **Learn More →** badge. Used for both languages when `details_url_fr` is blank |
 | `details_url_fr` | — | Optional French URL override for the **Learn More →** badge |
-| `registration_url` | — | If set, a crimson **Register Now →** badge appears on the card (opens in new tab). Hidden for past events (date < today). |
-| `results_url` | — | If set, a navy **View Results →** badge appears on the card (opens in new tab). Populated automatically by `/fenb-data-get-results` after a tournament scrape. |
+| `registration_url_en` | — | English URL for the **Register Now →** badge. Used for both languages when `registration_url_fr` is blank. Hidden for past events (date < today). |
+| `registration_url_fr` | — | Optional French URL override for the **Register Now →** badge. Falls back to `registration_url_en` if blank. |
+| `results_url_en` | — | English URL for the **View Results →** badge. Populated automatically by `/fenb-data-get-results` after a tournament scrape (FTL links are language-agnostic, so `_fr` is left blank). |
+| `results_url_fr` | — | Optional French URL override for the **View Results →** badge (set when the results link is an internal bilingual news article). Falls back to `results_url_en` if blank. |
 
 **Example:**
 
@@ -178,8 +191,10 @@ Add an entry to `data/events.yaml`.
   description_fr: ""               # optional; falls back to description_en if blank
   details_url_en: ""               # optional Learn More link (used for both languages if _fr is blank)
   details_url_fr: ""               # optional French override for the Learn More link
-  registration_url: ""             # optional; hidden once event date has passed
-  results_url: ""                  # optional; populated by /fenb-data-get-results
+  registration_url_en: ""          # optional; hidden once event date has passed
+  registration_url_fr: ""          # optional French override; falls back to _en if blank
+  results_url_en: ""               # optional; populated by /fenb-data-get-results
+  results_url_fr: ""               # optional French override; falls back to _en if blank
 ```
 
 **Category colours:**

@@ -3,7 +3,7 @@ description: Generate a bilingual EN/FR news article from a saved fenb-get-resul
 allowed-tools: AskUserQuestion Read Write Bash(ls *) Bash(find *)
 ---
 
-Create a bilingual news article summarising NB fencer results from a saved results JSON file.
+Create a bilingual news article summarising results from a saved results JSON file.
 
 ---
 
@@ -13,11 +13,19 @@ If the user provided a file path, use it. Otherwise list `scripts/output/` and a
 
 Read the JSON file.
 
+**Detect format** — the JSON is one of two shapes:
+- **Away format** (standard NB-fencer tracking): top-level key `events_with_nb_fencers`. Shows NB athletes only across all placements.
+- **Hosted format** (NB-hosted tournament): top-level key `events`, each entry has a `podium` array. Shows all medalists regardless of province, top-4 only per event.
+
+All steps below branch on this format. Follow the appropriate branch throughout.
+
 ---
 
 ## Step 2 — Check for in-progress events
 
-Scan `events_with_nb_fencers` for any entry where `source` is `"competitors"` (place values are empty — results not yet posted).
+**Away format:** Scan `events_with_nb_fencers` for any entry where `source` is `"competitors"` (place values are empty — results not yet posted).
+
+**Hosted format:** Scan `events` for any entry whose `podium` array is empty or missing — this means final results were not entered in the system.
 
 **If any exist**, report:
 - A warning that not all events are finished.
@@ -44,15 +52,21 @@ Ask the user two things via `AskUserQuestion`:
 
 ## Step 4 — Identify top results
 
+**Away format:**
 Count unique NB fencers across all events (deduplicate by name across multiple events).
 
 From all finished events, collect:
 - **Medalists**: any NB fencer with a numeric place of 1, 2, or 3. Strip any trailing `T` before comparing. Map to medal emoji: 1 → 🥇, 2 → 🥈, 3 → 🥉.
 - **Top-16 non-medalists**: any NB fencer with a numeric place of 4–16 (strip `T` before comparing).
 
+**Hosted format:**
+No pre-processing needed — the `podium` array for each event already contains only medalists (4 entries: 1st, 2nd, 3T, 3T). Medal emoji map: place 1 → 🥇, 2 → 🥈, 3 (or 3T) → 🥉.
+
 ---
 
 ## Step 5 — Write EN article body
+
+### Away format
 
 **Paragraph 1** (2 sentences):
 - Name the tournament, location, and dates. State the total number of unique NB fencers and how many events they appeared in.
@@ -75,13 +89,28 @@ From all finished events, collect:
 - Leave Place as `—` for any in-progress event rows
 - One blank line between the table and the next heading
 
+### Hosted format
+
+**Paragraph 1** (2 sentences):
+- Name the tournament, location, and dates. State the number of events contested and the weapons/age groups covered.
+
+No top-performers block. Go directly to per-event sections.
+
+**Per-event sections** (one per event, in order from the JSON):
+- Heading: `### [Event name]` — hyperlink to `results_url`
+- Markdown table with columns **`Name | Club | Place`** (Place is always last)
+- Add the appropriate medal emoji before the fencer's name for places 1–3 (e.g. `🥇 ZHANG Zhirong`)
+- If a fencer has no club recorded, use `—` in the Club column
+- If an event's `podium` is empty (results not in system), note this under the heading instead of a table
+- One blank line between the table and the next heading
+
 The JS in `static/js/results-table.js` automatically hides the Place column and makes headers sortable — the markdown table format is all that is needed.
 
 ---
 
 ## Step 6 — Write FR article body
 
-Translate the full article into French using the same structure. Standard French fencing terminology:
+Translate the full article into French using the same structure (away or hosted, matching whatever was used for EN). Standard French fencing terminology:
 
 | English         | French       |
 |-----------------|--------------|
@@ -118,22 +147,28 @@ Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée se
    title: "{English title}"
    date: {YYYY-MM-DD}
    category: results
+   results_table: true
    summary: "{One-sentence English summary for the homepage card}"
    ---
 
    {EN article body}
    ```
+   For **away tournaments** (NB athletes competed out of province), also add `results_hide_placements: true` below `results_table: true`. This hides the Place column in the rendered table since placement context differs across events.
+   For **hosted tournaments**, `results_table: true` is sufficient — placements are shown.
+
 6. Write `fenb-1/content/news/{year}/{mon}-{dd}-{slug}.fr.md`:
    ```yaml
    ---
    title: "{French title}"
    date: {YYYY-MM-DD}
    category: results
+   results_table: true
    summary: "{One-sentence French summary for the homepage card}"
    ---
 
    {FR article body}
    ```
+   Apply the same `results_hide_placements: true` rule as the EN file.
 
 **Critical:** language code uses a **dot** separator (`.en.md`, `.fr.md`), never a dash.
 

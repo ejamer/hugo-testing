@@ -296,7 +296,7 @@ Three link types appear on event cards and schedule rows. Each has a specific CS
 | Register Now → | `fenb-event-register-link` | `--crimson` | `--text-body` |
 | View Results → | `fenb-event-results-link` | `--navy` | `--navy-light` |
 
-`Register Now` is suppressed for past events (date < today). `View Results` shows regardless of date when `results_url` is set.
+`Register Now` is suppressed for past events (date < today). `View Results` shows regardless of date when `results_url_en` is set.
 
 Any layout that renders event links (card partial, schedule list, future widgets) must use these classes — **not** a plain `<a>` with a local colour rule — so that print and dark-mode overrides apply automatically.
 
@@ -388,7 +388,7 @@ News articles use the same category IDs as events. The badge label is looked up 
 - Registration or announcement for a training camp / summer camp / clinic → `training`
 - General announcements → `announcement`
 
-**Results table JS:** Add `results_table: true` to the front matter to load `results-table.js`, which adds sortable columns to markdown tables in the article body. This is decoupled from category so it can be used with any category.
+**Results table JS:** Add `results_table: true` to the front matter to load `results-table.js`, which adds sortable columns to markdown tables in the article body. This is decoupled from category so it can be used with any category. Add `results_hide_placements: true` to also hide the last column (placement) behind a toggle — omit it when placements should always be visible.
 
 ---
 

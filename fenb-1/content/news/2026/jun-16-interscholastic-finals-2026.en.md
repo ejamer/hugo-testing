@@ -2,6 +2,7 @@
 title: "2026 NB Interscholastic Fencing Finals — Results"
 date: 2026-06-16
 category: announcement
+results_table: true
 summary: "Twenty-five student fencers from five Francophone schools in southeastern New Brunswick competed at Antonine-Maillet in Dieppe on June 5 — Antonine-Maillet won the champion school banner."
 ---
 
@@ -11,56 +12,52 @@ The New Brunswick Interscholastic Fencing Finals took place at Antonine-Maillet 
 
 Competition ran across four events — Senior Boys, Senior Girls, Junior Boys, and Junior Girls — with four schools represented on the podium.
 
----
-
-**Senior Boys (7th–8th grade)**
-
-| Place | Name | School |
-|---|---|---|
-| 🥇 1st | Olivier Larocque (7th) | Carrefour de l'Acadie |
-| 🥈 2nd | Alex McGraw (7th) | Carrefour de l'Acadie |
-| 🥉 3rd | Sayf Eddine Bouibaoune (7th) | Antonine-Maillet |
-| 🥉 3rd | Vincent Gagnon (8th) | Antonine-Maillet |
-
-**Senior Girls (7th–8th grade)**
-
-| Place | Name | School |
-|---|---|---|
-| 🥇 1st | Illo Wang (8th) | Le Sommet |
-| 🥈 2nd | Maya Cormier-Frenette (8th) | Le Sommet |
-| 🥉 3rd | Selena Herrera (7th) | Camille-Vautour |
-| 🥉 3rd | Jasmine Boudreau (7th) | Antonine-Maillet |
-
-**Junior Boys (5th–6th grade)**
-
-| Place | Name | School |
-|---|---|---|
-| 🥇 1st | Luc Fullerton (6th) | Mgr François-Bourgeois |
-| 🥈 2nd | Enaël Pichaud (6th) | Mgr François-Bourgeois |
-
-**Junior Girls (5th–6th grade)**
-
-| Place | Name | School |
-|---|---|---|
-| 🥇 1st | Layene Ben Boubaker (6th) | Antonine-Maillet |
-| 🥈 2nd | Isabella LeBlanc (6th) | Antonine-Maillet |
-| 🥉 3rd | Mila Chayer (6th) | Mgr François-Bourgeois |
-| 🥉 3rd | Djeneba Simpara (6th) | Antonine-Maillet |
-
----
-
-**Final School Standings**
-
-| Place | School |
-|---|---|
-| 🥇 1st | École Antonine-Maillet |
-| 🥈 2nd | École Le Sommet |
-| 🥉 3rd | École Carrefour de l'Acadie |
-| 4th | École Mgr-François-Bourgeois |
-| 5th | École Camille-Vautour |
-
----
-
 Congratulations to all participants — and especially to Antonine-Maillet, which won the champion school banner. A big thank you to the participating schools, our volunteers, and to Guy Gautreau, Fencing-Escrime NB, and the DSFS for their support.
 
 We look forward to the 2026–2027 season!
+
+---
+
+### Senior Boys (7th–8th grade)
+
+| Name | Grade | School | 
+|---|---|---|
+| 🥇 Olivier Larocque | 7th | Carrefour de l'Acadie | 
+| 🥈 Alex McGraw | 7th | Carrefour de l'Acadie | 
+| 🥉 Sayf Eddine Bouibaoune | 7th | Antonine-Maillet | 
+| 🥉 Vincent Gagnon | 8th | Antonine-Maillet | 
+
+### Senior Girls (7th–8th grade)
+
+| Name | Grade | School | 
+|---|---|---|
+| 🥇 Illo Wang | 8th | Le Sommet | 
+| 🥈 Maya Cormier-Frenette | 8th | Le Sommet |
+| 🥉 Selena Herrera | 7th | Camille-Vautour | 
+| 🥉 Jasmine Boudreau | 7th | Antonine-Maillet | 
+
+### Junior Boys (5th–6th grade)
+
+| Name | Grade | School | 
+|---|---|---|
+| 🥇 Luc Fullerton | 6th | Mgr François-Bourgeois | 
+| 🥈 Enaël Pichaud | 6th | Mgr François-Bourgeois | 
+
+### Junior Girls (5th–6th grade)
+
+| Name | Grade | School | 
+|---|---|---|
+| 🥇 Layene Ben Boubaker | 6th | Antonine-Maillet |
+| 🥈 Isabella LeBlanc | 6th | Antonine-Maillet | 
+| 🥉 Mila Chayer | 6th | Mgr François-Bourgeois | 
+| 🥉 Djeneba Simpara | 6th | Antonine-Maillet | 
+
+### Final School Standings
+
+| Ranking | School | 
+|---|---|---|
+| 🥇 1st | École Antonine-Maillet | 
+| 🥈 2nd | École Le Sommet | 
+| 🥉 3rd | École Carrefour de l'Acadie | 
+| 4th | École Mgr-François-Bourgeois |  
+| 5th | École Camille-Vautour | 

@@ -34,7 +34,7 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 | `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
-| `/fenb-data-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
+| `/fenb-data-get-results` | Fetch tournament results from fencingtimelive.com — hosted-tournament mode reports full podiums (all medalists, any province); away-tournament mode reports NB fencer placements |
 | `/fenb-data-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
 
 When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/commands/`. Types: `git` (branch/commit/PR workflows), `content` (creating new pages or articles), `data` (fetching or managing structured data files).
