@@ -92,6 +92,55 @@ For content and data skills (`/fenb-content-add-news`, `/fenb-content-add-page`,
 
 ---
 
+## Scripts
+
+Utility scripts live in `scripts/`. They are independent of the Hugo build — run them from the repo root with `python3 scripts/<name>.py`.
+
+### fencingtimelive-results.py
+
+Fetches tournament results from [fencingtimelive.com](https://www.fencingtimelive.com). Requires `--location` to specify the tournament type — this determines what is fetched and how the output is structured.
+
+> **Skill available:** run `/fenb-data-get-results` in Claude Code — it handles parameters, login, tournament selection, and result reporting interactively.
+
+**`--location away`** — NB athletes competed out of province. Scans every event for NB fencer participation (matched against `fenb-1/data/clubs.yaml`) and saves only events where NB athletes appear. Output: `scripts/output/{slug}-{date}.json` with an `events_with_nb_fencers` key.
+
+**`--location hosted`** — tournament held in NB. Fetches full final standings for every finished event and extracts the top-4 medalists (gold, silver, two tied bronze). NB-club filtering is not applied. Output: `scripts/output/{slug}-podiums-{date}.json` with an `events[].podium` key.
+
+**Usage:**
+
+```bash
+# Away — search recent CAN tournaments, pick interactively:
+python3 scripts/fencingtimelive-results.py --location away
+
+# Away — USA, last 30 days, skip picker:
+python3 scripts/fencingtimelive-results.py --location away --country USA --days -2 --select 1
+
+# Hosted — search and pick interactively:
+python3 scripts/fencingtimelive-results.py --location hosted
+
+# Hosted — direct tournament ID (bypasses --days limit):
+python3 scripts/fencingtimelive-results.py --location hosted --tournament-id 4A78131AF1154821BF95F71B1D4FD913
+
+# Manual cookie instead of browser login:
+python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid=...;AWSALB=..."
+```
+
+| Flag | Default | Notes |
+|---|---|---|
+| `--location` | *(required)* | `hosted` or `away` — determines fetch mode and output structure |
+| `--cookie` | *(opens browser)* | Full `Cookie:` header string from DevTools; omit to use browser login |
+| `--country` | `CAN` | FIE country code (away mode only) |
+| `--days` | `-1` | `-2` last 30 days, `-1` last 10 days, `0` in progress, `1` next 7 days |
+| `--tournament-id` | — | Bypass the tournament list; use this hex ID directly (useful for old tournaments) |
+| `--list` | — | Print tournament list as JSON and exit (used by skill) |
+| `--select N` | — | Skip interactive picker, use tournament N from the list (used by skill) |
+
+**Authentication:** the site uses Google OAuth, which cannot be automated. On first run, system Chrome opens and you complete the Google login normally. The session is saved to `scripts/.browser-profile/` (gitignored) and reused on subsequent runs until it expires.
+
+**Dependencies:** `pip install playwright pyyaml` — no extra browser install needed; the script uses system Chrome.
+
+---
+
 ## Stack
 
 | Layer | Choice |

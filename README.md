@@ -30,58 +30,10 @@ For git and release workflow skills (`/fenb-git-commit`, `/fenb-git-merge`, `/fe
 
 ---
 
-## Scripts
-
-Utility scripts live in `scripts/`. They are independent of the Hugo build — run them from the repo root with `python3 scripts/<name>.py`.
-
-### fencingtimelive-results.py
-
-Fetches tournament results from [fencingtimelive.com](https://www.fencingtimelive.com). Requires `--location` to specify the tournament type — this determines what is fetched and how the output is structured.
-
-> **Skill available:** run `/fenb-data-get-results` in Claude Code — it handles parameters, login, tournament selection, and result reporting interactively.
-
-**`--location away`** — NB athletes competed out of province. Scans every event for NB fencer participation (matched against `fenb-1/data/clubs.yaml`) and saves only events where NB athletes appear. Output: `scripts/output/{slug}-{date}.json` with an `events_with_nb_fencers` key.
-
-**`--location hosted`** — tournament held in NB. Fetches full final standings for every finished event and extracts the top-4 medalists (gold, silver, two tied bronze). NB-club filtering is not applied. Output: `scripts/output/{slug}-podiums-{date}.json` with an `events[].podium` key.
-
-**Usage:**
-
-```bash
-# Away — search recent CAN tournaments, pick interactively:
-python3 scripts/fencingtimelive-results.py --location away
-
-# Away — USA, last 30 days, skip picker:
-python3 scripts/fencingtimelive-results.py --location away --country USA --days -2 --select 1
-
-# Hosted — search and pick interactively:
-python3 scripts/fencingtimelive-results.py --location hosted
-
-# Hosted — direct tournament ID (bypasses --days limit):
-python3 scripts/fencingtimelive-results.py --location hosted --tournament-id 4A78131AF1154821BF95F71B1D4FD913
-
-# Manual cookie instead of browser login:
-python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid=...;AWSALB=..."
-```
-
-| Flag | Default | Notes |
-|---|---|---|
-| `--location` | *(required)* | `hosted` or `away` — determines fetch mode and output structure |
-| `--cookie` | *(opens browser)* | Full `Cookie:` header string from DevTools; omit to use browser login |
-| `--country` | `CAN` | FIE country code (away mode only) |
-| `--days` | `-1` | `-2` last 30 days, `-1` last 10 days, `0` in progress, `1` next 7 days |
-| `--tournament-id` | — | Bypass the tournament list; use this hex ID directly (useful for old tournaments) |
-| `--list` | — | Print tournament list as JSON and exit (used by skill) |
-| `--select N` | — | Skip interactive picker, use tournament N from the list (used by skill) |
-
-**Authentication:** the site uses Google OAuth, which cannot be automated. On first run, system Chrome opens and you complete the Google login normally. The session is saved to `scripts/.browser-profile/` (gitignored) and reused on subsequent runs until it expires.
-
-**Dependencies:** `pip install playwright pyyaml` — no extra browser install needed; the script uses system Chrome.
-
----
-
 ## Adding content
 
-### Site-wide announcement banner
+<details>
+<summary><strong>Site-wide announcement banner</strong></summary>
 
 A sticky red banner can be shown across all pages to alert visitors (e.g. "draft site", maintenance notices). It sticks with the nav so it never scrolls out of view.
 
@@ -102,9 +54,10 @@ All settings live in `fenb-1/hugo.toml` under `[params.announcement]`:
 
 The banner is rendered by `layouts/partials/site-announcement.html` and hidden from print output automatically.
 
----
+</details>
 
-### New news post
+<details>
+<summary><strong>New news post</strong></summary>
 
 > **Skill available:** run `/fenb-content-add-news` in Claude Code — it prompts for date, slug, titles, category, and summaries, then creates both language files with correct front matter and filenames.
 
@@ -155,9 +108,10 @@ Do **not** write `[clubs](/clubs/)` or `[clubs](/fr/clubs/)` — root-relative p
 
 Note: `relref` only works for Hugo content pages (`content/`). For links to static files (PDFs in `static/documents/`), use a plain Markdown link with a site-root-relative path: `[Annual Report](/documents/about/agm-minutes/2024.pdf)` — this is correct for production at `fenb.ca/` where there is no subpath.
 
----
+</details>
 
-### New event
+<details>
+<summary><strong>New event</strong></summary>
 
 Add an entry to `data/events.yaml`.
 
@@ -239,9 +193,10 @@ description: "2026–2027 season schedule"
 description: "Calendrier de la saison 2026–2027"
 ```
 
----
+</details>
 
-### Board of Directors
+<details>
+<summary><strong>Board of Directors</strong></summary>
 
 Edit `data/board_members.yaml`. Top-level keys:
 
@@ -262,9 +217,10 @@ Edit `data/board_members.yaml`. Top-level keys:
   ```
   Members are displayed in the order they appear in the file. Add `card_color: teal` or `card_color: crimson` to any member whose avatar and role label should use a non-default colour (omit for standard directors, which use navy).
 
----
+</details>
 
-### Policies & Reports documents
+<details>
+<summary><strong>Policies &amp; Reports documents</strong></summary>
 
 #### Add or update an individual policy
 
@@ -300,9 +256,10 @@ Edit `data/board_members.yaml`. Top-level keys:
 
 The season label ("2025–2026 Season AGM Minutes") is computed automatically from `year` in the layout.
 
----
+</details>
 
-### Hall of Fame inductees
+<details>
+<summary><strong>Hall of Fame inductees</strong></summary>
 
 Inductees are bilingual Markdown pairs in `content/about/hall-of-fame/`. File naming follows the standard bilingual convention: `{slug}.en.md` + `{slug}.fr.md`.
 
@@ -336,9 +293,10 @@ The landing page table at `/about/hall-of-fame/` is generated automatically from
 
 **Inductee photos:** store in `static/images/hall-of-fame/{slug}.jpg` and set `photo: images/hall-of-fame/{slug}.jpg` in the front matter. If `photo` is omitted, a coloured circle with the inductee's initials is shown instead (colour driven by the first category).
 
----
+</details>
 
-### New club
+<details>
+<summary><strong>New club</strong></summary>
 
 Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
 
@@ -351,9 +309,10 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
   city: "City, NB"
 ```
 
----
+</details>
 
-### Hero carousel images
+<details>
+<summary><strong>Hero carousel images</strong></summary>
 
 Drop replacement images into `static/images/hero/` and update `data/hero_slides.yaml`:
 
@@ -376,9 +335,10 @@ slides:
 
 Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; click the prev/next arrows or the dot indicators to navigate manually; use the pause/play button (top-right corner) to stop or resume auto-advance.
 
----
+</details>
 
-### New section page
+<details>
+<summary><strong>New section page</strong></summary>
 
 > **Skill available:** run `/fenb-content-add-page` in Claude Code — it prompts for section, slug, titles, and an optional subtitle, then creates both language files with correct front matter.
 
@@ -401,12 +361,15 @@ Then create `layouts/{section}/single.html` defining only `title` and `main` —
 
 If pages within the section need **fundamentally different HTML structure** (not just different data), use `layout: {name}` in the page's front matter instead of a shared `single.html`. Hugo looks for `layouts/{section}/{name}.html`. The join section uses this pattern — each sub-page has its own layout file (`membership.html`, `clubs.html`, `volunteer.html`).
 
----
+</details>
 
-### Join section seasonal updates
+<details>
+<summary><strong>Join section seasonal updates</strong></summary>
 
 Two URLs in `data/join.yaml` need updating at the start of each season:
 
 - `membership_url` — the 2MEV registration portal URL (includes the season slug, e.g. `fencing-nb-2025-2026`); update when 2MEV creates the new season's registration page
 - `club_form_url` — the Google Form URL for club registration; leave blank to fall back to an email CTA (the clubs layout handles the empty case automatically)
+
+</details>
 
