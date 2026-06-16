@@ -13,6 +13,11 @@
   overflow: hidden;
 }
 
+/* In dark mode --teal-light becomes a vivid #4dbfad; cap the gradient at --teal */
+[data-theme="dark"] .fenb-hero {
+  background: linear-gradient(150deg, var(--teal-dark) 0%, var(--teal) 55%, var(--teal) 100%);
+}
+
 /* Subtle diagonal grid pattern */
 .fenb-hero-bg-pattern {
   position: absolute;
