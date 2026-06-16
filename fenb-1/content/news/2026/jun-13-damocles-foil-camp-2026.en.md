@@ -1,7 +1,7 @@
 ---
 title: "2026 Damocles Summer Foil & Leadership Camp — Registration Open"
 date: 2026-06-13
-category: registration
+category: announcement
 summary: "Damocles Fencing Club presents the 2026 Summer Foil & Leadership Camp in Fredericton, August 24–28, for fencers ages 13–19 — foil training, leadership skills, and experienced coaching for $325."
 ---
 

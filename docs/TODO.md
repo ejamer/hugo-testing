@@ -4,6 +4,12 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ---
 
+## News & Results page
+
+- [ ] **News index filters** — add client-side category toggle buttons and year dropdown to the `/news/` index page. Requires removing pagination (render all cards at once), adding `data-category`/`data-year` attributes to news cards, and wiring up `news-filter.js`. See `plans/news-filter.md` for the full implementation plan.
+
+---
+
 ## Non-technical content maintenance
 
 - [ ] **Editor tooling** — build shell scripts, editor guide, staging preview, and optionally Decap CMS to allow a non-technical administrator to maintain events, board members, news, and join URLs without developer involvement. See `plans/non-technical-maintenance.md` for the full plan and implementation order.
@@ -73,6 +79,6 @@ Test each project skill end-to-end at least once to verify it works correctly.
 ## Events data
 
 - [ ] **Damocles Foil & Leadership Camp registration URL** — `registration_url` in `fenb-1/data/events.yaml` for the Aug 24–28 camp entry is blank; add the registration link when Damocles publishes one (contact: Joe Kinley, Kinley.jf@gmail.com)
-- [ ] **Damocles camp news articles — review before commit** — `jun-16-damocles-epee-camp-2026.{en,fr}.md` and `jun-16-damocles-foil-camp-2026.{en,fr}.md` were machine-drafted from the resource flyers; user should verify French translations and camp details before publishing
+- [ ] **Damocles camp news articles — review before commit** — `jun-13-damocles-epee-camp-2026.{en,fr}.md` and `jun-13-damocles-foil-camp-2026.{en,fr}.md` were machine-drafted from the resource flyers; user should verify French translations and camp details before publishing
 - [ ] **Interscholastic finals article — photo gallery** — 4 action photos copied to `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; currently not embedded in the article — add if a photo gallery shortcode is available or desired
 - [ ] **Season rollover (archive pattern)** — when a new fencing season begins, move the outgoing `fenb-1/data/events.yaml` to `fenb-1/data/events_archive/YYYY-YYYY.yaml` (e.g. `2025-2026.yaml`) before starting the new season file. No layout changes needed at that point. See `plans/events-data-archive.md` for the full plan including how to build a Past Events page when desired.
