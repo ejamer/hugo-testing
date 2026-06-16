@@ -109,21 +109,26 @@ Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 ---
 title: "Post title"
 date: 2026-06-01
-category: results   # canonical ID — drives CSS colour, badge label (via i18n), and results table
+category: national   # canonical ID — same IDs used by events; drives badge colour and label
+results_table: true  # optional — add to load the interactive sortable table on articles with result tables
 summary: "One-sentence summary shown on the homepage card."
 ---
 
 Full post body here (Markdown).
 ```
 
-**Category values:**
+**Category values:** news articles share the same category IDs as events (see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full colour table and typical mapping guidance).
 
-| `category` | Badge label (EN) | Badge label (FR) | Colour | Notes |
-|---|---|---|---|---|
-| `results` | Results | Résultats | Teal | Also loads the interactive results table |
-| `announcement` | Announcement | Annonce | Crimson | |
-| `registration` | Registration | Inscription | Green | |
-| `community` | Community | Communauté | Navy | |
+| `category` | Badge label (EN) | Badge label (FR) | Colour |
+|---|---|---|---|
+| `competition` | Competition | Compétition | Teal |
+| `national` | National Event | Événement national | Crimson |
+| `provincial` | NB Provincial | Provincial NB | Crimson |
+| `training` | Training Camp | Camp d'entraînement | Yellow |
+| `announcement` | Announcement | Annonce | Blue |
+| `meeting` | FENB Meeting | Réunion FENB | Grey |
+
+**`results_table: true`** — add this field to any article that contains markdown tables of placements; it loads `results-table.js` which makes the tables sortable. It is independent of category.
 
 The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 

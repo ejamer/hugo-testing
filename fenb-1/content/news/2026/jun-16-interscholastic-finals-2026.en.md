@@ -1,7 +1,7 @@
 ---
 title: "2026 NB Interscholastic Fencing Finals — Results"
 date: 2026-06-16
-category: community
+category: announcement
 summary: "Twenty-five student fencers from five Francophone schools in southeastern New Brunswick competed at Antonine-Maillet in Dieppe on June 5 — Antonine-Maillet won the champion school banner."
 ---
 

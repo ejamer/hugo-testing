@@ -1,7 +1,8 @@
 ---
 title: "New Brunswick Fencers at the Québec Provincial Championships"
 date: 2026-06-16
-category: results
+category: competition
+results_table: true
 summary: "Four New Brunswick fencers competed at the Québec Provincial Championships in Rimouski, with LAU Marcena earning silver in Senior Women's Foil."
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: "Escrimeurs néo-brunswickois au Championnat provincial du Québec"
 date: 2026-06-16
-category: results
+category: competition
+results_table: true
 summary: "Quatre escrimeurs néo-brunswickois ont participé au Championnat provincial du Québec à Rimouski, où LAU Marcena a remporté l'argent au fleuret senior féminin."
 ---
 

@@ -20,7 +20,7 @@
         <div class="fenb-article-body">
           {{ .Content }}
         </div>
-        {{ if eq .Params.category "results" }}
+        {{ if .Params.results_table }}
         <script src="{{ "js/results-table.js" | absURL }}" defer></script>
         {{ end }}
         {{ partial "back-link.html" (dict "url" "news/" "key" "back_to_news") }}

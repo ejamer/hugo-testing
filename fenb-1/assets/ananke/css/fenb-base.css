@@ -33,14 +33,14 @@
   --transition:    0.22s var(--ease);
 
   /* Category colours — used for event badges, tags, cal bars, news stripes */
-  --cat-training:       #2d6a4f;
-  --cat-training-pale:  #e7f2ec;
-  --cat-national:       #1a3a5c;
-  --cat-national-pale:  #e8eef5;
-  --cat-clinic:         #5a6a3a;
-  --cat-clinic-pale:    #eef2e6;
-  --cat-meeting:        #4a4a4a;
-  --cat-meeting-pale:   #efefef;
+  --cat-announcement:       #1a5fa8;
+  --cat-announcement-pale:  #e3eefa;
+  --cat-training:           #8c6e00;
+  --cat-training-pale:      #f5efdc;
+  --cat-national:           #1a3a5c;
+  --cat-national-pale:      #e8eef5;
+  --cat-meeting:            #4a4a4a;
+  --cat-meeting-pale:       #efefef;
 
   /* Brand colour channels — for rgba() opacity tints */
   --teal-rgb:           0, 97, 86;
@@ -63,10 +63,10 @@
   --shadow-sm:          0 2px 10px rgba(0,0,0,0.4);
   --shadow-md:          0 6px 24px rgba(0,0,0,0.5);
   --shadow-lg:          0 12px 48px rgba(0,0,0,0.6);
-  --cat-training-pale:  #0d2018;
-  --cat-national-pale:  #0d1828;
-  --cat-clinic-pale:    #121c0c;
-  --cat-meeting-pale:   #1e1e1e;
+  --cat-announcement-pale: #0a1a2e;
+  --cat-training-pale:     #1f1700;
+  --cat-national-pale:     #0d1828;
+  --cat-meeting-pale:      #1e1e1e;
 }
 
 /* ── Reset / base ─────────────────────────────── */
