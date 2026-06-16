@@ -1,7 +1,7 @@
 ---
 title: "2026 Damocles Élite Épée Summer Camp — Registration Open"
 date: 2026-06-13
-category: announcement
+category: training
 summary: "Damocles Fencing Club is hosting an elite épée training camp in Fredericton, August 17–21, with National Team fencer Fynn Fafard and head coach Marc-André LeBlanc — limited to 15 spots."
 ---
 

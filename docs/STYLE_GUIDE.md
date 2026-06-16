@@ -38,7 +38,7 @@ Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped t
 The load order is declared in `hugo.toml` under `params.ananke.custom_css`. Files must live in `fenb-1/assets/ananke/css/` — **not** `fenb-1/static/css/` — so Ananke's pipeline picks them up for concatenation, minification, and (in production) fingerprinting. A file placed in `static/` would be served separately, uncached, and unminified.
 
 - No inline styles for anything reusable — add a class to the appropriate file instead
-- Use CSS custom properties defined at `:root` rather than raw hex values: `--teal`, `--crimson`, `--shadow-sm`, `--radius`, category colours (`--cat-training`, `--cat-national`, `--cat-clinic`, `--cat-meeting` and their `--cat-*-pale` variants), brand colour channels for `rgba()` (`--teal-rgb`, `--crimson-rgb`)
+- Use CSS custom properties defined at `:root` rather than raw hex values: `--teal`, `--crimson`, `--shadow-sm`, `--radius`, category colours (`--cat-announcement`, `--cat-training`, `--cat-national`, `--cat-meeting` and their `--cat-*-pale` variants), brand colour channels for `rgba()` (`--teal-rgb`, `--crimson-rgb`)
 
 ### Container width modifiers
 
@@ -353,16 +353,26 @@ When the first article of a new calendar year arrives, create the year subfolder
 
 ## News category colours
 
-The `category` front matter field is a **canonical ID** (lowercase, no spaces) — the same convention used by event categories. The badge label is looked up via i18n at render time; never put a display string or translated label in the front matter.
+News articles use the same category IDs as events. The badge label is looked up via i18n; never put a display string in the front matter.
 
 | `category` | Badge EN | Badge FR | CSS variable | Colour |
 |---|---|---|---|---|
-| `results` | Results | Résultats | `--teal` | Teal |
-| `announcement` | Announcement | Annonce | `--crimson` | Crimson |
-| `registration` | Registration | Inscription | `--cat-training` | Green |
-| `community` | Community | Communauté | `--cat-national` | Navy |
+| `competition` | Competition | Compétition | `--teal` | Teal |
+| `national` | National Event | Événement national | `--crimson` | Crimson |
+| `provincial` | NB Provincial | Provincial NB | `--crimson` | Crimson |
+| `training` | Training Camp | Camp d'entraînement | `--cat-training` | Yellow |
+| `announcement` | Announcement | Annonce | `--cat-announcement` | Blue |
+| `meeting` | FENB Meeting | Réunion FENB | `--cat-meeting` | Grey |
 
-The `results` category also triggers loading of `results-table.js` — the check is `eq .Params.category "results"`, so the ID must match exactly.
+**Typical mappings when writing news articles:**
+- Results from a national championship → `national`
+- Results from the NB Provincial Championship → `provincial`
+- Results from a non-NB / open competition → `competition`
+- Registration or announcement for a competition → `competition`
+- Registration or announcement for a training camp / summer camp / clinic → `training`
+- General announcements → `announcement`
+
+**Results table JS:** Add `results_table: true` to the front matter to load `results-table.js`, which adds sortable columns to markdown tables in the article body. This is decoupled from category so it can be used with any category.
 
 ---
 
@@ -373,12 +383,11 @@ Each category drives three visual elements: the date badge on the event card, th
 | `category` | CSS variable | Colour |
 |---|---|---|
 | `competition` | `--teal` | Teal |
-| `training` | `--cat-training` | Dark green |
-| `national` | `--cat-national` | Navy |
+| `training` | `--cat-training` | Yellow |
+| `national` | `--crimson` | Crimson |
 | `provincial` | `--crimson` | Crimson |
-| `clinic` | `--cat-clinic` | Olive |
 | `meeting` | `--cat-meeting` | Grey |
-| `announcement` | `--teal` | Teal |
+| `announcement` | `--cat-announcement` | Blue |
 
 `category` is the canonical ID and CSS hook — must match exactly (lowercase, no spaces) and must be listed in `data/event_categories.yaml` (which drives the calendar legend and schedule filter buttons). Display labels are looked up from `i18n/en.yaml` and `i18n/fr.yaml` automatically; the raw category key is shown as a fallback. Each non-brand category also has a `--cat-*-pale` variant used for tag backgrounds.
 

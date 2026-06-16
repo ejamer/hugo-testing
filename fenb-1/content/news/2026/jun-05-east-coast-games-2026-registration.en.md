@@ -1,7 +1,7 @@
 ---
 title: "East Coast Games 2026 Registration"
 date: 2026-06-05
-category: registration
+category: competition
 summary: "Registration is now open for the 2026 East Coast Games, the final tournament of the season, taking place in Saint John on June 20–21."
 ---
 

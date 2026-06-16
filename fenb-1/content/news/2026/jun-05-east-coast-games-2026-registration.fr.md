@@ -1,7 +1,7 @@
 ---
 title: "Inscription aux East Coast Games 2026"
 date: 2026-06-05
-category: registration
+category: competition
 summary: "Les inscriptions sont maintenant ouvertes pour les East Coast Games 2026, le dernier tournoi de la saison, qui se dérouleront à Saint John les 20 et 21 juin."
 ---
 

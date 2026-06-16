@@ -1,7 +1,8 @@
 ---
 title: "Résultats du Championnat provincial — Avril 2026"
 date: 2026-04-20
-category: results
+category: provincial
+results_table: true
 summary: "Des athlètes de partout au Nouveau-Brunswick ont participé au Championnat provincial d'escrime 2026 à Fredericton. Les meilleurs dans chacune des trois armes passent à la sélection nationale."
 ---
 

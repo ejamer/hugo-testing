@@ -72,12 +72,12 @@
 }
 
 /* Category colour overrides for date badge */
-.fenb-event-card--training   .fenb-event-date-badge { background: var(--cat-training); }
-.fenb-event-card--national   .fenb-event-date-badge { background: var(--cat-national); }
-.fenb-event-card--provincial .fenb-event-date-badge { background: var(--crimson); }
-.fenb-event-card--clinic     .fenb-event-date-badge { background: var(--cat-clinic); }
+.fenb-event-card--competition    .fenb-event-date-badge { background: var(--teal); }
+.fenb-event-card--training       .fenb-event-date-badge { background: var(--cat-training); }
+.fenb-event-card--national       .fenb-event-date-badge { background: var(--crimson); }
+.fenb-event-card--provincial     .fenb-event-date-badge { background: var(--crimson); }
 .fenb-event-card--meeting        .fenb-event-date-badge { background: var(--cat-meeting); }
-.fenb-event-card--announcement   .fenb-event-date-badge { background: var(--teal); }
+.fenb-event-card--announcement   .fenb-event-date-badge { background: var(--cat-announcement); }
 
 .fenb-event-day   { font-size: 1.75rem; font-weight: 800; line-height: 1; }
 .fenb-event-month {
@@ -137,13 +137,12 @@
   border-radius: 4px;
   line-height: 1;
 }
-.fenb-tag--competition { background: var(--teal-pale);         color: var(--teal); }
-.fenb-tag--training    { background: var(--cat-training-pale); color: var(--cat-training); }
-.fenb-tag--national    { background: var(--cat-national-pale); color: var(--cat-national); }
-.fenb-tag--provincial  { background: var(--crimson-pale);      color: var(--crimson); }
-.fenb-tag--clinic      { background: var(--cat-clinic-pale);   color: var(--cat-clinic); }
-.fenb-tag--meeting        { background: var(--cat-meeting-pale);  color: var(--cat-meeting); }
-.fenb-tag--announcement   { background: var(--teal-pale);         color: var(--teal); }
+.fenb-tag--competition  { background: var(--teal-pale);             color: var(--teal); }
+.fenb-tag--training     { background: var(--cat-training-pale);     color: var(--cat-training); }
+.fenb-tag--national     { background: var(--crimson-pale);          color: var(--crimson); }
+.fenb-tag--provincial   { background: var(--crimson-pale);          color: var(--crimson); }
+.fenb-tag--meeting      { background: var(--cat-meeting-pale);      color: var(--cat-meeting); }
+.fenb-tag--announcement { background: var(--cat-announcement-pale); color: var(--cat-announcement); }
 
 /* ── Placeholder card (shown when fewer than 4 upcoming events) ─ */
 .fenb-event-card--placeholder {
@@ -382,11 +381,10 @@
 
 .fenb-cal-bar--competition  { background: var(--teal); }
 .fenb-cal-bar--training     { background: var(--cat-training); }
-.fenb-cal-bar--national     { background: var(--cat-national); }
+.fenb-cal-bar--national     { background: var(--crimson); }
 .fenb-cal-bar--provincial   { background: var(--crimson); }
-.fenb-cal-bar--clinic       { background: var(--cat-clinic); }
 .fenb-cal-bar--meeting      { background: var(--cat-meeting); }
-.fenb-cal-bar--announcement { background: var(--teal); }
+.fenb-cal-bar--announcement { background: var(--cat-announcement); }
 
 .fenb-cal-no-events {
   text-align: center;
@@ -408,16 +406,15 @@
 /* ── Dark mode ────────────────────────────────── */
 [data-theme="dark"] .fenb-event-card { border-color: var(--light-gray); }
 [data-theme="dark"] .fenb-event-details-link { color: var(--teal-light); }
-[data-theme="dark"] .fenb-event-register-link { color: var(--text-body); }
+[data-theme="dark"] .fenb-event-register-link { color: var(--crimson-light); }
 [data-theme="dark"] .fenb-event-results-link { color: var(--navy-light); }
 
-[data-theme="dark"] .fenb-tag--competition  { background: var(--teal);          color: #fff; }
-[data-theme="dark"] .fenb-tag--training     { background: var(--cat-training);  color: #fff; }
-[data-theme="dark"] .fenb-tag--national     { background: var(--cat-national);  color: #fff; }
-[data-theme="dark"] .fenb-tag--provincial   { background: var(--crimson);       color: #fff; }
-[data-theme="dark"] .fenb-tag--clinic       { background: var(--cat-clinic);    color: #fff; }
-[data-theme="dark"] .fenb-tag--meeting      { background: var(--cat-meeting);   color: #fff; }
-[data-theme="dark"] .fenb-tag--announcement { background: var(--teal);          color: #fff; }
+[data-theme="dark"] .fenb-tag--competition  { background: var(--teal);               color: #fff; }
+[data-theme="dark"] .fenb-tag--training     { background: var(--cat-training);      color: #fff; }
+[data-theme="dark"] .fenb-tag--national     { background: var(--crimson);            color: #fff; }
+[data-theme="dark"] .fenb-tag--provincial   { background: var(--crimson);            color: #fff; }
+[data-theme="dark"] .fenb-tag--meeting      { background: var(--cat-meeting);        color: #fff; }
+[data-theme="dark"] .fenb-tag--announcement { background: var(--cat-announcement);   color: #fff; }
 
 [data-theme="dark"] .fenb-cal-btn { border-color: var(--teal-light); color: var(--teal-light); }
 [data-theme="dark"] .fenb-cal-btn:hover { background: var(--teal-light); color: #fff; }

@@ -3,9 +3,8 @@
 # Each id must have a matching i18n key and fenb-cal-bar--{id} CSS class.
 event_categories:
   - competition
-  - training
   - national
   - provincial
-  - clinic
+  - training
   - meeting
   - announcement

@@ -1,7 +1,7 @@
 ---
 title: "Camp d'été d'épée élite Damocles 2026 — Inscriptions ouvertes"
 date: 2026-06-13
-category: announcement
+category: training
 summary: "Le Club d'escrime Damocles organise un camp d'entraînement d'épée d'élite à Fredericton du 17 au 21 août, avec l'athlète de l'équipe nationale Fynn Fafard et l'entraîneur-chef Marc-André LeBlanc — limité à 15 places."
 ---
 
