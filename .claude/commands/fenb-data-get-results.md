@@ -124,8 +124,8 @@ After reporting results, check whether the tournament matches an event in `fenb-
 
 If a match is found:
 - Check whether the event already has a `results_url` field set to a non-empty value.
-- **If empty or missing:** Ask the user: "I found a matching event in events.yaml: `{event title}` ({display_date}). Would you like to set its `results_url` to the FTL tournament schedule URL?\n`{tournament.schedule_url}`"
-- **If the user confirms:** Update the matching event in `fenb-1/data/events.yaml` by adding or setting `results_url: "{tournament.schedule_url}"` on the event, preserving all other fields and the file's existing formatting style.
+- **If empty or missing:** Ask the user: "I found a matching event in events.yaml: `{event title}` ({display_date}). Would you like to set its `results_url_en` to the FTL tournament schedule URL?\n`{tournament.schedule_url}`"
+- **If the user confirms:** Update the matching event in `fenb-1/data/events.yaml` by setting `results_url_en: "{tournament.schedule_url}"` (leave `results_url_fr` empty — the EN URL is language-agnostic for FTL links), preserving all other fields and the file's existing formatting style.
 - **If already set:** Report the existing URL and take no action.
 
 If no match is found, skip silently and proceed to Step 6.

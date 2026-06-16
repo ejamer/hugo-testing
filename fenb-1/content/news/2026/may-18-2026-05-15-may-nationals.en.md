@@ -3,6 +3,7 @@ title: "New Brunswick Fencers at the 2026 May Nationals"
 date: 2026-05-18
 category: national
 results_table: true
+results_hide_placements: true
 summary: "Thirty-six NB fencers competed across 31 events at the 2026 May Nationals in Quebec City, with Wendy Yano claiming two gold medals in veteran saber."
 ---
 

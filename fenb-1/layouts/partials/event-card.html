@@ -21,11 +21,15 @@
     <a class="fenb-event-details-link" href="{{ $detailsUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>
     {{ end }}
     {{- $todayMidnight := time (now.Format "2006-01-02") -}}
-    {{ if and .registration_url (not ($dateObj.Before $todayMidnight)) }}
-    <a class="fenb-event-register-link" href="{{ .registration_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>
+    {{- $registerUrl := .registration_url_en -}}
+    {{- if and (eq site.Language.Lang "fr") .registration_url_fr -}}{{- $registerUrl = .registration_url_fr -}}{{- end -}}
+    {{ if and $registerUrl (not ($dateObj.Before $todayMidnight)) }}
+    <a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>
     {{ end }}
-    {{ if .results_url }}
-    <a class="fenb-event-results-link" href="{{ .results_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_results" }} &rarr;</a>
+    {{- $resultsUrl := .results_url_en -}}
+    {{- if and (eq site.Language.Lang "fr") .results_url_fr -}}{{- $resultsUrl = .results_url_fr -}}{{- end -}}
+    {{ if $resultsUrl }}
+    <a class="fenb-event-results-link" href="{{ $resultsUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_results" }} &rarr;</a>
     {{ end }}
   </div>
 </article>

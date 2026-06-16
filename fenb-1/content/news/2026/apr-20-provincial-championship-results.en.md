@@ -3,6 +3,7 @@ title: "Provincial Championship Results — April 2026"
 date: 2026-04-20
 category: provincial
 results_table: true
+results_hide_placements: true
 summary: "Athletes from across New Brunswick competed at the 2026 Provincial Championships held in Fredericton. Top finishers in all three weapons advance to national selection."
 ---
 

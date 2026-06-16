@@ -130,6 +130,8 @@ Full post body here (Markdown).
 
 **`results_table: true`** — add this field to any article that contains markdown tables of placements; it loads `results-table.js` which makes the tables sortable. It is independent of category.
 
+**`results_hide_placements: true`** — optional companion to `results_table`. When set, the last column (placement) is hidden by default with a "Show placements / Hide placements" toggle button. Omit this field (or leave it unset) when you want placements always visible.
+
 The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 
 **New year folder:** when the first article of a new calendar year is created, add a year subfolder with `_index.md` and `_index.fr.md` (copy from the previous year folder).
@@ -163,8 +165,10 @@ Add an entry to `data/events.yaml`.
 | `description_fr` | — | Optional French description. Falls back to `description_en` if blank |
 | `details_url_en` | — | English URL for the **Learn More →** badge. Used for both languages when `details_url_fr` is blank |
 | `details_url_fr` | — | Optional French URL override for the **Learn More →** badge |
-| `registration_url` | — | If set, a crimson **Register Now →** badge appears on the card (opens in new tab). Hidden for past events (date < today). |
-| `results_url` | — | If set, a navy **View Results →** badge appears on the card (opens in new tab). Populated automatically by `/fenb-data-get-results` after a tournament scrape. |
+| `registration_url_en` | — | English URL for the **Register Now →** badge. Used for both languages when `registration_url_fr` is blank. Hidden for past events (date < today). |
+| `registration_url_fr` | — | Optional French URL override for the **Register Now →** badge. Falls back to `registration_url_en` if blank. |
+| `results_url_en` | — | English URL for the **View Results →** badge. Populated automatically by `/fenb-data-get-results` after a tournament scrape (FTL links are language-agnostic, so `_fr` is left blank). |
+| `results_url_fr` | — | Optional French URL override for the **View Results →** badge (set when the results link is an internal bilingual news article). Falls back to `results_url_en` if blank. |
 
 **Example:**
 
@@ -178,8 +182,10 @@ Add an entry to `data/events.yaml`.
   description_fr: ""               # optional; falls back to description_en if blank
   details_url_en: ""               # optional Learn More link (used for both languages if _fr is blank)
   details_url_fr: ""               # optional French override for the Learn More link
-  registration_url: ""             # optional; hidden once event date has passed
-  results_url: ""                  # optional; populated by /fenb-data-get-results
+  registration_url_en: ""          # optional; hidden once event date has passed
+  registration_url_fr: ""          # optional French override; falls back to _en if blank
+  results_url_en: ""               # optional; populated by /fenb-data-get-results
+  results_url_fr: ""               # optional French override; falls back to _en if blank
 ```
 
 **Category colours:**

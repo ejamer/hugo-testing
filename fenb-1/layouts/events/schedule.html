@@ -68,12 +68,16 @@
                       </div>
                       {{- $evDate := time .start_date -}}
                       {{- $todayMidnight := time (now.Format "2006-01-02") -}}
-                      {{- $showRegister := and .registration_url (not ($evDate.Before $todayMidnight)) -}}
-                      {{ if or $detailsUrl $showRegister .results_url }}
+                      {{- $registerUrl := .registration_url_en -}}
+                      {{- if and (eq site.Language.Lang "fr") .registration_url_fr -}}{{- $registerUrl = .registration_url_fr -}}{{- end -}}
+                      {{- $showRegister := and $registerUrl (not ($evDate.Before $todayMidnight)) -}}
+                      {{- $resultsUrl := .results_url_en -}}
+                      {{- if and (eq site.Language.Lang "fr") .results_url_fr -}}{{- $resultsUrl = .results_url_fr -}}{{- end -}}
+                      {{ if or $detailsUrl $showRegister $resultsUrl }}
                       <div class="fenb-schedule-links">
                         {{ with $detailsUrl }}<a class="fenb-event-details-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>{{ end }}
-                        {{ if $showRegister }}<a class="fenb-event-register-link" href="{{ .registration_url }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>{{ end }}
-                        {{ with .results_url }}<a class="fenb-event-results-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_results" }} &rarr;</a>{{ end }}
+                        {{ if $showRegister }}<a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>{{ end }}
+                        {{ with $resultsUrl }}<a class="fenb-event-results-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_results" }} &rarr;</a>{{ end }}
                       </div>
                       {{ end }}
                     </li>

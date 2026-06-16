@@ -9,7 +9,7 @@
   // today at midnight, for future-date checks
   var today = cal.today ? new Date(cal.today + 'T00:00:00') : (function () { var d = new Date(); d.setHours(0,0,0,0); return d; }());
 
-  var fr = document.documentElement.lang === 'fr';
+  var fr = document.documentElement.lang.startsWith('fr');
   var year, month; // current display state (month is 0-indexed)
 
   function init() {
@@ -285,11 +285,13 @@
       if (detailsUrl) {
         linksHtml += '<a href="' + esc(detailsUrl) + '" class="fenb-event-details-link" target="_blank" rel="noopener noreferrer">' + esc(cal.detailsLabel) + ' →</a>';
       }
-      if (e.registration_url && eventDate >= today) {
-        linksHtml += '<a href="' + esc(e.registration_url) + '" class="fenb-event-register-link" target="_blank" rel="noopener noreferrer">' + esc(cal.registerLabel) + ' →</a>';
+      var registerUrl = (fr && e.registration_url_fr) ? e.registration_url_fr : e.registration_url_en;
+      if (registerUrl && eventDate >= today) {
+        linksHtml += '<a href="' + esc(registerUrl) + '" class="fenb-event-register-link" target="_blank" rel="noopener noreferrer">' + esc(cal.registerLabel) + ' →</a>';
       }
-      if (e.results_url) {
-        linksHtml += '<a href="' + esc(e.results_url) + '" class="fenb-event-results-link" target="_blank" rel="noopener noreferrer">' + esc(cal.resultsLabel) + ' →</a>';
+      var resultsUrl = (fr && e.results_url_fr) ? e.results_url_fr : e.results_url_en;
+      if (resultsUrl) {
+        linksHtml += '<a href="' + esc(resultsUrl) + '" class="fenb-event-results-link" target="_blank" rel="noopener noreferrer">' + esc(cal.resultsLabel) + ' →</a>';
       }
 
       var article = document.createElement('article');
