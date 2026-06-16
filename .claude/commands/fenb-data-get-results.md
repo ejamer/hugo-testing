@@ -51,10 +51,12 @@ Use `AskUserQuestion` with two questions — one for country, one for date range
 Run the script in list mode to get the available tournaments. This may open a Chrome window for Google login if no saved session exists — tell the user to complete the login in the browser.
 
 ```bash
-python3 scripts/fencingtimelive-results.py --list --country {COUNTRY} --days {DAYS}
+python3 scripts/fencingtimelive-results.py --list --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-list.stderr
 ```
 
-The script writes logs to stderr and JSON to stdout. Parse the JSON array from stdout.
+**Important:** do not use `2>&1` — stderr contains log lines that will break JSON parsing. Redirect stderr separately (e.g. `2>/tmp/ftl-list.stderr`) and print it after for context.
+
+The script writes logs to stderr and clean JSON to stdout. Parse the JSON array from stdout.
 
 If the list is empty or the command fails, report the error clearly and stop.
 
@@ -62,10 +64,18 @@ If the list is empty or the command fails, report the error clearly and stop.
 
 ## Step 3 — Select tournament
 
-Present the tournament list to the user using `AskUserQuestion`:
+**Determine a sensible "already checked" set** by listing `scripts/output/` for files whose date suffix matches today (`<slug>-{today}.json`).
 
-- **Question:** "Which tournament do you want to check for NB fencers?"
-- One option per tournament, labelled with the tournament name; description shows location and dates.
+**If there are ≤ 4 tournaments:** use `AskUserQuestion` with one option per tournament, labelled with the name; description shows location and dates.
+
+**If there are > 4 tournaments:** present the full numbered list as a markdown table in your response (columns: #, Name, Location, Dates; mark already-checked ones with a ✓), then ask via `AskUserQuestion` with these four options:
+
+- **"All of them"** — scrape every tournament in the list
+- **"New ones only"** — skip any already checked today (output file exists in `scripts/output/` for today's date)
+- **"Specific tournament(s)"** — user types a number, range, or keyword via the Other field
+- **"Just one"** — show me the list and I'll pick by number (Other field)
+
+When the user picks "All of them" or "New ones only", run the scrapes sequentially (one `--select N` call per tournament) without prompting again.
 
 ---
 
@@ -74,12 +84,14 @@ Present the tournament list to the user using `AskUserQuestion`:
 Run the script with the selected tournament number (1-indexed position in the list from Step 2):
 
 ```bash
-python3 scripts/fencingtimelive-results.py --select {N} --country {COUNTRY} --days {DAYS}
+python3 scripts/fencingtimelive-results.py --select {N} --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-scrape.stderr
 ```
+
+**Important:** do not use `2>&1`. Redirect stderr separately; do not attempt to parse stdout — the script saves clean JSON automatically.
 
 This may take a minute or two — there is a 2-second rate limit between each event. Keep the user informed that the script is running.
 
-The script saves output to `scripts/output/<slug>-<date>.json` and logs the exact path to stderr. Find the output file path in the stderr log line that starts with `[ ok ] Output saved to`.
+**Read results from `scripts/output/<slug>-{today}.json`**, not from stdout. The script logs the exact path to stderr as `[ ok ] Output saved to …`.
 
 ---
 
