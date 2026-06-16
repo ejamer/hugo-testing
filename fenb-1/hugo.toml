@@ -140,6 +140,18 @@ theme = 'ananke'
   parent = "about"
 
 [[languages.en.menus.main]]
+  name = "Mission & Leadership"
+  url = "about/organization/"
+  weight = 3
+  parent = "about"
+
+[[languages.en.menus.main]]
+  name = "Contact Us"
+  url = "contact/"
+  weight = 4
+  parent = "about"
+
+[[languages.en.menus.main]]
   name = "Join"
   url = "join/"
   weight = 6
@@ -228,6 +240,18 @@ theme = 'ananke'
   name = "Temple de la renommée"
   url = "about/hall-of-fame/"
   weight = 2
+  parent = "about"
+
+[[languages.fr.menus.main]]
+  name = "Mission et direction"
+  url = "about/organization/"
+  weight = 3
+  parent = "about"
+
+[[languages.fr.menus.main]]
+  name = "Nous joindre"
+  url = "contact/"
+  weight = 4
   parent = "about"
 
 [[languages.fr.menus.main]]

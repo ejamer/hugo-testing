@@ -203,6 +203,22 @@
   background: linear-gradient(135deg, var(--teal-dark), var(--teal-light));
 }
 
+.fenb-board-card--vacant {
+  opacity: 0.65;
+}
+
+.fenb-board-card-avatar--vacant {
+  background: linear-gradient(135deg, #8a8a8a, #b8b8b8);
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.fenb-board-card--vacant .fenb-board-card-name {
+  color: var(--text-muted);
+  font-style: italic;
+  font-weight: 400;
+}
+
 /* ── Contact ─────────────────────────────────────── */
 .fenb-about-contact-section {
   background: var(--off-white);
@@ -277,7 +293,7 @@
 
 .fenb-contact-form-submit {
   align-self: flex-start;
-  background: var(--teal);
+  background: var(--crimson);
   color: var(--white);
   font-size: 0.9rem;
   font-weight: 700;
@@ -288,7 +304,7 @@
   transition: background var(--transition);
 }
 
-.fenb-contact-form-submit:hover { background: var(--teal-dark); }
+.fenb-contact-form-submit:hover { background: var(--crimson-dark); }
 
 [data-theme="dark"] .fenb-contact-form-row input,
 [data-theme="dark"] .fenb-contact-form-row textarea {

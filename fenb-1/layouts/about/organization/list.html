@@ -1,0 +1,61 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+
+{{/* ── Mission ──────────────────────────────────────────── */}}
+<section class="fenb-about-overview-section">
+  <div class="fenb-container fenb-container--narrow">
+    {{ partial "back-link.html" (dict "url" "about/" "key" "hof_back_about") }}
+
+    <div class="fenb-about-overview-grid">
+      <div class="fenb-about-overview-body">
+        <div class="fenb-about-mission-block">
+          <span class="fenb-section-label">{{ i18n "about_mission_label" }}</span>
+          <h2 class="fenb-section-title">{{ i18n "about_mission_title" }}</h2>
+          <blockquote class="fenb-callout fenb-callout--quote">{{ i18n "about_mission_quote" }}</blockquote>
+        </div>
+      </div>
+
+      <div class="fenb-about-sidebar">
+        <div class="fenb-about-sidebar-card">
+          <h3>{{ i18n "about_affiliations_title" }}</h3>
+          <ul>
+            {{ range hugo.Data.board_members.affiliations }}
+            <li><a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ index . (printf "name_%s" $.Site.Language.Lang) | default .name_en }}</a></li>
+            {{ end }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{/* ── Board of Directors ────────────────────────────────── */}}
+<section class="fenb-board-section">
+  <div class="fenb-container fenb-container--narrow">
+    <span class="fenb-section-label">{{ i18n "about_board_label" }}</span>
+    <h2 class="fenb-section-title">{{ i18n "about_board_title" }}</h2>
+    <div class="fenb-board-grid">
+      {{ range hugo.Data.board_members.members }}
+      {{ $vacant := not .name }}
+      {{ $initials := "~" }}
+      {{ if .name }}
+        {{ $initials = "" }}
+        {{ $parts := split .name " " }}
+        {{ range $parts }}{{ $initials = printf "%s%s" $initials (substr . 0 1) }}{{ end }}
+      {{ end }}
+      {{ $avatarMod := "" }}
+      {{ if .card_color }}{{ $avatarMod = .card_color }}{{ else if $vacant }}{{ $avatarMod = "vacant" }}{{ end }}
+      <div class="fenb-board-card{{ if $vacant }} fenb-board-card--vacant{{ end }}">
+        <div class="fenb-board-card-avatar{{ with $avatarMod }} fenb-board-card-avatar--{{ . }}{{ end }}">{{ $initials }}</div>
+        <p class="fenb-board-card-name">{{ if $vacant }}{{ i18n "about_board_vacant" }}{{ else }}{{ .name }}{{ end }}</p>
+        <p class="fenb-board-card-role{{ with .card_color }} fenb-board-card-role--{{ . }}{{ end }}">
+          {{- index . (printf "role_%s" $.Site.Language.Lang) | default .role_en -}}
+        </p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{ end }}

@@ -138,7 +138,7 @@ search_searching:      "Recherche de [SEARCH_TERM]…"
 # ── Page à propos ──────────────────────────────────────────
 about_overview_label:     "Notre organisation"
 about_overview_title:     "Escrime-Fencing NB"
-about_overview_body:      "Escrime-Fencing NB (FENB) est l'organisation sportive provinciale régissant l'escrime au Nouveau-Brunswick, agissant à titre de section provinciale de la Fédération canadienne d'escrime. FENB est membre de Sport Nouveau-Brunswick et est régie par un conseil d'administration bénévole de sept membres en vertu des Règlements de FENB, selon les principes de gouvernance Carver."
+about_overview_body:      "Escrime-Fencing NB (FENB) est l'organisation sportive provinciale régissant l'escrime au Nouveau-Brunswick, agissant à titre de section provinciale de la Fédération canadienne d'escrime. FENB est membre de Sport Nouveau-Brunswick et est régie par un conseil d'administration bénévole de membres en vertu des Règlements de FENB, selon les principes de gouvernance Carver."
 about_affiliations_title: "Affiliations"
 about_mission_label:      "Notre mission"
 about_mission_title:      "Énoncé de mission de FENB"
@@ -150,9 +150,9 @@ about_history_body:       "L'association provinciale d'escrime a été officiell
 about_board_label:        "Direction"
 about_board_title:        "Conseil d'administration"
 about_board_season:       "2025–2026"
+about_board_vacant:       "Vacant"
 about_governance_label:   "Gouvernance"
 about_governance_title:   "Politiques, plans et rapports"
-about_governance_note:    "Les documents de gouvernance, les plans stratégiques et les rapports annuels sont disponibles sur la page"
 about_contact_label:      "Nous joindre"
 about_contact_title:      "Contacter FENB"
 about_contact_name:       "Nom"
@@ -257,7 +257,7 @@ join_volunteer_role_tourn_2:  "Armurerie (tests et réparations d'équipement)"
 join_volunteer_role_tourn_3:  "Responsable de salle (coordination et annonces)"
 join_volunteer_apply_label:   "Prêt à faire du bénévolat?"
 join_volunteer_apply_body:    "Parlez-nous de vos intérêts et de vos disponibilités. Nous vous associerons à un rôle adapté à vos compétences — et fournirons une formation si nécessaire."
-join_volunteer_apply_btn:     "Écrire à FENB"
+join_volunteer_apply_btn:     "Contacter la FENB"
 
 # ── Programmes — Page d'accueil ────────────────────
 programs_landing_label:               "Formation et développement"
@@ -327,7 +327,7 @@ programs_coach_pathway_upcoming_note: "La FENB se prépare également à souteni
 programs_coach_contact_label:         "Par où commencer"
 programs_coach_contact_title:         "Amorcez votre parcours d'entraîneur"
 programs_coach_contact_body:          "La FENB offre actuellement l'évaluation au niveau Instructeur-Débutant. Communiquez avec nous pour connaître les prochaines étapes de votre parcours — ou pour télécharger la liste de vérification d'évaluation."
-programs_coach_contact_btn:           "Écrire à la FENB"
+programs_coach_contact_btn:           "Contacter la FENB"
 
 # ── Programmes — Jeux d'hiver du Canada : Québec 2027 ──
 programs_cwg_label:                   "Jeux d'hiver du Canada 2027"
@@ -451,12 +451,19 @@ rss_feed_label: "Fil RSS des nouvelles"
 
 # ── Temple de la renommée ───────────────────────────────────
 # ── Cartes de navigation des sous-sections À propos ────────
+about_landing_intro:      "Découvrez Escrime-Fencing NB — notre mission, notre direction, notre histoire et comment nous joindre."
 about_nav_policies_title: "Politiques, plans et rapports"
 about_nav_policies_desc:  "Documents de gouvernance, politiques officielles et rapports annuels."
 about_nav_policies_cta:   "Voir les documents"
 about_nav_hof_title:      "Temple de la renommée"
 about_nav_hof_desc:       "Honorer les athlètes, entraîneurs et bâtisseurs qui ont façonné l'escrime au Nouveau-Brunswick."
 about_nav_hof_cta:        "Voir les récipiendaires"
+about_nav_org_title:      "Mission et direction"
+about_nav_org_desc:       "L'énoncé de mission de FENB, le conseil d'administration et les affiliations organisationnelles."
+about_nav_org_cta:        "En savoir plus"
+about_nav_contact_title:  "Nous joindre"
+about_nav_contact_desc:   "Envoyez un message à Escrime-Fencing NB."
+about_nav_contact_cta:    "Nous contacter"
 
 # ── Temple de la renommée ───────────────────────────────────
 hof_section_label:   "Reconnaissance"

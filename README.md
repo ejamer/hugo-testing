@@ -191,8 +191,8 @@ description: "Calendrier de la saison 2026–2027"
 Edit `data/board_members.yaml`. Top-level keys:
 
 - `season` — display label (e.g. `"2025–2026"`); update at the start of each season
-- `contact` — board inquiry email shown on the About contact section
-- `affiliations` — provincial/national affiliations shown in the About sidebar:
+- `contact` — board inquiry email used on the `/contact/` page
+- `affiliations` — provincial/national affiliations shown in the Mission & Leadership page sidebar (`/about/organization/`):
   ```yaml
   affiliations:
     - name_en: "Canadian Fencing Federation"
@@ -205,7 +205,7 @@ Edit `data/board_members.yaml`. Top-level keys:
     role_en: "President"       # displayed in English
     role_fr: "Présidente"      # displayed in French
   ```
-  Members are displayed in the order they appear in the file. Add `card_color: teal` or `card_color: crimson` to any member whose avatar and role label should use a non-default colour (omit for standard directors, which use navy).
+  Members are displayed in the order they appear in the file. Add `card_color: teal` or `card_color: crimson` to any member whose avatar and role label should use a non-default colour (omit for standard directors, which use navy). To mark a position as **vacant**, omit the `name` field entirely — the card will display "Vacant" (bilingual) with a `~` avatar.
 
 </details>
 
