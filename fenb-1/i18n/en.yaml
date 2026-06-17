@@ -173,6 +173,7 @@ policies_also_in:          "Aussi disponible en"
 theme_light:               "Light"
 theme_dark:                "Dark"
 theme_system:              "System"
+nav_submenu:               "submenu"
 
 # ── Join & Register section ────────────────────────────────
 join_back:                    "Join & Register"

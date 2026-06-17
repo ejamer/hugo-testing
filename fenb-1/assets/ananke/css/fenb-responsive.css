@@ -39,6 +39,9 @@
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     padding: 0.75rem 0;
     z-index: 199;
+    max-height: calc(100vh - var(--header-height, var(--nav-height)));
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .fenb-nav-links.is-open ul  { flex-direction: column; gap: 0; align-items: stretch; }
   .fenb-nav-links.is-open a   { border-radius: 0; padding: 0.85rem 1.5rem; color: var(--text-body); text-align: left; }
@@ -49,9 +52,34 @@
   }
   .fenb-nav-toggle { display: flex; }
 
-  /* Dropdown: show inline as sub-items in mobile menu */
-  .fenb-nav-links.is-open .fenb-nav-dropdown {
+  /* Dropdown parent: flex row so button sits beside the link */
+  .fenb-nav-links.is-open .fenb-nav-has-dropdown { display: flex; flex-wrap: wrap; align-items: stretch; }
+  .fenb-nav-links.is-open .fenb-nav-has-dropdown > a { flex: 1; min-width: 0; }
+
+  /* Chevron button — visible on mobile, hidden on desktop */
+  .fenb-nav-chevron-btn {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    border-left: 1px solid var(--light-gray);
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+  .fenb-nav-chevron-btn::after          { content: '▾'; }
+  .fenb-nav-has-dropdown.is-open .fenb-nav-chevron-btn::after { content: '▴'; }
+
+  /* Hide the inline chevron inside the link on mobile */
+  .fenb-nav-links.is-open .fenb-nav-chevron { display: none; }
+
+  /* Dropdown: hidden by default, spans full width when open */
+  .fenb-nav-links.is-open .fenb-nav-dropdown {
+    display: none;
+    flex-basis: 100%;
     position: static;
     box-shadow: none;
     border: none;
@@ -61,16 +89,14 @@
     background: var(--off-white);
     min-width: 0;
   }
+  .fenb-nav-links.is-open .fenb-nav-has-dropdown.is-open > .fenb-nav-dropdown { display: flex; }
   .fenb-nav-links.is-open .fenb-nav-dropdown a {
     padding: 0.65rem 1.5rem 0.65rem 2.5rem;
     font-size: 1rem;
     font-weight: 500;
     color: var(--text-muted);
   }
-  .fenb-nav-links.is-open .fenb-nav-dropdown a:hover {
-    color: var(--teal);
-  }
-  .fenb-nav-links.is-open .fenb-nav-chevron::after { transform: none; }
+  .fenb-nav-links.is-open .fenb-nav-dropdown a:hover { color: var(--teal); }
 
   .fenb-search-overlay-inner { padding: 0 1rem; }
   .fenb-search-row { gap: 0.25rem; }

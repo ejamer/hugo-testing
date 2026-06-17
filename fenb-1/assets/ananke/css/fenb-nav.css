@@ -55,6 +55,8 @@
   gap: 0.15rem;
 }
 
+.fenb-nav-chevron-btn { display: none; }
+
 .fenb-nav-links a {
   display: block;
   color: var(--text-body);

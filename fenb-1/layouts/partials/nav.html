@@ -15,6 +15,7 @@
           {{ if .Children }}
           <li class="fenb-nav-has-dropdown">
             <a href="{{ .URL | relLangURL }}">{{ .Name }}<span class="fenb-nav-chevron" aria-hidden="true"></span></a>
+            <button class="fenb-nav-chevron-btn" aria-expanded="false" aria-label="{{ .Name }} {{ i18n "nav_submenu" }}"></button>
             <ul class="fenb-nav-dropdown">
               {{ range .Children }}
               <li><a href="{{ .URL | relLangURL }}">{{ .Name }}</a></li>
@@ -100,10 +101,34 @@
   (function () {
     const toggle = document.getElementById('fenb-nav-toggle');
     const links  = document.getElementById('fenb-nav-links');
+
+    function closeMobileDropdowns() {
+      if (!links) return;
+      links.querySelectorAll('.fenb-nav-has-dropdown.is-open').forEach(function (el) {
+        el.classList.remove('is-open');
+        const btn = el.querySelector('.fenb-nav-chevron-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+
     if (toggle && links) {
       toggle.addEventListener('click', function () {
         const open = links.classList.toggle('is-open');
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (!open) closeMobileDropdowns();
+      });
+
+      // Mobile dropdown toggle — chevron button opens/closes sub-items; link navigates freely
+      links.querySelectorAll('.fenb-nav-chevron-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const item = btn.closest('.fenb-nav-has-dropdown');
+          const wasOpen = item.classList.contains('is-open');
+          closeMobileDropdowns();
+          if (!wasOpen) {
+            item.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
       });
     }
     const nav = document.getElementById('fenb-nav');
@@ -112,6 +137,14 @@
         nav.classList.toggle('fenb-nav--scrolled', window.scrollY > 40);
       }, { passive: true });
     }
+
+    // Keep --header-height in sync so mobile dropdown max-height accounts for announcement banner
+    const navWrap = document.querySelector('.fenb-nav-wrap');
+    function updateHeaderHeight() {
+      if (navWrap) document.documentElement.style.setProperty('--header-height', navWrap.offsetHeight + 'px');
+    }
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight, { passive: true });
 
     // Theme selector dropdown
     const themeToggle = document.getElementById('fenb-theme-toggle');
