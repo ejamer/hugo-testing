@@ -120,6 +120,35 @@
   .fenb-schedule-filter-btns { flex-direction: row; flex-wrap: wrap; }
 }
 
+/* Calendar compact/dot mode — legend hidden, bars swapped for dots */
+@media (max-width: 540px) {
+  .fenb-cal-legend { display: none; }
+
+  .fenb-cal-nav { flex-wrap: wrap; }
+  .fenb-cal-schedule-link {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    padding-top: 0.25rem;
+  }
+
+  .fenb-cal-select { font-size: 0.95rem; padding: 0.3rem 0.45rem; }
+
+  .fenb-cal-cell {
+    min-height: 48px;
+    padding: 0.25rem 0.2rem;
+    gap: 0.2rem;
+  }
+  .fenb-cal-cell--has-events { cursor: pointer; }
+  .fenb-cal-day-num { font-size: 0.8rem; }
+  .fenb-cal-bars { display: none; }
+  .fenb-cal-dots { display: flex; flex-wrap: wrap; }
+
+  .fenb-cal-weekday { padding: 0.4rem 0; font-size: 0.75rem; }
+  .fenb-cal-wd-long  { display: none; }
+  .fenb-cal-wd-short { display: inline; }
+}
+
 @media (max-width: 680px) {
   .fenb-article-layout  { grid-template-columns: 1fr; }
   .fenb-article-sidebar { display: none; }
@@ -153,7 +182,8 @@
 @media print {
   .fenb-nav-wrap,
   .fenb-schedule-controls,
-  .fenb-schedule-sidebar { display: none !important; }
+  .fenb-schedule-sidebar,
+  footer { display: none !important; }
 
   body, .fenb-schedule-section { background: #fff !important; }
 

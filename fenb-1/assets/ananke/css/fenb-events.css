@@ -379,12 +379,12 @@
   cursor: pointer;
 }
 
-.fenb-cal-bar--competition  { background: var(--teal); }
-.fenb-cal-bar--training     { background: var(--cat-training); }
-.fenb-cal-bar--national     { background: var(--crimson); }
-.fenb-cal-bar--provincial   { background: var(--crimson); }
-.fenb-cal-bar--meeting      { background: var(--cat-meeting); }
-.fenb-cal-bar--announcement { background: var(--cat-announcement); }
+.fenb-cal-bar--competition,  .fenb-cal-dot--competition  { background: var(--teal); }
+.fenb-cal-bar--training,    .fenb-cal-dot--training     { background: var(--cat-training); }
+.fenb-cal-bar--national,    .fenb-cal-dot--national     { background: var(--crimson); }
+.fenb-cal-bar--provincial,  .fenb-cal-dot--provincial   { background: var(--crimson); }
+.fenb-cal-bar--meeting,     .fenb-cal-dot--meeting      { background: var(--cat-meeting); }
+.fenb-cal-bar--announcement,.fenb-cal-dot--announcement { background: var(--cat-announcement); }
 
 .fenb-cal-no-events {
   text-align: center;
@@ -392,6 +392,26 @@
   font-style: italic;
   padding: 2.5rem 0 1rem;
 }
+
+/* Dot row — hidden on desktop, shown on mobile */
+.fenb-cal-dots {
+  display: none;
+  gap: 3px;
+  width: 100%;
+}
+
+.fenb-cal-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Weekday header short/long span pair */
+.fenb-cal-wd-short { display: none; }
+.fenb-cal-wd-long  { display: inline; }
+
 
 /* Pulse highlight when scrolled-to from a calendar cell click */
 @keyframes fenb-cal-highlight {
