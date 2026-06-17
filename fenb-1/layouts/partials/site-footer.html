@@ -1,12 +1,12 @@
-<footer class="{{ .Site.Params.background_color_class | compare.Default "bg-black" }} bottom-0 w-100 pa3" role="contentinfo">
+<footer class="{{ .Site.Params.background_color_class | compare.Default "bg-black" }} bottom-0 w-100" role="contentinfo">
   <div class="flex justify-between">
-    <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="{{ .Site.Home.RelPermalink }}">
+    <a class="f4 fw4 hover-white white-70 dib pv2 ph3 no-underline" href="{{ .Site.Home.RelPermalink }}">
       &copy; {{ with .Site.Copyright | compare.Default .Site.Title }} {{ . | safe.HTML }} {{ now.Format "2006"}} {{ end }}
     </a>
     <div class="fenb-footer-right">
       {{ partials.IncludeCached "social/follow.html" . }}
       <a href="{{ "news/index.xml" | relLangURL }}" class="fenb-footer-rss" aria-label="{{ i18n "rss_feed_label" }}">
-        {{ partial "icon.html" (dict "name" "rss.svg" "w" 20 "h" 20) }}
+        {{ partial "icon.html" (dict "name" "rss.svg" "w" 18 "h" 18) }}
       </a>
     </div>
   </div>

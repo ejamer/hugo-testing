@@ -28,13 +28,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 126px;
+  height: var(--nav-height);
 }
 
 .fenb-nav-logo-link { display: flex; align-items: center; flex-shrink: 0; }
-.fenb-nav-logo      { height: 122px; width: auto; }
+.fenb-nav-logo      { height: 86px; width: auto; }
 
-.fenb-nav-logo--white                    { display: none; }
+.fenb-nav-logo--white       { display: none; }
+.fenb-nav-logo--small-color { display: none; }
+.fenb-nav-logo--small-white { display: none; }
+
 [data-theme="dark"] .fenb-nav-logo--color { display: none; }
 [data-theme="dark"] .fenb-nav-logo--white { display: block; }
 
@@ -56,7 +59,7 @@
   display: block;
   color: var(--text-body);
   text-decoration: none;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
   padding: 0.45rem 0.8rem;
   border-radius: var(--radius-sm);
@@ -114,7 +117,7 @@
 }
 
 .fenb-nav-dropdown a {
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.45rem 0.8rem;
   white-space: normal;
 }
@@ -151,7 +154,7 @@
   justify-content: center;
   padding: 0.45rem 0.6rem;
   border-radius: var(--radius-sm);
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   text-decoration: none;
@@ -358,7 +361,7 @@
 }
 
 .fenb-page-title {
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-size: clamp(1.35rem, 3.4vw, 2rem);
   font-weight: 800;
   color: #fff;
   margin: 0;
@@ -408,6 +411,11 @@
 .fenb-announcement__text {
   margin: 0;
 }
+
+/* ── Footer ──────────────────────────────────── */
+footer[role="contentinfo"] { padding: 0.4rem 1rem; }
+footer[role="contentinfo"] a.f4 { font-size: 1.1rem; }
+footer[role="contentinfo"] .ananke-socials a .icon svg { width: 20px; height: 20px; }
 
 /* ── Footer RSS link ─────────────────────────── */
 .fenb-footer-right {

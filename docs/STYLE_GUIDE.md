@@ -8,8 +8,10 @@
 
 ### Logos
 - `static/images/fenb-logo` — folder contains the FENB-Logo-Standards.html guidelines, and subfolders with different official logo files
-- `FENB-Logo-Landscape-FullColour` — logo for light backgrounds
-- `FENB-Logo-Landscape-White` — logo for dark/teal backgrounds (hero, teal sections)
+- `FENB-Logo-Landscape-FullColour` — full landscape logo for light backgrounds; used in desktop nav (`fenb-nav-logo--color`)
+- `FENB-Logo-Landscape-White` — full landscape logo for dark/teal backgrounds; used in desktop dark-mode nav (`fenb-nav-logo--white`)
+- `FENB-Logo-Small-FullColor` — compact mark for light backgrounds; used in mobile nav at ≤860px (`fenb-nav-logo--small-color`)
+- `FENB-Logo-Small-White` — compact mark for dark mode; used in mobile dark-mode nav at ≤860px (`fenb-nav-logo--small-white`)
  
 
 ### Fonts
@@ -79,7 +81,7 @@ padding: 1rem 1.25rem;
 background: var(--off-white);
 ```
 
-**Responsive:** collapse to single column at ≤720px. Move controls sidebars *above* main content with `order: -1`; leave passive sidebars in natural order (falls below).
+**Responsive:** controls sidebars (schedule, calendar) hide (`display: none`) at ≤720px when the layout collapses to a single column. Informational sidebars also hide at their page's single-column breakpoint. Neither type stacks below the main content on narrow screens.
 
 #### Informational sidebars (links/metadata)
 
@@ -96,7 +98,7 @@ Heading (`h3`): `font-size: 0.75rem; font-weight: 700; text-transform: uppercase
 
 Use `.fenb-about-sidebar-card` directly when possible. When the sidebar needs its own layout wrapper (sticky positioning, specific column width), define page-specific layout CSS but style the card to match this reference. Dark mode: heading and links use `var(--teal-light)`.
 
-**Responsive:** sidebar collapses below main content at the page's single-column breakpoint.
+**Responsive:** sidebar hides (`display: none`) at the page's single-column breakpoint — it does not stack below the main content.
 
 ---
 
