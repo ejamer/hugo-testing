@@ -11,7 +11,9 @@
       <aside class="fenb-hof-profile-aside">
 
         {{ if .Params.photo }}
-        <img class="fenb-hof-profile-photo" src="{{ .Params.photo | relURL }}" alt="{{ .Title }}" loading="lazy">
+        <figure class="fenb-hof-profile-photo-wrap" data-lightbox-zone>
+          <img class="fenb-hof-profile-photo" src="{{ .Params.photo | relURL }}" alt="{{ .Title }}" loading="lazy">
+        </figure>
         {{ else }}
         {{ $initials := "" }}
         {{ $parts := split .Title " " }}

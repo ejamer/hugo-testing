@@ -1,9 +1,5 @@
 {{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
 
-{{ define "scripts" }}
-<script src="{{ "js/lightbox.js" | absURL }}" defer></script>
-{{ end }}
-
 {{ define "main" }}
 <section class="fenb-section fenb-article-section">
   <div class="fenb-container">
@@ -21,7 +17,7 @@
           {{- $dateStr := cond (eq .Site.Language.Lang "fr") (printf "%s %s %s" $day ($month | lower) $year) (printf "%s %s, %s" $month $day $year) -}}
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ $dateStr }}</time>
         </div>
-        <div class="fenb-article-body" {{ if .Params.results_table }}data-results-table="true"{{ end }} {{ if .Params.results_hide_placements }}data-hide-placements="true"{{ end }}>
+        <div class="fenb-article-body" data-lightbox-zone {{ if .Params.results_table }}data-results-table="true"{{ end }} {{ if .Params.results_hide_placements }}data-hide-placements="true"{{ end }}>
           {{ .Content }}
         </div>
         {{ if .Params.results_table }}
