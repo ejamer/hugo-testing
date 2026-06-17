@@ -51,7 +51,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.fenb-article-body img, .fenb-article-event-logo img').forEach(function (img) {
+    document.querySelectorAll('[data-lightbox-zone] img:not([aria-hidden="true"]):not(.fenb-no-lightbox)').forEach(function (img) {
       img.addEventListener('click', function () { openLightbox(img); });
     });
   });

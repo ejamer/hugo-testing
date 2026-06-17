@@ -382,8 +382,8 @@
   cursor: zoom-in;
 }
 
-/* ── Article body images ──────────────────────── */
-.fenb-article-body img { cursor: zoom-in; }
+/* ── Lightboxable images ──────────────────────── */
+[data-lightbox-zone] img:not([aria-hidden="true"]):not(.fenb-no-lightbox) { cursor: zoom-in; }
 
 /* ── Lightbox ─────────────────────────────────── */
 .fenb-lightbox {

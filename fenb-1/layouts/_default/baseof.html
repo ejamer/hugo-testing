@@ -82,6 +82,7 @@
       {{ block "main" . }}{{ end }}
     </main>
     {{ block "footer" . }}{{ partials.IncludeCached "site-footer.html" . }}{{ end }}
+    <script src="{{ "js/lightbox.js" | absURL }}" defer></script>
     {{ block "scripts" . }}{{ end }}
   </body>
 </html>

@@ -6,6 +6,8 @@
   // parse it back to a real array if needed.
   var events = typeof cal.events === 'string' ? JSON.parse(cal.events) : cal.events;
   var categoryLabels = typeof cal.categoryLabels === 'string' ? JSON.parse(cal.categoryLabels) : cal.categoryLabels;
+  // Sort once so byDay day-arrays are always in chronological order
+  events.sort(function (a, b) { return a.start_date < b.start_date ? -1 : a.start_date > b.start_date ? 1 : 0; });
   // today at midnight, for future-date checks
   var today = cal.today ? new Date(cal.today + 'T00:00:00') : (function () { var d = new Date(); d.setHours(0,0,0,0); return d; }());
 
@@ -146,7 +148,9 @@
       var cell = document.createElement('div');
       cell.className = 'fenb-cal-weekday';
       cell.setAttribute('aria-hidden', 'true');
-      cell.textContent = wd;
+      cell.innerHTML =
+        '<span class="fenb-cal-wd-long">' + wd + '</span>' +
+        '<span class="fenb-cal-wd-short">' + wd.charAt(0) + '</span>';
       grid.appendChild(cell);
     });
 
@@ -187,6 +191,9 @@
           var bars = document.createElement('div');
           bars.className = 'fenb-cal-bars';
 
+          var dots = document.createElement('div');
+          dots.className = 'fenb-cal-dots';
+
           byDay[day].forEach(function (item) {
             (function (it) {
               var bar = document.createElement('div');
@@ -206,10 +213,35 @@
                 }
               });
               bars.appendChild(bar);
+
+              var dot = document.createElement('span');
+              dot.className = 'fenb-cal-dot fenb-cal-dot--' + it.e.category;
+              dot.setAttribute('role', 'button');
+              dot.setAttribute('tabindex', '0');
+              dot.setAttribute('aria-label', it.e.title);
+              dot.addEventListener('click', function (ev) {
+                ev.stopPropagation();
+                scrollToEventCard(it.idx);
+              });
+              dot.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Enter' || ev.key === ' ') {
+                  ev.preventDefault();
+                  scrollToEventCard(it.idx);
+                }
+              });
+              dots.appendChild(dot);
             }(item));
           });
 
+          // Cell-level gap-click: scrolls to the chronologically first event.
+          // Dot clicks stopPropagation so they take priority on their own tap target.
+          var firstIdx = byDay[day][0].idx;
+          cell.addEventListener('click', function () {
+            scrollToEventCard(firstIdx);
+          });
+
           cell.appendChild(bars);
+          cell.appendChild(dots);
         }
 
         grid.appendChild(cell);
