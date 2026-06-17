@@ -113,6 +113,8 @@ Before implementing anything that touches the nav bar layout (adding/moving butt
 
 **Direct-child selectors in nav CSS:** whenever you add a nested `<ul>` or `<li>` inside `.fenb-nav-links`, use direct-child selectors (`> ul`, `> ul > li`, `> ul > li:last-child`) to prevent bleed-through into dropdowns. `fenb-nav.css` already uses this pattern.
 
+**`--nav-height` is the single source of truth for nav bar height.** It is defined in `fenb-base.css` (`:root`) and referenced via `var(--nav-height)` in both `.fenb-nav-inner` (height) and `.fenb-nav-links.is-open` (top offset in the mobile menu). If the nav height ever changes, update only `--nav-height` — never hardcode the pixel value in CSS or templates.
+
 ## Hugo data file naming
 
 **Never use hyphens in data filenames. Use underscores** (e.g. `board_members.yaml`, `join_paths.yaml`). Hugo stores the data key as the literal filename, so `program-cards.yaml` produces key `program-cards` — a syntax error in Go template dot notation. The page renders silently empty with no build error.

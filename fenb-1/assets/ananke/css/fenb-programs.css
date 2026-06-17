@@ -642,8 +642,8 @@
 /* ── Responsive ───────────────────────────────────── */
 @media (max-width: 900px) {
   .fenb-armourer-sections { grid-template-columns: 1fr; }
-  .fenb-cwg-layout { grid-template-columns: 1fr; }
-  .fenb-cwg-sidebar-card { position: static; }
+  .fenb-cwg-layout        { grid-template-columns: 1fr; }
+  .fenb-cwg-sidebar       { display: none; }
 }
 @media (max-width: 700px) {
   .fenb-referee-levels { grid-template-columns: 1fr; }

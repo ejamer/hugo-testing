@@ -4,12 +4,34 @@
    =================================================== */
 
 /* ── Responsive ───────────────────────────────── */
+@media (max-width: 1000px) {
+  .fenb-article-layout { grid-template-columns: 1fr 260px; }
+}
+
 @media (max-width: 860px) {
+  .fenb-nav-inner   { justify-content: flex-start; }
+  .fenb-nav-actions { margin-left: auto; }
+
+  /* Touch targets — ensure 44px minimum for action buttons */
+  .fenb-search-btn,
+  .fenb-theme-toggle { min-height: 44px; min-width: 44px; }
+  .fenb-lang-btn     { min-height: 44px; }
+  .fenb-nav-toggle   { min-height: 44px; min-width: 44px; }
+
+  /* Swap landscape logo for compact logo */
+  .fenb-nav-logo--color                           { display: none; }
+  .fenb-nav-logo--white                           { display: none; }
+  [data-theme="dark"] .fenb-nav-logo--white       { display: none; }
+  .fenb-nav-logo--small-color                     { display: block; height: 56px; }
+  .fenb-nav-logo--small-white                     { display: none; }
+  [data-theme="dark"] .fenb-nav-logo--small-color { display: none; }
+  [data-theme="dark"] .fenb-nav-logo--small-white { display: block; height: 56px; }
+
   .fenb-nav-links { display: none; }
   .fenb-nav-links.is-open {
     display: block;
     position: absolute;
-    top: 126px;
+    top: var(--nav-height);
     left: 0;
     right: 0;
     background: var(--white);
@@ -18,8 +40,8 @@
     padding: 0.75rem 0;
     z-index: 199;
   }
-  .fenb-nav-links.is-open ul  { flex-direction: column; gap: 0; }
-  .fenb-nav-links.is-open a   { border-radius: 0; padding: 0.85rem 1.5rem; color: var(--text-body); }
+  .fenb-nav-links.is-open ul  { flex-direction: column; gap: 0; align-items: stretch; }
+  .fenb-nav-links.is-open a   { border-radius: 0; padding: 0.85rem 1.5rem; color: var(--text-body); text-align: left; }
   .fenb-nav-links.is-open > ul > li:last-child a {
     margin: 0.5rem 1.5rem;
     border-radius: 6px;
@@ -59,22 +81,26 @@
   .fenb-hero-content { padding-bottom: 4rem; }
 
   .fenb-about-overview-grid { grid-template-columns: 1fr; }
-  .fenb-about-sidebar { flex-direction: row; flex-wrap: wrap; }
-  .fenb-about-sidebar-card { flex: 1 1 200px; }
-  .fenb-policy-layout { grid-template-columns: 1fr; }
+  .fenb-about-sidebar       { display: none; }
+  .fenb-policy-layout       { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 720px) {
   .fenb-cal-layout { flex-direction: column; }
   .fenb-cal-legend { flex: none; width: 100%; }
 
-  .fenb-schedule-layout { flex-direction: column; }
-  .fenb-schedule-sidebar { flex: none; width: 100%; order: -1; }
+  .fenb-schedule-layout  { flex-direction: column; }
+  .fenb-schedule-sidebar { display: none; }
   .fenb-schedule-filter-btns { flex-direction: row; flex-wrap: wrap; }
 }
 
+@media (max-width: 680px) {
+  .fenb-article-layout  { grid-template-columns: 1fr; }
+  .fenb-article-sidebar { display: none; }
+}
+
 @media (max-width: 640px) {
-  .fenb-about-history-body { grid-template-columns: 1fr; }
+  .fenb-about-history-body  { grid-template-columns: 1fr; }
   .fenb-about-history-photo { max-width: 180px; margin: 0 auto; }
 }
 
@@ -97,15 +123,6 @@
   .fenb-policy-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
 }
 
-@media (max-width: 1000px) {
-  .fenb-article-layout { grid-template-columns: 1fr 260px; }
-}
-
-@media (max-width: 680px) {
-  .fenb-article-layout { grid-template-columns: 1fr; }
-  .fenb-sidebar-block  { position: static; }
-}
-
 /* ── Print ────────────────────────────────────── */
 @media print {
   .fenb-nav-wrap,
@@ -119,7 +136,7 @@
     padding: 0.75rem 0 0.5rem;
     border-bottom: 2px solid #000;
   }
-  .fenb-page-title   { color: #000 !important; font-size: 1.4rem; }
+  .fenb-page-title    { color: #000 !important; font-size: 1.4rem; }
   .fenb-page-subtitle { color: #444 !important; }
 
   .fenb-schedule-month-heading {
@@ -143,8 +160,8 @@
   .fenb-schedule-links .fenb-event-register-link { color: #79242f !important; }
   .fenb-schedule-links .fenb-event-results-link  { color: #1e3a5f !important; }
 
-  .fenb-schedule-item    { break-inside: avoid; }
-  .fenb-schedule-month   { break-inside: avoid; }
+  .fenb-schedule-item  { break-inside: avoid; }
+  .fenb-schedule-month { break-inside: avoid; }
 
   .fenb-announcement { display: none; }
 }

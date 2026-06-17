@@ -31,6 +31,7 @@
   --radius-sm:     8px;
   --ease:          cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --transition:    0.22s var(--ease);
+  --nav-height:    90px;
 
   /* Category colours — used for event badges, tags, cal bars, news stripes */
   --cat-announcement:       #1a5fa8;
@@ -108,7 +109,7 @@ main.pb7 { padding-bottom: 0 !important; }
 
 .fenb-section-label {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
