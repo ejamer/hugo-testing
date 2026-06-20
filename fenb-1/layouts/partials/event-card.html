@@ -23,7 +23,7 @@
     {{- $todayMidnight := time (now.Format "2006-01-02") -}}
     {{- $registerUrl := .registration_url_en -}}
     {{- if and (eq site.Language.Lang "fr") .registration_url_fr -}}{{- $registerUrl = .registration_url_fr -}}{{- end -}}
-    {{ if and $registerUrl (not ($dateObj.Before $todayMidnight)) }}
+    {{ if and $registerUrl ($dateObj.After $todayMidnight) }}
     <a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>
     {{ end }}
     {{- $resultsUrl := .results_url_en -}}
