@@ -382,6 +382,36 @@
   cursor: zoom-in;
 }
 
+/* ── Article photo gallery (bottom, optional) ──── */
+.fenb-article-photo-gallery {
+  margin: 1.75rem 0 0.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--light-gray);
+}
+.fenb-article-photo-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.fenb-article-photo-gallery-item {
+  margin: 0;
+}
+.fenb-article-photo-gallery-item img {
+  display: block;
+  width: 100%;
+  border-radius: 6px;
+  cursor: zoom-in;
+}
+.fenb-article-photo-gallery-item figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+@media (max-width: 540px) {
+  .fenb-article-photo-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* ── Lightboxable images ──────────────────────── */
 [data-lightbox-zone] img:not([aria-hidden="true"]):not(.fenb-no-lightbox) { cursor: zoom-in; }
 
