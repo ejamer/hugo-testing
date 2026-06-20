@@ -70,7 +70,7 @@
                       {{- $todayMidnight := time (now.Format "2006-01-02") -}}
                       {{- $registerUrl := .registration_url_en -}}
                       {{- if and (eq site.Language.Lang "fr") .registration_url_fr -}}{{- $registerUrl = .registration_url_fr -}}{{- end -}}
-                      {{- $showRegister := and $registerUrl (not ($evDate.Before $todayMidnight)) -}}
+                      {{- $showRegister := and $registerUrl ($evDate.After $todayMidnight) -}}
                       {{- $resultsUrl := .results_url_en -}}
                       {{- if and (eq site.Language.Lang "fr") .results_url_fr -}}{{- $resultsUrl = .results_url_fr -}}{{- end -}}
                       {{ if or $detailsUrl $showRegister $resultsUrl }}
