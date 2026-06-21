@@ -1,14 +1,16 @@
 ---
-title: "Jeux de la côte Est 2026 — Résultats — Journée 1"
+title: "Jeux de la côte Est 2026 — Résultats finaux"
 date: 2026-06-20
 category: results
 results_table: true
-summary: "Résultats de la journée 1 des Jeux de la côte Est 2026 à Saint John, N.-B. — sept épreuves de sabre et de fleuret disputées le samedi 20 juin; les résultats d'épée de la journée 2 à venir."
+summary: "Résultats finaux des Jeux de la côte Est 2026 à Saint John, N.-B. — onze épreuves disputées sur deux jours de compétition au sabre, au fleuret et à l'épée."
 ---
 
-La journée 1 des Jeux de la côte Est 2026 s'est tenue le samedi 20 juin à Saint John (N.-B.), avec sept épreuves disputées au sabre et au fleuret. Des rondes de poules pour [le sabre mixte U11/U13](https://www.fencingtimelive.com/events/results/03AACBE4AAEE4F159ADCD2B9C423B57F) et [le fleuret mixte U13/U15](https://www.fencingtimelive.com/events/results/AF1094E3FB2D410A8DC88EAB9B20710E) ont été disputées en groupes d'âge combinés pour alimenter les tableaux d'élimination directe.
+Les Jeux de la côte Est 2026 se sont tenus les 20 et 21 juin à Saint John (N.-B.), avec onze épreuves disputées au sabre, au fleuret et à l'épée.
 
-Les résultats de la journée 2 — épée mixte U-15 et U-13 — seront publiés une fois la compétition de dimanche terminée.
+## Journée 1 — samedi 20 juin
+
+Des rondes de poules pour [le sabre mixte U11/U13](https://www.fencingtimelive.com/events/results/03AACBE4AAEE4F159ADCD2B9C423B57F) et [le fleuret mixte U13/U15](https://www.fencingtimelive.com/events/results/AF1094E3FB2D410A8DC88EAB9B20710E) ont été disputées en groupes d'âge combinés pour alimenter les tableaux d'élimination directe.
 
 ### [Sabre mixte U13 — Élimination directe](https://www.fencingtimelive.com/events/results/A28D695DC04C42C9B20040D5F7D15A4B)
 
@@ -66,3 +68,41 @@ Les résultats de la journée 2 — épée mixte U-15 et U-13 — seront publié
 |-----|------|----------|
 | 🥇 Pickle | — | 1re |
 | 🥈 Beaches, right? | — | 2e |
+
+## Journée 2 — dimanche 21 juin
+
+Des rondes de poules pour [l'épée mixte U11/U13](https://www.fencingtimelive.com/events/results/BC0A37B2CF5444978E0F02DC5215CF1B) ont été disputées en groupe d'âge combiné pour alimenter les tableaux d'élimination directe.
+
+### [Épée mixte U-15](https://www.fencingtimelive.com/events/results/AF8729D3AAE048628131F7F2180D2DAD)
+
+| Nom | Club | Position |
+|-----|------|----------|
+| 🥇 CANDY Gideon | Damocles Fencing Club | 1re |
+| 🥈 VIVAS Diego | Damocles Fencing Club | 2e |
+| 🥉 SINGH RANGER Bhikki | Damocles Fencing Club | 3e |
+| 🥉 WILSON Mae | PEI Fencing Club | 3e |
+
+### [Épée U11](https://www.fencingtimelive.com/events/results/6AECA17CB8124840902AD4C0A37A2C7E)
+
+| Nom | Club | Position |
+|-----|------|----------|
+| 🥇 SHERWOOD Juliette | Fundy Fencing Club | 1re |
+| 🥈 LUDFORD Ada | Fundy Fencing Club | 2e |
+
+### [Épée féminin U13 — Élimination directe](https://www.fencingtimelive.com/events/results/6E48E6DD4B424C0E8903AB8EF59598EC)
+
+| Nom | Club | Position |
+|-----|------|----------|
+| 🥇 BAGSICAN Maria Cielo | Fundy Fencing Club | 1re |
+| 🥈 CHUTE Isadora | Damocles Fencing Club | 2e |
+| 🥉 CANDY Esther | Damocles Fencing Club | 3e |
+| 🥉 BOUDREAU Jasmine | Escrime La Résistance Fencing | 3e |
+
+### [Épée masculin U13 — Élimination directe](https://www.fencingtimelive.com/events/results/8AF2614F896A4137A4A85EFE5B7BBA5B)
+
+| Nom | Club | Position |
+|-----|------|----------|
+| 🥇 LI Austin | PEI Fencing Club | 1re |
+| 🥈 VIVAS Diego | Damocles Fencing Club | 2e |
+| 🥉 POLISHCHUK Ivan | Fundy Fencing Club | 3e |
+| 🥉 DRIES Mohamed Anis | Escrime La Résistance Fencing | 3e |
