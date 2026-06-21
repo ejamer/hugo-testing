@@ -65,6 +65,8 @@ All seven pages need a full review pass for both style and content quality befor
 
 ## Project skills
 
+- [ ] **Skill automation and non-AI tooling** — review `plans/skill-assessment.md` and implement the proposed shell scripts to reduce AI dependency, eliminate duplicated logic, and make common updates (news stubs, season rollover, version bumps) executable without Claude. Priority order: `generate-version-json.sh` → `season-rollover.sh` → `check-ftl-deps.sh` → `create-news-stub.sh` → `compute-next-version.sh`. Once scripts exist, slim the corresponding skills to use them. Ties into the **Editor tooling** item under Non-technical content maintenance — the same scripts that simplify AI skills form the foundation for non-AI workflows.
+
 Test each project skill end-to-end at least once to verify it works correctly.
 
 | Skill | Status | Notes |
