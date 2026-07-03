@@ -19,7 +19,10 @@
         </div>
         {{- with .Params.image }}
         <div class="fenb-article-event-logo">
-          <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}">
+          <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}" class="fenb-article-event-logo-img{{ if $.Params.image_dark }} fenb-article-event-logo-img--light{{ end }}">
+          {{- with $.Params.image_dark }}
+          <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}" class="fenb-article-event-logo-img fenb-article-event-logo-img--dark">
+          {{- end }}
         </div>
         {{- end }}
         <div class="fenb-article-body" data-lightbox-zone {{ if .Params.results_table }}data-results-table="true"{{ end }} {{ if .Params.results_hide_placements }}data-hide-placements="true"{{ end }}>

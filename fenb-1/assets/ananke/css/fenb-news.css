@@ -381,6 +381,9 @@
   margin: 0 auto;
   cursor: zoom-in;
 }
+.fenb-article-event-logo .fenb-article-event-logo-img--dark { display: none; }
+[data-theme="dark"] .fenb-article-event-logo .fenb-article-event-logo-img--light { display: none; }
+[data-theme="dark"] .fenb-article-event-logo .fenb-article-event-logo-img--dark { display: block; }
 
 /* ── Article photo gallery (bottom, optional) ──── */
 .fenb-article-photo-gallery {

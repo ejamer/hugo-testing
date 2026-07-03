@@ -4,6 +4,7 @@ date: 2026-07-03
 category: announcement
 summary: "Fencing NB is proud to announce Jim Stevens as Team Coach and Wendy Yano as Team Manager for the New Brunswick fencing team at the 2027 Canada Winter Games in Quebec City."
 image: "images/canada-games/qc2027-logo-horizontal.png"
+image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
 image_alt: "Canada Winter Games 2027 — Quebec City"
 photos:
   - src: "images/news/2026/cwg-2027-team-staff-jim-stevens.jpeg"

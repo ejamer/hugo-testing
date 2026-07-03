@@ -4,6 +4,7 @@ date: 2026-07-03
 category: announcement
 summary: "Escrime NB est fier d'annoncer Jim Stevens comme entraîneur-chef et Wendy Yano comme directrice d'équipe pour l'équipe d'escrime du Nouveau-Brunswick aux Jeux d'hiver du Canada 2027 à Québec."
 image: "images/canada-games/qc2027-logo-horizontal.png"
+image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
 image_alt: "Jeux d'hiver du Canada 2027 — Québec"
 photos:
   - src: "images/news/2026/cwg-2027-team-staff-jim-stevens.jpeg"

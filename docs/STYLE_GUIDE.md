@@ -216,20 +216,30 @@ Place it at the top of the page, above all content, outside any grid or two-colu
 
 Displays a centred logo/image above the article body — 220 px max-width, rounded corners, dark-mode drop shadow.
 
-**Preferred:** set `image` and `image_alt` in front matter; the layout renders this automatically (no shortcode needed in the body):
+**Standard:** set `image` and `image_alt` in front matter; the layout renders this automatically (no shortcode needed in the body). This is the required style for all new articles — inline images should always go through front matter, not the article body.
 
 ```yaml
 image: "images/event-logos/ecg.png"
 image_alt: "East Coast Games 2026"
 ```
 
-**Alternative (legacy):** use the Hugo `figure` shortcode directly in the article body:
+**Optional dark-mode variant:** if the logo doesn't read well on a dark background (e.g. dark text/outlines with no background fill), add `image_dark` with a light-on-dark version of the same asset. The layout swaps between the two automatically based on the site's `data-theme` attribute — no JS or extra markup needed in the article itself.
+
+```yaml
+image: "images/canada-games/qc2027-logo-horizontal.png"
+image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
+image_alt: "Canada Winter Games 2027 — Québec City"
+```
+
+If only one image exists, omit `image_dark` — the single `image` is used in both themes.
+
+**Alternative (legacy, discouraged):** using the Hugo `figure` shortcode directly in the article body still works, but new articles should use the front-matter fields above instead — it keeps image handling consistent and is the only way to get the dark-mode swap.
 
 ```markdown
 {{</* figure src="/images/event-logos/ecg.png" alt="East Coast Games 2026" class="fenb-article-event-logo" */>}}
 ```
 
-CSS targets `.fenb-article-event-logo img`.
+CSS targets `.fenb-article-event-logo img`; the light/dark swap uses `.fenb-article-event-logo-img--light` / `--dark` toggled by `[data-theme="dark"]`.
 
 ### `fenb-article-photo-gallery` — optional photo grid at the bottom of a news article
 
