@@ -80,6 +80,7 @@ hugo-testing/
     │   ├── join/           list.html, membership.html, clubs.html, volunteer.html
     │   ├── news/           list.html, single.html, rss.xml
     │   ├── programs/       list.html + one layout per sub-page
+    │   ├── shortcodes/     Custom Hugo shortcodes (currently empty; add fenb-specific shortcodes here)
     │   └── partials/       Shared template components:
     │                         back-link.html        Back-navigation link
     │                         clubs-benefits.html   Three-card benefits grid (clubs + join/clubs)
@@ -106,7 +107,7 @@ hugo-testing/
         │                     events-schedule.js   Season toggle + category filters for schedule page
         │                     hero-slider.js       Homepage hero carousel
         │                     hof-table.js         Sort + category-filter dropdown for the Hall of Fame table
-        │                     lightbox.js          Zoom-in image lightbox for news article images (loaded by layouts/news/single.html)
+        │                     lightbox.js          Zoom-in image lightbox — loaded globally by baseof.html; activates on any element with data-lightbox-zone
         │                     results-table.js     Sortable results table in news articles
         ├── sitemap.xsl     XSLT stylesheet for language sitemaps — makes /en/ and /fr/ sitemaps
         │                   render as styled HTML in browsers (referenced via PI in sitemap.xml)

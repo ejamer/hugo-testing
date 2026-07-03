@@ -62,8 +62,14 @@ Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 title: "Post title"
 date: 2026-06-01
 category: national   # canonical ID — same IDs used by events; drives badge colour and label
-results_table: true  # optional — add to load the interactive sortable table on articles with result tables
 summary: "One-sentence summary shown on the homepage card."
+image: "images/event-logos/ecg.png"           # optional — centred logo above body (no leading slash)
+image_alt: "East Coast Games 2026"             # optional — alt text for image
+results_table: true  # optional — add to load the interactive sortable table on articles with result tables
+photos:              # optional — photo gallery rendered below the article body
+  - src: "images/news/2026/action-shot.jpg"   #   no leading slash
+    alt: "Athletes competing"
+    caption: "Caption shown below photo"       #   caption is optional per item
 ---
 
 Full post body here (Markdown).

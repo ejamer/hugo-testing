@@ -214,29 +214,43 @@ Place it at the top of the page, above all content, outside any grid or two-colu
 
 ### `fenb-article-event-logo` — event logo in a news article
 
-Use this class on the Hugo `figure` shortcode to display a centred event logo at the top of a news article body. It caps the image at 220 px wide, centres it, adds rounded corners, and applies a drop shadow in dark mode so white-background logos don't look jarring.
+Displays a centred logo/image above the article body — 220 px max-width, rounded corners, dark-mode drop shadow.
+
+**Preferred:** set `image` and `image_alt` in front matter; the layout renders this automatically (no shortcode needed in the body):
+
+```yaml
+image: "images/event-logos/ecg.png"
+image_alt: "East Coast Games 2026"
+```
+
+**Alternative (legacy):** use the Hugo `figure` shortcode directly in the article body:
 
 ```markdown
 {{</* figure src="/images/event-logos/ecg.png" alt="East Coast Games 2026" class="fenb-article-event-logo" */>}}
 ```
 
-The `class` attribute applies to the `<figure>` element; CSS targets `figure.fenb-article-event-logo img`.
+CSS targets `.fenb-article-event-logo img`.
+
+### `fenb-article-photo-gallery` — optional photo grid at the bottom of a news article
+
+Set `photos:` in front matter to render a responsive image grid below the article body. `caption` is optional per item. The grid is hidden when the list is absent — no empty space.
+
+```yaml
+photos:
+  - src: "images/news/2026/action-shot.jpg"
+    alt: "Athletes competing"
+    caption: "Optional caption shown below"
+```
+
+Grid uses CSS Grid `auto-fill / minmax(200px, 1fr)` — collapses to 2 columns at ≤540px. Images are lightbox-enabled automatically. CSS classes: `.fenb-article-photo-gallery`, `.fenb-article-photo-gallery-grid`, `.fenb-article-photo-gallery-item`.
 
 ### Article image lightbox — zoom-in viewer for news article images
 
-All `<img>` elements inside `.fenb-article-body` and `.fenb-article-event-logo` get an automatic zoom-in lightbox on click. No markup changes are needed in the article. Behaviour: click the image → full-screen dark overlay showing the image at up to 90vw/90vh. Close via `×`, click outside the image, or Escape.
+All `<img>` elements inside any element marked `data-lightbox-zone` get an automatic zoom-in lightbox on click. Behaviour: click the image → full-screen dark overlay at up to 90vw/90vh. Close via `×`, click outside, or Escape.
 
-CSS lives in `fenb-news.css` (`.fenb-lightbox`, `.fenb-lightbox--open`, `.fenb-lightbox-img`, `.fenb-lightbox-close`). JS lives in `static/js/lightbox.js`, loaded via the `{{ block "scripts" }}` slot in `baseof.html`.
+`lightbox.js` is loaded globally by `baseof.html` — it is active on every page. To opt a container in, add `data-lightbox-zone` to it. To exclude a specific image, add `class="fenb-no-lightbox"`. The `fenb-article-body` div and `fenb-article-photo-gallery` div both carry `data-lightbox-zone`.
 
-Currently enabled only on `layouts/news/single.html`:
-
-```go
-{{ define "scripts" }}
-<script src="{{ "js/lightbox.js" | absURL }}" defer></script>
-{{ end }}
-```
-
-To enable on another layout, add the same `{{ define "scripts" }}` block — do not copy the CSS, it is already in the compiled stylesheet.
+CSS lives in `fenb-news.css` (`.fenb-lightbox`, `.fenb-lightbox--open`, `.fenb-lightbox-img`, `.fenb-lightbox-close`).
 
 ### Pathway diagram modal — `/programs/coach-training/` only
 
