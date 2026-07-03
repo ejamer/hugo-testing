@@ -5,7 +5,8 @@
 #                   "Venue Name, City, Province"), category (must match a key in
 #                   data/event_categories.yaml and i18n files)
 #
-# Optional fields:  end_date        — omit or leave blank for single-day events
+# Optional fields:  title_fr        — French override for the title; falls back to title if blank
+#                   end_date        — omit or leave blank for single-day events
 #                   description_en  — short note shown on the schedule page (not homepage)
 #                   description_fr  — French override; falls back to description_en if blank
 #                   details_url_en  — Learn More link (used for both languages if _fr is blank)
@@ -19,6 +20,7 @@ events:
 
   # ── September 2025 ──────────────────────────────────────
   - title: "HP / PT Training Camp"
+    title_fr: "Camp d'entraînement HP / EP"
     start_date: "2025-09-06"
     end_date: ""
     location: "Fredericton, NB"
@@ -33,6 +35,7 @@ events:
     results_url_fr: ""
 
   - title: "Coach Clinic / Forum"
+    title_fr: ""
     start_date: "2025-09-07"
     end_date: ""
     location: "Fredericton, NB"
@@ -47,6 +50,7 @@ events:
     results_url_fr: ""
 
   - title: "Fundy Open"
+    title_fr: ""
     start_date: "2025-09-13"
     end_date: ""
     location: "Saint John, NB"
@@ -61,6 +65,7 @@ events:
     results_url_fr: ""
 
   - title: "Terres Des Hommes"
+    title_fr: ""
     start_date: "2025-09-20"
     end_date: "2025-09-21"
     location: "Québec, QC"
@@ -75,6 +80,7 @@ events:
     results_url_fr: ""
 
   - title: "CC #1 — Senior Nationals"
+    title_fr: ""
     start_date: "2025-09-26"
     end_date: "2025-09-28"
     location: "Kingston, ON"
@@ -90,6 +96,7 @@ events:
 
   # ── October 2025 ────────────────────────────────────────
   - title: "HP / PT Training Camp"
+    title_fr: "Camp d'entraînement HP / EP"
     start_date: "2025-10-18"
     end_date: ""
     location: "Fredericton, NB"
@@ -104,6 +111,7 @@ events:
     results_url_fr: ""
 
   - title: "Québec Youth Circuit #1"
+    title_fr: ""
     start_date: "2025-10-25"
     end_date: "2025-10-26"
     location: "Gatineau, QC"
@@ -119,6 +127,7 @@ events:
 
   # ── November 2025 ───────────────────────────────────────
   - title: "UNB Maskerade"
+    title_fr: ""
     start_date: "2025-11-01"
     end_date: ""
     location: "Fredericton, NB"
@@ -131,6 +140,7 @@ events:
     results_url_fr: ""
 
   - title: "HP / PT Training Camp"
+    title_fr: "Camp d'entraînement HP / EP"
     start_date: "2025-11-01"
     end_date: ""
     location: "Moncton, NB"
@@ -145,6 +155,7 @@ events:
     results_url_fr: ""
 
   - title: "RMC Team Tournament"
+    title_fr: ""
     start_date: "2025-11-01"
     end_date: "2025-11-02"
     location: "Kingston, ON"
@@ -159,6 +170,7 @@ events:
     results_url_fr: ""
 
   - title: "Épées de l'Est"
+    title_fr: ""
     start_date: "2025-11-15"
     end_date: "2025-11-16"
     location: "Moncton, NB"
@@ -173,6 +185,7 @@ events:
     results_url_fr: ""
 
   - title: "FENB Annual General Meeting"
+    title_fr: "Assemblée générale annuelle de la FENB"
     start_date: "2025-11-23"
     end_date: ""
     location: "Fredericton, NB"
@@ -187,6 +200,7 @@ events:
     results_url_fr: ""
 
   - title: "CC #2"
+    title_fr: ""
     start_date: "2025-11-29"
     end_date: "2025-12-01"
     location: "Richmond, BC"
@@ -202,6 +216,7 @@ events:
 
   # ── December 2025 ───────────────────────────────────────
   - title: "HP / PT Training Camp"
+    title_fr: "Camp d'entraînement HP / EP"
     start_date: "2025-12-06"
     end_date: ""
     location: "Fredericton, NB"
@@ -216,6 +231,7 @@ events:
     results_url_fr: ""
 
   - title: "Challenge La Glace et le Glaive"
+    title_fr: ""
     start_date: "2025-12-07"
     end_date: ""
     location: "Dieppe, NB"
@@ -230,6 +246,7 @@ events:
     results_url_fr: ""
 
   - title: "Québec Youth Circuit #2"
+    title_fr: ""
     start_date: "2025-12-13"
     end_date: "2025-12-14"
     location: "Longueuil, QC"
@@ -245,6 +262,7 @@ events:
 
   # ── January 2026 ────────────────────────────────────────
   - title: "Épées de l'Est"
+    title_fr: ""
     start_date: "2026-01-10"
     end_date: "2026-01-11"
     location: "Rimouski / Rivière-du-Loup, QC"
@@ -259,6 +277,7 @@ events:
     results_url_fr: ""
 
   - title: "Challenge Desjarlais"
+    title_fr: ""
     start_date: "2026-01-24"
     end_date: "2026-01-25"
     location: "Drummondville, QC"
@@ -273,6 +292,7 @@ events:
     results_url_fr: ""
 
   - title: "HP / PT Training Camp"
+    title_fr: "Camp d'entraînement HP / EP"
     start_date: "2026-01-31"
     end_date: "2026-02-01"
     location: "Moncton, NB"
@@ -288,6 +308,7 @@ events:
 
   # ── February 2026 ───────────────────────────────────────
   - title: "Alfred Knappe Team Tournament"
+    title_fr: ""
     start_date: "2026-02-15"
     end_date: ""
     location: "Fredericton, NB"
@@ -302,6 +323,7 @@ events:
     results_url_fr: ""
 
   - title: "CC #3 — Junior / Cadet Nationals"
+    title_fr: ""
     start_date: "2026-02-20"
     end_date: "2026-02-22"
     location: "Calgary, AB"
@@ -316,6 +338,7 @@ events:
     results_url_fr: ""
 
   - title: "Québec Youth Circuit #3"
+    title_fr: ""
     start_date: "2026-02-21"
     end_date: "2026-02-22"
     location: "St.-Thérèse, QC"
@@ -330,6 +353,7 @@ events:
     results_url_fr: ""
 
   - title: "Challenge Beausoleil-Broussard"
+    title_fr: ""
     start_date: "2026-02-22"
     end_date: ""
     location: "Shediac, NB"
@@ -344,6 +368,7 @@ events:
     results_url_fr: ""
 
   - title: "HP / PT Training Camp"
+    title_fr: "Camp d'entraînement HP / EP"
     start_date: "2026-02-28"
     end_date: ""
     location: "Fredericton, NB"
@@ -359,6 +384,7 @@ events:
 
   # ── March 2026 ──────────────────────────────────────────
   - title: "Coupe de Printemps"
+    title_fr: ""
     start_date: "2026-03-14"
     end_date: "2026-03-15"
     location: "Montréal, QC"
@@ -373,6 +399,7 @@ events:
     results_url_fr: ""
 
   - title: "Épées de l'Est"
+    title_fr: ""
     start_date: "2026-03-28"
     end_date: "2026-03-29"
     location: "Québec City, QC"
@@ -388,6 +415,7 @@ events:
 
   # ── April 2026 ──────────────────────────────────────────
   - title: "Sword Falls"
+    title_fr: ""
     start_date: "2026-04-11"
     end_date: "2026-04-12"
     location: "Fredericton, NB"
@@ -402,6 +430,7 @@ events:
     results_url_fr: ""
 
   - title: "Québec Youth Circuit #4"
+    title_fr: ""
     start_date: "2026-04-11"
     end_date: "2026-04-12"
     location: "Sherbrooke, QC"
@@ -416,6 +445,7 @@ events:
     results_url_fr: ""
 
   - title: "NB Provincials"
+    title_fr: ""
     start_date: "2026-04-25"
     end_date: "2026-04-26"
     location: "Moncton, NB"
@@ -431,6 +461,7 @@ events:
 
   # ── May 2026 ────────────────────────────────────────────
   - title: "HP / PT Training Camp"
+    title_fr: "Camp d'entraînement HP / EP"
     start_date: "2026-05-02"
     end_date: ""
     location: "Fredericton, NB"
@@ -445,6 +476,7 @@ events:
     results_url_fr: ""
 
   - title: "Québec Youth Provincials"
+    title_fr: ""
     start_date: "2026-05-09"
     end_date: "2026-05-10"
     location: "Montréal, QC"
@@ -459,6 +491,7 @@ events:
     results_url_fr: ""
 
   - title: "CC #4 — May Nationals"
+    title_fr: ""
     start_date: "2026-05-15"
     end_date: "2026-05-18"
     location: "Québec City, QC"
@@ -474,6 +507,7 @@ events:
 
   # ── June 2026 ───────────────────────────────────────────
   - title: "NB Interscholastic Fencing Finals"
+    title_fr: ""
     start_date: "2026-06-05"
     end_date: "2026-06-05"
     location: "Dieppe, NB (Antonine-Maillet)"
@@ -486,6 +520,7 @@ events:
     results_url_fr: "/fr/news/2026/jun-16-interscholastic-finals-2026/"
 
   - title: "OFA Provincial Championships"
+    title_fr: ""
     start_date: "2026-06-06"
     end_date: "2026-06-07"
     location: "TBA"
@@ -498,6 +533,7 @@ events:
     results_url_fr: ""
 
   - title: "Québec Provincial Championships"
+    title_fr: ""
     start_date: "2026-06-13"
     end_date: "2026-06-14"
     location: "Rimouski, QC"
@@ -512,6 +548,7 @@ events:
     results_url_fr: ""
 
   - title: "East Coast Games — NB Youth Provincials"
+    title_fr: ""
     start_date: "2026-06-20"
     end_date: "2026-06-21"
     location: "Saint John, NB"
@@ -527,6 +564,7 @@ events:
 
   # ── July 2026 ─────────────────────────────────────────
   - title: "Club and Coach Forum"
+    title_fr: "Forum des clubs et entraîneurs"
     start_date: "2026-07-04"
     end_date: ""
     location: "Fredericton, NB (Damocles Fencing Club)"
@@ -541,6 +579,7 @@ events:
     results_url_fr: ""
 
   - title: "CWG 2027 Core Team Meeting"
+    title_fr: ""
     start_date: "2026-07-04"
     end_date: ""
     location: ""
@@ -555,6 +594,7 @@ events:
     results_url_fr: ""
 
   - title: "FENB Board Meeting"
+    title_fr: "Réunion du conseil d'administration de la FENB"
     start_date: "2026-07-12"
     end_date: ""
     location: ""
@@ -570,6 +610,7 @@ events:
 
   # ── August 2026 ─────────────────────────────────────────
   - title: "Damocles Élite Épée Camp"
+    title_fr: ""
     start_date: "2026-08-17"
     end_date: "2026-08-21"
     location: "Fredericton, NB"
@@ -584,6 +625,7 @@ events:
     results_url_fr: ""
 
   - title: "Damocles Summer Foil & Leadership Camp"
+    title_fr: ""
     start_date: "2026-08-24"
     end_date: "2026-08-28"
     location: "Fredericton, NB"
@@ -599,6 +641,7 @@ events:
 
   # ── Summer 2026 (off-season placeholder) ───────────────
   - title: "2026–27 Season Registration"
+    title_fr: ""
     start_date: "2026-08-31"
     end_date: "2026-08-31"
     location: "NB"

@@ -120,6 +120,7 @@ Add an entry to `data/events.yaml`.
 | Field | Required | Notes |
 |---|---|---|
 | `title` | ✅ | |
+| `title_fr` | — | Optional French override for the title. Falls back to `title` if blank. Only needed for generic/translatable titles (e.g. "Training Camp", "Annual General Meeting") — proper nouns and tournament names are usually left as-is |
 | `start_date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
 | `end_date` | — | ISO `YYYY-MM-DD`. Omit or leave blank for single-day events. If set, the displayed date shows as a range (`Sep 20–21` or `Nov 29 – Dec 1`) and the calendar draws bars across the full range. |
 | `category` | ✅ | See categories below — must be a canonical ID from `data/event_categories.yaml` |
@@ -137,6 +138,7 @@ Add an entry to `data/events.yaml`.
 
 ```yaml
 - title: "Event Name"
+  title_fr: ""                     # optional French override; falls back to title if blank
   start_date: "2026-06-01"         # ISO YYYY-MM-DD
   end_date: "2026-06-02"           # optional; omit for single-day events
   category: competition            # see categories below

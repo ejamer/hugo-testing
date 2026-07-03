@@ -198,8 +198,8 @@
             (function (it) {
               var bar = document.createElement('div');
               bar.className = 'fenb-cal-bar fenb-cal-bar--' + it.e.category;
-              bar.textContent = it.e.title;
-              bar.title = it.e.title;
+              bar.textContent = evTitle(it.e);
+              bar.title = evTitle(it.e);
               bar.setAttribute('role', 'button');
               bar.setAttribute('tabindex', '0');
               bar.addEventListener('click', function (ev) {
@@ -218,7 +218,7 @@
               dot.className = 'fenb-cal-dot fenb-cal-dot--' + it.e.category;
               dot.setAttribute('role', 'button');
               dot.setAttribute('tabindex', '0');
-              dot.setAttribute('aria-label', it.e.title);
+              dot.setAttribute('aria-label', evTitle(it.e));
               dot.addEventListener('click', function (ev) {
                 ev.stopPropagation();
                 scrollToEventCard(it.idx);
@@ -258,6 +258,10 @@
         target.classList.remove('fenb-cal-card--highlight');
       }, 1500);
     }
+  }
+
+  function evTitle(e) {
+    return (fr && e.title_fr) ? e.title_fr : e.title;
   }
 
   function esc(str) {
@@ -337,7 +341,7 @@
         '</div>' +
         '<div class="fenb-event-body">' +
           '<span class="fenb-tag fenb-tag--' + e.category + '">' + esc(categoryLabels[e.category] || e.category) + '</span>' +
-          '<h3 class="fenb-event-title">' + esc(e.title) + '</h3>' +
+          '<h3 class="fenb-event-title">' + esc(evTitle(e)) + '</h3>' +
           '<p class="fenb-event-date-range">' + esc(formatEventDate(e)) + '</p>' +
           '<p class="fenb-event-meta">' +
             '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
