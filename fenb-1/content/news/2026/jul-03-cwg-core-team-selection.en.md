@@ -1,5 +1,5 @@
 ---
-title: "CWG 2027 Core Team Selections"
+title: "Canada Winter Games 2027 - Core Team Athlete Selections"
 date: 2026-07-03
 category: announcement
 summary: "Fencing NB has announced its Core Team athlete selections for the 2027 Canada Winter Games."
