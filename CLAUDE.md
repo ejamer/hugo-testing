@@ -72,6 +72,20 @@ See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bi
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
 - **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see docs/STYLE_GUIDE.md)
 - **Recurring event slugs:** for tournaments that repeat annually, include the year in the slug — e.g. `east-coast-games-2026-registration`. This prevents cross-season collisions in the archive.
+- **News article images** — this is the standard way to add images to a news article; the legacy inline `figure` shortcode still works but is discouraged for new articles. Front matter fields (no shortcodes needed in the body):
+  - `image` + `image_alt` — renders a centred logo/image above the article body (`.fenb-article-event-logo` styling)
+  - `image_dark` (optional) — a light-on-dark variant of `image`, swapped in automatically under `[data-theme="dark"]`. Only add it if the default `image` doesn't read well on a dark background.
+  - `photos` — list of `{src, alt, caption}` objects; rendered as a responsive grid below the article body. `caption` is optional per item. Example:
+    ```yaml
+    image: "images/canada-games/qc2027-logo-horizontal.png"
+    image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
+    image_alt: "Canada Winter Games 2027 — Quebec City"
+    photos:
+      - src: "images/news/2026/cwg-2027-team-staff-jim-stevens.jpeg"
+        alt: "Jim Stevens, Team Coach"
+        caption: "Jim Stevens — Team Coach"
+    ```
+    Paths must not have a leading slash (see URL paths rule above).
 
 ## Pattern reuse — check before creating
 

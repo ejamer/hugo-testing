@@ -4,9 +4,9 @@ date: 2026-06-16
 category: announcement
 results_table: true
 summary: "Vingt-cinq escrimeurs étudiants de cinq écoles francophones du sud-est du Nouveau-Brunswick se sont affrontés à Antonine-Maillet à Dieppe le 5 juin — Antonine-Maillet a remporté la bannière d'école championne."
+image: "images/news/2026/interscholastic-finals-2026-results.jpg"
+image_alt: "Finale d'escrime interscolaire du NB 2026 — Affiche des résultats"
 ---
-
-{{< figure src="/images/news/2026/interscholastic-finals-2026-results.jpg" alt="Finale d'escrime interscolaire du NB 2026 — Affiche des résultats" class="fenb-article-event-logo" >}}
 
 La finale d'escrime interscolaire du Nouveau-Brunswick a eu lieu à Antonine-Maillet à Dieppe le vendredi 5 juin. Vingt-cinq escrimeurs de cinq écoles du sud-est du Nouveau-Brunswick se sont affrontés pour le titre de champion interscolaire 2026 : Antonine-Maillet (Dieppe), Camille-Vautour (St. Antoine), Carrefour de l'Acadie (Dieppe), Le Sommet (Moncton) et Mgr François-Bourgeois (Shediac).
 

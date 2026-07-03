@@ -9,7 +9,9 @@
   </div>
   <div class="fenb-event-body">
     <span class="fenb-tag fenb-tag--{{ .category }}">{{ i18n .category | default .category }}</span>
-    <h3 class="fenb-event-title">{{ .title }}</h3>
+    {{- $title := .title -}}
+    {{- if and (eq site.Language.Lang "fr") .title_fr -}}{{- $title = .title_fr -}}{{- end -}}
+    <h3 class="fenb-event-title">{{ $title }}</h3>
     <p class="fenb-event-date-range">{{ partial "event-date.html" . }}</p>
     <p class="fenb-event-meta">
       {{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}

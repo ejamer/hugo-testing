@@ -56,10 +56,12 @@
                     {{- if and (eq site.Language.Lang "fr") .details_url_fr -}}{{- $detailsUrl = .details_url_fr -}}{{- end -}}
                     {{- $desc := .description_en -}}
                     {{- if and (eq site.Language.Lang "fr") .description_fr -}}{{- $desc = .description_fr -}}{{- end -}}
+                    {{- $title := .title -}}
+                    {{- if and (eq site.Language.Lang "fr") .title_fr -}}{{- $title = .title_fr -}}{{- end -}}
                     <li class="fenb-schedule-item" data-category="{{ .category }}">
                       <div class="fenb-schedule-row fenb-schedule-row--primary">
                         <span class="fenb-schedule-date">{{ partial "event-date.html" . }}</span>
-                        <strong class="fenb-schedule-title">{{ .title }}</strong>
+                        <strong class="fenb-schedule-title">{{ $title }}</strong>
                         <span class="fenb-schedule-category fenb-cal-bar--{{ .category }}">{{ i18n .category | default .category }}</span>
                       </div>
                       <div class="fenb-schedule-row fenb-schedule-row--secondary">

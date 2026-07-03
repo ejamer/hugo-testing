@@ -33,7 +33,9 @@ All steps below branch on this format. Follow the appropriate branch throughout.
 
 Then ask the user via `AskUserQuestion` whether to:
 - **Wait** — stop here; re-run `/fenb-content-add-results` once all events are complete.
-- **Proceed anyway** — continue with the in-progress events included, showing "—" for placement; the article may need updating once final results are posted.
+- **Proceed anyway** — continue generating the article. Two sub-cases:
+  - **Day 1 of a multi-day tournament** — exclude the in-progress events entirely (don't show them with "—"). Frame the title and intro as Day 1 results (e.g. "East Coast Games 2026 — Day 1 Results") with a closing note that Day 2 results will follow. When Day 2 finishes, re-run `/fenb-data-get-results` for a fresh JSON, then **manually update the existing article** — do not create a second article. Add a `## Day 2 — [date]` section, append the new event tables, and update the title to "Final Results".
+  - **Single-day event with a late result** — include the in-progress event with "—" for placement and a note that the result is pending.
 
 Stop if the user chooses to wait. Otherwise continue.
 
@@ -47,6 +49,8 @@ Ask the user two things via `AskUserQuestion`:
 
 1. **Publication date** — default today's date (YYYY-MM-DD)
 2. **Article slug suffix** — a short kebab-case label the user can edit; suggest one derived from the tournament name (e.g. for "May Nationals 2026" suggest `may-nationals`). The full slug will be `{tournament-start-date}-{suffix}` (e.g. `2026-05-15-may-nationals`).
+
+   **Caution:** the full slug already contains the year via the start-date prefix (e.g. `2026-05-15`). Do not repeat the year in the suffix — use `may-nationals`, not `may-nationals-2026`.
 
 ---
 
@@ -96,7 +100,9 @@ No pre-processing needed — the `podium` array for each event already contains 
 
 No top-performers block. Go directly to per-event sections.
 
-**Per-event sections** (one per event, in order from the JSON):
+**Combined pool/seeding rounds (hosted format only):** Some tournaments run combined age-group pool rounds (e.g. "U11/U13 Mixed Sabre Pools") before splitting into separate DE brackets by age. These events appear in the JSON with podium data but are not standalone competitions — do not include them as per-event podium sections. Instead, reference them by name with a hyperlink to their `results_url` in the intro paragraph (e.g. "Pool rounds for [U11/U13 Mixed Sabre](...) were held as combined age groups to seed the direct elimination brackets below."). Apply this rule to any event whose name contains "Pool" or "Pools" and whose age group spans multiple categories (e.g. "U11/U13", "U13/U15").
+
+**Per-event sections** (one per event, in order from the JSON, excluding combined pool rounds):
 - Heading: `### [Event name]` — hyperlink to `results_url`
 - Markdown table with columns **`Name | Club | Place`** (Place is always last)
 - Add the appropriate medal emoji before the fencer's name for places 1–3 (e.g. `🥇 ZHANG Zhirong`)

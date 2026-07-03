@@ -62,8 +62,16 @@ Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 title: "Post title"
 date: 2026-06-01
 category: national   # canonical ID — same IDs used by events; drives badge colour and label
-results_table: true  # optional — add to load the interactive sortable table on articles with result tables
 summary: "One-sentence summary shown on the homepage card."
+image: "images/event-logos/ecg.png"           # optional — centred logo above body (no leading slash)
+image_alt: "East Coast Games 2026"             # optional — alt text for image
+results_table: true  # optional — add to load the interactive sortable table on articles with result tables
+photos:              # optional — photo gallery rendered below the article body
+  - src: "images/news/2026/action-shot.jpg"   #   no leading slash
+    alt: "Athletes competing"
+    caption: "Caption shown below photo"       #   caption is optional per item
+related_news:         # optional — "Related News" sidebar, shown above "Recent News"
+  - "news/2026/jun-01-another-article"        #   content path, no leading slash, no file extension
 ---
 
 Full post body here (Markdown).
@@ -83,6 +91,8 @@ Full post body here (Markdown).
 **`results_table: true`** — add this field to any article that contains markdown tables of placements; it loads `results-table.js` which makes the tables sortable. It is independent of category.
 
 **`results_hide_placements: true`** — optional companion to `results_table`. When set, the last column (placement) is hidden by default with a "Show placements / Hide placements" toggle button. Use this for **away-tournament** articles where placement context varies across events. Omit it for **hosted-tournament** articles where placements should always be visible.
+
+**`related_news`** — optional list of content paths to other news articles (e.g. `news/2026/jun-01-another-article`, matching the source file path without the `.{lang}.md` extension). Resolved via Hugo's `GetPage` — a typo or missing page is silently skipped (no build warning, no link rendered), so double-check paths by hand. Set it separately per language file — an EN article should list EN paths, an FR article FR paths — since `GetPage` only resolves pages in the current language. When present, renders a crimson "Related News" sidebar block above the standard "Recent News" block.
 
 The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 
@@ -110,6 +120,7 @@ Add an entry to `data/events.yaml`.
 | Field | Required | Notes |
 |---|---|---|
 | `title` | ✅ | |
+| `title_fr` | — | Optional French override for the title. Falls back to `title` if blank. Only needed for generic/translatable titles (e.g. "Training Camp", "Annual General Meeting") — proper nouns and tournament names are usually left as-is |
 | `start_date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
 | `end_date` | — | ISO `YYYY-MM-DD`. Omit or leave blank for single-day events. If set, the displayed date shows as a range (`Sep 20–21` or `Nov 29 – Dec 1`) and the calendar draws bars across the full range. |
 | `category` | ✅ | See categories below — must be a canonical ID from `data/event_categories.yaml` |
@@ -127,6 +138,7 @@ Add an entry to `data/events.yaml`.
 
 ```yaml
 - title: "Event Name"
+  title_fr: ""                     # optional French override; falls back to title if blank
   start_date: "2026-06-01"         # ISO YYYY-MM-DD
   end_date: "2026-06-02"           # optional; omit for single-day events
   category: competition            # see categories below

@@ -17,16 +17,59 @@
           {{- $dateStr := cond (eq .Site.Language.Lang "fr") (printf "%s %s %s" $day ($month | lower) $year) (printf "%s %s, %s" $month $day $year) -}}
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ $dateStr }}</time>
         </div>
+        {{- with .Params.image }}
+        <div class="fenb-article-event-logo">
+          <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}" class="fenb-article-event-logo-img{{ if $.Params.image_dark }} fenb-article-event-logo-img--light{{ end }}">
+          {{- with $.Params.image_dark }}
+          <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}" class="fenb-article-event-logo-img fenb-article-event-logo-img--dark">
+          {{- end }}
+        </div>
+        {{- end }}
         <div class="fenb-article-body" data-lightbox-zone {{ if .Params.results_table }}data-results-table="true"{{ end }} {{ if .Params.results_hide_placements }}data-hide-placements="true"{{ end }}>
           {{ .Content }}
         </div>
         {{ if .Params.results_table }}
         <script src="{{ "js/results-table.js" | absURL }}" defer></script>
         {{ end }}
+        {{- with .Params.photos }}
+        <div class="fenb-article-photo-gallery" data-lightbox-zone>
+          <div class="fenb-article-photo-gallery-grid">
+            {{- range . }}
+            <figure class="fenb-article-photo-gallery-item">
+              <img src="{{ .src | relURL }}" alt="{{ .alt }}">
+              {{- with .caption }}<figcaption>{{ . }}</figcaption>{{- end }}
+            </figure>
+            {{- end }}
+          </div>
+        </div>
+        {{- end }}
         {{ partial "back-link.html" (dict "url" "news/" "key" "back_to_news") }}
       </div>
 
       <aside class="fenb-article-sidebar fenb-article-sidebar--right">
+        {{- with .Params.related_news }}
+        {{- $related := slice }}
+        {{- range . }}
+          {{- with $.Site.GetPage . }}
+            {{- $related = $related | append . }}
+          {{- end }}
+        {{- end }}
+        {{- with $related }}
+        <div class="fenb-sidebar-block fenb-sidebar-block--crimson">
+          <h3 class="fenb-sidebar-heading">{{ i18n "sidebar_related_news" }}</h3>
+          <ul class="fenb-sidebar-news-list">
+            {{- range . }}
+            <li class="fenb-sidebar-news-item">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              {{- $sbMonth := i18n (printf "month_%s" (.Date.Format "Jan")) | default (.Date.Format "Jan") -}}
+              {{- $sbDate := cond (eq $.Site.Language.Lang "fr") (printf "%s %s %s" (.Date.Format "2") $sbMonth (.Date.Format "2006")) (printf "%s %s, %s" $sbMonth (.Date.Format "2") (.Date.Format "2006")) -}}
+              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ $sbDate }}</time>
+            </li>
+            {{- end }}
+          </ul>
+        </div>
+        {{- end }}
+        {{- end }}
         <div class="fenb-sidebar-block">
           <h3 class="fenb-sidebar-heading">{{ i18n "sidebar_recent_news" }}</h3>
           <ul class="fenb-sidebar-news-list">
