@@ -6,6 +6,8 @@ summary: "Fencing NB is proud to announce Jim Stevens as Team Coach and Wendy Ya
 image: "images/canada-games/qc2027-logo-horizontal.png"
 image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
 image_alt: "Canada Winter Games 2027 — Quebec City"
+related_news:
+  - "news/2026/jul-03-cwg-core-team-selection"
 photos:
   - src: "images/news/2026/cwg-2027-team-staff-jim-stevens.jpeg"
     alt: "Jim Stevens, Team Coach"

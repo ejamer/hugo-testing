@@ -98,6 +98,8 @@ Heading (`h3`): `font-size: 0.75rem; font-weight: 700; text-transform: uppercase
 
 Use `.fenb-about-sidebar-card` directly when possible. When the sidebar needs its own layout wrapper (sticky positioning, specific column width), define page-specific layout CSS but style the card to match this reference. Dark mode: heading and links use `var(--teal-light)`.
 
+**Crimson variant** — `fenb-sidebar-block--crimson` (defined in `fenb-news.css`, used for the news article "Related News" block). Background swapped to `var(--crimson-pale)` (instead of the default `var(--off-white)`, which has a faint teal cast), heading and link-hover colours swapped to `var(--crimson)` (`var(--crimson-light)` in dark mode). Stack it above a standard teal sidebar block inside the same `<aside>` — it carries its own `margin-bottom` for the gap.
+
 **Responsive:** sidebar hides (`display: none`) at the page's single-column breakpoint — it does not stack below the main content.
 
 ---

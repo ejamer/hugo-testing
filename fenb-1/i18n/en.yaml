@@ -23,6 +23,7 @@ schedule_filter_label:    "Filter Events"
 schedule_filter_all:      "All"
 schedule_filter_none:     "None"
 sidebar_recent_news: "Recent News"
+sidebar_related_news: "Related News"
 see_more_news:       "See more news"
 
 # ── Programs section ───────────────────────────────────────

@@ -6,6 +6,8 @@ summary: "Escrime NB est fier d'annoncer Jim Stevens comme entraîneur-chef et W
 image: "images/canada-games/qc2027-logo-horizontal.png"
 image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
 image_alt: "Jeux d'hiver du Canada 2027 — Québec"
+related_news:
+  - "news/2026/jul-03-cwg-core-team-selection"
 photos:
   - src: "images/news/2026/cwg-2027-team-staff-jim-stevens.jpeg"
     alt: "Jim Stevens, entraîneur-chef"

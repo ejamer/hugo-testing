@@ -47,6 +47,29 @@
       </div>
 
       <aside class="fenb-article-sidebar fenb-article-sidebar--right">
+        {{- with .Params.related_news }}
+        {{- $related := slice }}
+        {{- range . }}
+          {{- with $.Site.GetPage . }}
+            {{- $related = $related | append . }}
+          {{- end }}
+        {{- end }}
+        {{- with $related }}
+        <div class="fenb-sidebar-block fenb-sidebar-block--crimson">
+          <h3 class="fenb-sidebar-heading">{{ i18n "sidebar_related_news" }}</h3>
+          <ul class="fenb-sidebar-news-list">
+            {{- range . }}
+            <li class="fenb-sidebar-news-item">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+              {{- $sbMonth := i18n (printf "month_%s" (.Date.Format "Jan")) | default (.Date.Format "Jan") -}}
+              {{- $sbDate := cond (eq $.Site.Language.Lang "fr") (printf "%s %s %s" (.Date.Format "2") $sbMonth (.Date.Format "2006")) (printf "%s %s, %s" $sbMonth (.Date.Format "2") (.Date.Format "2006")) -}}
+              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ $sbDate }}</time>
+            </li>
+            {{- end }}
+          </ul>
+        </div>
+        {{- end }}
+        {{- end }}
         <div class="fenb-sidebar-block">
           <h3 class="fenb-sidebar-heading">{{ i18n "sidebar_recent_news" }}</h3>
           <ul class="fenb-sidebar-news-list">

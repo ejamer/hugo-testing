@@ -70,6 +70,8 @@ photos:              # optional — photo gallery rendered below the article bod
   - src: "images/news/2026/action-shot.jpg"   #   no leading slash
     alt: "Athletes competing"
     caption: "Caption shown below photo"       #   caption is optional per item
+related_news:         # optional — "Related News" sidebar, shown above "Recent News"
+  - "news/2026/jun-01-another-article"        #   content path, no leading slash, no file extension
 ---
 
 Full post body here (Markdown).
@@ -89,6 +91,8 @@ Full post body here (Markdown).
 **`results_table: true`** — add this field to any article that contains markdown tables of placements; it loads `results-table.js` which makes the tables sortable. It is independent of category.
 
 **`results_hide_placements: true`** — optional companion to `results_table`. When set, the last column (placement) is hidden by default with a "Show placements / Hide placements" toggle button. Use this for **away-tournament** articles where placement context varies across events. Omit it for **hosted-tournament** articles where placements should always be visible.
+
+**`related_news`** — optional list of content paths to other news articles (e.g. `news/2026/jun-01-another-article`, matching the source file path without the `.{lang}.md` extension). Resolved via Hugo's `GetPage` — a typo or missing page is silently skipped (no build warning, no link rendered), so double-check paths by hand. Set it separately per language file — an EN article should list EN paths, an FR article FR paths — since `GetPage` only resolves pages in the current language. When present, renders a crimson "Related News" sidebar block above the standard "Recent News" block.
 
 The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 
