@@ -97,13 +97,19 @@
             <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_late_entry_when" }}</span>
             <span class="fenb-cwg-timeline-label">{{ i18n "programs_cwg_date_late_entry" }}</span>
           </li>
-          <li class="fenb-cwg-timeline-item fenb-cwg-timeline-item">
+          <li class="fenb-cwg-timeline-item fenb-cwg-timeline-item--past">
             <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_staff_when" }}</span>
             <span class="fenb-cwg-timeline-label">{{ i18n "programs_cwg_date_staff" }}</span>
+            {{- with $.Site.GetPage "news/2026/jul-03-cwg-2027-team-staff" }}
+            <a href="{{ .RelPermalink }}" class="fenb-cwg-timeline-note">→ {{ i18n "programs_cwg_read_announcement" }}</a>
+            {{- end }}
           </li>
-          <li class="fenb-cwg-timeline-item">
+          <li class="fenb-cwg-timeline-item fenb-cwg-timeline-item--past">
             <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_core_when" }}</span>
             <span class="fenb-cwg-timeline-label">{{ i18n "programs_cwg_date_core" }}</span>
+            {{- with $.Site.GetPage "news/2026/jul-03-cwg-core-team-selection" }}
+            <a href="{{ .RelPermalink }}" class="fenb-cwg-timeline-note">→ {{ i18n "programs_cwg_read_announcement" }}</a>
+            {{- end }}
           </li>
           <li class="fenb-cwg-timeline-item">
             <span class="fenb-cwg-timeline-date">{{ i18n "programs_cwg_date_final_when" }}</span>
