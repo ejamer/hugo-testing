@@ -343,6 +343,14 @@
   font-weight: 700;
   color: var(--text-dark);
 }
+.fenb-cwg-timeline-note {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--teal);
+  text-decoration: none;
+}
+.fenb-cwg-timeline-note:hover { text-decoration: underline; }
+[data-theme="dark"] .fenb-cwg-timeline-note { color: var(--teal-light); }
 
 .fenb-cwg-points-heading {
   font-size: 0.875rem;
