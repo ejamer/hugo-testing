@@ -11,6 +11,14 @@
   gap: 1.25rem;
 }
 
+/* Homepage upcoming-events grid renders every still-upcoming event (a safe
+   superset) plus 4 placeholders; js/upcoming-events.js narrows this down to
+   the true first 4 using the visitor's clock. Showing only the first 4 DOM
+   children is just the no-JS fallback — see layouts/index.html. */
+#fenb-upcoming-events > :nth-child(n+5) {
+  display: none;
+}
+
 .fenb-event-card {
   background: var(--white);
   border-radius: var(--radius);
@@ -149,7 +157,6 @@
   background: var(--off-white);
   border: 2px dashed var(--light-gray);
   box-shadow: none;
-  justify-content: center;
   min-height: 110px;
 }
 .fenb-event-card--placeholder:hover {
@@ -167,8 +174,12 @@
 }
 .fenb-event-placeholder-logo {
   width: 120px;
-  opacity: 0.35;
+  opacity: 0.6;
 }
+.fenb-event-placeholder-logo--dark { display: none; }
+
+[data-theme="dark"] .fenb-event-placeholder-logo--light { display: none; }
+[data-theme="dark"] .fenb-event-placeholder-logo--dark { display: block; }
 .fenb-event-placeholder-text {
   font-size: 0.8rem;
   font-weight: 600;
@@ -178,12 +189,10 @@
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-
 [data-theme="dark"] .fenb-event-card--placeholder {
   background: var(--surface-dark, #1e2533);
-  border-color: var(--light-gray);
 }
-[data-theme="dark"] .fenb-event-placeholder-logo { opacity: 0.2; }
+[data-theme="dark"] .fenb-event-placeholder-logo { opacity: 0.6; }
 
 /* ── Events calendar page ─────────────────────── */
 .fenb-events-cal-section { background: var(--white); }

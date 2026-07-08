@@ -561,6 +561,12 @@ This keeps the logic in one file regardless of how many templates render the sam
 
 For filterable lists (e.g. `/events/schedule/`), prefer SSR + JS visibility toggling over JS-only rendering: Hugo renders every item with `data-*` HTML attributes; JS shows/hides them in response to filter controls. This gives a no-JS fallback and print support for free. `static/js/events-schedule.js` is the established example.
 
+### Build-time date staleness — client-side recompute pattern
+
+Hugo's `now` is frozen at build time, and this site only rebuilds on release, so "is this event still upcoming" checks computed from it can drift stale between deploys. `static/js/event-dates.js` exposes `window.FenbEventDates` (`todayMidnight()`, `parseDate()`, `isUpcoming()`) so pages recompute against the visitor's real clock instead.
+
+Templates render a safe superset server-side (e.g. every event still upcoming as of the build, not just the first 4) tagged with a `data-event-date` attribute, and JS narrows it down client-side on load: `static/js/upcoming-events.js` trims the homepage grid to the true first 4, and `events-calendar.js`/`events-schedule.js` re-check register-link visibility the same way. Use this pattern for any date-sensitive "is this still current" check rather than trusting Hugo's build-time `now`.
+
 ---
 
 ## 404 page

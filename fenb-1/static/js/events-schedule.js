@@ -1,4 +1,16 @@
 (function () {
+  // Register links are only rendered server-side while the event hasn't started as
+  // of the last build (see layouts/events/schedule.html); that can go stale on a
+  // static site that only rebuilds on release, so re-check against the visitor's
+  // own clock and hide any that have since passed.
+  if (window.FenbEventDates) {
+    document.querySelectorAll('.fenb-event-register-link[data-event-date]').forEach(function (link) {
+      link.hidden = !window.FenbEventDates.isUpcoming(link.dataset.eventDate);
+    });
+  }
+})();
+
+(function () {
   var seasonSelect = document.getElementById('schedule-season-select');
   var filterBtns   = document.querySelectorAll('.fenb-schedule-filter-btn');
   var metaBtns     = document.querySelectorAll('.fenb-schedule-filter-meta');

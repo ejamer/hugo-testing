@@ -8,8 +8,9 @@
   var categoryLabels = typeof cal.categoryLabels === 'string' ? JSON.parse(cal.categoryLabels) : cal.categoryLabels;
   // Sort once so byDay day-arrays are always in chronological order
   events.sort(function (a, b) { return a.start_date < b.start_date ? -1 : a.start_date > b.start_date ? 1 : 0; });
-  // today at midnight, for future-date checks
-  var today = cal.today ? new Date(cal.today + 'T00:00:00') : (function () { var d = new Date(); d.setHours(0,0,0,0); return d; }());
+  // today at midnight, for future-date checks. Always derived from the visitor's
+  // own clock (not a Hugo build-time value) so this stays correct between deploys.
+  var today = window.FenbEventDates.todayMidnight();
 
   var fr = document.documentElement.lang.startsWith('fr');
   var year, month; // current display state (month is 0-indexed)
