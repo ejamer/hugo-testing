@@ -78,6 +78,10 @@ Test each project skill end-to-end at least once to verify it works correctly.
 | `/fenb-data-season-rollover` | ❌ Untested | |
 | `/fenb-docs-update` | ✅ Tested | |
 
+## Careers
+
+- [ ] **Executive Director job ad — French PDF** — `static/documents/careers/executive-director-job-ad-2026.pdf` is currently English only; both language versions of `jul-16-executive-director-hiring-2026.{en,fr}.md` link to it. Add a French version when available and update the FR article's link + remove the "English only" note.
+
 ## Events data
 
 - [ ] **Damocles Foil & Leadership Camp registration URL** — `registration_url_en` in `fenb-1/data/events.yaml` for the Aug 24–28 camp entry is blank; add the registration link when Damocles publishes one (contact: Joe Kinley, Kinley.jf@gmail.com)

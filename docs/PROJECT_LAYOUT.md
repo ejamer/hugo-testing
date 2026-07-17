@@ -17,6 +17,7 @@ hugo-testing/
 ├── .claude/               Project skills and settings (see CLAUDE.md for skill descriptions)
 ├── plans/                 Detailed plans for multi-session features (referenced from docs/TODO.md)
 ├── scripts/               Utility scripts for fetching tournament results data
+├── design-sources/        Editable HTML/CSS + flattened PNG source for generated graphics (e.g. typographic hero slides) — not served by Hugo; re-render with headless Chrome and re-export to static/images/ when reused or edited
 └── fenb-1/                Hugo site root
     ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)
     ├── archetypes/         Front matter templates (default.md, news.md)
