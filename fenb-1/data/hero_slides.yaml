@@ -5,11 +5,11 @@
 #   - External URLs: full URL, e.g. "https://example.com/page"
 #   - link_fr falls back to link_en if omitted or empty.
 slides:
-  - src: images/hero/hero1.jpg
-    alt: ""
-    link_en: ""
+  - src: images/hero/hero6.jpg
+    alt: "Fencing-Escrime NB is hiring its next Executive Director — part-time contract, apply by July 31, 2026 / Nous embauchons notre prochain directeur général — contrat à temps partiel, date limite le 31 juillet 2026"
+    link_en: "news/2026/jul-16-executive-director-hiring-2026/"
     link_fr: ""
-  - src: images/hero/hero2.jpg
+  - src: images/hero/hero1.jpg
     alt: ""
     link_en: ""
     link_fr: ""
