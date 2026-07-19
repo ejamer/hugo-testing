@@ -80,7 +80,7 @@ Test each project skill end-to-end at least once to verify it works correctly.
 
 ## Careers
 
-- [ ] **Executive Director job ad — French PDF** — `static/documents/careers/executive-director-job-ad-2026.pdf` is currently English only; both language versions of `jul-16-executive-director-hiring-2026.{en,fr}.md` link to it. Add a French version when available and update the FR article's link + remove the "English only" note.
+- [x] **Executive Director job ad — French PDF** — French version added as `static/documents/careers/executive-director-job-ad-2026-fr.pdf` (English renamed to `executive-director-job-ad-2026-en.pdf`); both news articles updated to link to their respective language PDF and the "English only" note was removed.
 
 ## Events data
 
