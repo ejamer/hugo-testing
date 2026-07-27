@@ -25,7 +25,7 @@ Items that need follow-up — kept current as pages are built and content is add
 ## Join section — data maintenance
 
 - [ ] **Club registration form URL** — add Google Form URL to `fenb-1/data/join.yaml` → `club_form_url` when available; clubs page currently falls back to email contact
-- [ ] **2MEV URL** — update `membership_url` in `fenb-1/data/join.yaml` at the start of each season (currently `fencing-nb-2025-2026`)
+- [x] **2MEV URL** — updated `membership_url` in `fenb-1/data/join.yaml` to `fencing-nb-2026-2027` for the new season
 
 ## Join section — review required
 
