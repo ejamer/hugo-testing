@@ -4,20 +4,26 @@
 #   - Internal paths: no leading slash, e.g. "news/2026/jun-16-results/"
 #   - External URLs: full URL, e.g. "https://example.com/page"
 #   - link_fr falls back to link_en if omitted or empty.
+# Optional: add src_fr to serve a different image when viewing French content.
+#   - src_fr falls back to src_en if omitted or empty.
 slides:
-  - src: images/hero/hero6.jpg
+  - src_en: images/hero/hero6.jpg
+    src_fr: ""
     alt: "Fencing-Escrime NB is hiring its next Executive Director — part-time contract, apply by July 31, 2026 / Nous embauchons notre prochain directeur général — contrat à temps partiel, date limite le 31 juillet 2026"
     link_en: "news/2026/jul-16-executive-director-hiring-2026/"
     link_fr: ""
-  - src: images/hero/summer-break.png
+  - src_en: images/hero/summer-break.png
+    src_fr: ""
     alt: "FENB is closed until August 10th and we will respond to your message after that date. / FENB est fermé jusqu'au 10 août inclus. Nous répondrons à votre message après cette date."
     link_en: ""
     link_fr: ""
-  - src: images/hero/hero3.jpg
+  - src_en: images/hero/hero3.jpg
+    src_fr: ""
     alt: ""
     link_en: ""
     link_fr: ""
-  - src: images/hero/hero5.jpg
+  - src_en: images/hero/hero5.jpg
+    src_fr: ""
     alt: ""
     link_en: ""
     link_fr: ""

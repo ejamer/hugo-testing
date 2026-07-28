@@ -135,6 +135,8 @@ Before implementing anything that touches the nav bar layout (adding/moving butt
 
 Match the top-level YAML key to the filename exactly. Only create data files for genuinely editable content — static structural elements belong directly in the template.
 
+**Bilingual data fields use an `_en` / `_fr` suffix pair, with `_fr` falling back to `_en` when empty or omitted** (e.g. `title_en`/`title_fr`, `url_en`/`url_fr`, `src_en`/`src_fr` in `hero_slides.yaml`, `image_en`/`image_fr` in `coach_pathways.yaml`). Apply this pattern to any new bilingual field on a data YAML file rather than inventing a different naming scheme.
+
 ## URL paths — the no-leading-slash rule
 
 Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as host-root-relative, stripping the base URL's path component. With the GitHub Pages `baseURL` (`/hugo-testing/`):

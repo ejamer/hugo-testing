@@ -320,11 +320,13 @@ Drop replacement images into `static/images/hero/` and update `data/hero_slides.
 
 ```yaml
 slides:
-  - src: images/hero/hero1.jpg
+  - src_en: images/hero/hero1.jpg
+    src_fr: ""                                    # optional — French-language variant of the image
     alt: "Alt text for accessibility"
     link_en: "news/2026/jun-16-some-article/"   # optional — makes slide clickable
     link_fr: ""                                  # leave empty to fall back to link_en
-  - src: images/hero/hero2.jpg
+  - src_en: images/hero/hero2.jpg
+    src_fr: ""
     alt: ""
     link_en: ""
     link_fr: ""
@@ -334,6 +336,8 @@ slides:
 - Internal paths: no leading slash, e.g. `news/2026/jun-16-article/`
 - External URLs: full URL, e.g. `https://example.com/page` — opens in a new tab automatically
 - `link_fr` falls back to `link_en` if empty or omitted
+
+**`src_en` / `src_fr`** — `src_fr` is optional; use it when a slide's image contains text that needs a French version (e.g. a bilingual notice graphic). `src_fr` falls back to `src_en` if empty or omitted.
 
 Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; click the prev/next arrows or the dot indicators to navigate manually; use the pause/play button (top-right corner) to stop or resume auto-advance.
 
