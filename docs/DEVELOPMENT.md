@@ -12,7 +12,23 @@ Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/hugo.
 
 ## Local development
 
-Hugo is installed via snap (`/snap/bin/hugo`). Run all commands from the **repo root** unless noted. If Hugo is installed elsewhere, override the path: `make serve HUGO=/usr/local/bin/hugo`.
+Requires **Hugo** (extended) and **Node** (for the Pagefind search index) on your `PATH`:
+
+- macOS: `brew install hugo node`
+- Linux: your distro's package manager (e.g. `sudo snap install hugo --channel=extended`), plus Node via package manager or nvm
+- Windows: `choco install hugo-extended nodejs` (or Scoop equivalents)
+
+All of these add themselves to `PATH`, so the Makefile's `HUGO` variable defaults to the bare `hugo` command and resolves the same way on macOS, Linux, and Windows. Override only if Hugo isn't on `PATH` or you need a specific binary: `make serve HUGO=/usr/local/bin/hugo`.
+
+**First time on a new machine:** after cloning, initialize the Ananke theme submodule before running any `make` command:
+
+```bash
+git submodule update --init --recursive
+```
+
+Skipping this causes every build to fail with `partial "site-style.html" not found` — see [Ananke theme submodule](#ananke-theme-submodule) below.
+
+Run all commands from the **repo root** unless noted.
 
 ```bash
 make serve        # dev server with search (preferred)
@@ -160,7 +176,7 @@ The Ananke theme lives in `fenb-1/themes/ananke/` and is managed as a git submod
 
 **After a fresh clone**, populate the theme files:
 ```bash
-git submodule update --init
+git submodule update --init --recursive
 ```
 
 **To update Ananke** to a newer version:
