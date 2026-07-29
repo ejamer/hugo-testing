@@ -12,15 +12,17 @@
       <div class="fenb-hero-slide{{ if eq $i 0 }} is-active{{ end }}">
         {{- $link := $slide.link_en -}}
         {{- if and (eq site.Language.Lang "fr") $slide.link_fr -}}{{- $link = $slide.link_fr -}}{{- end -}}
+        {{- $src := $slide.src_en -}}
+        {{- if and (eq site.Language.Lang "fr") $slide.src_fr -}}{{- $src = $slide.src_fr -}}{{- end -}}
         {{ if $link }}
         {{ $isExternal := hasPrefix $link "http" }}
         {{ $href := cond $isExternal $link ($link | relLangURL) }}
         <a href="{{ $href }}" class="fenb-hero-slide-link"{{ if $isExternal }} target="_blank" rel="noopener"{{ end }}>
-          <img src="{{ $slide.src | relURL }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
+          <img src="{{ $src | relURL }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
           <span class="fenb-hero-slide-cta" aria-hidden="true">{{ i18n "read_more" }} &rarr;</span>
         </a>
         {{ else }}
-        <img src="{{ $slide.src | relURL }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
+        <img src="{{ $src | relURL }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
         {{ end }}
       </div>
       {{ end }}

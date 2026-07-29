@@ -1,7 +1,10 @@
 # All commands run from repo root. Hugo site lives in fenb-1/.
-# Hugo installed via snap; pagefind via npm. Override HUGO if installed elsewhere:
+# Hugo must be on PATH — standard installs add it there regardless of OS. If it's
+# not found, the shell fails immediately with "command not found" (exit 127), which
+# means Hugo isn't installed or isn't on PATH. Override only if you need a specific
+# binary:
 #   make serve HUGO=/usr/local/bin/hugo
-HUGO ?= /snap/bin/hugo
+HUGO ?= hugo
 
 # Dev server: pre-builds pagefind search index, then serves with live reload.
 # --baseURL must match on both the index-build and the server step — relURL bakes the
