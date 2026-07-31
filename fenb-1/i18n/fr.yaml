@@ -2,7 +2,7 @@
 hero_badge:    "Organisation provinciale d'escrime du Nouveau-Brunswick"
 hero_tagline:  "Former des champions par l'art de la lame"
 cta_events:    "Voir les événements à venir"
-cta_about:     "À propos d'Escrime-Fencing NB"
+cta_about:     "À propos de Fencing-Escrime NB"
 
 # ── Section événements ─────────────────────────────────────
 section_label_events:  "Au calendrier"
@@ -37,7 +37,7 @@ program_dev_title:     "Développement de l'athlète"
 program_dev_desc:      "Des parcours structurés pour les athlètes à chaque étape de leur développement"
 program_dev_cta:       "En savoir plus"
 program_join_title:    "Adhérer et s'inscrire"
-program_join_desc:     "Inscrivez-vous comme athlète, entraîneur ou officiel avec Escrime-Fencing NB"
+program_join_desc:     "Inscrivez-vous comme athlète, entraîneur ou officiel avec Fencing-Escrime NB"
 program_join_cta:      "Commencer"
 
 # ── Étiquettes de catégorie (clés correspondent au champ category dans data/events.yaml) ─
@@ -449,7 +449,7 @@ rss_feed_label: "Fil RSS des nouvelles"
 
 # ── Temple de la renommée ───────────────────────────────────
 # ── Cartes de navigation des sous-sections À propos ────────
-about_landing_intro:      "Découvrez Escrime-Fencing NB — notre mission, notre direction, notre histoire et comment nous joindre."
+about_landing_intro:      "Découvrez Fencing-Escrime NB — notre mission, notre direction, notre histoire et comment nous joindre."
 about_nav_policies_title: "Politiques, plans et rapports"
 about_nav_policies_desc:  "Documents de gouvernance, politiques officielles et rapports annuels."
 about_nav_policies_cta:   "Voir les documents"
@@ -460,7 +460,7 @@ about_nav_org_title:      "Mission et direction"
 about_nav_org_desc:       "L'énoncé de mission de FENB, le conseil d'administration et les affiliations organisationnelles."
 about_nav_org_cta:        "En savoir plus"
 about_nav_contact_title:  "Nous joindre"
-about_nav_contact_desc:   "Envoyez un message à Escrime-Fencing NB."
+about_nav_contact_desc:   "Envoyez un message à Fencing-Escrime NB."
 about_nav_contact_cta:    "Nous contacter"
 
 # ── Temple de la renommée ───────────────────────────────────
@@ -483,7 +483,7 @@ hof_placeholder:       "Biographie complète à venir."
 hof_about_heading:     "À propos du Temple de la renommée"
 hof_about_p1:          "Fondé en 2025, le Temple de la renommée honore les athlètes, entraîneurs, bâtisseurs et dirigeants dont le dévouement a façonné le sport à travers la province."
 hof_about_p2:          "Les récipiendaires sont sélectionnés en fonction de leur impact à long terme sur l'escrime au Nouveau-Brunswick. Cela comprend les réalisations en compétition, l'excellence en entraînement, le leadership organisationnel et les contributions à la croissance communautaire."
-hof_about_p3:          "Les nouveaux récipiendaires sont annoncés chaque année lors de l'événement de présentation du Temple de la renommée de FENB, à la suite du Tournoi provincial d'Escrime-Fencing NB."
+hof_about_p3:          "Les nouveaux récipiendaires sont annoncés chaque année lors de l'événement de présentation du Temple de la renommée de FENB, à la suite du Tournoi provincial de Fencing-Escrime NB."
 hof_about_photo_alt:   "Prix du Temple de la renommée de FENB"
 hof_inductees_heading: "Récipiendaires"
 hof_filter_clear:      "Effacer"

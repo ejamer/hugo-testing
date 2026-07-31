@@ -1,4 +1,4 @@
 ---
 title: "Nous joindre"
-description: "Communiquez avec Escrime-Fencing NB."
+description: "Communiquez avec Fencing-Escrime NB."
 ---

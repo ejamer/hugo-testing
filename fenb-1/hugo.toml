@@ -25,11 +25,11 @@ theme = 'ananke'
   background_color_class = "bg-fenb-teal"
 
   [params.announcement]
-    enabled    = true
+    enabled    = false
     bg_color   = "#cc0000"
     text_color = "#ffffff"
-    text_en    = "** DRAFT ** — Exploring website update options; please visit our official site at: https://www.fencingnb.ca/ — ** DRAFT **"
-    text_fr    = "** BROUILLON ** — Exploration des options de mise à jour du site; veuillez visiter notre site officiel à : https://www.fencingnb.ca/ — ** BROUILLON **"
+    text_en    = ""
+    text_fr    = ""
 
   [params.ananke]
     show_recent_posts = false
@@ -161,10 +161,10 @@ theme = 'ananke'
   locale       = 'fr-CA'
   label        = 'Français'
   weight       = 2
-  title        = 'Escrime-Fencing NB'
+  title        = 'Fencing-Escrime NB'
 
   [languages.fr.params]
-    description = "Escrime-Fencing NB — L'organisation sportive provinciale du Nouveau-Brunswick pour l'escrime."
+    description = "Fencing-Escrime NB — L'organisation sportive provinciale du Nouveau-Brunswick pour l'escrime."
 
 # French menu URLs omit the fr/ prefix; relLangURL in the nav template adds it.
 [[languages.fr.menus.main]]
