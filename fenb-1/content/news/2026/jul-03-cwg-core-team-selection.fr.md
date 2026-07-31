@@ -2,7 +2,7 @@
 title: "Jeux d'hiver du Canada 2027 — Sélections des athlètes de l'équipe de base"
 date: 2026-07-03
 category: announcement
-summary: "Escrime-Fencing NB annonce les sélections des athlètes de l'équipe de base pour les Jeux d'hiver du Canada 2027."
+summary: "Fencing-Escrime NB annonce les sélections des athlètes de l'équipe de base pour les Jeux d'hiver du Canada 2027."
 image: "images/canada-games/qc2027-logo-horizontal.png"
 image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
 image_alt: "Jeux d'hiver du Canada 2027 — Québec"

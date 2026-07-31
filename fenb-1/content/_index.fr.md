@@ -1,6 +1,6 @@
 ---
-title: "Escrime-Fencing NB"
-description: "Escrime-Fencing NB — L'organisation sportive provinciale du Nouveau-Brunswick pour l'escrime."
+title: "Fencing-Escrime NB"
+description: "Fencing-Escrime NB — L'organisation sportive provinciale du Nouveau-Brunswick pour l'escrime."
 ---
 
 <!-- Page content is not read from this file. Edit in data/hero_slides.yaml (hero),

@@ -12,7 +12,7 @@ La finale d'escrime interscolaire du Nouveau-Brunswick a eu lieu à Antonine-Mai
 
 La compétition s'est déroulée en quatre catégories — Garçons seniors, Filles seniors, Garçons juniors et Filles juniors — avec quatre écoles représentées sur le podium.
 
-Félicitations à tous les participants — et tout particulièrement à Antonine-Maillet, qui a remporté la bannière d'école championne. Un grand merci aux écoles participantes, à nos bénévoles, ainsi qu'à Guy Gautreau, Escrime-Fencing NB et la DSFS pour leur soutien.
+Félicitations à tous les participants — et tout particulièrement à Antonine-Maillet, qui a remporté la bannière d'école championne. Un grand merci aux écoles participantes, à nos bénévoles, ainsi qu'à Guy Gautreau, Fencing-Escrime NB et la DSFS pour leur soutien.
 
 Nous avons hâte de lancer la saison 2026–2027!
 
