@@ -85,6 +85,7 @@ Test each project skill end-to-end at least once to verify it works correctly.
 ## Careers
 
 - [x] **Executive Director job ad — French PDF** — French version added as `static/documents/careers/executive-director-job-ad-2026-fr.pdf` (English renamed to `executive-director-job-ad-2026-en.pdf`); both news articles updated to link to their respective language PDF and the "English only" note was removed.
+- [ ] **Executive Director job ad PDFs — deadline still July 31** — hero slide, alt text, and news article (`jul-16-executive-director-hiring-2026.{en,fr}.md`) were updated to the new August 15, 2026 deadline, but `static/documents/careers/executive-director-job-ad-2026-{en,fr}.pdf` are flattened PDFs with no editable source in the repo, so they still say July 31, 2026. Regenerate both from their original source (Google Doc/Word/Canva) with the corrected date and re-export.
 
 ## Events data
 

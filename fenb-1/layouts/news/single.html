@@ -17,6 +17,9 @@
           {{- $dateStr := cond (eq .Site.Language.Lang "fr") (printf "%s %s %s" $day ($month | lower) $year) (printf "%s %s, %s" $month $day $year) -}}
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ $dateStr }}</time>
         </div>
+        {{- with .Params.update }}
+        <div class="fenb-callout fenb-callout--alert">{{ . | safeHTML }}</div>
+        {{- end }}
         {{- with .Params.image }}
         <div class="fenb-article-event-logo">
           <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}" class="fenb-article-event-logo-img{{ if $.Params.image_dark }} fenb-article-event-logo-img--light{{ end }}">

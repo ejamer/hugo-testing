@@ -2,7 +2,8 @@
 title: "Nous embauchons notre prochain directeur général ou notre prochaine directrice générale"
 date: 2026-07-16
 category: announcement
-summary: "Fencing-Escrime NB est à la recherche d'une ou d'un directeur général à temps partiel. Les candidatures sont acceptées jusqu'au 31 juillet 2026."
+summary: "Fencing-Escrime NB est à la recherche d'une ou d'un directeur général à temps partiel. Les candidatures sont acceptées jusqu'au 15 août 2026."
+update: "<strong>Mise à jour :</strong> La date limite de candidature a été prolongée au 15 août 2026."
 ---
 
 Fencing-Escrime NB (FENB) est un organisme à but non lucratif dirigé par un conseil d'administration bénévole, constitué en tant que section provinciale de la Fédération canadienne d'escrime. Notre mandat est de promouvoir, développer, réglementer, encourager et améliorer le sport de l'escrime au Nouveau-Brunswick, ainsi que de représenter et de coordonner les intérêts des escrimeuses et escrimeurs néo-brunswickois.
@@ -13,5 +14,5 @@ Il s'agit d'un poste contractuel à temps partiel nécessitant l'utilisation d'u
 
 Consultez l'[offre d'emploi complète (PDF)](/documents/careers/executive-director-job-ad-2026-fr.pdf) pour tous les détails, y compris les tâches et responsabilités et les qualifications requises.
 
-**Pour postuler :** veuillez faire parvenir votre curriculum vitæ et votre lettre de présentation à [fencingnb@gmail.com](mailto:fencingnb@gmail.com) avant la fin de la journée le **31 juillet 2026**.
+**Pour postuler :** veuillez faire parvenir votre curriculum vitæ et votre lettre de présentation à [fencingnb@gmail.com](mailto:fencingnb@gmail.com) avant la fin de la journée le **15 août 2026**.
 
