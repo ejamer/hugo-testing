@@ -63,6 +63,7 @@ title: "Post title"
 date: 2026-06-01
 category: national   # canonical ID — same IDs used by events; drives badge colour and label
 summary: "One-sentence summary shown on the homepage card."
+update: "<strong>Update:</strong> The deadline has been extended to August 15, 2026."  # optional — alert banner above the article body, HTML allowed
 image: "images/event-logos/ecg.png"           # optional — centred logo above body (no leading slash)
 image_alt: "East Coast Games 2026"             # optional — alt text for image
 results_table: true  # optional — add to load the interactive sortable table on articles with result tables
@@ -91,6 +92,8 @@ Full post body here (Markdown).
 **`results_table: true`** — add this field to any article that contains markdown tables of placements; it loads `results-table.js` which makes the tables sortable. It is independent of category.
 
 **`results_hide_placements: true`** — optional companion to `results_table`. When set, the last column (placement) is hidden by default with a "Show placements / Hide placements" toggle button. Use this for **away-tournament** articles where placement context varies across events. Omit it for **hosted-tournament** articles where placements should always be visible.
+
+**`update`** — optional alert banner rendered above the article body (`fenb-callout fenb-callout--alert`, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md)). Use for a short, urgent notice on an already-published article (e.g. an extended deadline). HTML is allowed and rendered via `safeHTML`, so wrap the lead-in with `<strong>` as shown above.
 
 **`related_news`** — optional list of content paths to other news articles (e.g. `news/2026/jun-01-another-article`, matching the source file path without the `.{lang}.md` extension). Resolved via Hugo's `GetPage` — a typo or missing page is silently skipped (no build warning, no link rendered), so double-check paths by hand. Set it separately per language file — an EN article should list EN paths, an FR article FR paths — since `GetPage` only resolves pages in the current language. When present, renders a crimson "Related News" sidebar block above the standard "Recent News" block.
 

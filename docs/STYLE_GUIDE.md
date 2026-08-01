@@ -174,6 +174,11 @@ Modifier `--quote` for pull-quotes and mission statements:
 <blockquote class="fenb-callout fenb-callout--quote">…</blockquote>
 ```
 
+Modifier `--alert` for an urgent notice on an already-published news article (e.g. an extended deadline) — crimson border/text, bold. Set via the `update` front matter field on a news article rather than writing the markup directly; see [README.md](../README.md) news front matter docs.
+```html
+<div class="fenb-callout fenb-callout--alert"><strong>Update:</strong> …</div>
+```
+
 **Use for:** rules, caveats, important asides — content the reader needs but that sits outside the main flow.
 
 **Do not use for:** navigation sentences (inline text + link is correct), promotional links, or anything that is just a styled box for visual interest.
