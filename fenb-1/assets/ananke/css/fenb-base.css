@@ -245,8 +245,19 @@ main.pb7 { padding-bottom: 0 !important; }
   line-height: 1.7;
 }
 
+.fenb-callout--alert {
+  background: var(--crimson-pale);
+  border-left-color: var(--crimson);
+  color: var(--text-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.fenb-callout--alert strong { color: var(--crimson); }
+
 [data-theme="dark"] .fenb-callout { border-left-color: var(--teal-light); }
 [data-theme="dark"] .fenb-callout--quote { color: var(--text-dark); }
+[data-theme="dark"] .fenb-callout--alert { border-left-color: var(--crimson-light); }
+[data-theme="dark"] .fenb-callout--alert strong { color: #c85a6c; }
 
 /* ── CTA banner (teal background, text left + button right) ── */
 .fenb-cta-banner {
