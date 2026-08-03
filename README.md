@@ -71,6 +71,12 @@ photos:              # optional — photo gallery rendered below the article bod
   - src: "images/news/2026/action-shot.jpg"   #   no leading slash
     alt: "Athletes competing"
     caption: "Caption shown below photo"       #   caption is optional per item
+cta_label: "Registration"                      # optional — call-to-action banner below the article body
+cta_heading: "Register by August 5"            #   cta_heading is the trigger; omit the whole block to skip it
+cta_text: "Email us to reserve your spot."     #   optional supporting sentence
+cta_button_label: "Email to Register"
+cta_button_url: "mailto:someone@example.com"   #   or any URL
+cta_note: "Spots are limited."                 #   optional small note under the button
 related_news:         # optional — "Related News" sidebar, shown above "Recent News"
   - "news/2026/jun-01-another-article"        #   content path, no leading slash, no file extension
 ---
@@ -94,6 +100,8 @@ Full post body here (Markdown).
 **`results_hide_placements: true`** — optional companion to `results_table`. When set, the last column (placement) is hidden by default with a "Show placements / Hide placements" toggle button. Use this for **away-tournament** articles where placement context varies across events. Omit it for **hosted-tournament** articles where placements should always be visible.
 
 **`update`** — optional alert banner rendered above the article body (`fenb-callout fenb-callout--alert`, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md)). Use for a short, urgent notice on an already-published article (e.g. an extended deadline). HTML is allowed and rendered via `safeHTML`, so wrap the lead-in with `<strong>` as shown above.
+
+**`cta_heading`** (+ `cta_label`, `cta_text`, `cta_button_label`, `cta_button_url`, `cta_note`) — optional call-to-action banner (`fenb-cta-banner`, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md)) rendered below the article body. Use for a registration deadline or other action you want to visually separate from the body copy. `cta_heading` presence is what triggers the block — omit it (and the other `cta_*` fields) to skip the banner entirely. All values are literal strings, not i18n keys, so write them in the article's own language.
 
 **`related_news`** — optional list of content paths to other news articles (e.g. `news/2026/jun-01-another-article`, matching the source file path without the `.{lang}.md` extension). Resolved via Hugo's `GetPage` — a typo or missing page is silently skipped (no build warning, no link rendered), so double-check paths by hand. Set it separately per language file — an EN article should list EN paths, an FR article FR paths — since `GetPage` only resolves pages in the current language. When present, renders a crimson "Related News" sidebar block above the standard "Recent News" block.
 

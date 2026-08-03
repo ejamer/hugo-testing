@@ -609,6 +609,21 @@ events:
     results_url_fr: ""
 
   # ── August 2026 ─────────────────────────────────────────
+  - title: "FENB Coaching Workshop"
+    title_fr: "Atelier des entraîneurs FENB"
+    start_date: "2026-08-08"
+    end_date: "2026-08-09"
+    location: "Club d’escrime La Resistance, 123 Halifax St., Moncton, NB"
+    category: "training"
+    description_en: "Two workshops for coaches — beginner/introductory programs on Aug. 8, competitive fencers on Aug. 9. Free for FENB members. 3 NCCP points. Register by August 5."
+    description_fr: "Deux ateliers pour entraîneurs — programmes débutants et d'initiation le 8 août, escrimeurs de compétition le 9 août. Sans frais pour les membres de FENB. 3 points PNCE. Inscrivez-vous avant le 5 août."
+    details_url_en: "/news/2026/aug-02-fenb-coaching-workshop-2026/"
+    details_url_fr: "/fr/news/2026/aug-02-fenb-coaching-workshop-2026/"
+    registration_url_en: "mailto:bjdaniel@nbnet.nb.ca?subject=FENB%20Coaching%20Workshop%20Registration"
+    registration_url_fr: ""
+    results_url_en: ""
+    results_url_fr: ""
+
   - title: "Damocles Élite Épée Camp"
     title_fr: "Camp d'épée élite Damocles"
     start_date: "2026-08-17"
