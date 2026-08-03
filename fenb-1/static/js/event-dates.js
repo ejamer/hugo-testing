@@ -20,9 +20,19 @@
     return parseDate(dateStr) >= todayMidnight();
   }
 
+  // Inclusive on both ends: fromStr may show today, toStr still shows through
+  // the end of the day it names (the day after toStr is the first hidden day).
+  function isWithinWindow(fromStr, toStr) {
+    var today = todayMidnight();
+    if (fromStr && parseDate(fromStr) > today) return false;
+    if (toStr && parseDate(toStr) < today) return false;
+    return true;
+  }
+
   window.FenbEventDates = {
     todayMidnight: todayMidnight,
     parseDate: parseDate,
-    isUpcoming: isUpcoming
+    isUpcoming: isUpcoming,
+    isWithinWindow: isWithinWindow
   };
 }());

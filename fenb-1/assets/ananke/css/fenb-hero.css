@@ -98,6 +98,21 @@
   transition: filter 0.3s ease;
 }
 
+/* Shown when every real slide is outside its publish/expiry window — see js/hero-slider.js */
+.fenb-hero-slide--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(150deg, var(--teal-dark) 0%, var(--teal) 100%);
+}
+
+.fenb-hero-slide--fallback img {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.5;
+}
+
 .fenb-hero-slide-link {
   position: absolute;
   inset: 0;

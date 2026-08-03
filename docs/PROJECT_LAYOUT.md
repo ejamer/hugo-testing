@@ -104,10 +104,10 @@ hugo-testing/
         │                   diagram PNGs, EN/FR), hall-of-fame/, hero/, svg/
         ├── js/             Client-side scripts:
         │                     coach-pathways.js    Pathway diagram modal on /programs/coach-training/
-        │                     event-dates.js       Shared window.FenbEventDates helpers (todayMidnight/parseDate/isUpcoming)
+        │                     event-dates.js       Shared window.FenbEventDates helpers (todayMidnight/parseDate/isUpcoming/isWithinWindow)
         │                     events-calendar.js   JS month grid for the events calendar
         │                     events-schedule.js   Season toggle + category filters for schedule page
-        │                     hero-slider.js       Homepage hero carousel
+        │                     hero-slider.js       Homepage hero carousel; hides slides outside their publish_from/expires window and shows a fallback logo slate if none are live
         │                     upcoming-events.js   Narrows homepage event grid to true first 4 using visitor's clock
         │                     hof-table.js         Sort + category-filter dropdown for the Hall of Fame table
         │                     lightbox.js          Zoom-in image lightbox — loaded globally by baseof.html; activates on any element with data-lightbox-zone
