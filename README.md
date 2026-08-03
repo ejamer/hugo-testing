@@ -352,6 +352,8 @@ slides:
 
 Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; click the prev/next arrows or the dot indicators to navigate manually; use the pause/play button (top-right corner) to stop or resume auto-advance.
 
+**Creating a new announcement-style slide (event date, location, title, CTA text):** start from the reusable Inkscape template at `design-sources/hero/fenb-hero-template.svg` rather than designing from scratch, then export the edited panel to EN/FR JPGs in `static/images/hero/`.
+
 </details>
 
 <details>
