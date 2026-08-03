@@ -9,6 +9,8 @@
 }
 
 @media (max-width: 860px) {
+  :root { --nav-height: 60px; }
+
   .fenb-nav-inner   { justify-content: flex-start; }
   .fenb-nav-actions { margin-left: auto; }
 
@@ -17,15 +19,6 @@
   .fenb-theme-toggle { min-height: 44px; min-width: 44px; }
   .fenb-lang-btn     { min-height: 44px; }
   .fenb-nav-toggle   { min-height: 44px; min-width: 44px; }
-
-  /* Swap landscape logo for compact logo */
-  .fenb-nav-logo--color                           { display: none; }
-  .fenb-nav-logo--white                           { display: none; }
-  [data-theme="dark"] .fenb-nav-logo--white       { display: none; }
-  .fenb-nav-logo--small-color                     { display: block; height: 56px; }
-  .fenb-nav-logo--small-white                     { display: none; }
-  [data-theme="dark"] .fenb-nav-logo--small-color { display: none; }
-  [data-theme="dark"] .fenb-nav-logo--small-white { display: block; height: 56px; }
 
   .fenb-nav-links { display: none; }
   .fenb-nav-links.is-open {
@@ -105,6 +98,10 @@
   .fenb-section-header .fenb-see-all { align-self: flex-start; }
 
   .fenb-hero-content { padding-bottom: 4rem; }
+  .fenb-hero-slider {
+    width: 96vw;
+    margin: 0 calc((100% - 96vw) / 2) 2rem;
+  }
 
   .fenb-about-overview-grid { grid-template-columns: 1fr; }
   .fenb-about-sidebar       { display: none; }

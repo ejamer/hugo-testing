@@ -32,7 +32,7 @@
 }
 
 .fenb-nav-logo-link { display: flex; align-items: center; flex-shrink: 0; }
-.fenb-nav-logo      { height: 86px; width: auto; }
+.fenb-nav-logo      { height: var(--nav-height); width: auto; }
 
 .fenb-nav-logo--white       { display: none; }
 .fenb-nav-logo--small-color { display: none; }
