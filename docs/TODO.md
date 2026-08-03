@@ -10,6 +10,12 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ---
 
+## Photo gallery
+
+- [ ] **Build photo gallery** — new `/gallery/` page with tag/date filtering, backed by a separate GitHub repo (submodule) for image storage served via jsDelivr, with tagging metadata in `fenb-1/data/gallery/`. Requires a new `/fenb-content-add-gallery-photos` skill for uploads. See `plans/image-gallery.md` for the full plan, including an open question about that skill's git commit/push scope that needs resolving before it's built.
+
+---
+
 ## Non-technical content maintenance
 
 - [ ] **Editor tooling** — build shell scripts, editor guide, staging preview, and optionally Decap CMS to allow a non-technical administrator to maintain events, board members, news, and join URLs without developer involvement. See `plans/non-technical-maintenance.md` for the full plan and implementation order.
@@ -81,11 +87,6 @@ Test each project skill end-to-end at least once to verify it works correctly.
 | `/fenb-data-get-results` | ✅ Tested | NB Provincials 2026 — direct URL, hosted mode, full podium fetch |
 | `/fenb-data-season-rollover` | ❌ Untested | |
 | `/fenb-docs-update` | ✅ Tested | |
-
-## Careers
-
-- [x] **Executive Director job ad — French PDF** — French version added as `static/documents/careers/executive-director-job-ad-2026-fr.pdf` (English renamed to `executive-director-job-ad-2026-en.pdf`); both news articles updated to link to their respective language PDF and the "English only" note was removed.
-- [ ] **Executive Director job ad PDFs — deadline still July 31** — hero slide, alt text, and news article (`jul-16-executive-director-hiring-2026.{en,fr}.md`) were updated to the new August 15, 2026 deadline, but `static/documents/careers/executive-director-job-ad-2026-{en,fr}.pdf` are flattened PDFs with no editable source in the repo, so they still say July 31, 2026. Regenerate both from their original source (Google Doc/Word/Canva) with the corrected date and re-export.
 
 ## Events data
 

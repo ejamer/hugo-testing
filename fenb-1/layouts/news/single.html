@@ -34,6 +34,19 @@
         {{ if .Params.results_table }}
         <script src="{{ "js/results-table.js" | absURL }}" defer></script>
         {{ end }}
+        {{- with .Params.cta_heading }}
+        <div class="fenb-cta-banner">
+          <div class="fenb-cta-banner-body">
+            {{- with $.Params.cta_label }}<p class="fenb-section-label">{{ . }}</p>{{- end }}
+            <h3 class="fenb-cta-banner-heading">{{ . }}</h3>
+            {{- with $.Params.cta_text }}<p>{{ . }}</p>{{- end }}
+          </div>
+          <div class="fenb-cta-banner-action">
+            <a href="{{ $.Params.cta_button_url }}" class="fenb-btn fenb-btn-white">{{ $.Params.cta_button_label }}</a>
+            {{- with $.Params.cta_note }}<p class="fenb-cta-banner-note">{{ . }}</p>{{- end }}
+          </div>
+        </div>
+        {{- end }}
         {{- with .Params.photos }}
         <div class="fenb-article-photo-gallery" data-lightbox-zone>
           <div class="fenb-article-photo-gallery-grid">

@@ -161,6 +161,8 @@ A teal background banner with text on the left and a button on the right. Define
 
 The `fenb-cta-banner-heading` class sets `font-size: 1.25rem` — do not use `fenb-section-title` inside a banner (it's too large at `clamp(1.6rem, 3.5vw, 2.1rem)`). The button is always `fenb-btn fenb-btn-white` on the teal background. Omitting the label, heading, or action wrapper produces visual inconsistency.
 
+**In a news article:** don't write this markup by hand in the article body — Goldmark's `unsafe = false` setting strips raw HTML from Markdown content, so it would silently disappear. Instead set the `cta_*` front matter fields (`cta_heading` is the trigger); `layouts/news/single.html` renders the banner below the article body. See [README.md](../README.md) news front matter docs for the field list.
+
 ### `fenb-callout` — note block
 
 A left-border block for supplementary notes, caveats, or explanatory asides. Defined in `fenb-base.css`.
@@ -172,6 +174,11 @@ A left-border block for supplementary notes, caveats, or explanatory asides. Def
 Modifier `--quote` for pull-quotes and mission statements:
 ```html
 <blockquote class="fenb-callout fenb-callout--quote">…</blockquote>
+```
+
+Modifier `--alert` for an urgent notice on an already-published news article (e.g. an extended deadline) — crimson border/text, bold. Set via the `update` front matter field on a news article rather than writing the markup directly; see [README.md](../README.md) news front matter docs.
+```html
+<div class="fenb-callout fenb-callout--alert"><strong>Update:</strong> …</div>
 ```
 
 **Use for:** rules, caveats, important asides — content the reader needs but that sits outside the main flow.
