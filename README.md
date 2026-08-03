@@ -336,11 +336,15 @@ slides:
     alt: "Alt text for accessibility"
     link_en: "news/2026/jun-16-some-article/"   # optional — makes slide clickable
     link_fr: ""                                  # leave empty to fall back to link_en
+    publish_from: ""                              # optional — hide until this date
+    expires: ""                                   # optional — hide after this date
   - src_en: images/hero/hero2.jpg
     src_fr: ""
     alt: ""
     link_en: ""
     link_fr: ""
+    publish_from: ""
+    expires: ""
 ```
 
 **`link_en` / `link_fr`** — optional. When provided, the slide becomes clickable and shows a "Read more →" / "Lire la suite →" badge in the bottom-right corner. Rules:
@@ -349,6 +353,12 @@ slides:
 - `link_fr` falls back to `link_en` if empty or omitted
 
 **`src_en` / `src_fr`** — `src_fr` is optional; use it when a slide's image contains text that needs a French version (e.g. a bilingual notice graphic). `src_fr` falls back to `src_en` if empty or omitted.
+
+**`publish_from` / `expires`** — optional, `"YYYY-MM-DD"`. Checked against the *visitor's own browser clock*, not the last build — so a time-boxed slide (a registration deadline, a hiring notice) goes live and retires itself on schedule without a redeploy.
+- `publish_from`: slide is hidden until this date; omit/empty = live immediately.
+- `expires`: slide is hidden starting the day *after* this date (it stays visible through the date itself); omit/empty = never expires.
+- If every slide is currently outside its window, the carousel shows a default FENB logo slate instead of going empty.
+- A slide that has already expired by the last site build is dropped from the page entirely (never shipped in the HTML); a slide with a future `publish_from` can be added ahead of time and will just wait for its date.
 
 Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; click the prev/next arrows or the dot indicators to navigate manually; use the pause/play button (top-right corner) to stop or resume auto-advance.
 

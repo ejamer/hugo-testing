@@ -570,9 +570,11 @@ For filterable lists (e.g. `/events/schedule/`), prefer SSR + JS visibility togg
 
 ### Build-time date staleness — client-side recompute pattern
 
-Hugo's `now` is frozen at build time, and this site only rebuilds on release, so "is this event still upcoming" checks computed from it can drift stale between deploys. `static/js/event-dates.js` exposes `window.FenbEventDates` (`todayMidnight()`, `parseDate()`, `isUpcoming()`) so pages recompute against the visitor's real clock instead.
+Hugo's `now` is frozen at build time, and this site only rebuilds on release, so "is this event still upcoming" checks computed from it can drift stale between deploys. `static/js/event-dates.js` exposes `window.FenbEventDates` (`todayMidnight()`, `parseDate()`, `isUpcoming()`, `isWithinWindow(fromStr, toStr)`) so pages recompute against the visitor's real clock instead.
 
 Templates render a safe superset server-side (e.g. every event still upcoming as of the build, not just the first 4) tagged with a `data-event-date` attribute, and JS narrows it down client-side on load: `static/js/upcoming-events.js` trims the homepage grid to the true first 4, and `events-calendar.js`/`events-schedule.js` re-check register-link visibility the same way. Use this pattern for any date-sensitive "is this still current" check rather than trusting Hugo's build-time `now`.
+
+`static/js/hero-slider.js` is the two-sided variant: homepage hero slides carry optional `data-publish-from`/`data-expires` attributes (from `hero_slides.yaml`), and `isWithinWindow()` hides a slide before its `publish_from` date and after its `expires` date. If every slide is currently outside its window, a default FENB-logo fallback slate is shown instead of an empty carousel.
 
 ---
 

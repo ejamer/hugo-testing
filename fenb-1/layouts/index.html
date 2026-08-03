@@ -8,8 +8,15 @@
   <div class="fenb-hero-content">
     <span class="fenb-hero-badge">{{ i18n "hero_badge" }}</span>
     <div class="fenb-hero-slider" id="fenb-hero-slider">
-      {{ range $i, $slide := hugo.Data.hero_slides.slides }}
-      <div class="fenb-hero-slide{{ if eq $i 0 }} is-active{{ end }}">
+      {{ $today := now.Format "2006-01-02" }}
+      {{ $visibleSlides := slice }}
+      {{ range hugo.Data.hero_slides.slides }}
+        {{ if or (not .expires) (ge .expires $today) }}
+          {{ $visibleSlides = $visibleSlides | append . }}
+        {{ end }}
+      {{ end }}
+      {{ range $i, $slide := $visibleSlides }}
+      <div class="fenb-hero-slide{{ if eq $i 0 }} is-active{{ end }}" data-publish-from="{{ $slide.publish_from }}" data-expires="{{ $slide.expires }}">
         {{- $link := $slide.link_en -}}
         {{- if and (eq site.Language.Lang "fr") $slide.link_fr -}}{{- $link = $slide.link_fr -}}{{- end -}}
         {{- $src := $slide.src_en -}}
@@ -26,6 +33,11 @@
         {{ end }}
       </div>
       {{ end }}
+      {{/* Shown when every real slide is hidden (all outside their publish/expiry window) — see js/hero-slider.js. Also the no-JS default when $visibleSlides is empty at build time. */}}
+      <div class="fenb-hero-slide fenb-hero-slide--fallback{{ if not $visibleSlides }} is-active{{ end }}" aria-hidden="true">
+        <img src="{{ "images/fenb-logo/FENB-Logo-Small-White/FencingNB-Logo-Small-OneColour-White.svg" | relURL }}" alt="">
+      </div>
+      {{ if $visibleSlides }}
       <button class="fenb-hero-slider-btn fenb-hero-slider-btn--prev" aria-label="Previous slide">
         {{ partial "icon.html" (dict "name" "arrow-left.svg" "w" 16 "h" 16) }}
       </button>
@@ -33,8 +45,8 @@
         {{ partial "icon.html" (dict "name" "arrow-right.svg" "w" 16 "h" 16) }}
       </button>
       <div class="fenb-hero-dots" role="tablist">
-        {{ range $i, $slide := hugo.Data.hero_slides.slides }}
-        <button class="fenb-hero-dot{{ if eq $i 0 }} is-active{{ end }}" role="tab" aria-label="Slide {{ add $i 1 }}" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" data-index="{{ $i }}"></button>
+        {{ range $i, $slide := $visibleSlides }}
+        <button class="fenb-hero-dot{{ if eq $i 0 }} is-active{{ end }}" role="tab" aria-label="Slide {{ add $i 1 }}" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}"></button>
         {{ end }}
       </div>
       <button class="fenb-hero-pause" aria-label="Pause slideshow" aria-pressed="false">
@@ -46,6 +58,7 @@
           <polygon points="0,0 11,6.5 0,13"/>
         </svg>
       </button>
+      {{ end }}
     </div>
     <p class="fenb-hero-tagline">{{ i18n "hero_tagline" }}</p>
     <div class="fenb-hero-ctas">
@@ -123,8 +136,8 @@
   </div>
 </section>
 
-<script src="{{ "js/hero-slider.js" | absURL }}" defer></script>
 <script src="{{ "js/event-dates.js" | absURL }}" defer></script>
+<script src="{{ "js/hero-slider.js" | absURL }}" defer></script>
 <script src="{{ "js/upcoming-events.js" | absURL }}" defer></script>
 
 {{ end }}

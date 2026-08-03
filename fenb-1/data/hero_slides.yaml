@@ -6,34 +6,54 @@
 #   - link_fr falls back to link_en if omitted or empty.
 # Optional: add src_fr to serve a different image when viewing French content.
 #   - src_fr falls back to src_en if omitted or empty.
+# Optional: publish_from / expires — "YYYY-MM-DD", checked against the visitor's own
+# browser clock (not build time), so a time-boxed slide can go live and retire itself
+# without a redeploy.
+#   - publish_from: slide is hidden until this date; omit/empty = live immediately.
+#   - expires: slide is hidden starting the day AFTER this date (it stays visible
+#     through the date itself); omit/empty = never expires.
+#   - If every slide is currently hidden, the carousel shows a default FENB logo slate
+#     instead of going empty.
 slides:
   - src_en: images/hero/fenb-hero-coach-workshop-en.jpg
     src_fr: "images/hero/fenb-hero-coach-workshop-fr.jpg"
     alt: "Register now for our upcoming coach workshop / Inscrivez-vous maintenant pour notre prochain atelier de coaching"
     link_en: "news/2026/aug-02-fenb-coaching-workshop-2026/"
     link_fr: ""
+    publish_from: ""
+    expires: "2026-08-09"
   - src_en: images/hero/hero6.jpg
     src_fr: ""
     alt: "Fencing-Escrime NB is hiring its next Executive Director — part-time contract, apply by August 15, 2026 / Nous embauchons notre prochain directeur général — contrat à temps partiel, date limite le 15 août 2026"
     link_en: "news/2026/jul-16-executive-director-hiring-2026/"
     link_fr: ""
+    publish_from: ""
+    expires: "2026-08-15"
   - src_en: images/hero/hero5.jpg
     src_fr: ""
     alt: ""
     link_en: ""
     link_fr: ""
+    publish_from: ""
+    expires: ""
   - src_en: images/hero/hero3.jpg
     src_fr: ""
     alt: ""
     link_en: ""
     link_fr: ""
+    publish_from: ""
+    expires: ""
   - src_en: images/hero/hero-fleche.jpg
     src_fr: ""
     alt: ""
     link_en: ""
     link_fr: ""
+    publish_from: ""
+    expires: ""
   - src_en: images/hero/hero-mask.jpg
     src_fr: ""
     alt: ""
     link_en: ""
     link_fr: ""
+    publish_from: ""
+    expires: ""
