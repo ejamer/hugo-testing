@@ -1,6 +1,6 @@
 ---
 title: "Member Clubs"
-description: "Find a fencing club near you — FENB-sanctioned clubs across New Brunswick."
+description: "Find a fencing club near you — FENB member clubs across New Brunswick."
 hide_page_header: true
 ---
 
