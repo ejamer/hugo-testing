@@ -30,5 +30,5 @@ Les sélections finales ont été faites pour les athlètes de l'équipe de base
 
 **Épée masculine**
 - Ethan Han
-- Luke Martin
+- Gideon Candy
 - Sammy Singh-Ranger

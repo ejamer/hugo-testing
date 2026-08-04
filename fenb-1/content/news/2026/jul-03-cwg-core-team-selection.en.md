@@ -30,5 +30,5 @@ Final selections have been made for the Core Team athletes who will continue tra
 
 **Men's Épée**
 - Ethan Han
-- Luke Martin
+- Gideon Candy
 - Sammy Singh-Ranger
