@@ -143,12 +143,20 @@
 
           <p class="fenb-cwg-points-note">{{ i18n "programs_cwg_rankings_points_note" }}</p>
 
-          <a href="https://docs.google.com/spreadsheets/d/1bXPWEDCEGpDcTOufhtHJ6ZuYdDx-Kaqe/edit?gid=1189192189#gid=1189192189"
-             target="_blank" rel="noopener noreferrer"
-             class="fenb-btn fenb-btn-teal fenb-cwg-rankings-cta">
-            {{ partial "icon.html" (dict "name" "activity.svg" "w" 16 "h" 16) }}
-            {{ i18n "programs_cwg_rankings_cwg" }}
-          </a>
+          <div class="fenb-cwg-rankings-ctas">
+            <a href="https://docs.google.com/spreadsheets/d/1bXPWEDCEGpDcTOufhtHJ6ZuYdDx-Kaqe/edit?gid=1189192189#gid=1189192189"
+               target="_blank" rel="noopener noreferrer"
+               class="fenb-btn fenb-btn-teal-outline fenb-cwg-rankings-cta">
+              {{ partial "icon.html" (dict "name" "activity.svg" "w" 16 "h" 16) }}
+              {{ i18n "programs_cwg_rankings_cwg" }}
+            </a>
+            <a href="https://docs.google.com/spreadsheets/d/1ztJF9W5ARAyNTdwTgKNDbQL9DPqqoos6/"
+               target="_blank" rel="noopener noreferrer"
+               class="fenb-btn fenb-btn-crimson fenb-cwg-rankings-cta">
+              {{ partial "icon.html" (dict "name" "activity.svg" "w" 16 "h" 16) }}
+              {{ i18n "programs_cwg_rankings_core" }}
+            </a>
+          </div>
         </div>
 
       </div>{{/* /fenb-cwg-main */}}

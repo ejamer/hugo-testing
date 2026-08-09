@@ -191,6 +191,20 @@ main.pb7 { padding-bottom: 0 !important; }
   color: #fff;
 }
 
+.fenb-btn-teal-outline {
+  background: transparent;
+  color: var(--teal);
+  border: 1.5px solid var(--teal);
+  box-shadow: none;
+}
+.fenb-btn-teal-outline:hover {
+  background: var(--teal-pale);
+  border-color: var(--teal-dark);
+  color: var(--teal-dark);
+}
+[data-theme="dark"] .fenb-btn-teal-outline { color: var(--teal-light); border-color: var(--teal-light); }
+[data-theme="dark"] .fenb-btn-teal-outline:hover { background: var(--teal-pale); border-color: var(--teal-light); color: var(--teal-light); }
+
 .fenb-btn-white {
   background: #fff;
   color: var(--teal);
