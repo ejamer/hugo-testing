@@ -210,6 +210,7 @@ All buttons share `fenb-btn` as the base class. Always pair with a variant modif
 | `fenb-btn-crimson` | Crimson bg, white text | High-emphasis CTAs |
 | `fenb-btn-white` | White bg, teal text | Teal/coloured backgrounds (e.g. inside `fenb-cta-banner`) |
 | `fenb-btn-outline` | Transparent bg, white border | Hero section or dark backgrounds |
+| `fenb-btn-teal-outline` | Transparent bg, teal text/border | Light/white backgrounds, de-emphasized CTA (e.g. a link that's still useful but no longer the primary action) |
 
 ### `back-link.html` partial — back-navigation link
 
