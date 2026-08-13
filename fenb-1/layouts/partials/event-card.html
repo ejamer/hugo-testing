@@ -1,7 +1,7 @@
 {{- /* Renders a single event card. Expects a YAML event object as context (.). */ -}}
 {{- $dateObj := time .start_date -}}
 {{- $month   := i18n (printf "month_%s" ($dateObj.Format "Jan")) | default ($dateObj.Format "Jan") -}}
-<article class="fenb-event-card fenb-event-card--{{ .category }}">
+<article class="fenb-event-card fenb-event-card--{{ .category }}" data-event-date="{{ .start_date }}">
   <div class="fenb-event-date-badge">
     <span class="fenb-event-day">{{ $dateObj.Format "02" }}</span>
     <span class="fenb-event-month">{{ $month }}</span>
@@ -26,7 +26,7 @@
     {{- $registerUrl := .registration_url_en -}}
     {{- if and (eq site.Language.Lang "fr") .registration_url_fr -}}{{- $registerUrl = .registration_url_fr -}}{{- end -}}
     {{ if and $registerUrl ($dateObj.After $todayMidnight) }}
-    <a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>
+    <a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer" data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>
     {{ end }}
     {{- $resultsUrl := .results_url_en -}}
     {{- if and (eq site.Language.Lang "fr") .results_url_fr -}}{{- $resultsUrl = .results_url_fr -}}{{- end -}}

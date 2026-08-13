@@ -78,7 +78,7 @@
                       {{ if or $detailsUrl $showRegister $resultsUrl }}
                       <div class="fenb-schedule-links">
                         {{ with $detailsUrl }}<a class="fenb-event-details-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>{{ end }}
-                        {{ if $showRegister }}<a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_register" }} &rarr;</a>{{ end }}
+                        {{ if $showRegister }}<a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer" data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>{{ end }}
                         {{ with $resultsUrl }}<a class="fenb-event-results-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_results" }} &rarr;</a>{{ end }}
                       </div>
                       {{ end }}
@@ -124,6 +124,7 @@
   </div>
 </section>
 
+<script src="{{ "js/event-dates.js" | absURL }}" defer></script>
 <script src="{{ "js/events-schedule.js" | absURL }}" defer></script>
 
 {{ end }}

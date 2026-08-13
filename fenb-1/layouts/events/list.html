@@ -86,10 +86,10 @@ window.FENB_CAL = {
   detailsLabel: "{{ i18n "event_details" }}",
   registerLabel: "{{ i18n "event_register" }}",
   resultsLabel: "{{ i18n "event_results" }}",
-  today: "{{ now.Format "2006-01-02" }}",
   categoryLabels: {{ $catLabels | jsonify | safeJS }}
 };
 </script>
+<script src="{{ "js/event-dates.js" | absURL }}" defer></script>
 <script src="{{ "js/events-calendar.js" | absURL }}" defer></script>
 
 {{ end }}

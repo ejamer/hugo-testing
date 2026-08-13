@@ -60,18 +60,26 @@
 <section class="fenb-section fenb-events-section" id="fenb-events">
   <div class="fenb-container">
     {{ partial "section-header.html" (dict "label" (i18n "section_label_events") "title" (i18n "section_title_events") "linkURL" "events/" "linkText" (i18n "view_all_events")) }}
-    <div class="fenb-events-grid">
-      {{/* ISO 8601 strings are lexicographically sortable, so string "ge"/"lt" comparisons work. */}}
+    <div class="fenb-events-grid" id="fenb-upcoming-events">
+      {{/*
+        ISO 8601 strings are lexicographically sortable, so string "ge"/"lt" comparisons work.
+        Hugo's `now` is frozen at build time, which can be stale on a static site that only
+        rebuilds on release — so this renders every event that is still upcoming as of the
+        build (a safe superset, since build time is always <= a visitor's real time) and lets
+        js/event-dates.js + the inline script below narrow it down to the true first 4 using
+        the visitor's own clock. The CSS default of showing only the first 4 DOM children is
+        just the no-JS fallback.
+      */}}
       {{ $today    := now.Format "2006-01-02" }}
-      {{ $upcoming := first 4 (where hugo.Data.events.events "start_date" "ge" $today) }}
+      {{ $upcoming := where hugo.Data.events.events "start_date" "ge" $today }}
       {{ range $upcoming }}
       {{ partial "event-card.html" . }}
       {{ end }}
-      {{ $placeholders := sub 4 (len $upcoming) }}
-      {{ range seq $placeholders }}
+      {{ range seq 4 }}
       <article class="fenb-event-card fenb-event-card--placeholder" aria-hidden="true">
         <div class="fenb-event-placeholder-inner">
-          <img src="{{ "images/fenb-logo/FENB-Logo-Landscape-FullColour/FencingNB-Logo-FullColour.svg" | relURL }}" alt="" class="fenb-event-placeholder-logo">
+          <img src="{{ "images/fenb-logo/FENB-Logo-Landscape-FullColour/FencingNB-Logo-FullColour.svg" | relURL }}" alt="" class="fenb-event-placeholder-logo fenb-event-placeholder-logo--light">
+          <img src="{{ "images/fenb-logo/FENB-Logo-Landscape-White/FencingNB-Logo-OneColour-White.svg" | relURL }}" alt="" class="fenb-event-placeholder-logo fenb-event-placeholder-logo--dark">
           <p class="fenb-event-placeholder-text">{{ i18n "event_more_coming" }}</p>
         </div>
       </article>
@@ -114,5 +122,7 @@
 </section>
 
 <script src="{{ "js/hero-slider.js" | absURL }}" defer></script>
+<script src="{{ "js/event-dates.js" | absURL }}" defer></script>
+<script src="{{ "js/upcoming-events.js" | absURL }}" defer></script>
 
 {{ end }}
