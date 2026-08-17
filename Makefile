@@ -15,6 +15,15 @@ HUGO ?= hugo
 serve:
 	cd fenb-1 && $(HUGO) --environment development --baseURL http://localhost:1313/ && npx pagefind --site public --root-selector "main" && $(HUGO) server --renderStaticToDisk --disableFastRender --noHTTPCache --watch --baseURL http://localhost:1313/
 
+# Offline dev server: skips the `npx pagefind` step entirely, so it never touches the
+# network (npx resolves pagefind from the npm registry on every invocation since it
+# isn't a local devDependency — with no connection, that call fails and `make serve`
+# never reaches `hugo server`). Search overlay will not work locally under this target;
+# use `make serve` whenever you have a connection and need to test search.
+serve-local:
+	@echo "==> serve-local: skipping 'npx pagefind' (needs network) — the search overlay will not work in this session. Use 'make serve' when you have a connection."
+	cd fenb-1 && $(HUGO) server --environment development --watch --noHTTPCache --baseURL http://localhost:1313/
+
 # Quick local build (no minification, no pagefind). Useful for checking output.
 build: clean
 	cd fenb-1 && $(HUGO) --environment development
@@ -35,4 +44,4 @@ check-parity:
 	@bash -c 'find fenb-1/content -name "*.en.md" | while read f; do fr="$${f%.en.md}.fr.md"; [ ! -f "$$fr" ] && echo "MISSING FR: $$f"; done; true'
 	@bash -c 'find fenb-1/content -name "*.fr.md" | while read f; do base="$${f%.fr.md}"; [ ! -f "$${base}.en.md" ] && [ ! -f "$${base}.md" ] && echo "MISSING EN: $$f"; done; true'
 
-.PHONY: serve build build-prod clean check-parity
+.PHONY: serve serve-local build build-prod clean check-parity
