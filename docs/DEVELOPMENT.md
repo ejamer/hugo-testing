@@ -32,12 +32,16 @@ Run all commands from the **repo root** unless noted.
 
 ```bash
 make serve        # dev server with search (preferred)
+make serve-local  # offline dev server — no search, no network calls
 make build        # quick local build — no minification, no pagefind
 make build-prod   # production build — minified + pagefind index
 ```
 
 > [!TIP]
 > `make serve` runs three steps in order: builds the site, generates the search index with Pagefind, then starts the dev server. Using just `hugo server` inside the `fenb-1` folder skips the Pagefind step, so the search overlay will silently fail to load — always use `make serve` when you need a full-featured test.
+
+> [!WARNING]
+> `make serve`'s Pagefind step runs via `npx pagefind`. There's no `package.json`/`node_modules` pinning Pagefind locally, so `npx` resolves it from the npm registry **every time** — with no internet connection, that call fails and, because the Makefile steps are chained with `&&`, `hugo server` never starts. If you're offline, use `make serve-local` instead: it calls `hugo server` directly with no Pagefind step, so it never touches the network. Trade-off: the search overlay won't work under `serve-local` since no Pagefind index is generated.
 
 The site builds in ~100 ms. Open `http://localhost:1313/` in your browser.
 
@@ -330,3 +334,5 @@ Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the
 ### Search index
 
 Pagefind runs as a post-build step and writes its index to `public/pagefind/`. This directory is **not tracked in git** — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before serving.
+
+Pagefind is invoked via `npx pagefind`, not a local devDependency, so it requires network access to resolve from the npm registry — see the offline note under [Local development](#local-development) and use `make serve-local` when you have no connection.

@@ -57,7 +57,7 @@ Key rules:
 - **Feature branches** — cut from `dev`, PR back into `dev` when done, then delete.
 - **Release** — PR from `dev` into `main`.
 
-Dev server: `make serve` | Production build: `make build-prod` | Clean: `make clean`
+Dev server: `make serve` (needs network for the Pagefind search index) | Offline dev server, no search: `make serve-local` | Production build: `make build-prod` | Clean: `make clean`
 
 All `make` commands run from the repo root.
 
