@@ -268,7 +268,7 @@ Grid uses CSS Grid `auto-fill / minmax(200px, 1fr)` — collapses to 2 columns a
 
 All `<img>` elements inside any element marked `data-lightbox-zone` get an automatic zoom-in lightbox on click. Behaviour: click the image → full-screen dark overlay at up to 90vw/90vh. Close via `×`, click outside, or Escape.
 
-`lightbox.js` is loaded globally by `baseof.html` — it is active on every page. To opt a container in, add `data-lightbox-zone` to it. To exclude a specific image, add `class="fenb-no-lightbox"`. The `fenb-article-body` div and `fenb-article-photo-gallery` div both carry `data-lightbox-zone`.
+`lightbox.js` is loaded globally by `baseof.html` — it is active on every page. To opt a container in, add `data-lightbox-zone` to it. To exclude a specific image, add `class="fenb-no-lightbox"`. The `fenb-article-event-logo` div, `fenb-article-body` div, and `fenb-article-photo-gallery` div all carry `data-lightbox-zone` — so the front-matter `image`/`image_dark` logo is zoomable too.
 
 CSS lives in `fenb-news.css` (`.fenb-lightbox`, `.fenb-lightbox--open`, `.fenb-lightbox-img`, `.fenb-lightbox-close`).
 
