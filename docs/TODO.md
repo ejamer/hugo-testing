@@ -6,8 +6,6 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ## News & Results page
 
-- [ ] **News index filters** — add client-side category toggle buttons and year dropdown to the `/news/` index page. Requires removing pagination (render all cards at once), adding `data-category`/`data-year` attributes to news cards, and wiring up `news-filter.js`. See `plans/news-filter.md` for the full implementation plan.
-
 ---
 
 ## Photo gallery
@@ -43,6 +41,8 @@ All four join pages need a visual review in the dev server before release. Key i
 ## About page
 
 - [ ] **Board member roles** — only Celine Fournet (President) and the Executive Director role were confirmed from source data. The remaining 6 members are listed as "Director" — verify actual officer roles (Secretary, Treasurer, etc.) and update `fenb-1/data/board_members.yaml`.
+- [ ] **Board member start dates** — `start_date` was added to every entry in `fenb-1/data/board_members.yaml` (2026-08-17) but left blank for all current members since the actual month/year each joined isn't recorded anywhere; fill in when known. Doesn't block anything — `start_date` is historical record only, doesn't affect display.
+- [ ] **Board history page** — `fenb-1/data/board_members.yaml` now has a `previous_members` list (added 2026-08-17) for past board members — populated when someone leaves the current `members` roster (see the file's header comment for the exact workflow) but not displayed anywhere yet. Build a "Board History" view when wanted.
 
 ## Programs page
 
@@ -75,7 +75,7 @@ All seven pages need a full review pass for both style and content quality befor
 
 ## Project skills
 
-- [ ] **Skill automation and non-AI tooling** — review `plans/skill-assessment.md` and implement the proposed shell scripts to reduce AI dependency, eliminate duplicated logic, and make common updates (news stubs, season rollover, version bumps) executable without Claude. Priority order: `generate-version-json.sh` → `season-rollover.sh` → `check-ftl-deps.sh` → `create-news-stub.sh` → `compute-next-version.sh`. Once scripts exist, slim the corresponding skills to use them. Ties into the **Editor tooling** item under Non-technical content maintenance — the same scripts that simplify AI skills form the foundation for non-AI workflows.
+- [ ] **Skill automation and non-AI tooling** — review `plans/skill-assessment.md` and implement the proposed shell scripts to reduce AI dependency, eliminate duplicated logic, and make common updates (news stubs, season rollover, version bumps) executable without Claude. Priority order: `generate-version-json.sh` → ~~`season-rollover.sh`~~ (done, see below) → `check-ftl-deps.sh` → `create-news-stub.sh` → `compute-next-version.sh`. Once scripts exist, slim the corresponding skills to use them. Ties into the **Editor tooling** item under Non-technical content maintenance — the same scripts that simplify AI skills form the foundation for non-AI workflows.
 
 Test each project skill end-to-end at least once to verify it works correctly.
 
@@ -85,7 +85,6 @@ Test each project skill end-to-end at least once to verify it works correctly.
 | `/fenb-content-add-page` | ❌ Untested | |
 | `/fenb-content-add-results` | ✅ Tested | NB Provincials 2026 — hosted format (full podium, medalists only) |
 | `/fenb-data-get-results` | ✅ Tested | NB Provincials 2026 — direct URL, hosted mode, full podium fetch |
-| `/fenb-data-season-rollover` | ❌ Untested | |
 | `/fenb-docs-update` | ✅ Tested | |
 
 ## Events data
@@ -93,4 +92,3 @@ Test each project skill end-to-end at least once to verify it works correctly.
 - [ ] **Damocles Foil & Leadership Camp registration URL** — `registration_url_en` in `fenb-1/data/events.yaml` for the Aug 24–28 camp entry is blank; add the registration link when Damocles publishes one (contact: Joe Kinley, Kinley.jf@gmail.com)
 - [ ] **Damocles camp news articles — review before commit** — `jun-13-damocles-epee-camp-2026.{en,fr}.md` and `jun-13-damocles-foil-camp-2026.{en,fr}.md` were machine-drafted from the resource flyers; user should verify French translations and camp details before publishing
 - [ ] **Interscholastic finals article — photo gallery** — 4 action photos at `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; add `photos:` front matter to `jun-16-interscholastic-finals-2026.{en,fr}.md` (photo gallery system now available — see README.md)
-- [ ] **Season rollover (archive pattern)** — when a new fencing season begins, move the outgoing `fenb-1/data/events.yaml` to `fenb-1/data/events_archive/YYYY-YYYY.yaml` (e.g. `2025-2026.yaml`) before starting the new season file. No layout changes needed at that point. See `plans/events-data-archive.md` for the full plan including how to build a Past Events page when desired.

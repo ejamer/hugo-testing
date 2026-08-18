@@ -1,14 +1,69 @@
 {{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
+
+{{- $allPages := sort .RegularPagesRecursive "Date" "desc" -}}
+
+{{/* Category filter buttons: canonical event-category order first (for the categories
+     news actually uses), then any news-only categories (e.g. "results") not in that
+     list, in first-seen order. Self-maintaining — no hardcoded category list to update. */}}
+{{- $eventCatOrder := hugo.Data.event_categories.event_categories -}}
+{{- $usedCats := slice -}}
+{{- range $allPages -}}
+  {{- $c := .Params.category -}}
+  {{- if and $c (not (in $usedCats $c)) -}}{{- $usedCats = $usedCats | append $c -}}{{- end -}}
+{{- end -}}
+{{- $cats := slice -}}
+{{- range $eventCatOrder -}}{{- if in $usedCats . -}}{{- $cats = $cats | append . -}}{{- end -}}{{- end -}}
+{{- range $usedCats -}}{{- if not (in $cats .) -}}{{- $cats = $cats | append . -}}{{- end -}}{{- end -}}
+
+{{/* Season dropdown options. $allPages is already sorted Date desc, so collecting
+     distinct seasons in first-seen order naturally yields newest-season-first. */}}
+{{- $seasons := slice -}}
+{{- range $allPages -}}
+  {{- $s := partial "news-season.html" .Date -}}
+  {{- if not (in $seasons $s) -}}{{- $seasons = $seasons | append $s -}}{{- end -}}
+{{- end -}}
+
 <section class="fenb-section fenb-news-index-section">
   <div class="fenb-container">
+
+    <div class="fenb-news-filter-bar">
+      <div class="fenb-news-filter-group">
+        <span class="fenb-news-filter-label">{{ i18n "schedule_filter_label" }}</span>
+        <div class="fenb-news-filter-meta-row">
+          <button class="fenb-news-filter-meta" data-action="all">{{ i18n "schedule_filter_all" }}</button>
+          <button class="fenb-news-filter-meta" data-action="none">{{ i18n "schedule_filter_none" }}</button>
+        </div>
+        <div class="fenb-news-filter-btns">
+          {{- range $cats -}}
+          <button class="fenb-news-filter-btn fenb-news-filter-btn--{{ . }} is-active" data-category="{{ . }}">
+            {{ i18n . | default . }}
+          </button>
+          {{- end -}}
+        </div>
+      </div>
+      <div class="fenb-news-filter-group">
+        <label class="fenb-news-filter-label" for="news-season-select">{{ i18n "news_filter_season" }}</label>
+        <select id="news-season-select" class="fenb-cal-select fenb-news-season-select">
+          <option value="all">{{ i18n "news_filter_all_seasons" }}</option>
+          {{- range $seasons -}}
+          <option value="{{ . }}">{{ . }}</option>
+          {{- end -}}
+        </select>
+      </div>
+    </div>
+
     <div class="fenb-news-grid">
-      {{ range ($.Paginate (sort .RegularPagesRecursive "Date" "desc")).Pages }}
+      {{ range $allPages }}
       {{ partial "news-card.html" (dict "page" . "heading" "h2" "truncate" 160) }}
       {{ end }}
     </div>
-    {{ partial "pagination.html" . }}
+    <p class="fenb-news-no-results" hidden>{{ i18n "news_no_results" }}</p>
+
   </div>
 </section>
+
+<script src="{{ "js/news-filter.js" | absURL }}" defer></script>
+
 {{ end }}

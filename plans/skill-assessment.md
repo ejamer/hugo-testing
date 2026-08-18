@@ -132,36 +132,9 @@ The scraper already loads the tournament data. Add a `--match-events` flag that 
 
 ---
 
-## 5. `fenb-data-season-rollover`
-
-**What it does:** Archive current `events.yaml`, write a blank new-season `events.yaml`, update two `_index.md` descriptions, print a reminder checklist.
-
-### (a) Format
-Clean. `disable-model-invocation: true`, narrow tool list (`Read Write Bash(ls *)`). Correct.
-
-### (b) Relevance & efficiency
-Well-scoped. Short and clear. The reminder list at the end is the right level of detail.
-
-### (c) Token burn
-The instructions are already lean. The main inefficiency is that AI is doing pure file I/O that has no reasoning component: read a YAML key, copy a file, write a template, edit two description lines.
-
-### (d) Script candidates — HIGHEST OPPORTUNITY
-
-**This skill is a candidate for full script replacement.**
-
-`scripts/season-rollover.sh <outgoing-season> <new-season-label>` can:
-1. Verify `events.yaml` `season:` field matches the outgoing season
-2. Copy to `data/events_archive/`
-3. Write blank new `events.yaml`
-4. Patch both `_index.md` description fields
-
-The skill becomes: run the script, report its output, print the reminder checklist. No AI judgment needed for steps 1–4. The script running cleanly is the verification.
-
-The AI's residual role is only: ask the 2 inputs and display the post-rollover reminder list. This could ultimately be a very short skill (10 lines instead of 42).
-
 ---
 
-## 6. `fenb-docs-update`
+## 5. `fenb-docs-update`
 
 **What it does:** Gather git diff, assess 6 doc files for needed updates, present a summary table, optionally apply edits.
 
@@ -185,7 +158,7 @@ This skill is inherently AI-dependent. The file assessments cannot be scripted.
 
 ---
 
-## 7. `fenb-git-commit`
+## 6. `fenb-git-commit`
 
 **What it does:** Confirm intent; check/select target branch; inspect remote state; stage and commit; push.
 
@@ -218,7 +191,7 @@ The commit message draft (Step 5) and the actual commit (Step 6) must remain AI-
 
 ---
 
-## 8. `fenb-git-merge`
+## 7. `fenb-git-merge`
 
 **What it does:** Find unmerged feature branches, let user pick one, push if needed, create PR, optionally merge immediately.
 
@@ -246,7 +219,7 @@ AI reads the output and presents it in the `AskUserQuestion` — no need for the
 
 ---
 
-## 9. `fenb-git-release`
+## 8. `fenb-git-release`
 
 **What it does:** Confirm intent; check branch/remote; build prod; parity check; summarize commits; select version tag; create PR; write version.json; merge; tag.
 
@@ -300,7 +273,6 @@ Eliminates the most error-prone AI step. The AI's only role becomes: pass the ve
 | `fenb-content-add-page` | ✓ | Good | Medium — Step 6 trigger | MEDIUM — file stub + grep audit script |
 | `fenb-content-add-results` | ✓ | Good | Low-medium — FR table trimming | MEDIUM — format detection, year-folder, stub |
 | `fenb-data-get-results` | ✓ | Good | MEDIUM — Step 0 verbosity | HIGH — deps check script, events.yaml match |
-| `fenb-data-season-rollover` | ✓ | Lean | Low | HIGHEST — fully scriptable |
 | `fenb-docs-update` | ✓ | Good | Low | LOW — inherently AI judgment |
 | `fenb-git-commit` | ✓ | Good | Low | MEDIUM — preflight script for branch/remote state |
 | `fenb-git-merge` | ✓ | Good | Low | MEDIUM — branch list script |
@@ -313,21 +285,20 @@ Eliminates the most error-prone AI step. The AI's only role becomes: pass the ve
 | Priority | Script | Replaces | Effort |
 |---|---|---|---|
 | 1 | `scripts/generate-version-json.sh <version> <pr-url>` | Step 11 of git-release (most error-prone AI step) | Low |
-| 2 | `scripts/season-rollover.sh <outgoing> <new-label>` | Entire fenb-data-season-rollover execution | Low |
-| 3 | `scripts/check-ftl-deps.sh` | Step 0 of fenb-data-get-results | Low |
-| 4 | `scripts/create-news-stub.sh <date> <slug> <category>` | File creation in add-news + add-results | Medium |
-| 5 | `scripts/compute-next-version.sh` | Step 1 of git-release | Low |
-| 6 | `scripts/git-preflight.sh` | Steps 1+3+4 of git-commit | Medium |
-| 7 | `scripts/list-feature-branches.sh` | Step 1 of git-merge | Low |
-| 8 | `scripts/page-audit.sh <section> <slug>` | Step 5 greps in add-page | Medium |
+| 2 | `scripts/check-ftl-deps.sh` | Step 0 of fenb-data-get-results | Low |
+| 3 | `scripts/create-news-stub.sh <date> <slug> <category>` | File creation in add-news + add-results | Medium |
+| 4 | `scripts/compute-next-version.sh` | Step 1 of git-release | Low |
+| 5 | `scripts/git-preflight.sh` | Steps 1+3+4 of git-commit | Medium |
+| 6 | `scripts/list-feature-branches.sh` | Step 1 of git-merge | Low |
+| 7 | `scripts/page-audit.sh <section> <slug>` | Step 5 greps in add-page | Medium |
 
-Scripts 1–3 are the quickest wins: low effort, highest frequency of error or unnecessary token burn. Scripts 4–5 consolidate duplicated logic across multiple skills. Scripts 6–8 are quality-of-life improvements.
+Scripts 1–2 are the quickest wins: low effort, highest frequency of error or unnecessary token burn. Scripts 3–4 consolidate duplicated logic across multiple skills. Scripts 5–7 are quality-of-life improvements.
 
 ---
 
 ## Cross-skill observations
 
-1. **`disable-model-invocation: true` is inconsistently applied.** It's set on skills that still say "Ask the user for:" at the top (`add-news`, `add-page`, `season-rollover`). This appears to mean "run in current conversation, not a sub-agent" — which is correct and intentional — but the semantics should be confirmed, since new contributors might misread it as "no AI involved."
+1. **`disable-model-invocation: true` is inconsistently applied.** It's set on skills that still say "Ask the user for:" at the top (`add-news`, `add-page`). This appears to mean "run in current conversation, not a sub-agent" — which is correct and intentional — but the semantics should be confirmed, since new contributors might misread it as "no AI involved."
 
 2. **Year-folder creation logic is duplicated** between `add-news` (Step 3) and `add-results` (Step 7, step 4). A shared script removes this duplication.
 

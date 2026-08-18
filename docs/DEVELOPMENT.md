@@ -108,13 +108,13 @@ Git and release workflows are automated as Claude Code skills (invoked with `/fe
 | `/fenb-git-merge` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
 | `/fenb-git-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
 
-For content and data skills (`/fenb-content-add-news`, `/fenb-content-add-page`, `/fenb-data-get-results`, `/fenb-data-season-rollover`), see `README.md`. See `CLAUDE.md` for the full skill list and naming convention.
+For content and data skills (`/fenb-content-add-news`, `/fenb-content-add-page`, `/fenb-data-get-results`), see `README.md`. See `CLAUDE.md` for the full skill list and naming convention. 
 
 ---
 
 ## Scripts
 
-Utility scripts live in `scripts/`. They are independent of the Hugo build — run them from the repo root with `python3 scripts/<name>.py`.
+Utility scripts live in `scripts/`. They are independent of the Hugo build — run them from the repo root. For example: `python3 scripts/<name>.py`. (Note: Season rollover is a script, not a skill — `scripts/season-rollover.sh`, see `README.md`.)
 
 ### fencingtimelive-results.py
 

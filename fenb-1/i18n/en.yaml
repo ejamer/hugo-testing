@@ -25,6 +25,9 @@ schedule_filter_none:     "None"
 sidebar_recent_news: "Recent News"
 sidebar_related_news: "Related News"
 see_more_news:       "See more news"
+news_filter_season:      "Season"
+news_filter_all_seasons: "All seasons"
+news_no_results:         "No articles match the selected filters."
 
 # ── Programs section ───────────────────────────────────────
 program_clubs_title:   "Find a Club"
