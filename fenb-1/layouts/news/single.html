@@ -21,7 +21,7 @@
         <div class="fenb-callout fenb-callout--alert">{{ . | safeHTML }}</div>
         {{- end }}
         {{- with .Params.image }}
-        <div class="fenb-article-event-logo">
+        <div class="fenb-article-event-logo" data-lightbox-zone>
           <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}" class="fenb-article-event-logo-img{{ if $.Params.image_dark }} fenb-article-event-logo-img--light{{ end }}">
           {{- with $.Params.image_dark }}
           <img src="{{ . | relURL }}" alt="{{ $.Params.image_alt }}" class="fenb-article-event-logo-img fenb-article-event-logo-img--dark">
