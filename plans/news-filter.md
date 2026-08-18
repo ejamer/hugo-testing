@@ -354,9 +354,45 @@ The filter buttons use CSS variables already defined for dark mode. After implem
 - [ ] All categories visible by default on load
 - [ ] Toggling a category off hides matching cards, toggling back shows them
 - [ ] All/None meta buttons work correctly
-- [ ] Year dropdown filters correctly; "All years" shows everything
-- [ ] Year + category filters combine correctly (AND logic)
+- [ ] Season dropdown filters correctly; "All seasons" shows everything
+- [ ] Season + category filters combine correctly (AND logic)
 - [ ] "No articles" message appears when filters eliminate all cards
 - [ ] Both EN and FR pages work
 - [ ] Dark mode filter bar is readable
 - [ ] Mobile layout: filter bar wraps cleanly at narrow widths
+
+---
+
+## Revision (2026-08-17) — season grouping instead of calendar year
+
+Everything above still holds structurally (Option A, remove pagination, filter in JS). The one change: group and filter by **fencing season** (Sept–Aug, matching `events.yaml` and `join.yaml`) instead of calendar year. A news reader thinking "show me articles from this season" means Sept 2026–Aug 2027, not Jan–Dec 2026 — a calendar-year filter would arbitrarily split a season's coverage across two dropdown entries (e.g. the Sept 2026 season-opener article and the June 2027 provincials results article would land in different "years" despite being the same season).
+
+**No new front matter needed.** Season is derived from each article's existing `date` field:
+
+```go
+{{- /* partials/news-season.html — takes a time.Time, returns its season label, e.g. "2026–2027" */ -}}
+{{- $d := . -}}
+{{- $y := $d.Year -}}
+{{- $label := "" -}}
+{{- if ge (int $d.Month) 9 -}}
+  {{- $label = printf "%d–%d" $y (add $y 1) -}}
+{{- else -}}
+  {{- $label = printf "%d–%d" (sub $y 1) $y -}}
+{{- end -}}
+{{- return $label -}}
+```
+
+(Hugo's `return` only accepts a bare value/variable, not a nested function-call expression — assign to a variable first.)
+
+Deriving avoids drift (an editor typing the wrong season string into front matter) and works retroactively on all ~15 existing articles with zero migration.
+
+**Deltas from the Option A plan above:**
+
+| Original (year-based) | Revised (season-based) |
+|---|---|
+| `data-year="{{ $page.Date.Format "2006" }}"` on `.fenb-news-card` | `data-season="{{ partial "news-season.html" $page.Date }}"` |
+| `$years` collection loop (`.Date.Format "2006"`) | Same loop shape, collecting `partial "news-season.html" .Date` instead; sort descending so the current season is first |
+| `#news-year-select`, `news_filter_year`, `news_filter_all_years` i18n keys | Rename to `#news-season-select`, `news_filter_season`, `news_filter_all_seasons` |
+| JS `yearSelect` / `year` variable names | Rename to `seasonSelect` / `season`; comparison logic (`===` / `'all'`) is unchanged |
+
+Everything else — the pagination removal, the category toggle buttons, the CSS, the dark-mode note — is unchanged from the Option A plan above.

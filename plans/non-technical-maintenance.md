@@ -15,7 +15,7 @@ The site's current editing workflow assumes a developer: git branch management, 
 | Update join URLs (2MEV, club form) | Annual | Raw YAML field edit |
 | Add club | Rare | YAML append + image file upload |
 | Add policy / AGM minutes | Rare | Markdown pair + `data/policies.yaml` entry + PDF upload |
-| Season rollover | Annual | Multi-step; existing `/fenb-data-season-rollover` skill |
+| Season rollover | Annual | Already scripted — `scripts/season-rollover.sh <outgoing> <new-label>` |
 
 ## Specific failure modes to prevent
 
@@ -47,11 +47,14 @@ Validates:
 
 Appends a correctly-indented YAML block to `fenb-1/data/events.yaml` and prints a confirmation with the event's display date.
 
-#### `scripts/add-board-member.sh`
+#### `scripts/board-member-change.sh`
 
-Prompts: name, English role, French role, optional card_color (numbered menu: default/teal/crimson).
+`members:` is a fixed-size list (matches the board's bylaws seat count) — this script doesn't append or remove rows, it fills/vacates an existing seat.
 
-Appends to the `members:` list in `fenb-1/data/board_members.yaml`.
+- **Fill a seat:** list current `members:` entries, let the user pick a vacant one (blank `name`) or one to replace, prompt for name/role_en/role_fr/card_color/start_date, write it into that entry in place.
+- **Vacate a seat (someone leaves):** let the user pick their entry, prompt for an `end_date`, copy the entry (with `end_date` added) into `previous_members:`, then blank out the `name` field on the original `members:` entry (seat stays, now vacant).
+
+See `fenb-1/data/board_members.yaml`'s header comment for the exact workflow this scripts.
 
 #### `scripts/update-join-urls.sh`
 
@@ -103,7 +106,7 @@ Use this phase if: (a) the editor has zero terminal comfort, or (b) news article
 | Collection | Maps to | Notes |
 |---|---|---|
 | `events` | `data/events.yaml` (list field) | All event fields as typed inputs; category as select |
-| `board_members` | `data/board_members.yaml` (list field) | name, role_en, role_fr, card_color select |
+| `board_members` | `data/board_members.yaml` (`members` list field — fixed seat count, don't let the CMS add/remove rows) | name, role_en, role_fr, card_color select, start_date ("YYYY-MM"). Moving someone to `previous_members` (with an end_date) needs a separate, manual flow — not a simple field edit. |
 | `clubs` | `data/clubs.yaml` (list field) | Includes media upload for logo |
 | `news_en` | `content/news/YYYY/*.en.md` | Markdown body + front matter fields |
 | `news_fr` | `content/news/YYYY/*.fr.md` | Matching French collection |

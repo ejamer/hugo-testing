@@ -14,7 +14,6 @@ Content and data workflows are available as Claude Code skills (invoked with `/f
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
 | `/fenb-data-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
-| `/fenb-data-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
 
 For git and release workflow skills (`/fenb-git-commit`, `/fenb-git-merge`, `/fenb-git-release`), see `docs/DEVELOPMENT.md`.
 
@@ -182,29 +181,31 @@ Each category drives three visual elements: the date badge on the event card, th
 
 **Adding a new category:** add the ID to `data/event_categories.yaml`, add i18n keys to both `i18n/en.yaml` and `i18n/fr.yaml`, and add the corresponding CSS colour rules to `fenb-events.css`.
 
-The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today), falling back to the most recent past events if fewer than 4 are upcoming. When the season ends, add an off-season placeholder entry (category `announcement`) so the section stays populated through the summer gap.
+The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today). This pulls from `partials/all-events.html` — current season + every archived season merged — so an event archived mid-season (e.g. a rollover run before the outgoing season's last event has happened) doesn't disappear from the homepage or the `/events/` calendar just because it moved to `events_archive/`. When there's a genuine gap in scheduled events (off-season), add a placeholder entry (category `announcement`) so the section stays populated instead of showing "more coming soon" placeholders.
 
 #### Season rollover
 
-> **Skill available:** run `/fenb-data-season-rollover` in Claude Code — it verifies the outgoing season label, archives `events.yaml`, creates a fresh one, and updates the events calendar page subtitles.
+At the end of each season (typically late August), run:
 
-At the end of each season (typically late August):
-
-1. Move `data/events.yaml` to `data/events_archive/YYYY-YYYY.yaml` — use a regular hyphen in the filename (e.g. `2025-2026.yaml`).
-2. Create a fresh `data/events.yaml` for the incoming season with `season: "YYYY–YYYY"` (en-dash in the label) and an empty `events:` list.
-
-The season schedule page at `/events/schedule/` automatically adds a dropdown entry for the archived season on the next build — no layout or template changes needed.
-
-The **`season` field** at the top of `events.yaml` (e.g. `season: "2025–2026"`) is required — it drives the schedule page season dropdown label.
-
-Also update the events calendar page subtitle in `content/events/_index.md` and `content/events/_index.fr.md` at rollover time:
-```yaml
-# _index.md
-description: "2026–2027 season schedule"
-
-# _index.fr.md
-description: "Calendrier de la saison 2026–2027"
 ```
+scripts/season-rollover.sh 2025-2026 "2026–2027"
+```
+
+There's no skill for this — it's a fully mechanical set of steps (verify a label match, copy a file, template a fresh one, edit two front-matter fields), so it's just a script; ask Claude to run it and relay the output if you'd rather not run it yourself. The script:
+
+1. Verifies `data/events.yaml`'s `season:` field matches the outgoing season you specified — stops if it doesn't.
+2. Moves `data/events.yaml` to `data/events_archive/YYYY-YYYY.yaml` (regular hyphen filename) — refuses to overwrite an existing archive file.
+3. Creates a fresh `data/events.yaml` with `season: "YYYY–YYYY"` (en-dash label) and an empty `events:` list.
+4. Updates the `description:` subtitle in `content/events/_index.md` and `content/events/_index.fr.md`.
+
+Archiving events that are still current/upcoming (a rollover doesn't necessarily land after the outgoing season's very last event) is safe — the homepage and `/events/` calendar merge current + archived seasons at render time, so nothing disappears. See `plans/events-data-archive.md`.
+
+The season schedule page at `/events/schedule/` automatically adds a dropdown entry for the archived season on the next build — no layout or template changes needed there.
+
+**Not handled by the script** (needs human/AI judgment):
+- Add the first events of the new season to `data/events.yaml`
+- Add an off-season placeholder announcement event if there's a gap before the first real event
+- Update `membership_url` / `club_form_url` in `data/join.yaml` once 2MEV/a new form is published for the new season
 
 </details>
 
@@ -213,7 +214,6 @@ description: "Calendrier de la saison 2026–2027"
 
 Edit `data/board_members.yaml`. Top-level keys:
 
-- `season` — display label (e.g. `"2025–2026"`); update at the start of each season
 - `contact` — board inquiry email used on the `/contact/` page
 - `affiliations` — provincial/national affiliations shown in the Mission & Leadership page sidebar (`/about/organization/`):
   ```yaml
@@ -222,13 +222,29 @@ Edit `data/board_members.yaml`. Top-level keys:
       name_fr: "Fédération canadienne d'escrime"
       url: "https://fencing.ca/"
   ```
-- `members` — board member list. Each entry:
+- `members` — the **current** board roster, shown on `/about/organization/`. Each entry:
   ```yaml
   - name: "Full Name"
     role_en: "President"       # displayed in English
     role_fr: "Présidente"      # displayed in French
+    start_date: "2025-09"      # optional — "YYYY-MM" (month + year only), historical record only, doesn't affect display
   ```
-  Members are displayed in the order they appear in the file. Add `card_color: teal` or `card_color: crimson` to any member whose avatar and role label should use a non-default colour (omit for standard directors, which use navy). To mark a position as **vacant**, omit the `name` field entirely — the card will display "Vacant" (bilingual) with a `~` avatar.
+  Members are displayed in the order they appear in the file. Add `card_color: teal` or `card_color: crimson` to any member whose avatar and role label should use a non-default colour (omit for standard directors, which use navy). To mark a position as **vacant**, set `name: ""` — the card will display "Vacant" (bilingual) with a `~` avatar.
+
+  **Keep this list at exactly the board's bylaws-defined seat count at all times.** A departure should never change how many entries are here — see "When someone leaves" below.
+
+- `previous_members` — past board members, not displayed anywhere yet (a future "Board History" page — see `docs/TODO.md`). Each entry adds `end_date` to the `members` schema:
+  ```yaml
+  - name: "Full Name"
+    role_en: "Director"
+    role_fr: "Administrateur"
+    start_date: "2024-09"
+    end_date: "2026-06"        # "YYYY-MM" — presence here is what marks them as no longer active
+  ```
+
+  **When someone leaves the board:**
+  1. Copy their entry from `members` into `previous_members`, adding an `end_date`.
+  2. In `members`, either set that entry's `name` back to `""` (seat now vacant) or overwrite it with their successor's info. Never delete the entry — the list length must stay constant.
 
 </details>
 

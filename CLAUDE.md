@@ -10,7 +10,7 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - **`docs/PROJECT_LAYOUT.md`** — full directory tree with file-by-file descriptions. Read it when navigating an unfamiliar part of the repo.
 - **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, shared components, and page header band usage.
 - **`docs/TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
-- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, or git submodules.
+- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, git submodules, or any JS-driven show/hide toggle (filters, dropdowns, modals) — CSS `display` set via a class selector silently defeats the `hidden` attribute; see the entry for the fix.
 - **`plans/`** — detailed implementation plans for multi-session features. Read the relevant plan file before starting any TODO item that links to one.
 
 ## Outstanding TODOs
@@ -35,7 +35,8 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
 | `/fenb-data-get-results` | Fetch tournament results from fencingtimelive.com — hosted-tournament mode reports full podiums (all medalists, any province); away-tournament mode reports NB fencer placements |
-| `/fenb-data-season-rollover` | Archive the current season's events and start a fresh `events.yaml` |
+
+Season rollover (archive the current season's events, start a fresh `events.yaml`) is no longer a skill — it's fully mechanical, so it's `scripts/season-rollover.sh <outgoing> <new-label>` directly. See README.md's "Season rollover" section.
 
 When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/commands/`. Types: `git` (branch/commit/PR workflows), `content` (creating new pages or articles), `data` (fetching or managing structured data files).
 

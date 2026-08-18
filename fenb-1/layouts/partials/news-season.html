@@ -1,0 +1,17 @@
+{{- /*
+  Returns the fencing-season label (e.g. "2026–2027") for a given date, matching the
+  Sept–Aug season boundary used by events.yaml, board_members.yaml, and join.yaml.
+  Derived from the date rather than stored as front matter, so it needs no per-article
+  maintenance and can't drift from what the date actually says.
+
+  Call with a time.Time: {{ partial "news-season.html" $page.Date }}
+*/ -}}
+{{- $d := . -}}
+{{- $y := $d.Year -}}
+{{- $label := "" -}}
+{{- if ge (int $d.Month) 9 -}}
+  {{- $label = printf "%d–%d" $y (add $y 1) -}}
+{{- else -}}
+  {{- $label = printf "%d–%d" (sub $y 1) $y -}}
+{{- end -}}
+{{- return $label -}}

@@ -1,0 +1,22 @@
+{{- /*
+  Returns a flat slice of every event across the current season (hugo.Data.events.events)
+  and every archived season (hugo.Data.events_archive), sorted by start_date ascending.
+
+  Why this exists: a season rollover archives the *entire* outgoing events.yaml, including
+  any events whose start_date is still current/upcoming at rollover time (rollovers happen
+  "around late August," not necessarily after the last event of the outgoing season has
+  passed). Consumers that only read hugo.Data.events.events lose visibility of those events
+  until enough new-season events accumulate to replace them. Use this partial anywhere
+  "what's happening now / this month" is computed — layouts/events/schedule.html already
+  does its own version of this merge (grouped by season, not flattened) and doesn't need it.
+
+  No args required. Call with: {{ partial "all-events.html" . }}
+*/ -}}
+{{- $all := hugo.Data.events.events -}}
+{{- if hugo.Data.events_archive -}}
+  {{- range $k, $v := hugo.Data.events_archive -}}
+    {{- $all = $all | append $v.events -}}
+  {{- end -}}
+{{- end -}}
+{{- $all = sort $all "start_date" "asc" -}}
+{{- return $all -}}

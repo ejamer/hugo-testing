@@ -7,6 +7,9 @@
   {{- $catLabels = merge $catLabels (dict . (i18n . | default .)) -}}
 {{- end -}}
 
+{{/* Merged across current + archived seasons — see partials/all-events.html for why. */}}
+{{- $allEvents := partial "all-events.html" . -}}
+
 {{/* ── Calendar ────────────────────────────────────────── */}}
 <section class="fenb-section fenb-events-cal-section">
   <div class="fenb-container fenb-container--narrow">
@@ -39,7 +42,7 @@
         {{/* No-JS fallback: full chronological list */}}
         <noscript>
           <div class="fenb-events-grid">
-            {{ range hugo.Data.events.events }}
+            {{ range $allEvents }}
             {{ partial "event-card.html" . }}
             {{ end }}
           </div>
@@ -64,7 +67,7 @@
 {{/* ── Embed data and i18n strings for the calendar JS ── */}}
 <script>
 window.FENB_CAL = {
-  events: {{ hugo.Data.events.events | jsonify | safeJS }},
+  events: {{ $allEvents | jsonify | safeJS }},
   months: [
     "{{ i18n "cal_month_jan" }}", "{{ i18n "cal_month_feb" }}", "{{ i18n "cal_month_mar" }}",
     "{{ i18n "cal_month_apr" }}", "{{ i18n "cal_month_may" }}", "{{ i18n "cal_month_jun" }}",

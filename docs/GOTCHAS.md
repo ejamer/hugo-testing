@@ -117,7 +117,7 @@ Fix: add a `[hidden]` companion rule:
 }
 ```
 
-Caught on `.fenb-hof-filter-badge` (used `display: inline-flex`, stayed visible despite JS setting `hidden`).
+Caught on `.fenb-hof-filter-badge` (used `display: inline-flex`, stayed visible despite JS setting `hidden`). **Recurred** on `.fenb-news-card` (2026-08-17, `display: flex`) when the news filter bar was built — this doc wasn't consulted first because CLAUDE.md's "read GOTCHAS.md before working on X" list didn't name "JS-driven show/hide filters" as a trigger. Any new element that gets shown/hidden via JS toggling `.hidden` needs this checked, not just XML/sitemap/data-file work.
 
 ---
 

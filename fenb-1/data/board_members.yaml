@@ -1,7 +1,24 @@
-# Board of Directors — used by layouts/about/list.html
-# Update season label and members list at the start of each year.
+# Board of Directors — used by layouts/about/organization/list.html
 # card_color: "teal" or "crimson" highlights an officer; omit for regular directors.
-season: "2025–2026"
+#
+# `members` is the CURRENT roster. Keep it at exactly the board's bylaws-defined seat
+# count at all times — a departure should never change how many entries are in this
+# list. To mark a position as vacant, set its `name` to "" (renders as "Vacant" with a
+# `~` avatar) rather than deleting the entry.
+#
+# When someone leaves the board:
+#   1. Copy their entry into `previous_members` below, adding an `end_date`.
+#   2. In `members`, either blank out their `name` (seat now vacant) or overwrite the
+#      entry with their successor's info. Never remove the entry itself.
+#
+# start_date / end_date: "YYYY-MM" (month + year only — day doesn't matter here).
+#   - `members` entries: start_date is optional (historical record only, doesn't
+#     affect display); no end_date field — presence in this list means active.
+#   - `previous_members` entries: both start_date and end_date expected.
+#
+# `previous_members` isn't displayed anywhere yet — it's a historical record for a
+# future "Board History" page. See docs/TODO.md.
+
 contact: "fencingnb@gmail.com"
 
 affiliations:
@@ -17,25 +34,35 @@ members:
     role_en: "President"
     role_fr: "Présidente"
     card_color: "teal"
+    start_date: ""
   - name: ""
     role_en: "Executive Director"
     role_fr: "Directrice générale"
     card_color: "crimson"
+    start_date: ""
   - name: "David Collins"
     role_en: "Director"
     role_fr: "Administrateur"
+    start_date: ""
   - name: "David Drysdale"
     role_en: "Director"
     role_fr: "Administrateur"
+    start_date: ""
   - name: "Edward Jamer"
     role_en: "Director"
     role_fr: "Administrateur"
+    start_date: ""
   - name: "Colleen Parker"
     role_en: "Director"
     role_fr: "Administratrice"
+    start_date: ""
   - name: "Gilles Robichaud"
     role_en: "Director"
     role_fr: "Administrateur"
+    start_date: ""
   - name: ""
     role_en: "Director"
     role_fr: "Administrateur"
+    start_date: ""
+
+previous_members: []

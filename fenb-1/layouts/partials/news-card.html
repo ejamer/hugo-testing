@@ -8,7 +8,9 @@
 {{- $page     := .page -}}
 {{- $heading  := .heading  | default "h2" -}}
 {{- $truncate := .truncate | default 160  -}}
-<article class="fenb-news-card">
+<article class="fenb-news-card"
+  data-category="{{ $page.Params.category }}"
+  data-season="{{ partial "news-season.html" $page.Date }}">
   <div class="fenb-news-card-top{{ with $page.Params.category }} fenb-news-card-top--{{ . }}{{ end }}"></div>
   <div class="fenb-news-card-body">
     <div class="fenb-news-card-meta">

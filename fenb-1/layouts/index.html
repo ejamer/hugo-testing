@@ -86,7 +86,8 @@
         just the no-JS fallback.
       */}}
       {{ $today    := now.Format "2006-01-02" }}
-      {{ $upcoming := where hugo.Data.events.events "start_date" "ge" $today }}
+      {{/* Merged across current + archived seasons — see partials/all-events.html for why. */}}
+      {{ $upcoming := where (partial "all-events.html" .) "start_date" "ge" $today }}
       {{ range $upcoming }}
       {{ partial "event-card.html" . }}
       {{ end }}

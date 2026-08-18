@@ -16,7 +16,7 @@ hugo-testing/
 │   └── TODO.md            Outstanding items — keep current
 ├── .claude/               Project skills and settings (see CLAUDE.md for skill descriptions)
 ├── plans/                 Detailed plans for multi-session features (referenced from docs/TODO.md)
-├── scripts/               Utility scripts for fetching tournament results data
+├── scripts/               Utility scripts: fencingtimelive-results.py (tournament results), season-rollover.sh (events.yaml archive + fresh season file)
 ├── design-sources/        Editable source for generated graphics (e.g. typographic hero slides) — not served by Hugo; re-export to static/images/ when reused or edited. Two source formats: HTML/CSS (re-render with headless Chrome), and Inkscape SVG templates (e.g. hero/fenb-hero-template.svg — export panels directly to JPG/PNG)
 └── fenb-1/                Hugo site root
     ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)
@@ -50,7 +50,7 @@ hugo-testing/
     │   └── programs/       Programs landing + armourer, athlete, canada-games-2027,
     │                         coach, referee, secretariat sub-pages
     ├── data/               YAML files that drive page content — each maps to a specific page or feature:
-    │   ├── board_members.yaml      Board of directors grid on /about/organization/
+    │   ├── board_members.yaml      Board of directors grid on /about/organization/ — `members` is the current fixed-size roster (vacant seats included); departures move to `previous_members`, a historical record not displayed anywhere yet
     │   ├── hof_categories.yaml     Canonical Hall of Fame category IDs (drives filter dropdown + CSS badge classes)
     │   ├── clubs.yaml              Member club cards on /clubs/
     │   ├── coach_pathways.yaml     CFF coach certification pathway cards on /programs/coach-training/
@@ -83,6 +83,7 @@ hugo-testing/
     │   ├── programs/       list.html + one layout per sub-page
     │   ├── shortcodes/     Custom Hugo shortcodes (currently empty; add fenb-specific shortcodes here)
     │   └── partials/       Shared template components:
+    │                         all-events.html       Return-value partial — flat slice of current + all archived seasons' events, sorted by start_date (used by homepage + calendar so archived-but-current events stay visible)
     │                         back-link.html        Back-navigation link
     │                         clubs-benefits.html   Three-card benefits grid (clubs + join/clubs)
     │                         event-card.html       Single event card (YAML event object as context)
@@ -90,7 +91,8 @@ hugo-testing/
     │                         head-additions.html   Custom <head> additions (Analytics, etc.)
     │                         icon.html             Inline SVG renderer
     │                         nav.html              Sticky nav, language switcher, search, theme toggle
-    │                         news-card.html        Single news card
+    │                         news-card.html        Single news card — data-category/data-season attrs for news-filter.js
+    │                         news-season.html      Return-value partial — derives fencing-season label (Sept–Aug) from a date
     │                         page-header.html      Coloured band below the nav (title + subtitle)
     │                         section-header.html   Section label + h2 + "see all" link
     │                         site-announcement.html  Site-wide banner (controlled via hugo.toml)
@@ -111,6 +113,7 @@ hugo-testing/
         │                     upcoming-events.js   Narrows homepage event grid to true first 4 using visitor's clock
         │                     hof-table.js         Sort + category-filter dropdown for the Hall of Fame table
         │                     lightbox.js          Zoom-in image lightbox — loaded globally by baseof.html; activates on any element with data-lightbox-zone
+        │                     news-filter.js       Category toggle + season dropdown filter on /news/ (no pagination — all cards render, JS shows/hides)
         │                     results-table.js     Sortable results table in news articles
         ├── sitemap.xsl     XSLT stylesheet for language sitemaps — makes /en/ and /fr/ sitemaps
         │                   render as styled HTML in browsers (referenced via PI in sitemap.xml)
