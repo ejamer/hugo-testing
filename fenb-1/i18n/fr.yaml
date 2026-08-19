@@ -27,6 +27,7 @@ sidebar_related_news: "Nouvelles connexes"
 see_more_news:       "Voir plus de nouvelles"
 news_filter_season:      "Saison"
 news_filter_all_seasons: "Toutes les saisons"
+news_filter_clear:       "Effacer les filtres"
 news_no_results:         "Aucun article ne correspond aux filtres sélectionnés."
 
 # ── Section programmes ─────────────────────────────────────
