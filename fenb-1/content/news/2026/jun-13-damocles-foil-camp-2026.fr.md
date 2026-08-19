@@ -5,7 +5,7 @@ category: training
 summary: "Le Club d'escrime Damocles présente le Camp d'été de fleuret et de leadership 2026 à Fredericton, du 25 au 27 août, pour les escrimeurs de 13 à 19 ans — formation au fleuret, un programme optionnel de jeunes leaders pour les 16 ans et plus, et des entraîneurs expérimentés pour 195 $."
 image: "images/news/2026/damocles-foil-camp-2026.jpg"
 image_alt: "Camp d'été de fleuret et de leadership Damocles 2026"
-update: "<strong>Mise à jour :</strong> Les dates et les frais du camp ont changé — maintenant du 25 au 27 août pour 195 $, avec un nouveau programme optionnel de jeunes leaders pour les 16 ans et plus."
+update: "<strong>Mise à jour :</strong> En raison de circonstances indépendantes de notre volonté, le stage d'été 2026 de fleuret et de leadership est annulé. Nous présentons nos excuses à tous les fleurettistes intéressés."
 ---
 
 Le Club d'escrime Damocles organise le Camp d'été de fleuret et de leadership 2026 — trois jours de formation technique au fleuret combinée au développement du leadership pour les escrimeurs de 13 à 19 ans.
@@ -31,12 +31,3 @@ Les athlètes peuvent s'inscrire à un volet de leadership additionnel, qui comp
 - Diriger les échauffements, exercices et activités
 - Encadrer et mentorer les pairs
 - Formation supplémentaire en leadership
-
-**Inscription**
-
-Les places sont limitées — pré-inscrivez-vous dès aujourd'hui ! Contactez Joe Kinley :
-
-- Courriel : [Kinley.jf@gmail.com](mailto:Kinley.jf@gmail.com)
-- Téléphone : 902-322-9974
-
-Les frais de camp peuvent être payés par virement électronique ou par chèque (à l'ordre de Joseph Kinley) à [KinleyConsulting2021@gmail.com](mailto:KinleyConsulting2021@gmail.com).
