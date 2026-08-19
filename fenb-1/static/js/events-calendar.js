@@ -23,7 +23,22 @@
 
     populateSelectors();
     attachNavListeners();
+    attachHashListener();
     render();
+  }
+
+  // Editing the URL hash directly (e.g. pasting a new #YYYY-MM and hitting Enter)
+  // changes location.hash without a full page load, so init()'s one-time read of it
+  // never re-fires. Listen for that case too. history.replaceState() (used by
+  // updateHash() below) does not itself trigger 'hashchange', so this can't loop.
+  function attachHashListener() {
+    window.addEventListener('hashchange', function () {
+      var fromHash = parseHash();
+      if (!fromHash) return; // malformed/partial edit — leave the current view as-is
+      year = fromHash.year;
+      month = fromHash.month;
+      render();
+    });
   }
 
   // Deep-link format: #YYYY-MM (1-indexed month). Returns {year, month} with

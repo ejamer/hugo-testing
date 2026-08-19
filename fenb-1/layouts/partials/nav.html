@@ -131,6 +131,18 @@
         });
       });
     }
+    // Preserve a URL hash (e.g. the events calendar's #YYYY-MM deep link) across
+    // language switches — the switch links are server-rendered permalinks and can't
+    // know about client-side hash state at build time. Read the hash at click time
+    // (not on load) so it stays current if the page updates it after the initial load
+    // (e.g. the calendar rewriting it as the visitor browses months).
+    document.querySelectorAll('.fenb-lang-btn').forEach(function (btn) {
+      var baseHref = btn.getAttribute('href');
+      btn.addEventListener('click', function () {
+        if (window.location.hash) btn.href = baseHref + window.location.hash;
+      });
+    });
+
     const nav = document.getElementById('fenb-nav');
     if (nav) {
       window.addEventListener('scroll', function () {
