@@ -16,13 +16,32 @@
   var year, month; // current display state (month is 0-indexed)
 
   function init() {
+    var fromHash = parseHash();
     var now = new Date();
-    year = now.getFullYear();
-    month = now.getMonth();
+    year = fromHash ? fromHash.year : now.getFullYear();
+    month = fromHash ? fromHash.month : now.getMonth();
 
     populateSelectors();
     attachNavListeners();
     render();
+  }
+
+  // Deep-link format: #YYYY-MM (1-indexed month). Returns {year, month} with
+  // month 0-indexed, or null if the hash is absent/malformed.
+  function parseHash() {
+    var m = location.hash.match(/^#(\d{4})-(\d{2})$/);
+    if (!m) return null;
+    var mo = parseInt(m[2], 10);
+    if (mo < 1 || mo > 12) return null;
+    return { year: parseInt(m[1], 10), month: mo - 1 };
+  }
+
+  function updateHash() {
+    var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+    var target = '#' + year + '-' + pad(month + 1);
+    if (location.hash !== target) {
+      history.replaceState(null, '', target);
+    }
   }
 
   function populateSelectors() {
@@ -112,6 +131,7 @@
   }
 
   function render() {
+    updateHash();
     syncSelectors();
     renderGrid();
     renderEventList();
