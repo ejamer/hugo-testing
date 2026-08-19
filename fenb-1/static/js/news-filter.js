@@ -20,7 +20,8 @@
     var visible = 0;
 
     document.querySelectorAll('.fenb-news-card').forEach(function (card) {
-      var catMatch    = active.indexOf(card.dataset.category) !== -1;
+      // No category selected means no filtering by category — show everything.
+      var catMatch    = active.length === 0 || active.indexOf(card.dataset.category) !== -1;
       var seasonMatch = season === 'all' || card.dataset.season === season;
       var show = catMatch && seasonMatch;
       card.hidden = !show;
@@ -41,8 +42,7 @@
 
   metaBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var all = btn.dataset.action === 'all';
-      filterBtns.forEach(function (b) { b.classList.toggle('is-active', all); });
+      filterBtns.forEach(function (b) { b.classList.remove('is-active'); });
       applyFilters();
     });
   });

@@ -31,19 +31,18 @@
     <div class="fenb-news-filter-bar">
       <div class="fenb-news-filter-group">
         <span class="fenb-news-filter-label">{{ i18n "schedule_filter_label" }}</span>
-        <div class="fenb-news-filter-meta-row">
-          <button class="fenb-news-filter-meta" data-action="all">{{ i18n "schedule_filter_all" }}</button>
-          <button class="fenb-news-filter-meta" data-action="none">{{ i18n "schedule_filter_none" }}</button>
-        </div>
         <div class="fenb-news-filter-btns">
           {{- range $cats -}}
-          <button class="fenb-news-filter-btn fenb-news-filter-btn--{{ . }} is-active" data-category="{{ . }}">
+          <button class="fenb-news-filter-btn fenb-news-filter-btn--{{ . }}" data-category="{{ . }}">
             {{ i18n . | default . }}
           </button>
           {{- end -}}
         </div>
+        <div class="fenb-news-filter-meta-row">
+          <button class="fenb-news-filter-meta" data-action="clear">{{ i18n "news_filter_clear" }}</button>
+        </div>
       </div>
-      <div class="fenb-news-filter-group">
+      <div class="fenb-news-filter-group fenb-news-filter-group--season">
         <label class="fenb-news-filter-label" for="news-season-select">{{ i18n "news_filter_season" }}</label>
         <select id="news-season-select" class="fenb-cal-select fenb-news-season-select">
           <option value="all">{{ i18n "news_filter_all_seasons" }}</option>

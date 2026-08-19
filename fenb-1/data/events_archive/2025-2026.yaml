@@ -654,21 +654,6 @@ events:
     results_url_en: ""
     results_url_fr: ""
 
-  - title: "Damocles Summer Foil & Leadership Camp"
-    title_fr: "Camp d'été de fleuret et de leadership Damocles"
-    start_date: "2026-08-25"
-    end_date: "2026-08-27"
-    location: "Fredericton, NB"
-    category: "training"
-    description_en: "Foil training and leadership development for ages 13–19. Led by Joe Kinley & Isil Flynn."
-    description_fr: "Formation au fleuret et développement du leadership pour les 13–19 ans. Dirigé par Joe Kinley et Isil Flynn."
-    details_url_en: "/news/2026/jun-13-damocles-foil-camp-2026/"
-    details_url_fr: "/fr/news/2026/jun-13-damocles-foil-camp-2026/"
-    registration_url_en: ""
-    registration_url_fr: ""
-    results_url_en: ""
-    results_url_fr: ""
-
   # ── Summer 2026 (off-season placeholder) ───────────────
   - title: "2026–27 Season Registration"
     title_fr: "Inscription pour la saison 2026-2027"

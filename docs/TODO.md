@@ -89,6 +89,4 @@ Test each project skill end-to-end at least once to verify it works correctly.
 
 ## Events data
 
-- [ ] **Damocles Foil & Leadership Camp registration URL** — `registration_url_en` in `fenb-1/data/events.yaml` for the Aug 24–28 camp entry is blank; add the registration link when Damocles publishes one (contact: Joe Kinley, Kinley.jf@gmail.com)
-- [ ] **Damocles camp news articles — review before commit** — `jun-13-damocles-epee-camp-2026.{en,fr}.md` and `jun-13-damocles-foil-camp-2026.{en,fr}.md` were machine-drafted from the resource flyers; user should verify French translations and camp details before publishing
 - [ ] **Interscholastic finals article — photo gallery** — 4 action photos at `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; add `photos:` front matter to `jun-16-interscholastic-finals-2026.{en,fr}.md` (photo gallery system now available — see README.md)

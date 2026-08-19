@@ -163,6 +163,9 @@
   .fenb-news-grid   { grid-template-columns: 1fr; }
   .fenb-programs-grid { grid-template-columns: 1fr; }
 
+  .fenb-news-filter-group--season { margin-left: 0; width: 100%; }
+  .fenb-news-season-select        { width: 100%; }
+
   .fenb-clubs-grid     { grid-template-columns: 1fr; }
   .fenb-clubs-benefits { grid-template-columns: 1fr; }
   .fenb-clubs-cta-section { padding: 3.5rem 1rem; }

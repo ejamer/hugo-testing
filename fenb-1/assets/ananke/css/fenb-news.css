@@ -321,7 +321,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1.25rem 2rem;
-  align-items: flex-end;
+  align-items: flex-start;
   margin-bottom: 1.75rem;
   padding: 1.25rem 1.5rem;
   background: var(--white);
@@ -333,6 +333,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.fenb-news-filter-group--season {
+  margin-left: auto;
 }
 
 .fenb-news-filter-label {
@@ -556,10 +560,12 @@
 [data-theme="dark"] .fenb-news-filter-bar { background: var(--off-white); }
 [data-theme="dark"] .fenb-news-filter-meta,
 [data-theme="dark"] .fenb-news-filter-btn { background: var(--white); }
-[data-theme="dark"] .fenb-news-filter-btn.is-active               { color: var(--teal-light); border-color: var(--teal-light); }
+[data-theme="dark"] .fenb-news-filter-btn.is-active               { background: var(--teal);            color: #fff; border-color: var(--teal); }
+[data-theme="dark"] .fenb-news-filter-btn--training.is-active     { background: var(--cat-training);    color: #fff; border-color: var(--cat-training); }
 [data-theme="dark"] .fenb-news-filter-btn--national.is-active,
-[data-theme="dark"] .fenb-news-filter-btn--provincial.is-active   { color: var(--crimson-light); border-color: var(--crimson-light); }
-[data-theme="dark"] .fenb-news-filter-btn--announcement.is-active { color: var(--cat-announcement); border-color: var(--cat-announcement); }
+[data-theme="dark"] .fenb-news-filter-btn--provincial.is-active   { background: var(--crimson);         color: #fff; border-color: var(--crimson); }
+[data-theme="dark"] .fenb-news-filter-btn--meeting.is-active      { background: var(--cat-meeting);     color: #fff; border-color: var(--cat-meeting); }
+[data-theme="dark"] .fenb-news-filter-btn--announcement.is-active { background: var(--cat-announcement); color: #fff; border-color: var(--cat-announcement); }
 
 [data-theme="dark"] .fenb-404-code { color: var(--text-dark); }
 
