@@ -20,18 +20,18 @@
     {{- $detailsUrl := .details_url_en -}}
     {{- if and (eq site.Language.Lang "fr") .details_url_fr -}}{{- $detailsUrl = .details_url_fr -}}{{- end -}}
     {{ if $detailsUrl }}
-    <a class="fenb-event-details-link" href="{{ $detailsUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>
+    <a class="fenb-event-details-link" href="{{ $detailsUrl }}"{{ if not (or (hasPrefix $detailsUrl "mailto:") (hasPrefix $detailsUrl "tel:")) }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_details" }} &rarr;</a>
     {{ end }}
     {{- $todayMidnight := time (now.Format "2006-01-02") -}}
     {{- $registerUrl := .registration_url_en -}}
     {{- if and (eq site.Language.Lang "fr") .registration_url_fr -}}{{- $registerUrl = .registration_url_fr -}}{{- end -}}
     {{ if and $registerUrl ($dateObj.After $todayMidnight) }}
-    <a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer" data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>
+    <a class="fenb-event-register-link" href="{{ $registerUrl }}"{{ if not (or (hasPrefix $registerUrl "mailto:") (hasPrefix $registerUrl "tel:")) }} target="_blank" rel="noopener noreferrer"{{ end }} data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>
     {{ end }}
     {{- $resultsUrl := .results_url_en -}}
     {{- if and (eq site.Language.Lang "fr") .results_url_fr -}}{{- $resultsUrl = .results_url_fr -}}{{- end -}}
     {{ if $resultsUrl }}
-    <a class="fenb-event-results-link" href="{{ $resultsUrl }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_results" }} &rarr;</a>
+    <a class="fenb-event-results-link" href="{{ $resultsUrl }}"{{ if not (or (hasPrefix $resultsUrl "mailto:") (hasPrefix $resultsUrl "tel:")) }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>
     {{ end }}
   </div>
 </article>
