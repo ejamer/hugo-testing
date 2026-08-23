@@ -47,6 +47,7 @@ program_join_cta:      "Commencer"
 # ── Étiquettes de catégorie (clés correspondent au champ category dans data/events.yaml) ─
 competition: "Compétition"
 training:    "Camp d'entraînement"
+clinic:      "Clinique"
 national:    "Événement national"
 provincial:  "Provincial NB"
 meeting:      "Réunion FENB"

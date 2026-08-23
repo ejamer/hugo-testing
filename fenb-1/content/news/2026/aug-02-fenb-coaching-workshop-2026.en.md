@@ -1,7 +1,7 @@
 ---
 title: "2026 FENB Coaching Workshops — Register by August 5"
 date: 2026-08-02
-category: training
+category: clinic
 summary: "FENB is hosting two coaching workshops in Moncton on August 8–9, 2026 — register by August 5 to secure your spot."
 cta_label: "Registration"
 cta_heading: "Register by August 5"

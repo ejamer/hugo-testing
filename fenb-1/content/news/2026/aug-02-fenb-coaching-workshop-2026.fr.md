@@ -1,7 +1,7 @@
 ---
 title: "Ateliers des entraîneurs FENB 2026 — Inscrivez-vous avant le 5 août"
 date: 2026-08-02
-category: training
+category: clinic
 summary: "FENB organise deux ateliers pour entraîneurs à Moncton les 8 et 9 août 2026 — inscrivez-vous avant le 5 août pour réserver votre place."
 cta_label: "Inscription"
 cta_heading: "Inscrivez-vous avant le 5 août"

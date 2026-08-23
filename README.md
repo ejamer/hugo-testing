@@ -173,7 +173,7 @@ Each category drives three visual elements: the date badge on the event card, th
 | `training` | Training Camp / Camp d'entraînement | Dark green |
 | `national` | National Event / Événement national | Navy |
 | `provincial` | NB Provincial / Provincial NB | Crimson |
-| `clinic` | Clinic / Clinique | Olive |
+| `clinic` | Clinic / Clinique | Dark orange |
 | `meeting` | FENB Meeting / Réunion FENB | Grey |
 | `announcement` | Announcement / Annonce | Teal |
 
