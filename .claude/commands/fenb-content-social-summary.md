@@ -22,9 +22,9 @@ Pull out, in priority order:
 
 ## Step 3 — Determine the article URLs
 
-The filename stem (everything before `.en.md`/`.fr.md`, e.g. `aug-23-damocles-armoury-clinic`) is also the URL slug — the year subfolder does **not** appear in the URL (no custom permalinks are configured). Build:
-- EN: `https://www.fenb.ca/news/{filename-stem}/`
-- FR: `https://www.fenb.ca/fr/news/{filename-stem}/`
+The filename stem (everything before `.en.md`/`.fr.md`, e.g. `aug-23-damocles-armoury-clinic`) is also the URL slug, and the article's year subfolder **does** appear in the URL (no custom permalinks are configured, so Hugo uses the section's default path — `content/news/{year}/{stem}.md` → `/news/{year}/{stem}/`). Confirm the year against the file's own path — it's the year subfolder the file lives in, not necessarily the publication year in front matter. Build:
+- EN: `https://www.fenb.ca/news/{year}/{filename-stem}/`
+- FR: `https://www.fenb.ca/fr/news/{year}/{filename-stem}/`
 
 ## Step 4 — Compose the post
 
