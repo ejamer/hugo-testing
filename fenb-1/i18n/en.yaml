@@ -47,6 +47,7 @@ program_join_cta:      "Get started"
 # ── Event category labels (keys match the category field in data/events.yaml) ─
 competition: "Competition"
 training:    "Training Camp"
+clinic:      "Clinic"
 national:    "National Event"
 provincial:  "NB Provincial"
 meeting:      "FENB Meeting"

@@ -38,6 +38,8 @@
   --cat-announcement-pale:  #e3eefa;
   --cat-training:           #8c6e00;
   --cat-training-pale:      #f5efdc;
+  --cat-clinic:             #a13d0a;
+  --cat-clinic-pale:        #f8e6d8;
   --cat-national:           #1a3a5c;
   --cat-national-pale:      #e8eef5;
   --cat-meeting:            #4a4a4a;
@@ -66,6 +68,7 @@
   --shadow-lg:          0 12px 48px rgba(0,0,0,0.6);
   --cat-announcement-pale: #0a1a2e;
   --cat-training-pale:     #1f1700;
+  --cat-clinic-pale:       #26150a;
   --cat-national-pale:     #0d1828;
   --cat-meeting-pale:      #1e1e1e;
 }

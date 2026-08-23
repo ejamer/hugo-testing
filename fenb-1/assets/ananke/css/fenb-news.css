@@ -37,6 +37,7 @@
 }
 .fenb-news-card-top--competition  { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
 .fenb-news-card-top--training     { background: linear-gradient(90deg, var(--cat-training), #b08c00); }
+.fenb-news-card-top--clinic       { background: linear-gradient(90deg, var(--cat-clinic), #c9591a); }
 .fenb-news-card-top--national     { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
 .fenb-news-card-top--provincial   { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
 .fenb-news-card-top--meeting      { background: linear-gradient(90deg, var(--cat-meeting), #6a6a6a); }
@@ -71,6 +72,7 @@
 
 .fenb-news-category--competition  { background: var(--teal-pale);             color: var(--teal); }
 .fenb-news-category--training     { background: var(--cat-training-pale);     color: var(--cat-training); }
+.fenb-news-category--clinic       { background: var(--cat-clinic-pale);       color: var(--cat-clinic); }
 .fenb-news-category--national     { background: var(--crimson-pale);          color: var(--crimson); }
 .fenb-news-category--provincial   { background: var(--crimson-pale);          color: var(--crimson); }
 .fenb-news-category--meeting      { background: var(--cat-meeting-pale);      color: var(--cat-meeting); }
@@ -186,6 +188,7 @@
 }
 .fenb-article-divider--competition  { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
 .fenb-article-divider--training     { background: linear-gradient(90deg, var(--cat-training), #b08c00); }
+.fenb-article-divider--clinic       { background: linear-gradient(90deg, var(--cat-clinic), #c9591a); }
 .fenb-article-divider--national     { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
 .fenb-article-divider--provincial   { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
 .fenb-article-divider--meeting      { background: linear-gradient(90deg, var(--cat-meeting), #6a6a6a); }
@@ -374,6 +377,7 @@
 
 .fenb-news-filter-btn.is-active               { background: var(--teal-pale);           color: var(--teal);            border-color: var(--teal); }
 .fenb-news-filter-btn--training.is-active     { background: var(--cat-training-pale);    color: var(--cat-training);    border-color: var(--cat-training); }
+.fenb-news-filter-btn--clinic.is-active       { background: var(--cat-clinic-pale);      color: var(--cat-clinic);      border-color: var(--cat-clinic); }
 .fenb-news-filter-btn--national.is-active,
 .fenb-news-filter-btn--provincial.is-active   { background: var(--crimson-pale);         color: var(--crimson);         border-color: var(--crimson); }
 .fenb-news-filter-btn--meeting.is-active      { background: var(--cat-meeting-pale);      color: var(--cat-meeting);     border-color: var(--cat-meeting); }
@@ -552,6 +556,7 @@
 [data-theme="dark"] .fenb-news-category                           { background: var(--teal);             color: #fff; }
 [data-theme="dark"] .fenb-news-category--competition  { background: var(--teal);             color: #fff; }
 [data-theme="dark"] .fenb-news-category--training     { background: var(--cat-training);     color: #fff; }
+[data-theme="dark"] .fenb-news-category--clinic       { background: var(--cat-clinic);        color: #fff; }
 [data-theme="dark"] .fenb-news-category--national     { background: var(--crimson);           color: #fff; }
 [data-theme="dark"] .fenb-news-category--provincial   { background: var(--crimson);           color: #fff; }
 [data-theme="dark"] .fenb-news-category--meeting      { background: var(--cat-meeting);       color: #fff; }
@@ -562,6 +567,7 @@
 [data-theme="dark"] .fenb-news-filter-btn { background: var(--white); }
 [data-theme="dark"] .fenb-news-filter-btn.is-active               { background: var(--teal);            color: #fff; border-color: var(--teal); }
 [data-theme="dark"] .fenb-news-filter-btn--training.is-active     { background: var(--cat-training);    color: #fff; border-color: var(--cat-training); }
+[data-theme="dark"] .fenb-news-filter-btn--clinic.is-active       { background: var(--cat-clinic);       color: #fff; border-color: var(--cat-clinic); }
 [data-theme="dark"] .fenb-news-filter-btn--national.is-active,
 [data-theme="dark"] .fenb-news-filter-btn--provincial.is-active   { background: var(--crimson);         color: #fff; border-color: var(--crimson); }
 [data-theme="dark"] .fenb-news-filter-btn--meeting.is-active      { background: var(--cat-meeting);     color: #fff; border-color: var(--cat-meeting); }

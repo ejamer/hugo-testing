@@ -40,7 +40,7 @@ Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped t
 The load order is declared in `hugo.toml` under `params.ananke.custom_css`. Files must live in `fenb-1/assets/ananke/css/` — **not** `fenb-1/static/css/` — so Ananke's pipeline picks them up for concatenation, minification, and (in production) fingerprinting. A file placed in `static/` would be served separately, uncached, and unminified.
 
 - No inline styles for anything reusable — add a class to the appropriate file instead
-- Use CSS custom properties defined at `:root` rather than raw hex values: `--teal`, `--crimson`, `--shadow-sm`, `--radius`, category colours (`--cat-announcement`, `--cat-training`, `--cat-national`, `--cat-meeting` and their `--cat-*-pale` variants), brand colour channels for `rgba()` (`--teal-rgb`, `--crimson-rgb`)
+- Use CSS custom properties defined at `:root` rather than raw hex values: `--teal`, `--crimson`, `--shadow-sm`, `--radius`, category colours (`--cat-announcement`, `--cat-training`, `--cat-clinic`, `--cat-national`, `--cat-meeting` and their `--cat-*-pale` variants), brand colour channels for `rgba()` (`--teal-rgb`, `--crimson-rgb`)
 
 ### Container width modifiers
 
@@ -413,6 +413,7 @@ News articles use the same category IDs as events. The badge label is looked up 
 | `national` | National Event | Événement national | `--crimson` | Crimson |
 | `provincial` | NB Provincial | Provincial NB | `--crimson` | Crimson |
 | `training` | Training Camp | Camp d'entraînement | `--cat-training` | Yellow |
+| `clinic` | Clinic | Clinique | `--cat-clinic` | Dark orange |
 | `announcement` | Announcement | Annonce | `--cat-announcement` | Blue |
 | `meeting` | FENB Meeting | Réunion FENB | `--cat-meeting` | Grey |
 
@@ -421,7 +422,8 @@ News articles use the same category IDs as events. The badge label is looked up 
 - Results from the NB Provincial Championship → `provincial`
 - Results from a non-NB / open competition → `competition`
 - Registration or announcement for a competition → `competition`
-- Registration or announcement for a training camp / summer camp / clinic → `training`
+- Registration or announcement for a training camp / summer camp → `training`
+- Registration or announcement for a skills clinic (armoury, referee, etc.) → `clinic`
 - General announcements → `announcement`
 
 **Results table JS:** Add `results_table: true` to the front matter to load `results-table.js`, which adds sortable columns to markdown tables in the article body. This is decoupled from category so it can be used with any category. Add `results_hide_placements: true` to also hide the last column (placement) behind a toggle — omit it when placements should always be visible.
@@ -436,6 +438,7 @@ Each category drives four visual elements: the date badge on the event card, the
 |---|---|---|
 | `competition` | `--teal` | Teal |
 | `training` | `--cat-training` | Yellow |
+| `clinic` | `--cat-clinic` | Dark orange |
 | `national` | `--crimson` | Crimson |
 | `provincial` | `--crimson` | Crimson |
 | `meeting` | `--cat-meeting` | Grey |

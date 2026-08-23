@@ -15,20 +15,13 @@
 #   - If every slide is currently hidden, the carousel shows a default FENB logo slate
 #     instead of going empty.
 slides:
-  - src_en: images/hero/fenb-hero-coach-workshop-en.jpg
-    src_fr: "images/hero/fenb-hero-coach-workshop-fr.jpg"
-    alt: "Register now for our upcoming coach workshop / Inscrivez-vous maintenant pour notre prochain atelier de coaching"
-    link_en: "news/2026/aug-02-fenb-coaching-workshop-2026/"
+  - src_en: images/hero/hero-damocles-armoury-clinic-en.jpg
+    src_fr: images/hero/hero-damocles-armoury-clinic-fr.jpg
+    alt: "Damocles blade wiring armoury clinic — August 26, 2026 / Clinique d'armurerie Damocles — câblage des lames — 26 août 2026"
+    link_en: "news/2026/aug-23-damocles-armoury-clinic/"
     link_fr: ""
     publish_from: ""
-    expires: "2026-08-09"
-  - src_en: images/hero/hero6.jpg
-    src_fr: ""
-    alt: "Fencing-Escrime NB is hiring its next Executive Director — part-time contract, apply by August 15, 2026 / Nous embauchons notre prochain directeur général — contrat à temps partiel, date limite le 15 août 2026"
-    link_en: "news/2026/jul-16-executive-director-hiring-2026/"
-    link_fr: ""
-    publish_from: ""
-    expires: "2026-08-15"
+    expires: "2026-08-26"
   - src_en: images/hero/hero5.jpg
     src_fr: ""
     alt: ""
