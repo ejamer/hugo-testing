@@ -34,6 +34,7 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 | `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
+| `/fenb-content-social-summary` | Generate a short bilingual Facebook post summarizing an existing news article — offered automatically after `/fenb-content-add-news` and `/fenb-content-add-results` |
 | `/fenb-data-get-results` | Fetch tournament results from fencingtimelive.com — hosted-tournament mode reports full podiums (all medalists, any province); away-tournament mode reports NB fencer placements |
 
 Season rollover (archive the current season's events, start a fresh `events.yaml`) is no longer a skill — it's fully mechanical, so it's `scripts/season-rollover.sh <outgoing> <new-label>` directly. See README.md's "Season rollover" section.

@@ -1,7 +1,7 @@
 {
-  "version": "v0.5.4",
-  "released_at": "2026-08-23T13:40:56Z",
+  "version": "v0.5.5",
+  "released_at": "2026-08-23T22:53:46Z",
   "released_by": "Edward Jamer <edw*****@g*****.com>",
-  "pr": "https://github.com/ejamer/hugo-testing/pull/89",
-  "commits_since_tag": 1
+  "pr": "https://github.com/ejamer/hugo-testing/pull/90",
+  "commits_since_tag": 3
 }
