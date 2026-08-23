@@ -1,6 +1,6 @@
 ---
 description: Generate a bilingual EN/FR news article from a saved fenb-get-results JSON output file.
-allowed-tools: AskUserQuestion Read Write Bash(ls *) Bash(find *)
+allowed-tools: AskUserQuestion Read Write Skill Bash(ls *) Bash(find *)
 ---
 
 Create a bilingual news article summarising results from a saved results JSON file.
@@ -179,3 +179,5 @@ Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée se
 **Critical:** language code uses a **dot** separator (`.en.md`, `.fr.md`), never a dash.
 
 Report the two file paths created and tell the user to review them before committing.
+
+Then ask the user via `AskUserQuestion` whether they'd also like a sample Facebook post for this article. If yes, invoke `/fenb-content-social-summary` against the two files just created.

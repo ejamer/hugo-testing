@@ -1,7 +1,7 @@
 ---
 description: Create a new bilingual news article for the FencingNB Hugo site.
 disable-model-invocation: true
-allowed-tools: Read Write
+allowed-tools: Read Write AskUserQuestion Skill
 ---
 
 Ask the user for:
@@ -43,3 +43,5 @@ Then:
 Both files get the same `category` value — it's a canonical ID, not a display string. The badge label is derived from i18n at render time.
 
 **Critical:** the language code is separated by a **dot** (`.en.md`, `.fr.md`), never a dash (`-en.md`). A dash breaks Hugo's translation linking between the two files.
+
+After both files are written, ask the user via `AskUserQuestion` whether they'd also like a sample Facebook post for this article. If yes, invoke `/fenb-content-social-summary` against the two files just created.
