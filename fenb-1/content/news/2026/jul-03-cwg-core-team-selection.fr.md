@@ -12,23 +12,13 @@ related_news:
 
 Les sélections finales ont été faites pour les athlètes de l'équipe de base qui poursuivront leur entraînement dans le but de représenter notre province aux Jeux d'hiver du Canada 2027. Félicitations à chaque athlète — nous sommes fiers de votre travail acharné et de votre succès!
 
-**Sabre féminin**
-- Ashelin Stevens
+| Arme | Femmes | Hommes |
+|---|---|---|
+| Sabre | Ashelin Stevens | Jace Hallett, Simon Jamer, Flynn Stevens |
+| Fleuret | Shiloh Jamer | — |
+| Épée | Cielo Bagsican, Kseniia Losyk, Sophie Weed | Ethan Han, Gideon Candy, Sammy Singh-Ranger |
 
-**Fleuret féminin**
-- Shiloh Jamer
 
-**Épée féminine**
-- Cielo Bagsican
-- Kseniia Losyk
-- Sophie Weed
-
-**Sabre masculin**
-- Jace Hallett
-- Simon Jamer
-- Flynn Stevens
-
-**Épée masculine**
-- Ethan Han
-- Gideon Candy
-- Sammy Singh-Ranger
+#### Liens connexes :
+- Consultez les classements des athlètes JHC 2027 pour la [sélection de l'équipe finale](https://docs.google.com/spreadsheets/d/1ztJF9W5ARAyNTdwTgKNDbQL9DPqqoos6).
+- Consultez les classements des athlètes JHC 2027 utilisés lors de la [sélection de l'équipe de base](https://docs.google.com/spreadsheets/d/1bXPWEDCEGpDcTOufhtHJ6ZuYdDx-Kaqe).
