@@ -241,6 +241,25 @@
   background: var(--teal-pale);
   border-radius: 0 6px 6px 0;
 }
+.fenb-article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.5em;
+  font-size: 0.95em;
+}
+.fenb-article-body th,
+.fenb-article-body td {
+  padding: 0.6em 0.9em;
+  border-bottom: 1px solid var(--light-gray);
+  text-align: left;
+}
+.fenb-article-body thead th {
+  background: var(--off-white);
+  color: var(--text-dark);
+  font-weight: 600;
+  text-align: center;
+}
+.fenb-article-body tbody tr:last-child td { border-bottom: none; }
 
 /* ── News article sidebar ──────────────────────── */
 .fenb-article-sidebar {
