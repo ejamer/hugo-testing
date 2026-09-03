@@ -125,9 +125,13 @@ cal_wd_fri: "Fri"
 cal_wd_sat: "Sat"
 
 # ── 404 ────────────────────────────────────────────────────
-not_found_title:   "Page Not Found"
-not_found_message: "The page you're looking for doesn't exist or has been moved."
-back_home:         "Back to Home"
+# not_found_title is deliberately identical in en.yaml/fr.yaml: "Attaque Non"
+# is a fencing referee call for a failed attack — a nod to a missed page.
+not_found_title:   "“Attaque Non…”"
+not_found_message: "The content you are looking for doesn't exist at this URL, and may have moved when we rebuilt our website."
+not_found_action:  "Use the search bar below to search for what you need, or start fresh from our homepage."
+not_found_tip:      "Tip: Be sure to update any bookmarks or saved links once you find the content you need!"
+back_home:          "Go to Homepage"
 
 # ── Search ─────────────────────────────────────────────────
 search_placeholder:    "Search…"

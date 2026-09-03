@@ -126,9 +126,13 @@ cal_wd_fri: "Ven"
 cal_wd_sat: "Sam"
 
 # ── 404 ────────────────────────────────────────────────────
-not_found_title:   "Page introuvable"
-not_found_message: "La page que vous recherchez n'existe pas ou a été déplacée."
-back_home:         "Retour à l'accueil"
+# not_found_title is deliberately identical in en.yaml/fr.yaml: "Attaque Non"
+# is a fencing referee call for a failed attack — a nod to a missed page.
+not_found_title:   "“Attaque Non…”"
+not_found_message: "Le contenu que vous recherchez n'existe pas à cette adresse, et a peut-être changé d'adresse lors de la refonte de notre site."
+not_found_action:  "Utilisez la barre de recherche ci-dessous pour trouver ce que vous cherchez, ou repartez de notre page d'accueil."
+not_found_tip:      "Astuce : pensez à mettre à jour vos favoris ou liens enregistrés une fois que vous avez trouvé ce que vous cherchez!"
+back_home:          "Retour à l'accueil"
 
 # ── Recherche ──────────────────────────────────────────────
 search_placeholder:    "Rechercher…"

@@ -1,5 +1,11 @@
 {{ define "title" }}{{ i18n "not_found_title" }} | {{ .Site.Title }}{{ end }}
 
+{{/* GitHub Pages serves this one file for every 404, in both languages, so the
+     coloured page-header band (which would show Hugo's default, untranslated
+     "404 Page not found" title) is skipped in favour of the page's own
+     hand-translated heading below. */}}
+{{ define "header" }}{{ partial "nav.html" . }}{{ end }}
+
 {{ define "main" }}
 <div class="fenb-404">
   <div class="fenb-container">
@@ -7,24 +13,85 @@
       <div class="fenb-404-code">404</div>
       <h1 class="fenb-404-title" id="fenb-404-title">{{ i18n "not_found_title" }}</h1>
       <p class="fenb-404-message" id="fenb-404-msg">{{ i18n "not_found_message" }}</p>
+      <p class="fenb-404-message" id="fenb-404-action">{{ i18n "not_found_action" }}</p>
+
+      <div class="fenb-404-search" id="fenb-404-search"></div>
+
       <a href="{{ .Site.Home.RelPermalink }}" class="fenb-btn fenb-btn-teal" id="fenb-404-home">{{ i18n "back_home" }}</a>
+
+      <p class="fenb-404-tip" id="fenb-404-tip">{{ i18n "not_found_tip" }}</p>
     </div>
   </div>
 </div>
 
 <script>
 (function () {
-  if (window.location.pathname.indexOf('/fr/') < 0) return;
+  var isFr = window.location.pathname.indexOf('/fr/') >= 0;
+
+  // ── Mount an always-visible Pagefind search bar ────────
+  // (Strings mirror i18n/en.yaml + i18n/fr.yaml — Hugo's build-time i18n
+  // lookup isn't safe here: this template is compiled once per language, and
+  // only the English output is ever actually served by GitHub Pages, so both
+  // language variants of the Pagefind translations are hardcoded directly.)
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = '{{ "pagefind/pagefind-ui.css" | relURL }}';
+  document.head.appendChild(link);
+  var script = document.createElement('script');
+  script.src = '{{ "pagefind/pagefind-ui.js" | relURL }}';
+  script.onload = function () {
+    new PagefindUI({
+      element: '#fenb-404-search',
+      language: isFr ? 'fr' : 'en',
+      showSubResults: false,
+      resetStyles: false,
+      translations: isFr ? {
+        placeholder:       "Rechercher…",
+        clear_search:      "Effacer",
+        load_more:         "Charger plus de résultats",
+        search_label:      "Rechercher",
+        filters_label:     "",
+        zero_results:      "Aucun résultat pour [SEARCH_TERM]",
+        many_results:      "[COUNT] résultats pour [SEARCH_TERM]",
+        one_result:        "1 résultat pour [SEARCH_TERM]",
+        alt_search:        "Rechercher [DIFFERENT_TERM]",
+        search_suggestion: "Rechercher [DIFFERENT_TERM]",
+        searching:         "Recherche de [SEARCH_TERM]…"
+      } : {
+        placeholder:       "Search…",
+        clear_search:      "Clear",
+        load_more:         "Load more results",
+        search_label:      "Search",
+        filters_label:     "",
+        zero_results:      "No results for [SEARCH_TERM]",
+        many_results:      "[COUNT] results for [SEARCH_TERM]",
+        one_result:        "1 result for [SEARCH_TERM]",
+        alt_search:        "Search for [DIFFERENT_TERM]",
+        search_suggestion: "Search for [DIFFERENT_TERM]",
+        searching:         "Searching for [SEARCH_TERM]…"
+      }
+    });
+  };
+  document.head.appendChild(script);
+
+  if (!isFr) return;
 
   // ── 404 page text (French) ─────────────────────────────
   // Strings mirror i18n/fr.yaml — update both if changed.
-  document.getElementById('fenb-404-title').textContent = "Page introuvable";
-  document.getElementById('fenb-404-msg').textContent   = "La page que vous recherchez n’existe pas ou a été déplacée.";
+  // not_found_title is "Attaque Non" in both languages — a fencing referee
+  // call for a failed attack — so it isn't swapped here.
+  document.getElementById('fenb-404-msg').textContent    = "Le contenu que vous recherchez n’existe pas à cette adresse, et a peut-être changé d’adresse lors de la refonte de notre site.";
+  document.getElementById('fenb-404-action').textContent = "Utilisez la barre de recherche ci-dessous pour trouver ce que vous cherchez, ou repartez de notre page d’accueil.";
+  document.getElementById('fenb-404-tip').textContent   = "Astuce : pensez à mettre à jour vos favoris ou liens enregistrés une fois que vous avez trouvé ce que vous cherchez!";
   var homeBtn = document.getElementById('fenb-404-home');
   homeBtn.textContent = "Retour à l’accueil";
   homeBtn.href = '/fr/';
 
   // ── French nav labels (from Hugo's French menu) ────────
+  // Keyed by the raw, un-prefixed menu url (e.g. "events/") — matched below
+  // against the *end* of each rendered href, since the href's prefix varies
+  // by environment (e.g. "/events/" in production, "/hugo-testing/events/"
+  // in dev) while the raw url configured in hugo.toml never does.
   var frLabels = {
     {{- range hugo.Sites -}}
       {{- if eq .Language.Lang "fr" -}}
@@ -40,19 +107,25 @@
     var href = a.getAttribute('href');
     if (!href || href.charAt(0) !== '/' || href.indexOf('/fr') === 0) return;
     a.setAttribute('href', '/fr' + href);
-    if (frLabels[href]) a.textContent = frLabels[href];
+    for (var rawUrl in frLabels) {
+      if (href.slice(-('/' + rawUrl).length) === '/' + rawUrl) {
+        a.textContent = frLabels[rawUrl];
+        break;
+      }
+    }
   });
 
   // ── Logo home link ─────────────────────────────────────
   var logo = document.querySelector('.fenb-nav-logo-link');
   if (logo) logo.setAttribute('href', '/fr/');
 
-  // ── Language switcher: flip to English home ────────────
+  // ── Language switcher: flip to the English 404, matching the
+  //    "EN"/"FR" abbreviation used by nav.html's fenb-lang-btn everywhere else ──
   document.querySelectorAll('.fenb-lang-btn').forEach(function (btn) {
-    btn.href        = '/';
+    btn.href        = '/404.html';
     btn.lang        = 'en';
     btn.setAttribute('hreflang', 'en');
-    btn.textContent = 'English';
+    btn.textContent = 'EN';
   });
 })();
 </script>

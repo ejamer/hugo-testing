@@ -132,7 +132,7 @@
 }
 
 .fenb-404-inner {
-  max-width: 480px;
+  max-width: 640px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -151,13 +151,63 @@
 .fenb-404-title {
   font-size: 2rem;
   font-weight: 800;
+  font-style: italic;
   color: var(--text-dark);
   margin: 0;
 }
 
 .fenb-404-message {
   color: var(--text-muted);
-  margin: 0 0 1rem;
+  margin: 0;
+}
+
+.fenb-404-search {
+  width: 100%;
+  margin: 0.25rem 0 0.5rem;
+  text-align: left;
+  --pagefind-ui-primary:       var(--teal);
+  --pagefind-ui-text:          var(--text-body);
+  --pagefind-ui-background:    var(--white);
+  --pagefind-ui-border:        var(--light-gray);
+  --pagefind-ui-tag:           var(--off-white);
+  --pagefind-ui-border-width:  2px;
+  --pagefind-ui-border-radius: 6px;
+  --pagefind-ui-font:          inherit;
+}
+/* From here down, selectors are ID-qualified (#fenb-404-search, not
+   .fenb-404-search) on purpose: Pagefind's own CSS for these same elements
+   (e.g. .pagefind-ui__search-clear.svelte-xxxxx) is loaded dynamically via a
+   <link> injected after this stylesheet, and its selector — two classes — ties
+   our specificity if we only use classes here, so being later in the cascade
+   it would win regardless of our declaration order. The container's id beats
+   that tie outright. */
+#fenb-404-search .pagefind-ui__search-input       { color: var(--pagefind-ui-text); }
+#fenb-404-search .pagefind-ui__search-input:focus { outline-color: var(--teal); }
+#fenb-404-search .pagefind-ui__search-clear {
+  /* The nav's #fenb-search plain override (color/font-size/padding-left) isn't
+     enough here: Pagefind's reset re-inherits line-height from the surrounding
+     page text (`all: unset` on an inherited property computes to `inherit`),
+     and this page's body line-height is much taller than the nav bar's, which
+     pushes the text to the top of the button instead of centering it. Force
+     both axes explicitly rather than relying on inherited sizing. */
+  color: var(--teal);
+  font-size: 1rem;
+  line-height: 1;
+  padding-left: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#fenb-404-search .pagefind-ui__result-link        { color: var(--teal); }
+#fenb-404-search .pagefind-ui__result-link:hover  { color: var(--teal-dark); }
+[data-theme="dark"] #fenb-404-search .pagefind-ui__search-clear      { color: var(--teal-light); }
+[data-theme="dark"] #fenb-404-search .pagefind-ui__result-link:hover { color: var(--teal-light); }
+
+.fenb-404-tip {
+  margin-top: 2rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-style: italic;
 }
 
 /* ── News article single page ─────────────────── */
