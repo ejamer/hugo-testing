@@ -90,3 +90,4 @@ Test each project skill end-to-end at least once to verify it works correctly.
 ## Events data
 
 - [ ] **Interscholastic finals article — photo gallery** — 4 action photos at `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; add `photos:` front matter to `jun-16-interscholastic-finals-2026.{en,fr}.md` (photo gallery system now available — see README.md)
+- [ ] **Fundy Open — re-add to events.yaml once dates confirmed** — event is delayed; removed from `fenb-1/data/events.yaml` on 2026-09-03 to avoid displaying a stale Sept 13 date. Expected to be either Sept 19-20 or Oct 3-4, 2026 in Saint John, NB. Original entry (Cadet, Senior Div 1/2) still in `fenb-1/data/events_archive/2025-2026.yaml` for reference on fields.

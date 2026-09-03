@@ -31,3 +31,7 @@ __pycache__/
 
 # Resource folder, used to store sources and assets for content generation, not meant to be committed
 resources/
+
+# Node / Playwright — browser-driven verification tooling (package.json IS
+# committed; only the installed packages are ignored)
+node_modules/
