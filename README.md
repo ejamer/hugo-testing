@@ -65,6 +65,7 @@ summary: "One-sentence summary shown on the homepage card."
 update: "<strong>Update:</strong> The deadline has been extended to August 15, 2026."  # optional — alert banner above the article body, HTML allowed
 image: "images/event-logos/ecg.png"           # optional — centred logo above body (no leading slash)
 image_alt: "East Coast Games 2026"             # optional — alt text for image
+image_wide: true                               # optional — raises logo max-width 220px → 480px, for wide/banner-shaped images
 results_table: true  # optional — add to load the interactive sortable table on articles with result tables
 photos:              # optional — photo gallery rendered below the article body
   - src: "images/news/2026/action-shot.jpg"   #   no leading slash

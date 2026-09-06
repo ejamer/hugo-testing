@@ -43,6 +43,8 @@ make build-prod   # production build — minified + pagefind index
 > [!WARNING]
 > `make serve`'s Pagefind step runs via `npx pagefind`. There's no `package.json`/`node_modules` pinning Pagefind locally, so `npx` resolves it from the npm registry **every time** — with no internet connection, that call fails and, because the Makefile steps are chained with `&&`, `hugo server` never starts. If you're offline, use `make serve-local` instead: it calls `hugo server` directly with no Pagefind step, so it never touches the network. Trade-off: the search overlay won't work under `serve-local` since no Pagefind index is generated.
 
+**Browser-driven verification (Playwright):** the repo root has a `package.json`/`package-lock.json` pinning the Node `playwright` package as a devDependency — used for browser-driven verification of local builds (e.g. screenshotting a page to confirm a visual change), not part of the Hugo build itself. Run `npm install` once to use it; the installed packages under `node_modules/` are gitignored, but `package.json`/`package-lock.json` are committed so the version stays pinned. This is separate from the Python `playwright` package documented under [fencingtimelive-results.py](#fencingtimelive-resultspy) — same underlying tool, different language binding, different purpose.
+
 The site builds in ~100 ms. Open `http://localhost:1313/` in your browser.
 
 ### Environment configuration

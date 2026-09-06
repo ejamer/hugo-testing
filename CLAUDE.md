@@ -77,6 +77,7 @@ See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bi
 - **News article images** — this is the standard way to add images to a news article; the legacy inline `figure` shortcode still works but is discouraged for new articles. Front matter fields (no shortcodes needed in the body):
   - `image` + `image_alt` — renders a centred logo/image above the article body (`.fenb-article-event-logo` styling)
   - `image_dark` (optional) — a light-on-dark variant of `image`, swapped in automatically under `[data-theme="dark"]`. Only add it if the default `image` doesn't read well on a dark background.
+  - `image_wide: true` (optional) — raises the logo's max-width from 220px to 480px. Use for wide/banner-shaped images (e.g. a flyer banner, aspect ratio wider than ~3:1) where the default 220px cap would crush the height; don't use it for ordinary square-ish club/event logos.
   - `photos` — list of `{src, alt, caption}` objects; rendered as a responsive grid below the article body. `caption` is optional per item. Example:
     ```yaml
     image: "images/canada-games/qc2027-logo-horizontal.png"

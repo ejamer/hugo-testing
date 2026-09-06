@@ -540,6 +540,9 @@
   margin: 0 auto;
   cursor: zoom-in;
 }
+.fenb-article-event-logo--wide img {
+  max-width: 480px;
+}
 .fenb-article-event-logo .fenb-article-event-logo-img--dark { display: none; }
 [data-theme="dark"] .fenb-article-event-logo .fenb-article-event-logo-img--light { display: none; }
 [data-theme="dark"] .fenb-article-event-logo .fenb-article-event-logo-img--dark { display: block; }

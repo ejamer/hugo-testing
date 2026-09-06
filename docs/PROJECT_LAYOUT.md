@@ -8,6 +8,8 @@ The repo root holds documentation and scripts; all Hugo source lives under `fenb
 hugo-testing/
 ├── CLAUDE.md              Process instructions for Claude
 ├── README.md              How to add/update each content type
+├── package.json           Node devDependency pin: playwright (browser-driven verification, not part of the Hugo build)
+├── package-lock.json      Lockfile for package.json — node_modules/ itself is gitignored
 ├── docs/
 │   ├── DEVELOPMENT.md     Branch strategy and build commands
 │   ├── GOTCHAS.md         Past build/template gotchas and their fixes
