@@ -9,11 +9,15 @@ Ask the user for:
 2. Article slug — short kebab-case, no year (e.g. `provincial-results`)
 3. English title
 4. French title
-5. Category ID — one of:
-   - `results` — teal; also loads the interactive results table
-   - `announcement` — crimson
-   - `registration` — green
-   - `community` — navy
+5. Category ID — one of (see `docs/STYLE_GUIDE.md` "News category colours" for the authoritative table):
+   - `competition` — teal; registration/announcement/results for a competition (non-NB or open); also the typical choice for tournament registration or announcement posts
+   - `national` — crimson; results from a national championship
+   - `provincial` — crimson; results from the NB Provincial Championship
+   - `training` — yellow; registration/announcement for a training camp / summer camp
+   - `clinic` — dark orange; registration/announcement for a skills clinic (armoury, referee, etc.)
+   - `announcement` — blue; general announcements
+   - `meeting` — grey; FENB meeting notices
+   - `results` — teal; also loads the interactive results table (`results_table: true` front matter) — use only when the article itself contains a sortable results table, not for competition results in prose
 6. English summary — one sentence shown on the homepage card
 7. French summary
 

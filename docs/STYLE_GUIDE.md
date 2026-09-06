@@ -224,7 +224,7 @@ Place it at the top of the page, above all content, outside any grid or two-colu
 
 ### `fenb-article-event-logo` — event logo in a news article
 
-Displays a centred logo/image above the article body — 220 px max-width, rounded corners, dark-mode drop shadow.
+Displays a centred logo/image above the article body — 220 px max-width by default, rounded corners, dark-mode drop shadow.
 
 **Standard:** set `image` and `image_alt` in front matter; the layout renders this automatically (no shortcode needed in the body). This is the required style for all new articles — inline images should always go through front matter, not the article body.
 
@@ -242,6 +242,14 @@ image_alt: "Canada Winter Games 2027 — Québec City"
 ```
 
 If only one image exists, omit `image_dark` — the single `image` is used in both themes.
+
+**Wide/banner-shaped logos:** the default 220px max-width assumes a roughly square-ish logo. A wide banner image (e.g. a flyer graphic, aspect ratio wider than ~3:1) gets crushed to a sliver at that width. Add `image_wide: true` to raise the max-width to 480px via the `fenb-article-event-logo--wide` modifier class:
+
+```yaml
+image: "images/event-logos/fundy-open.png"
+image_alt: "2026 Fundy Open"
+image_wide: true
+```
 
 **Alternative (legacy, discouraged):** using the Hugo `figure` shortcode directly in the article body still works, but new articles should use the front-matter fields above instead — it keeps image handling consistent and is the only way to get the dark-mode swap.
 
