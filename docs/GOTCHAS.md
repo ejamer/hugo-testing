@@ -65,12 +65,13 @@ Also verify the `.git` file inside the submodule has the correct relative `gitdi
 
 ---
 
-## Hugo template `sort` syntax
+## Hugo template functions with 3+ args: pipe puts the value last, not first
 
-Pipe passes the value as the **last** argument, but `sort` expects the collection first — so `collection | sort "Key" "dir"` silently sorts the string `"Key"` instead of the collection. Always write it positionally:
+Pipe passes the value as the **last** argument, so any multi-arg function whose first parameter is the "subject" breaks when you pipe into it — `collection | sort "Key" "dir"` silently sorts the string `"Key"` instead of the collection, and `str | replace "old" "new"` silently calls `replace("old", "new", str)` (replacing `"new"` inside the string `"old"`, i.e. doing nothing useful) instead of `replace(str, "old", "new")`. No build error either way — it just produces the wrong string/order. Always write these positionally, or wrap the piped part in parens as the first arg:
 
 ```go
 sort .MyCollection "FieldName" "desc"
+replace ($myString | urlquery) "+" "%20"
 ```
 
 ---

@@ -4,6 +4,20 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ---
 
+## Events data — 2026–2027 season review (2026-09-15)
+
+`data/events.yaml` was populated for the full 2026–2027 season from the FENB tentative calendar (`~/Downloads/fenb_events/fenb 2026-2027 Calendar.pdf`), cross-referenced against the OFA and Quebec (FEQ) provisional calendars for out-of-province dates/locations. Needs a full review pass before publishing — in particular:
+
+- [ ] **Tentative status** — several FENB-listed events were marked "(Tentative)" or "(? - TBD)" in the source PDF (e.g. Masquerade). Confirm which entries are locked in before publishing.
+- [ ] **Unconfirmed participant categories** — Trisword (Halifax, NS, Nov 14–15) and PEI Open (Charlottetown, PE, Nov 28–29) had no participant categories listed in the source calendar (marked "?"); `description_en/fr` currently says "Details unconfirmed — TBD." — fill in once known.
+- [ ] **"UNB?" placeholders not added** — the FENB source calendar had three unconfirmed "UNB? - TBD" rows (Dec 5–6, 2026; Mar 13–14, 2027; Mar 20–21, 2027) with no title/category — these were intentionally left out of `events.yaml` rather than guessed. Add once the event name/details are confirmed.
+- [ ] **TBA/TBD locations** — Challenge Desjarlais, Coupe du Printemps, Quebec Youth Provincials, and Quebec Senior Provincials all have `location: "TBA, QC"` (Quebec's own provisional calendar also had these as "à définir") — update once venues are confirmed.
+- [x] **OFA event numbering** — renumbered to match Fencing Ontario's own published calendar: the Jan 23–24, 2027 and Mar 20–21, 2027 circuits are now "OFA Youth Circuit #3" and "#4" in `events.yaml` (the FENB and Quebec source calendars had called them "#2" and "#3").
+- [ ] **OFA Youth Circuit #2 — missing from OFA's own calendar** — Fencing Ontario's published calendar (as scraped, covering Aug 28, 2026 – Apr 24, 2027) jumps straight from "Ontario Youth Cadet Circuit #1" (Oct 17–18, 2026) to "Ontario Youth Circuit #3" (Jan 23–24, 2027) — no "#2" appears anywhere in that window. Not added to `events.yaml`. Need confirmation: was there a Circuit #2 (maybe outside this window, cancelled, or a different age category not published to the public calendar) that NB fencers should know about?
+- [ ] **`details_url`/`registration_url` blank for most new entries** — the source PDFs didn't include per-event links (only a general OFA calendar page and FEQ contact emails), so these fields are empty for all newly added out-of-province events. Fill in as links become available.
+
+---
+
 ## News & Results page
 
 ---

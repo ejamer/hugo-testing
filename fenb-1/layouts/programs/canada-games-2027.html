@@ -2,6 +2,11 @@
 
 {{ define "main" }}
 
+{{/* mailto: %-encoded via urlquery, then + swapped for %20 — mailto bodies need literal %20 for spaces, not the "+" that url.QueryEscape produces for HTML form encoding. replace's args are (input, old, new), so the urlquery result must be passed as the first arg, not piped into replace directly (piping appends as the LAST arg). */}}
+{{ $reportSubject := replace ("[CWG] report a fencing result" | urlquery) "+" "%20" }}
+{{ $reportBody := replace (i18n "programs_cwg_report_result_body" | urlquery) "+" "%20" }}
+{{ $reportMailto := printf "mailto:edward.jamer@gmail.com,sallygoodwin506@gmail.com?subject=%s&body=%s" $reportSubject $reportBody }}
+
 <section class="fenb-program-page fenb-cwg-page">
   <div class="fenb-container fenb-container--narrow">
 
@@ -49,6 +54,11 @@
               class="fenb-btn fenb-btn-crimson fenb-cwg-rankings-cta">
             {{ partial "icon.html" (dict "name" "activity.svg" "w" 16 "h" 16) }}
             {{ i18n "programs_cwg_rankings_core" }}
+          </a>
+          <a href="{{ $reportMailto | safeURL }}"
+              class="fenb-btn fenb-btn-teal-outline fenb-cwg-rankings-cta">
+            {{ partial "icon.html" (dict "name" "envelope.svg" "w" 16 "h" 16) }}
+            {{ i18n "programs_cwg_report_result_cta" }}
           </a>
         </div>
         <br/><br/>
@@ -159,6 +169,11 @@
                class="fenb-btn fenb-btn-crimson fenb-cwg-rankings-cta">
               {{ partial "icon.html" (dict "name" "activity.svg" "w" 16 "h" 16) }}
               {{ i18n "programs_cwg_rankings_core" }}
+            </a>
+            <a href="{{ $reportMailto | safeURL }}"
+                class="fenb-btn fenb-btn-teal-outline fenb-cwg-rankings-cta">
+              {{ partial "icon.html" (dict "name" "envelope.svg" "w" 16 "h" 16) }}
+              {{ i18n "programs_cwg_report_result_cta" }}
             </a>
           </div>
         </div>
