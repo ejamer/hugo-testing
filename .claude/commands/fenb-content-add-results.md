@@ -61,10 +61,25 @@ Count unique NB fencers across all events (deduplicate by name across multiple e
 
 From all finished events, collect:
 - **Medalists**: any NB fencer with a numeric place of 1, 2, or 3. Strip any trailing `T` before comparing. Map to medal emoji: 1 → 🥇, 2 → 🥈, 3 → 🥉.
-- **Top-16 non-medalists**: any NB fencer with a numeric place of 4–16 (strip `T` before comparing).
+- **Notable non-medal finishes**: any NB fencer with a numeric place (strip trailing `T`) that is (a) not a medal position and (b) within the top 50% of that event's `total_fencers` — i.e. `place <= total_fencers / 2` (round down). A fencer outside the top half of their field is not called out by name in the prose; their result still appears in the per-event table below. Example: 7th of 9 fails (7 > 4.5); 4th of 8 passes (4 ≤ 4).
 
 **Hosted format:**
 No pre-processing needed — the `podium` array for each event already contains only medalists (4 entries: 1st, 2nd, 3T, 3T). Medal emoji map: place 1 → 🥇, 2 → 🥈, 3 (or 3T) → 🥉.
+
+---
+
+## Step 4.5 — Choose an article title
+
+Don't default every article to "New Brunswick Fencers at {Tournament}" — vary the framing so consecutive articles don't read as a copy-paste job. Pick a template based on the medal results (from Step 4), and rotate in new variations over time rather than always reaching for the same one:
+
+- **No medals**: `New Brunswick Fencers at {Tournament}` — the plain-participation fallback when there's no medal story to lead with.
+- **Exactly one fencer earned any medal(s)** (even multiple medals, e.g. two golds in different age groups): spotlight them by name, singular — `{Name} Claims {Medal(s)} at {Tournament}` (e.g. "Flynn Stevens Claims Double Bronze at Terre des Hommes 2026").
+- **Two or more different fencers earned medals**: team framing — `New Brunswick Fencers Bring Back Medals from {Tournament}`.
+- **A softer tone fits better** than a medal callout (e.g. mixed results): `New Brunswick Finds Success at {Tournament}`.
+
+**Get it right:** "Fencers" (plural) in a title implies more than one person earned the credit — never use plural team framing when only one fencer is behind the headline result.
+
+When more than one template plausibly fits, offer 2–3 candidates via `AskUserQuestion` rather than silently picking one.
 
 ---
 
@@ -76,15 +91,17 @@ No pre-processing needed — the `podium` array for each event already contains 
 - Name the tournament, location, and dates. State the total number of unique NB fencers and how many events they appeared in.
 
 **Paragraph 2** — top performers block:
-- Open with a generic congratulatory sentence ("Congratulations to our podium finishers!" or similar).
+- Open with a congratulatory sentence naming the medalist(s) if there are only one or two (e.g. "Congratulations to Flynn Stevens, who claimed bronze in both..."); use a generic line ("Congratulations to our podium finishers!") only when there are more medalists than fit naturally in a sentence.
 - List each medalist on its own line using a backslash line-break (`\`):
   ```
   🥇 NAME — Event\
   🥈 NAME — Event\
   🥉 NAME — Event
   ```
-- Follow with a congratulatory sentence and a comma-separated inline list of top-16 non-medalists:
-  `NAME (Event), NAME (Event), …`
+- If there are any **notable non-medal finishes** (Step 4), introduce them with a natural, varied sentence — don't reuse the same boilerplate phrase (e.g. "We also celebrate strong finishes from...") across articles, and reference the specific standing when it reads naturally (e.g. "a top-10 finish"):
+  - **1–2 qualifying fencers:** an inline sentence, e.g. `NAME (Event, Nth of N)`.
+  - **3 or more qualifying fencers:** a bullet list instead of a sentence, one per line: `- NAME — Event (Nth of N)`.
+  - **Zero qualifying fencers:** omit this part of the paragraph — don't force a sentence with nothing to say.
 
 **Per-event sections** (one per event, in the order they appear in the JSON):
 - Heading: `### [Event name]` — hyperlink the heading text to `results_url`
