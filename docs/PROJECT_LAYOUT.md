@@ -72,7 +72,10 @@ hugo-testing/
     │   ├── 404.html        Custom 404 page
     │   ├── index.html      Homepage (hero, events, news, programs)
     │   ├── _default/
-    │   │   └── sitemap.xml Custom sitemap with hreflang alternates
+    │   │   ├── sitemap.xml Custom sitemap with hreflang alternates
+    │   │   └── _markup/
+    │   │       └── render-link.html  Markdown link render hook — opens external links (absolute
+    │   │                             http(s) URLs off-site) in a new tab; internal links unaffected
     │   ├── about/          list.html (About disambiguation), single.html (Policies & Reports),
     │   │                   policies/single.html (individual policy page),
     │   │                   hall-of-fame/list.html (inductee table), hall-of-fame/single.html (profile),

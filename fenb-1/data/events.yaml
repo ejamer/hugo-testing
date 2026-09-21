@@ -47,8 +47,8 @@ events:
     details_url_fr: ""
     registration_url_en: "https://2mev.com/#!/events/terre-des-hommes-septembre-2026-junior-senior-aaa-et-veteran"
     registration_url_fr: ""
-    results_url_en: "https://www.fencingtimelive.com/tournaments/eventSchedule/A42D29D2D4C74DADA1B1AF5D1DF161F1"
-    results_url_fr: ""
+    results_url_en: "/news/2026/sep-20-2026-09-19-terre-des-hommes/"
+    results_url_fr: "/fr/news/2026/sep-20-2026-09-19-terre-des-hommes/"
 
   - title: "2026 Fundy Open"
     title_fr: "Open de Fundy 2026"
@@ -62,8 +62,8 @@ events:
     details_url_fr: "https://docs.google.com/document/d/1Khkn45AsOaaVLgcZ8C_ca-YD7_d8m0xF"
     registration_url_en: "https://prettyform.addxt.com/a/form/vf/1FAIpQLSeBWHmVLGI72WkVppXx9jtRfLvITFf6YWnerQoogovJsynF_A"
     registration_url_fr: ""
-    results_url_en: ""
-    results_url_fr: ""
+    results_url_en: "/news/2026/sep-20-2026-09-19-fundy-open-results/"
+    results_url_fr: "/fr/news/2026/sep-20-2026-09-19-fundy-open-results/"
 
   - title: "Canada Cup #1 — Senior National Championships"
     title_fr: "Coupe Canada #1 — Championnats nationaux seniors"

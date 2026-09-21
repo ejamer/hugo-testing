@@ -90,6 +90,7 @@ All seven pages need a full review pass for both style and content quality befor
 ## Project skills
 
 - [ ] **Skill automation and non-AI tooling** — review `plans/skill-assessment.md` and implement the proposed shell scripts to reduce AI dependency, eliminate duplicated logic, and make common updates (news stubs, season rollover, version bumps) executable without Claude. Priority order: `generate-version-json.sh` → ~~`season-rollover.sh`~~ (done, see below) → `check-ftl-deps.sh` → `create-news-stub.sh` → `compute-next-version.sh`. Once scripts exist, slim the corresponding skills to use them. Ties into the **Editor tooling** item under Non-technical content maintenance — the same scripts that simplify AI skills form the foundation for non-AI workflows.
+- [ ] **`/fenb-content-add-results` should consume the scraper's `pools_only` flag** — `scripts/fencingtimelive-results.py` (hosted mode) now tags each event `pools_only: true` when its results page has no `/tableaus/scores/...` link (a combined pool round used only to seed separate divisions or gendered brackets, e.g. Fundy Open 2026's "Senior Men's Épée" → Div. 1/Div. 2 split). The scraper correctly excludes the podium for those events, but the skill doesn't yet know to drop the section and fold it into the intro as a pool-round mention (the pattern already used for combined age-group pools) — this had to be done manually for Fundy Open 2026. Update the skill so it auto-detects `pools_only: true` events and applies that treatment.
 
 Test each project skill end-to-end at least once to verify it works correctly.
 
@@ -97,8 +98,8 @@ Test each project skill end-to-end at least once to verify it works correctly.
 |---|---|---|
 | `/fenb-content-add-news` | ✅ Tested | |
 | `/fenb-content-add-page` | ❌ Untested | |
-| `/fenb-content-add-results` | ✅ Tested | NB Provincials 2026 — hosted format (full podium, medalists only) |
-| `/fenb-data-get-results` | ✅ Tested | NB Provincials 2026 — direct URL, hosted mode, full podium fetch |
+| `/fenb-content-add-results` | ✅ Tested | NB Provincials 2026 — hosted format (full podium, medalists only); away format also tested (Star Cup RYC/RJCC, Trick or Retreat ROC/RJCC, Terre des Hommes 2026) |
+| `/fenb-data-get-results` | ✅ Tested | NB Provincials 2026 — direct URL, hosted mode, full podium fetch; away-format search/list flow also tested (Terre des Hommes 2026) |
 | `/fenb-docs-update` | ✅ Tested | |
 
 ## Events data

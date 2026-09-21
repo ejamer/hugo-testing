@@ -595,6 +595,30 @@ def numeric_place(place_str) -> int:
         return 9999
 
 
+def has_de_bracket(event_id: str, cookie: str) -> bool:
+    """
+    True if this event's results page links to a direct-elimination tableau
+    (/tableaus/scores/...), meaning its 'place' values come from real
+    head-to-head bracket results.
+
+    Some events (e.g. a combined pool used only to seed separate divisions,
+    such as splitting "Senior Men's Épée" into Div 1 / Div 2, or a combined
+    "Mixed" pool later split by gender) are marked "finished" and return a
+    fully ranked results list, but that ranking is just the pool seed order —
+    no elimination bracket was ever run for that event, so the "place" values
+    don't reflect a real winner. Those events link to /pools/scores/... but
+    never to /tableaus/scores/....
+
+    Returns True (assume real bracket) on fetch failure so a transient error
+    never silently drops a legitimate podium.
+    """
+    try:
+        html = http_get_html(f"{BASE_URL}/events/results/{event_id}", cookie)
+    except Exception:
+        return True
+    return bool(re.search(r"/tableaus/scores/", html))
+
+
 # ---------------------------------------------------------------------------
 # Interactive tournament picker
 # ---------------------------------------------------------------------------
@@ -788,6 +812,7 @@ def main():
                     "day": event["day"],
                     "results_url": f"{BASE_URL}/events/results/{event['id']}",
                     "podium": [],
+                    "pools_only": False,
                 })
                 time.sleep(RATE_LIMIT_SECS)
                 continue
@@ -807,6 +832,23 @@ def main():
                     "day": event["day"],
                     "results_url": f"{BASE_URL}/events/results/{event['id']}",
                     "podium": [],
+                    "pools_only": False,
+                })
+                time.sleep(RATE_LIMIT_SECS)
+                continue
+
+            # A "finished" event with ranked results isn't necessarily a real
+            # winner — some events are pools-only, used just to seed separate
+            # divisions or gendered brackets (see has_de_bracket docstring).
+            pools_only = not has_de_bracket(event["id"], cookie)
+            if pools_only:
+                log("  Pools only — no DE bracket, excluding podium.", "warn")
+                event_results.append({
+                    "event_name": event["name"],
+                    "day": event["day"],
+                    "results_url": f"{BASE_URL}/events/results/{event['id']}",
+                    "podium": [],
+                    "pools_only": True,
                 })
                 time.sleep(RATE_LIMIT_SECS)
                 continue
@@ -832,6 +874,7 @@ def main():
                 "day": event["day"],
                 "results_url": f"{BASE_URL}/events/results/{event['id']}",
                 "podium": podium,
+                "pools_only": False,
             })
             time.sleep(RATE_LIMIT_SECS)
 
@@ -847,10 +890,13 @@ def main():
         slug = re.sub(r"[^a-z0-9]+", "-", tourn["name"].lower()).strip("-")
         out_path = OUTPUT_DIR / f"{slug}-podiums-{date.today()}.json"
 
+        pools_only_count = sum(1 for e in event_results if e["pools_only"])
+        pools_only_note = f", {pools_only_count} pools-only (excluded)" if pools_only_count else ""
         error_note = f", {errors} error(s)" if errors else ""
         log(
             f"Done. {len(events)} events checked, "
-            f"{sum(1 for e in event_results if e['podium'])} had podium results{error_note}.",
+            f"{sum(1 for e in event_results if e['podium'])} had podium results"
+            f"{pools_only_note}{error_note}.",
             "ok",
         )
 

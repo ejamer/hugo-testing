@@ -342,7 +342,11 @@ Three link types appear on event cards and schedule rows. Each has a specific CS
 
 `Register Now` is suppressed for past events (date < today). `View Results` shows regardless of date when `results_url_en` is set.
 
+`View Results` opens in the same tab when it points at an internal news article (root-relative, e.g. `/news/2026/.../`) and in a new tab for external hosts (e.g. fencingtimelive.com) — the templates decide this by checking for a leading `/`, so internal results links must keep it.
+
 Any layout that renders event links (card partial, schedule list, future widgets) must use these classes — **not** a plain `<a>` with a local colour rule — so that print and dark-mode overrides apply automatically.
+
+**Markdown links in article/page bodies** (e.g. a results table heading like `### [Event Name](https://fencingtimelive.com/...)`) follow the same same-tab/new-tab split automatically via a Hugo render hook at `layouts/_default/_markup/render-link.html`. It opens a link in a new tab (`target="_blank" rel="noopener noreferrer"`) whenever the destination is an absolute `http(s)` URL that doesn't match the current environment's `Site.BaseURL`; anything else (relative paths, root-relative internal paths, anchors) stays same-tab. This applies site-wide to all Markdown content — no per-article markup needed.
 
 ---
 

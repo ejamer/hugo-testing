@@ -197,4 +197,21 @@ Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée se
 
 Report the two file paths created and tell the user to review them before committing.
 
+---
+
+## Step 8 — Point the event's results link at this article
+
+Search `fenb-1/data/events.yaml` and `fenb-1/data/events_archive/*.yaml` for an event entry matching this tournament (by title and start date). If found and its `results_url_en` currently points elsewhere (e.g. a fencingtimelive.com URL), offer via `AskUserQuestion` to redirect it to the new internal article instead — an internal article is preferred over an external results host once one exists.
+
+If the user agrees, set:
+```yaml
+results_url_en: "/news/{year}/{mon}-{dd}-{slug}/"
+results_url_fr: "/fr/news/{year}/{mon}-{dd}-{slug}/"
+```
+using the same slug/date values from Step 7. Note the leading `/` here is intentional (site-root-relative href, not piped through a Hugo URL function) — matching the existing convention for internal results links.
+
+If no matching event entry is found, skip this step silently — not every results article corresponds to a tracked calendar event (e.g. away tournaments not on the NB calendar).
+
+---
+
 Then ask the user via `AskUserQuestion` whether they'd also like a sample Facebook post for this article. If yes, invoke `/fenb-content-social-summary` against the two files just created.
