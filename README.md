@@ -142,7 +142,7 @@ Add an entry to `data/events.yaml`.
 | `details_url_fr` | — | Optional French URL override for the **Learn More →** badge |
 | `registration_url_en` | — | English URL for the **Register Now →** badge. Used for both languages when `registration_url_fr` is blank. Hidden for past events (date < today). |
 | `registration_url_fr` | — | Optional French URL override for the **Register Now →** badge. Falls back to `registration_url_en` if blank. |
-| `results_url_en` | — | English URL for the **View Results →** badge. Populated automatically by `/fenb-data-get-results` after a tournament scrape (FTL links are language-agnostic, so `_fr` is left blank). |
+| `results_url_en` | — | English URL for the **View Results →** badge. Populated automatically by `/fenb-data-get-results` after a tournament scrape (FTL links are language-agnostic, so `_fr` is left blank). `/fenb-content-add-results` will also offer to redirect an existing FTL link here to the internal article it just created, once one exists. |
 | `results_url_fr` | — | Optional French URL override for the **View Results →** badge (set when the results link is an internal bilingual news article). Falls back to `results_url_en` if blank. |
 
 **Example:**

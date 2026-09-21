@@ -79,7 +79,7 @@
                       <div class="fenb-schedule-links">
                         {{ with $detailsUrl }}<a class="fenb-event-details-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>{{ end }}
                         {{ if $showRegister }}<a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer" data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>{{ end }}
-                        {{ with $resultsUrl }}<a class="fenb-event-results-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_results" }} &rarr;</a>{{ end }}
+                        {{ with $resultsUrl }}<a class="fenb-event-results-link" href="{{ . }}"{{ if not (hasPrefix . "/") }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>{{ end }}
                       </div>
                       {{ end }}
                     </li>

@@ -456,8 +456,8 @@ events:
     details_url_fr: ""
     registration_url_en: ""
     registration_url_fr: ""
-    results_url_en: "https://www.fencingtimelive.com/tournaments/eventSchedule/4A78131AF1154821BF95F71B1D4FD913"
-    results_url_fr: ""
+    results_url_en: "/news/2026/apr-26-2026-04-25-provincial-championship-results/"
+    results_url_fr: "/fr/news/2026/apr-26-2026-04-25-provincial-championship-results/"
 
   # ── May 2026 ────────────────────────────────────────────
   - title: "HP / PT Training Camp"
@@ -502,8 +502,8 @@ events:
     details_url_fr: ""
     registration_url_en: "https://2mev.com/#!/events/2026-may-national-championships-championnats-nationaux-de-mai-2026"
     registration_url_fr: ""
-    results_url_en: "https://www.fencingtimelive.com/tournaments/eventSchedule/B5F728038F50430497C2AF3C7EEFA467"
-    results_url_fr: ""
+    results_url_en: "/news/2026/may-18-2026-05-15-may-nationals/"
+    results_url_fr: "/fr/news/2026/may-18-2026-05-15-may-nationals/"
 
   # ── June 2026 ───────────────────────────────────────────
   - title: "NB Interscholastic Fencing Finals"
@@ -544,8 +544,8 @@ events:
     details_url_fr: ""
     registration_url_en: "https://2mev.com/#!/events/championnat-provincial-2026-junior-senior-aaa-et-veteran-rimouski"
     registration_url_fr: ""
-    results_url_en: "https://www.fencingtimelive.com/tournaments/eventSchedule/D777BD9F9A544C64BDB77E2B14BCD676"
-    results_url_fr: ""
+    results_url_en: "/news/2026/jun-16-2026-06-13-championnat-provincial-qc/"
+    results_url_fr: "/fr/news/2026/jun-16-2026-06-13-championnat-provincial-qc/"
 
   - title: "East Coast Games — NB Youth Provincials"
     title_fr: "East Coast Games — Provinciaux jeunesse du N.-B."
@@ -559,8 +559,8 @@ events:
     details_url_fr: "/documents/events/2025-26/East%20Coast%20Games%202026%20(FR).pdf"
     registration_url_en: "https://2mev.com/#!/events/2026-east-coast-games"
     registration_url_fr: ""
-    results_url_en: "https://www.fencingtimelive.com/tournaments/eventSchedule/FB91E6FF14244D65AB6C00CAE724132B"
-    results_url_fr: ""
+    results_url_en: "/news/2026/jun-20-2026-06-20-east-coast-games-results/"
+    results_url_fr: "/fr/news/2026/jun-20-2026-06-20-east-coast-games-results/"
 
   # ── July 2026 ─────────────────────────────────────────
   - title: "Club and Coach Forum"

@@ -31,7 +31,7 @@
     {{- $resultsUrl := .results_url_en -}}
     {{- if and (eq site.Language.Lang "fr") .results_url_fr -}}{{- $resultsUrl = .results_url_fr -}}{{- end -}}
     {{ if $resultsUrl }}
-    <a class="fenb-event-results-link" href="{{ $resultsUrl }}"{{ if not (or (hasPrefix $resultsUrl "mailto:") (hasPrefix $resultsUrl "tel:")) }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>
+    <a class="fenb-event-results-link" href="{{ $resultsUrl }}"{{ if not (or (hasPrefix $resultsUrl "mailto:") (hasPrefix $resultsUrl "tel:") (hasPrefix $resultsUrl "/")) }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>
     {{ end }}
   </div>
 </article>

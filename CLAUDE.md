@@ -149,6 +149,8 @@ Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as host-root-relativ
 
 **Rule: never use a leading `/` with any Hugo URL function.** This applies to hardcoded strings in templates and to paths stored in data YAML files piped through URL functions.
 
+**Exception — `results_url_en`/`results_url_fr` in `events.yaml`:** these are rendered as a raw `href` in `layouts/partials/event-card.html` and `layouts/events/schedule.html`, never piped through `relLangURL`/`absURL`, so a leading `/` is correct there when the value is an internal news article (e.g. `/news/2026/.../` and `/fr/news/2026/.../`). The templates also key off that leading `/` to decide whether to skip `target="_blank"` for internal links — don't "fix" these paths to remove the leading slash.
+
 ## Sweep rule — before any structural git or template change
 
 Before renaming a field, moving a file, or restoring a submodule, grep for related references first:

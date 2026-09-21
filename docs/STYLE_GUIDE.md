@@ -342,6 +342,8 @@ Three link types appear on event cards and schedule rows. Each has a specific CS
 
 `Register Now` is suppressed for past events (date < today). `View Results` shows regardless of date when `results_url_en` is set.
 
+`View Results` opens in the same tab when it points at an internal news article (root-relative, e.g. `/news/2026/.../`) and in a new tab for external hosts (e.g. fencingtimelive.com) — the templates decide this by checking for a leading `/`, so internal results links must keep it.
+
 Any layout that renders event links (card partial, schedule list, future widgets) must use these classes — **not** a plain `<a>` with a local colour rule — so that print and dark-mode overrides apply automatically.
 
 ---
