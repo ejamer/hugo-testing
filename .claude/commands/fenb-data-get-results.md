@@ -71,7 +71,11 @@ Read the saved `*-podiums-{today}.json` file. Report the podium for each event. 
 
 Check whether the tournament matches an event in `fenb-1/data/events.yaml` (same match logic as Step A5.5 below). If matched and `results_url_en` is empty, ask the user to confirm before setting it.
 
-Tell the user: "Run `/fenb-content-add-results scripts/output/{slug}-podiums-{today}.json` to generate the bilingual news article."
+Tell the user to run the next command, given as its own fenced code block (not inline backticks) so it can be copied with a click:
+
+```
+/fenb-content-add-results scripts/output/{slug}-podiums-{today}.json
+```
 
 ---
 
@@ -126,4 +130,8 @@ If matched and `results_url_en` is empty: ask the user before setting it to `{to
 
 ### Step A6 — Publish results
 
-Tell the user: "Run `/fenb-content-add-results scripts/output/{slug}-{today}.json` to generate the bilingual news article."
+Tell the user to run the next command, given as its own fenced code block (not inline backticks) so it can be copied with a click:
+
+```
+/fenb-content-add-results scripts/output/{slug}-{today}.json
+```
