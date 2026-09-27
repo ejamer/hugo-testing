@@ -85,6 +85,8 @@ When more than one template plausibly fits, offer 2–3 candidates via `AskUserQ
 
 ## Step 5 — Write EN article body
 
+**Spelling — "Sabre", never "Saber":** FTL event names use the American "Saber" (e.g. "Cadet Men's Saber"). Always write the Canadian spelling "Sabre" everywhere in the EN article — event headings, medalist lines, notable-finish lists, `summary`, and prose. Only the display text changes; `results_url` links stay as-is.
+
 ### Away format
 
 **Paragraph 1** (2 sentences):
@@ -145,7 +147,7 @@ Translate the full article into French using the same structure (away or hosted,
 | Men's           | masculin     |
 | Foil            | Fleuret      |
 | Épée            | Épée         |
-| Saber           | Sabre        |
+| Sabre           | Sabre        |
 | Senior          | Senior       |
 | Junior          | Junior       |
 | Cadet           | Cadet        |

@@ -11,12 +11,12 @@ Thirty-six New Brunswick fencers travelled to Quebec City from May 15–18, 2026
 
 Congratulations to our podium finishers!
 
-🥇 YANO Wendy — Veteran Women's Saber\
-🥇 YANO Wendy — Vet-50 Women's Saber\
+🥇 YANO Wendy — Veteran Women's Sabre\
+🥇 YANO Wendy — Vet-50 Women's Sabre\
 🥉 COLLINS David — Vet-40 Men's Épée\
 🥉 FLYNN Isil — Vet-60 Women's Foil
 
-We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber), FLYNN Isil (Veteran Women's Foil), RICHARD Clara (Junior Women's Foil), STEVENS Ashelin (U-15 Women's Saber), COLLINS David (Veteran Men's Épée), ZHANG Zhirong (Junior Men's Épée), LAROCQUE Olivier (U-13 Men's Épée), RICHARD Clara (Senior Women's Foil).
+We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Sabre), FLYNN Isil (Veteran Women's Foil), RICHARD Clara (Junior Women's Foil), STEVENS Ashelin (U-15 Women's Sabre), COLLINS David (Veteran Men's Épée), ZHANG Zhirong (Junior Men's Épée), LAROCQUE Olivier (U-13 Men's Épée), RICHARD Clara (Senior Women's Foil).
 
 ---
 
@@ -42,13 +42,13 @@ We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber),
 | TAILLON Maxime | Escrime La Résistance Fencing | 27T |
 | RODICHEV Yakym | Escrime La Résistance Fencing | 29 |
 
-### [Senior Women's Saber](https://www.fencingtimelive.com/events/results/8EA87EBE77EB4A4C94CC56255054B4D4)
+### [Senior Women's Sabre](https://www.fencingtimelive.com/events/results/8EA87EBE77EB4A4C94CC56255054B4D4)
 
 | Name | Club | Place |
 |---|---|---|
 | LAU Marcena | — | 35 |
 
-### [U-13 Men's Saber](https://www.fencingtimelive.com/events/results/065B51AB8DEE478E9EE44C32112E8DE4)
+### [U-13 Men's Sabre](https://www.fencingtimelive.com/events/results/065B51AB8DEE478E9EE44C32112E8DE4)
 
 | Name | Club | Place |
 |---|---|---|
@@ -64,20 +64,20 @@ We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber),
 | FULTON Alex | Damocles Fencing Club | 84 |
 | GAZAILLE Félix | Damocles Fencing Club | 89 |
 
-### [U-13 Women's Saber](https://www.fencingtimelive.com/events/results/8A22472E7EAA43FB9565F645EA1FF7DC)
+### [U-13 Women's Sabre](https://www.fencingtimelive.com/events/results/8A22472E7EAA43FB9565F645EA1FF7DC)
 
 | Name | Club | Place |
 |---|---|---|
 | PARKER Hadley | Beaches Sabre Club East | 19 |
 
-### [Cadet Men's Saber](https://www.fencingtimelive.com/events/results/92A706F0406A46879D4062C320CEDDD5)
+### [Cadet Men's Sabre](https://www.fencingtimelive.com/events/results/92A706F0406A46879D4062C320CEDDD5)
 
 | Name | Club | Place |
 |---|---|---|
 | STEVENS Flynn | Beaches Sabre Club East | 6 |
 | JAMER Simon | Beaches Sabre Club East | 27 |
 
-### [Veteran Women's Saber](https://www.fencingtimelive.com/events/results/D3214047E43D4E39BF056B5026E74ED2)
+### [Veteran Women's Sabre](https://www.fencingtimelive.com/events/results/D3214047E43D4E39BF056B5026E74ED2)
 
 | Name | Club | Place |
 |---|---|---|
@@ -100,7 +100,7 @@ We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber),
 | SELIG Nathaniel | Fundy Fencing Club | 64 |
 | GAZAILLE Félix | Damocles Fencing Club | 79T |
 
-### [Vet-50 Women's Saber](https://www.fencingtimelive.com/events/results/40C36BAB367E4B98A347D3D030FB9A4C)
+### [Vet-50 Women's Sabre](https://www.fencingtimelive.com/events/results/40C36BAB367E4B98A347D3D030FB9A4C)
 
 | Name | Club | Place |
 |---|---|---|
@@ -121,7 +121,7 @@ We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber),
 | VIVAS Daniela | Damocles Fencing Club | 49 |
 | BAGSICAN Maria Cielo | Fundy Fencing Club | 51 |
 
-### [Junior Men's Saber](https://www.fencingtimelive.com/events/results/C3B9A088A91F414C9800A3F4C1643A2B)
+### [Junior Men's Sabre](https://www.fencingtimelive.com/events/results/C3B9A088A91F414C9800A3F4C1643A2B)
 
 | Name | Club | Place |
 |---|---|---|
@@ -157,7 +157,7 @@ We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber),
 |---|---|---|
 | 🥉 FLYNN Isil | Damocles Fencing Club | 3 |
 
-### [Cadet Women's Saber](https://www.fencingtimelive.com/events/results/9985AC32D73346F5B0234B8A00A9B674)
+### [Cadet Women's Sabre](https://www.fencingtimelive.com/events/results/9985AC32D73346F5B0234B8A00A9B674)
 
 | Name | Club | Place |
 |---|---|---|
@@ -179,7 +179,7 @@ We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber),
 | BAGSICAN Maria Cielo | Fundy Fencing Club | 27 |
 | CANDY Esther | Damocles Fencing Club | 28 |
 
-### [U-15 Men's Saber](https://www.fencingtimelive.com/events/results/69534D3D98804A8EA730E15F51BFB446)
+### [U-15 Men's Sabre](https://www.fencingtimelive.com/events/results/69534D3D98804A8EA730E15F51BFB446)
 
 | Name | Club | Place |
 |---|---|---|
@@ -197,7 +197,7 @@ We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber),
 |---|---|---|
 | COLLINS David | Fundy Fencing Club | 12 |
 
-### [Senior Men's Saber](https://www.fencingtimelive.com/events/results/1656E0E2A8AE42D78FE947BCC69373C2)
+### [Senior Men's Sabre](https://www.fencingtimelive.com/events/results/1656E0E2A8AE42D78FE947BCC69373C2)
 
 | Name | Club | Place |
 |---|---|---|
@@ -232,7 +232,7 @@ We also celebrate strong top-16 finishes from STEVENS Flynn (Cadet Men's Saber),
 |---|---|---|
 | SINGH RANGER Sammy | Damocles Fencing Club | — |
 
-### [U-15 Women's Saber](https://www.fencingtimelive.com/events/results/9563280FF79B49CE8F211BCD60D218B3)
+### [U-15 Women's Sabre](https://www.fencingtimelive.com/events/results/9563280FF79B49CE8F211BCD60D218B3)
 
 | Name | Club | Place |
 |---|---|---|

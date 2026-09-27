@@ -12,7 +12,7 @@ The Fundy Open 2026 took place September 19–20 in Saint John, NB, with eleven 
 
 ## Day 1 — Saturday, September 19
 
-### [Cadet Men's Saber](https://www.fencingtimelive.com/events/results/6ACD2FA4FB6149D4B2EAE2960A4845ED)
+### [Cadet Men's Sabre](https://www.fencingtimelive.com/events/results/6ACD2FA4FB6149D4B2EAE2960A4845ED)
 
 | Name | Club | Place |
 |------|------|-------|
@@ -37,7 +37,7 @@ The Fundy Open 2026 took place September 19–20 in Saint John, NB, with eleven 
 | 🥈 BOUDREAU Jasmine | Ecole Antonine-Maillet Fencing Club | 2nd |
 | 🥉 SHERWOOD Juliette | Fundy Fencing Club | 3rd |
 
-### [Senior Mixed Saber](https://www.fencingtimelive.com/events/results/ACB86922E5E5486BAAB7EE19C203B1C1)
+### [Senior Mixed Sabre](https://www.fencingtimelive.com/events/results/ACB86922E5E5486BAAB7EE19C203B1C1)
 
 | Name | Club | Place |
 |------|------|-------|
