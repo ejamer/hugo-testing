@@ -15,6 +15,13 @@
 #   - If every slide is currently hidden, the carousel shows a default FENB logo slate
 #     instead of going empty.
 slides:
+  - src_en: images/hero/hero-canada-cup-1-en.jpg
+    src_fr: images/hero/hero-canada-cup-1-fr.jpg
+    alt: "Fencers celebrate with the Canadian flag — follow NB fencers at Canada Cup #1 / Escrimeurs célèbrent avec le drapeau canadien — suivez les escrimeurs du N.-B. à la Coupe Canada #1"
+    link_en: "news/2026/sep-26-2026-09-25-canada-cup-1/"
+    link_fr: ""
+    publish_from: ""
+    expires: "2026-10-04"
   - src_en: images/hero/hero-damocles-armoury-clinic-en.jpg
     src_fr: images/hero/hero-damocles-armoury-clinic-fr.jpg
     alt: "Damocles blade wiring armoury clinic — August 26, 2026 / Clinique d'armurerie Damocles — câblage des lames — 26 août 2026"
