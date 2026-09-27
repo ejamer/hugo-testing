@@ -17,7 +17,7 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 
 **At the start of every session, read `docs/TODO.md`**. Review each open item and flag to the user if any work in the session addresses or alters an item.
 
-**When creating or modifying content**, check whether any new placeholder links, missing pages, or deferred decisions arise. If so, add a `- [ ]` entry to `docs/TODO.md` under the relevant section before finishing. Mark items `- [x]` (and note the fix) when they are resolved.
+**When creating or modifying content**, check whether any new placeholder links, missing pages, or deferred decisions arise. If so, add a `- [ ]` entry to `docs/TODO.md` under the relevant section before finishing. When an item is resolved, **delete it** rather than ticking it `- [x]` — unless it holds context a still-pending item needs, in which case fold that context into the pending item first.
 
 ## Claude Code skills
 
@@ -27,10 +27,9 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 
 | Skill | What it does |
 |---|---|
-| `/fenb-git-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
+| `/fenb-git-commit` | Stage, commit, and push after one confirmation popup (shows the drafted message); on a feature branch it can also PR-and-merge into `dev` |
 | `/fenb-docs-update` | Review current git changes and assess whether system docs (CLAUDE.md, README.md, docs/*.md) need updating |
-| `/fenb-git-merge` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
-| `/fenb-git-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
+| `/fenb-git-release` | Production build + bilingual parity checks, then one popup (version + merge now/leave open) to open and optionally merge a PR from `dev` into `main` |
 | `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
@@ -56,7 +55,7 @@ See **`docs/DEVELOPMENT.md`** for the full branch strategy and build commands.
 Key rules:
 - **`main`** — production; pushing here triggers a GitHub Pages deploy. **Never commit directly.**
 - **`dev`** — permanent development branch; all work lands here first. **Never delete.**
-- **Feature branches** — cut from `dev`, PR back into `dev` when done, then delete.
+- **Feature branches** — rarely used; only for multi-session work. Cut from `dev` via `/fenb-git-commit` ("Commit to new branch…"), and merge back with its "Commit, push & merge into dev" option.
 - **Release** — PR from `dev` into `main`.
 
 Dev server: `make serve` (needs network for the Pagefind search index) | Offline dev server, no search: `make serve-local` | Production build: `make build-prod` | Clean: `make clean`
@@ -65,7 +64,9 @@ All `make` commands run from the repo root.
 
 ## Git commit and push — skills only
 
-`git commit`, `git push`, and `git push -u` are **never run autonomously**. They may only execute inside the `/fenb-git-commit` or `/fenb-git-release` skills, which start with an explicit user confirmation gate. There are no exceptions: not for "small fixes", not for updating version files, not for anything.
+`git commit`, `git push`, and `git push -u` are **never run autonomously**. They may only execute inside the `/fenb-git-commit` or `/fenb-git-release` skills, each of which asks for confirmation in a single popup before any git write. Don't add extra confirmation prompts inside those skills — one gate per run. There are no exceptions: not for "small fixes", not for updating version files, not for anything.
+
+Scripts in `scripts/` never run `git add`/`commit`/`push` — they write files only, and the calling skill does the git work (e.g. `generate-version-json.sh` writes `version.json`; `/fenb-git-release` commits it). This keeps every commit behind a skill's confirmation gate.
 
 ## Key conventions
 

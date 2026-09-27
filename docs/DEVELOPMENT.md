@@ -106,9 +106,8 @@ Git and release workflows are automated as Claude Code skills (invoked with `/fe
 
 | Skill | What it does |
 |---|---|
-| `/fenb-git-commit` | Stage, commit, and push — handles branch checks, feature branch creation, and remote state |
-| `/fenb-git-merge` | Discover unmerged feature branches, let user select one, and open a PR into `dev` |
-| `/fenb-git-release` | Production build check, bilingual parity check, and open a PR from `dev` into `main` |
+| `/fenb-git-commit` | Inspect changes, draft a message, then one popup: commit & push (or new branch / cancel). On a feature branch it also offers "Commit, push & merge into dev" |
+| `/fenb-git-release` | Production build + parity checks, then one popup choosing the version tag and whether to merge now; opens the PR, commits `version.json`, merges and tags |
 
 For content and data skills (`/fenb-content-add-news`, `/fenb-content-add-page`, `/fenb-data-get-results`), see `README.md`. See `CLAUDE.md` for the full skill list and naming convention. 
 
@@ -159,7 +158,7 @@ python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid
 
 **Authentication:** the site uses Google OAuth, which cannot be automated. On first run, system Chrome opens and you complete the Google login normally. The session is saved to `scripts/.browser-profile/` (gitignored) and reused on subsequent runs until it expires.
 
-**Dependencies:** `pip install playwright pyyaml` — no extra browser install needed; the script uses system Chrome.
+**Dependencies:** `pip install playwright pyyaml` — no extra browser install needed; the script uses system Chrome (Google Chrome specifically — it launches with `channel="chrome"`, so Chromium won't do). Run `scripts/check-ftl-deps.sh` to verify everything (Python 3.9+, PyYAML, Playwright, Chrome, `clubs.yaml`) in one go; add `--fix` to pip-install missing Python packages. `/fenb-data-get-results` runs this as its Step 0.
 
 ---
 
@@ -252,9 +251,9 @@ flowchart TD
     L --> M([GitHub Actions deploys to Pages])
 ```
 
-1. Cut a feature branch from `dev` (or work directly in `dev` for small changes).
+1. Work directly in `dev` (the normal case), or cut a feature branch from `dev` for rare multi-session work.
 2. Develop and test locally.
-3. Push the feature branch and open a PR into `dev`. Merge and delete the feature branch.
+3. On a feature branch, run `/fenb-git-commit` and pick "Commit, push & merge into dev" — it opens the PR into `dev`, merges it, and deletes the branch.
 4. When `dev` is ready to release, open a PR from `dev` into `main`. The Actions job deploys on merge.
 
 ---
@@ -276,9 +275,18 @@ After confirming the above, run `/fenb-git-release` or open the PR manually with
 gh pr create --base main --head dev --title "Release: <summary>" --body "..."
 ```
 
+A manual release should also update `version.json` (the skill does this automatically), or the deployed site keeps reporting the previous release:
+
+```bash
+scripts/compute-next-version.sh                                    # latest tag + next patch/minor/major
+scripts/generate-version-json.sh <vX.Y.Z | --untagged> <pr-url>    # writes fenb-1/static/version.json
+```
+
+Then commit `fenb-1/static/version.json` to `dev` and push — the open PR picks it up. If you chose a version tag, apply it to `main` after merging: `git tag -a vX.Y.Z -m "Release vX.Y.Z" origin/main && git push origin vX.Y.Z`.
+
 ### Release versioning
 
-Releases may optionally be tagged with a semver version (`vMAJOR.MINOR.PATCH`). The `/fenb-git-release` skill prompts for this after each successful merge. Tagging is optional — during rapid development, most merges are untagged.
+Releases may optionally be tagged with a semver version (`vMAJOR.MINOR.PATCH`). The `/fenb-git-release` skill prompts for this before opening the PR (the tag itself is applied to `main` after merge). Tagging is optional — during rapid development, most merges are untagged.
 
 | Level | When to use | Example trigger |
 |---|---|---|
@@ -294,7 +302,7 @@ curl https://fenb.ca/version.json
 
 ### version.json fields
 
-`/fenb-git-release` writes `fenb-1/static/version.json` and commits it to `dev`. Do not edit it manually. Fields:
+`/fenb-git-release` writes `fenb-1/static/version.json` (via `scripts/generate-version-json.sh`) and commits it to `dev`. Do not edit it manually. The script only writes the file — the git commit stays in the skill. `scripts/compute-next-version.sh` prints the latest tag and the next patch/minor/major candidates; both scripts are read-only apart from the JSON file. Fields:
 
 | Field | Value |
 |---|---|

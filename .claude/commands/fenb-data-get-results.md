@@ -1,6 +1,6 @@
 ---
 description: Fetch recent tournament results from fencingtimelive.com and report NB fencer placements.
-allowed-tools: Bash(python3 scripts/fencingtimelive-results.py *) Bash(python3 -c *) Bash(python3 -m pip *) Bash(pip install *) Bash(pip3 install *) Bash(which *) AskUserQuestion Read
+allowed-tools: Bash(scripts/check-ftl-deps.sh *) Bash(python3 scripts/fencingtimelive-results.py *) AskUserQuestion Read
 ---
 
 Fetch tournament results from fencingtimelive.com. Two modes:
@@ -12,21 +12,11 @@ Fetch tournament results from fencingtimelive.com. Two modes:
 
 ## Step 0 — Prerequisites
 
-Check all requirements in parallel before running anything.
+```bash
+scripts/check-ftl-deps.sh --fix
+```
 
-1. **Python 3.9+** — `python3 --version`
-2. **PyYAML** — `python3 -c "import yaml; print(yaml.__version__)"`
-3. **Playwright** — `python3 -c "from playwright.sync_api import sync_playwright; print('ok')"`
-4. **System Chrome** — `which google-chrome || which google-chrome-stable || which chromium-browser || which chromium`
-5. **clubs.yaml** — `ls fenb-1/data/clubs.yaml`
-
-Auto-fix missing dependencies:
-- PyYAML: `pip install pyyaml --break-system-packages`
-- Playwright: `pip install playwright --break-system-packages`
-- Chrome missing: tell user to install Google Chrome and stop.
-- clubs.yaml missing: stop and tell the user.
-
-Report pass/installed/fail for each. Stop if any prerequisite cannot be satisfied.
+Checks Python 3.9+, PyYAML, Playwright, system Google Chrome, and `fenb-1/data/clubs.yaml`, printing one `PASS`/`FAIL` line each; `--fix` pip-installs missing PyYAML/Playwright. If it exits non-zero, show its output to the user and stop.
 
 ---
 
@@ -67,7 +57,7 @@ python3 scripts/fencingtimelive-results.py --location hosted --select {N} --coun
 
 ### Step H3 — Report and publish
 
-Read the saved `*-podiums-{today}.json` file. Report the podium for each event. For events with an empty `podium` array, note that final results were not posted in the system.
+Read the saved `*-podiums-{today}.json` file. Report the podium for each event. For events with an empty `podium` array, note that final results were not posted in the system — except events with `pools_only: true`, which are seeding pools with no DE bracket; list those separately as "pool round only (no podium)".
 
 Check whether the tournament matches an event in `fenb-1/data/events.yaml` (same match logic as Step A5.5 below). If matched and `results_url_en` is empty, ask the user to confirm before setting it.
 

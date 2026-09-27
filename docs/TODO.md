@@ -1,6 +1,6 @@
 # Outstanding TODOs
 
-Items that need follow-up — kept current as pages are built and content is added.
+Items that need follow-up — kept current as pages are built and content is added. Resolved items are **deleted**, not ticked; if a resolved item holds context a pending item still needs, fold that context into the pending item.
 
 ---
 
@@ -12,13 +12,8 @@ Items that need follow-up — kept current as pages are built and content is add
 - [ ] **Unconfirmed participant categories** — Trisword (Halifax, NS, Nov 14–15) and PEI Open (Charlottetown, PE, Nov 28–29) had no participant categories listed in the source calendar (marked "?"); `description_en/fr` currently says "Details unconfirmed — TBD." — fill in once known.
 - [ ] **"UNB?" placeholders not added** — the FENB source calendar had three unconfirmed "UNB? - TBD" rows (Dec 5–6, 2026; Mar 13–14, 2027; Mar 20–21, 2027) with no title/category — these were intentionally left out of `events.yaml` rather than guessed. Add once the event name/details are confirmed.
 - [ ] **TBA/TBD locations** — Challenge Desjarlais, Coupe du Printemps, Quebec Youth Provincials, and Quebec Senior Provincials all have `location: "TBA, QC"` (Quebec's own provisional calendar also had these as "à définir") — update once venues are confirmed.
-- [x] **OFA event numbering** — renumbered to match Fencing Ontario's own published calendar: the Jan 23–24, 2027 and Mar 20–21, 2027 circuits are now "OFA Youth Circuit #3" and "#4" in `events.yaml` (the FENB and Quebec source calendars had called them "#2" and "#3").
-- [ ] **OFA Youth Circuit #2 — missing from OFA's own calendar** — Fencing Ontario's published calendar (as scraped, covering Aug 28, 2026 – Apr 24, 2027) jumps straight from "Ontario Youth Cadet Circuit #1" (Oct 17–18, 2026) to "Ontario Youth Circuit #3" (Jan 23–24, 2027) — no "#2" appears anywhere in that window. Not added to `events.yaml`. Need confirmation: was there a Circuit #2 (maybe outside this window, cancelled, or a different age category not published to the public calendar) that NB fencers should know about?
+- [ ] **OFA Youth Circuit #2 — missing from OFA's own calendar** — Fencing Ontario's published calendar (as scraped, covering Aug 28, 2026 – Apr 24, 2027) jumps straight from "Ontario Youth Cadet Circuit #1" (Oct 17–18, 2026) to "Ontario Youth Circuit #3" (Jan 23–24, 2027) — no "#2" appears anywhere in that window. Not added to `events.yaml`. (`events.yaml` numbers the Jan 23–24 and Mar 20–21, 2027 circuits "#3" and "#4" to match OFA's calendar; the FENB and Quebec source calendars had called them "#2" and "#3".) Need confirmation: was there a Circuit #2 (maybe outside this window, cancelled, or a different age category not published to the public calendar) that NB fencers should know about?
 - [ ] **`details_url`/`registration_url` blank for most new entries** — the source PDFs didn't include per-event links (only a general OFA calendar page and FEQ contact emails), so these fields are empty for all newly added out-of-province events. Fill in as links become available.
-
----
-
-## News & Results page
 
 ---
 
@@ -43,7 +38,6 @@ Items that need follow-up — kept current as pages are built and content is add
 ## Join section — data maintenance
 
 - [ ] **Club registration form URL** — add Google Form URL to `fenb-1/data/join.yaml` → `club_form_url` when available; clubs page currently falls back to email contact
-- [x] **2MEV URL** — updated `membership_url` in `fenb-1/data/join.yaml` to `fencing-nb-2026-2027` for the new season
 
 ## Join section — review required
 
@@ -66,11 +60,10 @@ All seven pages need a full review pass for both style and content quality befor
 
 - [ ] **`/programs/` (landing)** 
 - [ ] **`/programs/athlete-development/`** 
-- [x] **`/programs/coach-training/`** — content replaced with 5 CFF pathway cards (overview, community, instructor-beginner, competition-introduction, competition-development), each with a "Learn more" PNG modal and "Save this pathway" PDF download, plus a standalone full-guide PDF link and a note on upcoming Instructor-Intermediate/HP Coach pathways. A layout/styling polish pass may still be wanted.
+- [ ] **`/programs/coach-training/`** — content is done (5 CFF pathway cards with "Learn more" modals and PDF downloads, plus the full-guide PDF link); only a layout/styling polish pass remains.
 - [ ] **`/programs/canada-games-2027/`** 
 - [ ] **`/programs/referee-development/`** 
 - [ ] **`/programs/secretariat-development/`** 
-- [x] **HONOURS & AWARDS** — built as `/about/hall-of-fame/` with 5 inductees (2025 + 2026 cohorts).
 
 ## Hall of Fame
 
@@ -89,20 +82,17 @@ All seven pages need a full review pass for both style and content quality befor
 
 ## Project skills
 
-- [ ] **Skill automation and non-AI tooling** — review `plans/skill-assessment.md` and implement the proposed shell scripts to reduce AI dependency, eliminate duplicated logic, and make common updates (news stubs, season rollover, version bumps) executable without Claude. Priority order: `generate-version-json.sh` → ~~`season-rollover.sh`~~ (done, see below) → `check-ftl-deps.sh` → `create-news-stub.sh` → `compute-next-version.sh`. Once scripts exist, slim the corresponding skills to use them. Ties into the **Editor tooling** item under Non-technical content maintenance — the same scripts that simplify AI skills form the foundation for non-AI workflows.
-- [ ] **`/fenb-content-add-results` should consume the scraper's `pools_only` flag** — `scripts/fencingtimelive-results.py` (hosted mode) now tags each event `pools_only: true` when its results page has no `/tableaus/scores/...` link (a combined pool round used only to seed separate divisions or gendered brackets, e.g. Fundy Open 2026's "Senior Men's Épée" → Div. 1/Div. 2 split). The scraper correctly excludes the podium for those events, but the skill doesn't yet know to drop the section and fold it into the intro as a pool-round mention (the pattern already used for combined age-group pools) — this had to be done manually for Fundy Open 2026. Update the skill so it auto-detects `pools_only: true` events and applies that treatment.
+- [ ] **Skill automation and non-AI tooling** — `plans/skill-assessment.md` proposes shell scripts to reduce AI dependency and make common updates executable without Claude. Remaining: `create-news-stub.sh` (file creation + year-folder logic shared by `/fenb-content-add-news` and `/fenb-content-add-results`), then optionally `page-audit.sh`. **Don't build** the plan's `git-preflight.sh` or `list-feature-branches.sh` — `/fenb-git-commit` was simplified and `/fenb-git-merge` removed (2026-09-27), so they're obsolete. Per CLAUDE.md, scripts never run git commit/push. Ties into the **Editor tooling** item under Non-technical content maintenance.
+- [ ] **Test scripts on macOS** — written and tested on Linux only (2026-09-27). The macOS paths (Chrome at `/Applications/Google Chrome.app/...`, the Xcode Command Line Tools `python3` stub message, and the `--fix` pip fallback for older pip that rejects `--break-system-packages`) were only simulated with stubs. Run `scripts/check-ftl-deps.sh` on a Mac with and without `--fix`, and confirm each PASS/FAIL line is accurate. Also run `scripts/compute-next-version.sh` and `scripts/generate-version-json.sh --out /tmp/v.json --untagged <any PR URL>` there (both written for bash 3.2, Linux-tested only) and check the output matches a Linux run.
 
-Test each project skill end-to-end at least once to verify it works correctly.
+Skills still needing an end-to-end test run — remove a row once its skill passes a real run.
 
 | Skill | Status | Notes |
 |---|---|---|
-| `/fenb-content-add-news` | ✅ Tested | |
-| `/fenb-content-add-page` | ❌ Untested | |
-| `/fenb-content-add-results` | ✅ Tested | NB Provincials 2026 — hosted format (full podium, medalists only); away format also tested (Star Cup RYC/RJCC, Trick or Retreat ROC/RJCC, Terre des Hommes 2026) |
-| `/fenb-data-get-results` | ✅ Tested | NB Provincials 2026 — direct URL, hosted mode, full podium fetch; away-format search/list flow also tested (Terre des Hommes 2026) |
-| `/fenb-docs-update` | ✅ Tested | |
+| `/fenb-content-add-page` | Never run | |
+| `/fenb-git-commit` | Rewritten, untested | Restructured 2026-09-27 to a single confirmation popup (shows drafted message); absorbed the removed `/fenb-git-merge` as "Commit, push & merge into dev" on feature branches |
+| `/fenb-git-release` | Rewritten, untested | Restructured 2026-09-27 — up-front confirm removed; tag + open-PR + merge prompts combined into one two-question popup; uses `compute-next-version.sh` / `generate-version-json.sh` |
 
 ## Events data
 
 - [ ] **Interscholastic finals article — photo gallery** — 4 action photos at `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; add `photos:` front matter to `jun-16-interscholastic-finals-2026.{en,fr}.md` (photo gallery system now available — see README.md)
-- [x] **Fundy Open — re-add to events.yaml once dates confirmed** — confirmed for Sept 19-20, 2026 at Harbour View High School, Saint John, NB. Entry restored in `fenb-1/data/events.yaml` with description/venue, and a registration news article published (`fenb-1/content/news/2026/sep-05-fundy-open-2026-registration.{en,fr}.md`).

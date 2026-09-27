@@ -23,7 +23,7 @@ Review the current git state and assess each system documentation file for neede
 
    - **`docs/DEVELOPMENT.md`** — branch strategy, local build commands, GitHub Pages deployment, release checklist. Needs updating if the diff changes a build command, adds a Makefile target, changes deployment config, or introduces a new release step.
 
-   - **`docs/TODO.md`** — outstanding items. Needs updating if the diff resolves an open item (mark it `[x]`) or if new deferred decisions or known-missing pages were introduced.
+   - **`docs/TODO.md`** — outstanding items. Needs updating if the diff resolves an open item (delete it — fold any context a pending item still needs into that item) or if new deferred decisions or known-missing pages were introduced.
 
    - **`docs/PROJECT_LAYOUT.md`** — directory tree. Needs updating if the diff adds or removes files that are explicitly called out in the tree: CSS files, layout templates, partials, JS files, or data YAML files.
 

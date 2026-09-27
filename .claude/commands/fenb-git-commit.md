@@ -1,153 +1,104 @@
 ---
 description: Stage, commit, and push changes for the FencingNB Hugo site, following the project's branch strategy.
-allowed-tools: Bash(git *) AskUserQuestion
+allowed-tools: Bash(git *) Bash(gh *) Bash(script *) AskUserQuestion
 ---
 
-Walk through each step below in order. After each step, report the result clearly before continuing. Use bold headers and plain status lines so the output is easy to scan.
-
----
-
-## Step 0 — Confirm intent
-
-Before running any git commands, use the `AskUserQuestion` tool:
-
-- **Question:** "Commit and push pending changes to the FencingNB site?"
-- **Option 1 (default):** label `"Yes, proceed"`, description `"Stage, commit, and push pending changes"`
-- **Option 2:** label `"Cancel"`, description `"Stop without making any changes"`
-
-If the user picks **"Cancel"**: stop immediately. Do not run any git commands.
+Inspect first, then ask **once**, then commit and push. The single popup in Step 3 is the confirmation gate — it shows exactly what will be committed. Don't add other confirmation prompts.
 
 ---
 
-## Step 1 — Identify current branch
+## Step 1 — Inspect
 
-Run `git branch --show-current` and `git status --short`.
+Run `git fetch origin`, then in parallel:
+- `git branch --show-current`
+- `git status --short`
+- `git diff --stat HEAD`
+- `git log --oneline -8` (commit message style reference)
 
-Report:
-- Current branch name
-- Number of modified/untracked files (summarise, don't dump the full list yet)
+**Stop conditions:**
+- **Nothing to commit:** say so and stop.
+- **On `main`:** commits never go to `main`. Run `git checkout dev` (uncommitted changes carry over) and re-run the inspection. If the checkout fails, stop and report.
 
-**Branch rules:**
-- If on **`main`**: warn the user that commits never go directly to `main`, then automatically run `git checkout dev` and continue to Step 2.
-- If on **`dev`**: continue to Step 2.
-- If on any other branch (feature branch): continue to Step 2 (treating the current branch as the default target).
+**Branch vs. origin** — from `git status`:
+- **Behind origin:** run `git pull --rebase --autostash`. If it fails or conflicts, stop and report — don't try to resolve conflicts.
+- **Branch not on origin yet:** note it — Step 4 pushes with `-u`.
+- **Ahead of origin:** note the unpushed commits — they'll be pushed with the new one.
 
----
-
-## Step 2 — Confirm target branch
-
-Show the user a brief summary of the pending changes (`git diff --stat HEAD`), then use the `AskUserQuestion` tool to present a popup.
-
-**If currently on `dev`:**
-
-- **Question:** "Where should these changes land?"
-- **Option 1 (default):** label `"Continue on dev"`, description `"Commit directly to the dev branch"`
-- **Option 2:** label `"Create a new branch"`, description `"You will be prompted for the branch name"`
-
-If the user picks **"Continue on dev":** continue to Step 3.
-
-If the user picks **"Create a new branch":** use `AskUserQuestion` again to ask for the branch name:
-- **Question:** "Enter a branch name (format: feat/one-or-two-words, e.g. feat/programs, feat/coach-page)"
-- **Option 1:** `"feat/my-feature"` — they will likely choose Other and type their own name
-
-Branch naming rules: prefix `feat/`, followed by one or two words (dashes allowed, no slashes). Example: `feat/programs`, `feat/event-archive`. Note: `dev/` cannot be used as a prefix because a branch named `dev` already exists in this repo.
-
-Take the name they provide (or their Other input), run `git checkout -b <name>`, report the new branch name, and continue to Step 3.
-
-**If currently on a feature branch (not `dev` or `main`):**
-
-- **Question:** "Where should these changes land?"
-- **Option 1 (default):** label `"Stay on <branch-name>"`, description `"Commit to the current feature branch"`
-- **Option 2:** label `"Move to dev"`, description `"Stash changes, switch to dev, and commit there instead"`
-
-If the user picks **"Stay on <branch-name>":** continue to Step 3.
-
-If the user picks **"Move to dev":**
-1. Run `git stash push -m "fenb-git-commit: moving changes to dev"`
-2. Run `git checkout dev`
-3. Run `git stash pop`
-4. Report that changes have been moved to `dev`, then continue to Step 3 (targeting `dev`).
+Scan the file list for anything that looks unintended (build output, `.env`, large binaries, scratch files) and flag it — don't stage those files without asking.
 
 ---
 
-## Step 3 — Inspect remote state
+## Step 2 — Draft the commit message
 
-Run the following in parallel:
-- `git fetch origin`
-- (after fetch) `git status` to check ahead/behind
-- `git log origin/<branch>..<branch> --oneline 2>/dev/null` to list any unpushed local commits (if the remote branch exists)
-
-Report one of these situations clearly:
-
-| Situation | What to report |
-|---|---|
-| Branch doesn't exist on remote yet | "This branch hasn't been pushed to origin yet — will push with `-u` flag." |
-| Branch exists, no unpushed commits | "Branch is in sync with origin. New commit will be the first to push." |
-| Branch exists, N unpushed commits | "There are N unpushed commits ahead of origin. New commit will be pushed along with them." |
-| Branch is behind origin | Stop. Tell the user to pull first (`git pull origin <branch>`) before committing. |
+Read `git diff HEAD` (plus untracked files) and draft a message in this repo's style: imperative mood, sentence case, no trailing period, concise summary line. Add a short body only if the change spans several unrelated areas.
 
 ---
 
-## Step 4 — Show pending changes
+## Step 3 — Confirm (the only prompt)
 
-Run `git diff --stat HEAD` and `git status --short`. Present a clean summary:
+Show the file summary (grouped Modified / Untracked, one list — don't repeat it elsewhere) and any flags from Step 1, then use `AskUserQuestion`:
 
-```
-Modified:
-  fenb-1/content/news/2026/may-07-example.en.md
-  fenb-1/content/news/2026/may-07-example.fr.md
+- **Question:** `Commit "<message>" (<N> files) → <branch>?`
+- **Options on `dev`:**
+  1. label `"Commit & push"` — description `"Commit to dev and push to origin"`
+  2. label `"Commit to new branch…"` — description `"Rarely needed — for multi-session work. You'll be asked for a feat/<name> branch name"`
+  3. label `"Cancel"` — description `"Stop without committing"`
+- **Options on a feature branch:**
+  1. label `"Commit & push"` — description `"Commit and push to <branch>"`
+  2. label `"Commit, push & merge into dev"` — description `"Also open a PR into dev, merge it, and delete <branch>"`
+  3. label `"Cancel"` — description `"Stop without committing"`
 
-Untracked:
-  fenb-1/static/images/example.jpg
-```
+Tell the user in the question text that typing a message in **Other** replaces the proposed commit message (then proceed as "Commit & push").
 
-Do not ask for confirmation — proceed directly to Step 5.
+**"Commit to new branch…":** ask for the name with one more `AskUserQuestion` (option `"feat/my-feature"`; the user types their own via Other). Rule: `feat/` + one or two dash-separated words, no further slashes (`dev/` can't be used — a `dev` branch exists). Run `git checkout -b <name>` and continue.
 
----
-
-## Step 5 — Draft commit message
-
-Inspect the staged/unstaged diff (`git diff HEAD`) and recent commit log (`git log --oneline -8`) to match this repo's commit message style.
-
-Draft a concise message (imperative mood, sentence case, no trailing period). Show it:
-
-> Proposed commit message:
-> **"Add May 2026 provincial results news article"**
-
-Do not ask for confirmation — proceed directly to Step 6.
+**"Cancel":** stop. Nothing has been changed.
 
 ---
 
-## Step 6 — Stage and commit
+## Step 4 — Commit and push
 
-Run:
-```
-git add <files confirmed in Step 4>
+```bash
+git add <the files shown in Step 3, excluding anything flagged and not approved>
 git commit -m "$(cat <<'EOF'
-<message from Step 5 draft>
+<message>
 
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+Co-Authored-By: <current model's co-author line from this session's attribution instructions>
 EOF
 )"
+git push            # or: git push -u origin <branch>  if the branch isn't on origin yet
 ```
 
-Report: commit hash and message on success. If the pre-commit hook fails, show the hook output, fix the underlying issue, and re-run as a new commit (never use `--no-verify`).
+If a pre-commit hook fails, show its output, fix the underlying issue, and commit again (never `--no-verify`).
 
 ---
 
-## Step 7 — Push
+## Step 5 — Merge into dev (only if chosen in Step 3)
 
-- If branch is new (no remote): `git push -u origin <branch>`
-- Otherwise: `git push`
+```bash
+gh pr create --base dev --head <branch> --title "<message>" --body "<one-line summary>
 
-Report the push result. On success, show the following as plain text (not a code block):
+🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+```
+
+Capture the PR number from the URL it prints, then — always with the explicit number:
+
+```bash
+script -q -c "gh pr merge <PR-number> --merge --delete-branch" /dev/null
+git checkout dev && git pull origin dev && git branch -d <branch>
+```
+
+If any command fails, stop and report — the commit is already safely pushed to the branch.
+
+---
+
+## Step 6 — Summary
+
+Show as plain text (not a code block):
 
 ┌─ Commit Summary ─────────────────────────────
-│  <short-hash>  →  origin/<branch-name>
+│  <short-hash>  →  origin/<branch>
 │  <commit message>
 │  <N files changed · X insertions(+) · Y deletions(-)>
+│  Merged: <PR URL> → dev          (only if Step 5 ran)
 └─────────────────────────────────────────────
-
-Use the file-change stats from the commit output for the last line.
-
-If this is a feature branch, remind the user: "When ready, open a PR into `dev` (not `main`)."
