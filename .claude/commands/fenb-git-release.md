@@ -1,135 +1,77 @@
 ---
 description: Prepare and open a release PR from `dev` into `main` for the FencingNB Hugo site. Runs a production build check, bilingual parity check, and opens a PR.
 disable-model-invocation: true
-allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(script *) Read Write AskUserQuestion
+allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(script *) Bash(scripts/compute-next-version.sh) Bash(scripts/generate-version-json.sh *) Read AskUserQuestion
 ---
 
-Run through this checklist in order, pausing to report the result of each step before continuing:
+Run the checks, then ask **once** (Step 7) — that single popup is the release gate. This skill can only be started by the user (`disable-model-invocation`), so don't add an up-front "are you sure?" prompt. Report each step's result briefly as you go.
 
-0. **Confirm intent** — before running any git or build commands, use the `AskUserQuestion` tool:
-   - **Question:** "Prepare and open a release PR for the FencingNB site?"
-   - **Option 1 (default):** label `"Yes, proceed"`, description `"Run build checks, open a release PR, and commit version.json"`
-   - **Option 2:** label `"Cancel"`, description `"Stop without making any changes"`
+**Stash rule:** if Step 2 stashes changes, then no matter how or where the skill exits — failure, cancel, or success — run `git stash pop` before stopping and tell the user "Stashed changes have been restored."
 
-   If the user picks **"Cancel"**: stop immediately.
+---
 
-1. **Tag lookup** — run `git tag --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1` to find the current latest semver tag. If none exists, treat the current version as `v0.0.0` (no tags yet). Compute the three candidate versions:
-   - **Patch bump:** increment the last component, reset nothing (e.g. `v1.2.3 → v1.2.4`; from `v0.0.0` → `v0.0.1`)
-   - **Minor bump:** increment the middle component, reset patch to 0 (e.g. `v1.2.3 → v1.3.0`; from `v0.0.0` → `v0.1.0`)
-   - **Major bump:** increment the first component, reset minor and patch to 0 (e.g. `v1.2.3 → v2.0.0`; from `v0.0.0` → `v1.0.0`)
+1. **Tag lookup** — run `scripts/compute-next-version.sh`. It prints `current=` (latest `vX.Y.Z` tag, or `v0.0.0` if none), `tagged=` (`yes`/`no`), and the candidates `patch=`, `minor=`, `major=`. Keep these for Step 7. Report the current tag (e.g. "Current release tag: v1.2.3", or "No release tags exist yet" when `tagged=no`).
 
-   Store these three candidates and the current tag — they are used in Step 8. Report the current tag to the user (e.g. "Current release tag: v1.2.3" or "No release tags exist yet").
-
-2. **Branch check** — confirm the current branch is `dev`. If not, stop and tell the user.
-
-3. **Remote sync** — run `git fetch origin` then `git status` to confirm:
-   - `dev` is not behind `origin/dev` — if it is, stop and ask the user to pull first.
-   - The working tree is clean (no uncommitted changes) — if it isn't, describe the changes found (list the modified/untracked files), then use the `AskUserQuestion` tool with:
+2. **Branch and remote state** — run `git fetch origin`, `git branch --show-current`, and `git status`:
+   - **Not on `dev`:** stop and tell the user.
+   - **`dev` behind `origin/dev`:** run `git pull --ff-only`; if it fails, stop and report.
+   - **Uncommitted changes:** list them, then `AskUserQuestion` — the only other prompt this skill may show:
      - **Question:** "The working tree has uncommitted changes. How would you like to proceed?"
-     - **Option 1:** label `"Commit first"`, description `"Run the fenb-git-commit skill to commit the changes, then continue the release"`
-     - **Option 2:** label `"Stash and release"`, description `"Stash changes, complete the release, then restore the stash afterward"`
-     - **Option 3:** label `"Cancel release"`, description `"Stop here without opening a PR"`
+     - label `"Stash and release"` — description `"Stash changes, release what's committed, then restore the stash"` → `git stash push -m "fenb-git-release: pre-release stash"` and continue (see stash rule)
+     - label `"Cancel release"` — description `"Stop — run /fenb-git-commit first, then re-run /fenb-git-release"` → stop
+   - **Sync local `main`:** `git merge-base --is-ancestor main origin/main`; if it succeeds run `git fetch origin main:main` (safe — `main` is never checked out). If it fails (local `main` diverged), stop and alert the user. Needed because `gh pr merge` updates `origin/main` but not local `main`, which would make Step 5's `main..dev` list stale.
 
-     If the user picks **"Commit first"**: stop and tell the user: "Run `/fenb-git-commit` to commit your changes, then re-run `/fenb-git-release` to continue."
+3. **Production build** — `make build-prod`. Report errors or warnings; a clean build is required to continue.
 
-     If the user picks **"Stash and release"**: run `git stash push -m "fenb-git-release: pre-release stash"`, confirm the stash succeeded, then continue with the checklist. **IMPORTANT: from this point on, no matter how or where the skill exits — build failure, parity issues, user cancellation, PR error, or success — always run `git stash pop` before stopping and tell the user "Stashed changes have been restored."**
+4. **Bilingual parity** — `make check-parity`. Report any `MISSING FR:` / `MISSING EN:` lines (no output = all paired).
 
-     If the user picks **"Cancel release"**: stop and tell the user: "Release cancelled. You can run `/fenb-git-commit` to commit your changes, or `git stash` to set them aside, then re-run `/fenb-git-release`."
+5. **Commit summary** — `git log main..dev --oneline`. If empty, report "Nothing to release" and stop.
 
-   - Sync local `main` with `origin/main`: run `git merge-base --is-ancestor main origin/main`. If it succeeds, run `git fetch origin main:main` to fast-forward the local `main` ref (safe — `main` is never checked out by this skill). If it fails (local `main` has diverged), stop and alert the user. This is needed because `gh pr merge` (Step 12) updates `origin/main` but not the local `main` ref, so without this sync Step 6's `main..dev` diff drifts stale after every release.
+6. **TODO.md review** — read `docs/TODO.md` and flag unchecked items the commits above appear to address.
 
-4. **Production build** — run `make build-prod` from the repo root. Report any errors or warnings. A clean build is required to proceed. If the build fails, pop the stash (if one was taken) before stopping.
+7. **Release decision (the only gate)** — present the results of Steps 3–6 compactly, then one `AskUserQuestion` call with **two questions**:
 
-5. **Bilingual parity check** — run from the repo root:
+   **Question 1** — header `"Version"`, "Which version for this release?"
+   - label `"Content update (→ <patch>)"` — description `"Content updates and fixes"`
+   - label `"New feature (→ <minor>)"` — description `"New sections or features"`
+   - label `"Major redesign (→ <major>)"` — description `"Major redesigns or restructures"`
+   - label `"No tag (<current>-dev)"` — description `"Release without a version tag"`
+
+   **Question 2** — header `"Merge"`, "After opening the PR:"
+   - label `"Merge now"` — description `"Merge into main immediately — triggers the deploy"`
+   - label `"Leave open"` — description `"Open the PR; merge later in GitHub"`
+   - label `"Cancel release"` — description `"Stop without opening a PR"`
+
+   Substitute the real version strings from Step 1 into the labels. If the checks in Steps 3–4 failed, don't offer to proceed — report and stop instead. If Question 2 is "Cancel release", stop (stash rule applies). Otherwise answering is the approval — continue without further prompts.
+
+8. **Open PR** — check for an existing one: `script -q -c "gh pr list --base main --head dev --state open --json url,number" /dev/null`. If found, reuse it ("Using existing PR #N"). Otherwise:
+   ```bash
+   gh pr create --base main --head dev --title "Release: <summary of changes>" --body "<commit summary from Step 5>
+
+   🤖 Generated with [Claude Code](https://claude.com/claude-code)"
    ```
-   make check-parity
+   Capture the PR URL and number. If it fails, report and stop.
+
+9. **Write and commit version.json**:
+   ```bash
+   scripts/generate-version-json.sh <target-version | --untagged> <PR-URL>
    ```
-   This checks that every `.en.md` has a `.fr.md` counterpart and vice versa (accepting `_index.md` as a valid English counterpart for section index files). Report any `MISSING FR:` or `MISSING EN:` lines in the output. No output means all files are paired.
+   Pass the version chosen in Step 7 (e.g. `v0.1.0`), or `--untagged` for "No tag". The script writes `fenb-1/static/version.json` and prints it — keep `commits_since_tag` for the summary. It never touches git; if it exits non-zero, report its error and stop. Then:
+   ```bash
+   git add fenb-1/static/version.json
+   git commit -m "Update version.json for release <version>"
+   git push
+   ```
+   The open PR picks up this commit automatically.
 
-6. **Commit summary** — run `git log main..dev --oneline` to list what will land in this release. Show it to the user.
+10. **Merge and tag** — only if Step 7 chose "Merge now":
+    - `script -q -c "gh pr merge <PR-number> --merge --body ''" /dev/null` — always the explicit PR number; never `--delete-branch` (`dev` is permanent).
+    - `git fetch origin`. Don't merge or reset `dev` — GitHub will show `dev` "1 behind main"; the content is identical and it resolves with the next commit on `dev`.
+    - If a version was chosen: `git tag -a <version> -m "Release <version>" origin/main && git push origin <version>`.
 
-7. **TODO.md review** — read `docs/TODO.md`. Flag any unchecked items that appear to be addressed or affected by the commits above.
+    If "Leave open" was chosen with a version, remind the user to apply the tag after merging: `git tag -a <version> -m "Release <version>" origin/main && git push origin <version>`.
 
-8. **Tag selection** — using the current tag and candidate versions computed in Step 1, use the `AskUserQuestion` tool with:
-   - **Question:** "Apply a release version tag to this release?"
-   - **Option 1 (default):** label `"Yes — Content Update (→ <patch-candidate>)"`, description `"Content updates and fixes"`
-   - **Option 2:** label `"Yes — New Feature Added (→ <minor-candidate>)"`, description `"New sections or features"`
-   - **Option 3:** label `"Yes — Major Redesign (→ <major-candidate>)"`, description `"Major redesigns or restructures"`
-   - **Option 4:** label `"No"`, description `"Skip tagging — no version tag applied to this release"`
-
-   Substitute the actual computed version strings into the option labels (e.g. `"Yes — Content Update (→ v1.2.4)"`). Store the user's choice and the corresponding target version for use in Step 10.
-
-9. **User approval** — present the full checklist results, then use the `AskUserQuestion` tool with:
-   - **Question:** "Ready to open the PR?"
-   - **Option 1 (default):** label `"Open PR"`, description `"Create the pull request from dev into main"`
-   - **Option 2:** label `"Cancel"`, description `"Stop here without opening a PR"`
-
-   If the user picks "Cancel", pop the stash (if one was taken), then stop. Do not open the PR without explicit user approval.
-
-10. **Open PR** — first check for an existing open PR: `gh pr list --base main --head dev --state open --json url,number`. If one already exists, use its URL and number (skip creating a new one and report "Using existing PR #N"). Otherwise run:
-    ```
-    gh pr create --base main --head dev --title "Release: {summary of changes}" --body "..."
-    ```
-    Include the commit summary in the PR body. Use the `gh` CLI. Capture the PR URL from the output.
-
-    If the `gh pr create` command fails, pop the stash (if one was taken) before stopping and report the error.
-
-11. **Write version.json** — compute the following values using bash, then write `fenb-1/static/version.json` using the Write tool:
-
-    - **`version`** — depends on whether a tag was selected in Step 8:
-      - **Tagged release:** use the selected version string (e.g. `"v0.1.0"`)
-      - **Untagged release:** append `-dev` to the current tag from Step 1 (e.g. `"v1.2.3-dev"`). If no tags exist at all, use `"v0.0.0-dev"`.
-    - **`released_at`** — run `date -u +"%Y-%m-%dT%H:%M:%SZ"`
-    - **`released_by`** — run `git config user.name` and `git config user.email`, then anonymize the email:
-      ```bash
-      email=$(git config user.email)
-      local="${email%%@*}"
-      domain="${email#*@}"
-      anon_email="${local:0:3}*****@${domain:0:1}*****.${domain#*.}"
-      ```
-      Format as `"Name <anon_email>"` (e.g. `"Ed Jamer <edw*****@g*****.com>"`)
-    - **`pr`** — the PR URL captured in Step 10
-    - **`commits_since_tag`** — cumulative commit count since the last semver tag, computed as follows:
-      - **Tagged release:** `git log <prev-tag>..HEAD --oneline | wc -l | tr -d ' '` where `<prev-tag>` is the current tag from Step 1 (the one before this release). If no previous tag exists, use `git log --oneline | wc -l | tr -d ' '` (all commits).
-      - **Untagged release:** same as above — commits since the last tag (or all commits if no tags). This makes the counter cumulative across consecutive untagged releases.
-
-    Write the file as valid JSON:
-    ```json
-    {
-      "version": "...",
-      "released_at": "...",
-      "released_by": "...",
-      "pr": "...",
-      "commits_since_tag": N
-    }
-    ```
-
-    Then stage, commit, and push:
-    ```
-    git add fenb-1/static/version.json
-    git commit -m "Update version.json for release <version>"
-    git push
-    ```
-
-    Report that version.json has been committed and the PR has been updated automatically.
-
-12. **Merge** — use the `AskUserQuestion` tool with:
-    - **Question:** "PR updated with version.json. Merge it now?"
-    - **Option 1:** label `"Merge now"`, description `"Merge the PR into main immediately (regular merge commit, dev branch kept)"`
-    - **Option 2:** label `"Leave open"`, description `"Leave the PR open to review or merge later in GitHub"`
-
-    If the user picks **"Merge now"**: extract the PR number from the PR URL captured in Step 10 and run `script -q -c "gh pr merge <PR-number> --merge --body ''" /dev/null`. Never use `--delete-branch` — `dev` is the permanent development branch. Report success or failure.
-
-    After a successful merge, run `git fetch origin` to update remote refs locally. Do not merge or reset `dev` — GitHub's merge commit will leave `dev` showing "1 behind main" in the UI, but the content is identical and collaborators can use normal `git pull`. It resolves naturally when the next commit lands on `dev`.
-
-    **Apply tag** — if the user selected a "Yes" option in Step 8:
-    - Create an annotated tag pointing at the merge commit on `main`: `git tag -a <target-version> -m "Release <target-version>" origin/main`
-    - Push the tag: `git push origin <target-version>`
-    - Record the applied tag name for the summary.
-
-    If the user selected "No" in Step 8: record tag as `None` for the summary.
-
-    Pop the stash (if one was taken), then show the following as plain text (not a code block):
+11. **Summary** — pop the stash if one was taken, then show as plain text (not a code block):
 
     ┌─ Release Summary ────────────────────────────
     │  PR:      <PR URL>
@@ -139,4 +81,4 @@ Run through this checklist in order, pausing to report the result of each step b
     │  Status:  Merged ✓  (or "Open — merge when ready")
     └─────────────────────────────────────────────
 
-    For the Tag line: if a tag was applied show it (e.g. `v1.2.4`). If no tag was applied, show `None  (existing: <current-tag-from-step-1>)` — if no tags exist at all, show `None  (no tags yet)`.
+    Tag line: the applied tag (e.g. `v1.2.4`); if none, `None  (existing: <current>)`, or `None  (no tags yet)` when `tagged=no`.

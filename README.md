@@ -15,7 +15,7 @@ Content and data workflows are available as Claude Code skills (invoked with `/f
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
 | `/fenb-data-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
 
-For git and release workflow skills (`/fenb-git-commit`, `/fenb-git-merge`, `/fenb-git-release`), see `docs/DEVELOPMENT.md`.
+For git and release workflow skills (`/fenb-git-commit`, `/fenb-git-release`), see `docs/DEVELOPMENT.md`.
 
 ---
 

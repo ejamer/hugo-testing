@@ -25,7 +25,7 @@ All steps below branch on this format. Follow the appropriate branch throughout.
 
 **Away format:** Scan `events_with_nb_fencers` for any entry where `source` is `"competitors"` (place values are empty — results not yet posted).
 
-**Hosted format:** Scan `events` for any entry whose `podium` array is empty or missing — this means final results were not entered in the system.
+**Hosted format:** Scan `events` for any entry whose `podium` array is empty or missing — this means final results were not entered in the system. **Skip entries with `pools_only: true`** — their podium is deliberately empty (a seeding pool with no DE bracket, not an unfinished event); they are handled in Step 5 as pool-round mentions, not flagged here.
 
 **If any exist**, report:
 - A warning that not all events are finished.
@@ -117,14 +117,18 @@ When more than one template plausibly fits, offer 2–3 candidates via `AskUserQ
 
 No top-performers block. Go directly to per-event sections.
 
-**Combined pool/seeding rounds (hosted format only):** Some tournaments run combined age-group pool rounds (e.g. "U11/U13 Mixed Sabre Pools") before splitting into separate DE brackets by age. These events appear in the JSON with podium data but are not standalone competitions — do not include them as per-event podium sections. Instead, reference them by name with a hyperlink to their `results_url` in the intro paragraph (e.g. "Pool rounds for [U11/U13 Mixed Sabre](...) were held as combined age groups to seed the direct elimination brackets below."). Apply this rule to any event whose name contains "Pool" or "Pools" and whose age group spans multiple categories (e.g. "U11/U13", "U13/U15").
+**Combined pool/seeding rounds (hosted format only):** Some tournaments run combined pool rounds used only to seed separate DE brackets — by age (e.g. "U11/U13 Mixed Sabre Pools") or by division/gender (e.g. a "Senior Men's Épée" pool split into Div. 1/Div. 2). These are not standalone competitions — do not include them as per-event podium sections, and do not count them in the intro's "N events contested" total. Instead, reference them by name with a hyperlink to their `results_url` in the intro paragraph (e.g. "Pool rounds for [U11/U13 Mixed Sabre](...) and [Senior Men's Épée](...) were held as combined groups to seed the direct elimination brackets below."). Treat an event as a combined pool round if **either**:
+- it has `pools_only: true` in the JSON — the scraper sets this when the event's results page has no DE bracket, and has already emptied its `podium`. This is the authoritative signal; or
+- its name contains "Pool" or "Pools" and its age group spans multiple categories (e.g. "U11/U13", "U13/U15") — a fallback for older JSON files that predate the `pools_only` field.
+
+If there are no combined pool rounds, omit the pool-round sentence entirely.
 
 **Per-event sections** (one per event, in order from the JSON, excluding combined pool rounds):
 - Heading: `### [Event name]` — hyperlink to `results_url`
 - Markdown table with columns **`Name | Club | Place`** (Place is always last)
 - Add the appropriate medal emoji before the fencer's name for places 1–3 (e.g. `🥇 ZHANG Zhirong`)
 - If a fencer has no club recorded, use `—` in the Club column
-- If an event's `podium` is empty (results not in system), note this under the heading instead of a table
+- If an event's `podium` is empty (results not in system) and it is not `pools_only`, note this under the heading instead of a table
 - One blank line between the table and the next heading
 
 The JS in `static/js/results-table.js` automatically hides the Place column and makes headers sortable — the markdown table format is all that is needed.
@@ -153,6 +157,9 @@ Translate the full article into French using the same structure (away or hosted,
 | Place           | Position     |
 | Name            | Nom          |
 | Club            | Club         |
+| Mixed           | mixte        |
+| Pool round(s)   | ronde(s) de poules |
+| Direct elimination | élimination directe |
 
 Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée senior féminin"). The FR table header for the name column is `Nom`, for place is `Position`. Translate all prose. Keep fencer names and club names unchanged. Medal emoji and backslash line-breaks carry over unchanged.
 

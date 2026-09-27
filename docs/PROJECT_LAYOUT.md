@@ -18,7 +18,7 @@ hugo-testing/
 │   └── TODO.md            Outstanding items — keep current
 ├── .claude/               Project skills and settings (see CLAUDE.md for skill descriptions)
 ├── plans/                 Detailed plans for multi-session features (referenced from docs/TODO.md)
-├── scripts/               Utility scripts: fencingtimelive-results.py (tournament results), season-rollover.sh (events.yaml archive + fresh season file)
+├── scripts/               Utility scripts: fencingtimelive-results.py (tournament results), season-rollover.sh (events.yaml archive + fresh season file), check-ftl-deps.sh (prerequisite check for the results scraper), compute-next-version.sh (latest tag + next version candidates), generate-version-json.sh (writes static/version.json for a release)
 ├── design-sources/        Editable source for generated graphics (e.g. typographic hero slides) — not served by Hugo; re-export to static/images/ when reused or edited. Two source formats: HTML/CSS (re-render with headless Chrome), and Inkscape SVG templates (e.g. hero/fenb-hero-template.svg — export panels directly to JPG/PNG)
 └── fenb-1/                Hugo site root
     ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)
