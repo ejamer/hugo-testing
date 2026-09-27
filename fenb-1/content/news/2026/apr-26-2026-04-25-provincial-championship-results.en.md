@@ -17,7 +17,7 @@ The 2026 NB Provincial Fencing Championships took place April 25–26 in Moncton
 | 🥉 FULTON Alex | Damocles Fencing | 3T |
 | 🥉 TCHERNYSHOV Anna | Centre Excellence Escrime | 3T |
 
-### [Cadet Mixed Saber](https://www.fencingtimelive.com/events/results/4CDA5AE440C74E05955A4CB45A277B7D)
+### [Cadet Mixed Sabre](https://www.fencingtimelive.com/events/results/4CDA5AE440C74E05955A4CB45A277B7D)
 
 | Name | Club | Place |
 |---|---|---|
@@ -80,7 +80,7 @@ The 2026 NB Provincial Fencing Championships took place April 25–26 in Moncton
 | 🥉 RICHARD Clara | Escrime La Résistance Fencing | 3T |
 | 🥉 LAU Marcena | — | 3T |
 
-### [Mixed Saber](https://www.fencingtimelive.com/events/results/B508EFC6490B46C0B79BD6CB1E16C424)
+### [Mixed Sabre](https://www.fencingtimelive.com/events/results/B508EFC6490B46C0B79BD6CB1E16C424)
 
 | Name | Club | Place |
 |---|---|---|

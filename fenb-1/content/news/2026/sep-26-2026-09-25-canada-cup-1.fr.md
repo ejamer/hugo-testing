@@ -1,15 +1,15 @@
 ---
-title: "Suivi en direct : les escrimeurs du N.-B. à la Coupe Canada #1 Sylvie Clément Memorial"
+title: "Résultats finaux : les escrimeurs du N.-B. à la Coupe Canada #1 Sylvie Clément Memorial"
 date: 2026-09-26
 category: results
 results_table: true
 results_hide_placements: true
-summary: "Le Nouveau-Brunswick a aligné dix escrimeurs à la Coupe Canada #1 Sylvie Clément Memorial à Montréal — les résultats seront mis à jour au fil du week-end jusqu'à dimanche."
+summary: "Résultats finaux des dix escrimeurs du Nouveau-Brunswick à la Coupe Canada #1 Sylvie Clément Memorial à Montréal, menés par la 5e place de Flynn Stevens au sabre cadet masculin."
 ---
 
-Le Nouveau-Brunswick a envoyé dix escrimeurs à Montréal, QC ce week-end pour la Coupe Canada #1 — Championnats nationaux seniors, en hommage à Sylvie Clément, du 25 au 27 septembre 2026. Les résultats sont connus pour sept épreuves jusqu'à maintenant, avec trois autres dimanche avant la fin du tournoi.
+Le Nouveau-Brunswick a envoyé dix escrimeurs à Montréal, QC ce week-end pour la Coupe Canada #1 — Championnats nationaux seniors, en hommage à Sylvie Clément, du 25 au 27 septembre 2026. Les escrimeurs du N.-B. ont pris part à dix épreuves au cours des trois jours.
 
-Personne n'a encore atteint le podium, mais plusieurs escrimeurs du N.-B. ont signé de bons résultats samedi :
+Aucun escrimeur du N.-B. n'est monté sur le podium, mais plusieurs ont signé de bons résultats :
 
 - STEVENS Flynn — Sabre cadet masculin (5e sur 54)
 - LAROCQUE Olivier — Épée U-15 masculin (9e sur 31)
@@ -20,9 +20,11 @@ Personne n'a encore atteint le podium, mais plusieurs escrimeurs du N.-B. ont si
 - SINGH RANGER Sammy — Épée cadet masculin (28e sur 66)
 - STEVENS Flynn — Sabre junior masculin (29e sur 68)
 
+Félicitations à tous les escrimeurs qui ont fait le voyage — nous sommes fiers de tous les athlètes du Nouveau-Brunswick qui ont représenté notre province à cette compétition de niveau national.
+
 ---
 
-## Résultats jusqu'à maintenant
+## Résultats
 
 ### [Épée cadet masculin](https://www.fencingtimelive.com/events/results/5605D27FC0A44C0094F638EAFBA095B7)
 
@@ -70,34 +72,20 @@ Personne n'a encore atteint le podium, mais plusieurs escrimeurs du N.-B. ont si
 |---|---|---|
 | LAROCQUE Olivier | Escrime La Résistance Fencing | 9 |
 
----
+### [Épée junior féminin](https://www.fencingtimelive.com/events/results/300D2F73806B4637B149A0787C8017EB)
 
-## À venir
-
-Trois autres escrimeurs du Nouveau-Brunswick montent sur la piste dimanche :
+| Nom | Club | Position |
+|---|---|---|
+| LOSYK Kseniia | Escrime La Résistance Fencing | 44 |
 
 ### [Sabre senior masculin](https://www.fencingtimelive.com/events/results/11A015967607419AAC86FFFC064C5080)
 
-*Dimanche 27 septembre — 8 h 00*
-
 | Nom | Club | Position |
 |---|---|---|
-| STEVENS Flynn | Beaches Sabre Club East | — |
-
-### [Épée junior féminin](https://www.fencingtimelive.com/events/results/300D2F73806B4637B149A0787C8017EB)
-
-*Dimanche 27 septembre — 8 h 00*
-
-| Nom | Club | Position |
-|---|---|---|
-| LOSYK Kseniia | Escrime La Résistance Fencing | — |
+| STEVENS Flynn | Beaches Sabre Club East | 55 |
 
 ### [Sabre cadet féminin](https://www.fencingtimelive.com/events/results/3170B2A1D1CE4F389BCF404605599177)
 
-*Dimanche 27 septembre — 13 h 00*
-
 | Nom | Club | Position |
 |---|---|---|
-| STEVENS Ashelin | Beaches Sabre Club East | — |
-
-Nous mettrons à jour cet article avec les résultats finaux une fois le tournoi terminé dimanche.
+| STEVENS Ashelin | Beaches Sabre Club East | 37 |
