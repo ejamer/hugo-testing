@@ -113,12 +113,16 @@ Do not use `2>&1`. Output is saved to `scripts/output/{slug}-{today}.json` (path
 
 **If `events_with_nb_fencers` is empty:** report no NB fencers found. Show tournament name, location, dates, and total events checked.
 
-**If NB fencers were found:** for each event in `events_with_nb_fencers`, show:
-- Event name, day, start time
-- Table of NB fencer results: Place | Name | Club
-- Direct link to `results_url`
+**If NB fencers were found:** split events by `source` — this also doubles as the registrations view for a tournament still in progress, with no separate fetch needed:
+- **Completed** (`source: "results"`) — final placements are posted.
+- **Upcoming / in progress** (`source: "competitors"`) — no results yet; fencers are registered or seeded but each entry's `place` is empty.
 
-End with a summary: events with NB fencers, total NB fencer appearances.
+Report each group under its own heading (omit a group with no events). For each event, show:
+- Event name, day, start time
+- Table of NB fencer results: Place | Name | Club (drop the Place column for the upcoming group, since it's blank)
+- Direct link to `results_url` (an entry list for the upcoming group, a results page for the completed group)
+
+End with a summary: events with NB fencers (completed vs upcoming counts if both are present), total NB fencer appearances. If any events are in the upcoming group, note that the tournament is still in progress and the fetch can be re-run later for final results.
 
 ### Step A5.5 — Update events.yaml results_url
 
@@ -130,7 +134,9 @@ If matched and `results_url_en` is empty: ask the user before setting it to `{to
 
 ### Step A6 — Publish results
 
-Tell the user to run the next command, given as its own fenced code block (not inline backticks) so it can be copied with a click:
+**If any event in `events_with_nb_fencers` has `source: "competitors"`:** the tournament is still in progress. Do not suggest publishing yet — recommend re-running Step A4 once the tournament concludes so the results article reflects final placements, not partial ones.
+
+**If every event has `source: "results"`** (tournament fully finished): tell the user to run the next command, given as its own fenced code block (not inline backticks) so it can be copied with a click:
 
 ```
 /fenb-content-add-results scripts/output/{slug}-{today}.json
