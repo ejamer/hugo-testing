@@ -97,6 +97,10 @@ When "All of them" or "New ones only": run scrapes sequentially without promptin
 python3 scripts/fencingtimelive-results.py --location away --select {N} --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-scrape.stderr
 ```
 
+If the user provided a direct URL, skip Steps A2–A3 and use `--tournament-id {ID}` in place of `--select`/`--country`/`--days` (ID extracted as in Step H2).
+
+If the user already named NB fencers who won't match a club (see Step A5.2), pass each one as `--nb-fencer "NAME"` on the first run.
+
 Do not use `2>&1`. Output is saved to `scripts/output/{slug}-{today}.json` (path logged to stderr as `[ ok ] Output saved to …`). This may take a minute or two — keep the user informed.
 
 ### Step A5 — Report NB fencer results
@@ -113,6 +117,12 @@ Report each group under its own heading (omit a group with no events). For each 
 - Direct link to `results_url` (an entry list for the upcoming group, a results page for the completed group)
 
 End with a summary: events with NB fencers (completed vs upcoming counts if both are present), total NB fencer appearances. If any events are in the upcoming group, note that the tournament is still in progress and the fetch can be re-run later for final results.
+
+### Step A5.2 — Review other Canadian fencers
+
+NB matching is by club (`clubs.yaml`) or division. Outside Canada — especially at US tournaments — FTL often lists foreign fencers with only `country: CAN` and no club, so NB fencers are missed. The script collects every unmatched CAN entry under `canadian_fencers_to_review`.
+
+If that list is non-empty, show it as a table (Name | Club | Event | Place, one row per event) and ask the user which, if any, are NB fencers. Then re-run Step A4 with one `--nb-fencer "NAME"` per confirmed fencer, using the name exactly as FTL shows it (e.g. `--nb-fencer "SINGH RANGER Harvir"`). Only entries with country CAN match, so a same-named fencer from another country is not picked up. Check stderr for `matched no CAN entry` warnings (typos), then report Step A5 again from the new output.
 
 ### Step A5.5 — Update events.yaml results_url
 

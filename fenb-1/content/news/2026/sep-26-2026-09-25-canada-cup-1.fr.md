@@ -1,7 +1,7 @@
 ---
 title: "Résultats finaux : les escrimeurs du N.-B. à la Coupe Canada #1 Sylvie Clément Memorial"
 date: 2026-09-26
-category: results
+category: national
 results_table: true
 results_hide_placements: true
 summary: "Résultats finaux des dix escrimeurs du Nouveau-Brunswick à la Coupe Canada #1 Sylvie Clément Memorial à Montréal, menés par la 5e place de Flynn Stevens au sabre cadet masculin."
