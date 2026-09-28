@@ -272,6 +272,8 @@
   gap: 3rem;
   align-items: start;
 }
+/* min-width: 0 lets the 1fr column shrink below its widest unbreakable child on phones */
+.fenb-cwg-layout > * { min-width: 0; }
 
 
 .fenb-cwg-sublabel {
@@ -408,6 +410,9 @@
   align-items: center;
   gap: 0.5rem;
   margin-top: 0;
+  white-space: normal;  /* override .fenb-btn nowrap — long FR label overflows phones */
+  text-align: center;
+  max-width: 100%;
 }
 
 .fenb-cwg-sidebar-card {
