@@ -56,12 +56,11 @@ All four join pages need a visual review in the dev server before release. Key i
 
 ### Programs — page-by-page design and content review
 
-All seven pages need a full review pass for both style and content quality before release. For each page: assess layout, spacing, typography, content accuracy, and French translation quality. Revise layout HTML, CSS, i18n strings, and/or content structure as needed.
+The pages below need a full review pass for both style and content quality before release. For each page: assess layout, spacing, typography, content accuracy, and French translation quality. Revise layout HTML, CSS, i18n strings, and/or content structure as needed.
 
 - [ ] **`/programs/` (landing)** 
 - [ ] **`/programs/athlete-development/`** 
 - [ ] **`/programs/coach-training/`** — content is done (5 CFF pathway cards with "Learn more" modals and PDF downloads, plus the full-guide PDF link); only a layout/styling polish pass remains.
-- [ ] **`/programs/canada-games-2027/`** 
 - [ ] **`/programs/referee-development/`** 
 - [ ] **`/programs/secretariat-development/`** 
 
