@@ -63,6 +63,11 @@ USAGE
   # Skip tournament picker (useful for scripting):
   python3 scripts/fencingtimelive-results.py --location away --select 2
 
+  # Away — force-include confirmed NB fencers the club match missed (e.g. US
+  # tournaments list foreign fencers by country with no club). Repeatable:
+  python3 scripts/fencingtimelive-results.py --location away --tournament-id 77895A9FF3BD47DE85A252315AC61C47 \
+      --nb-fencer "HAN Ethan" --nb-fencer "SINGH RANGER Harvir"
+
   # Manual cookie:
   python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid=...;AWSALB=..."
 
@@ -73,7 +78,9 @@ WORKFLOW (away)
   3. Select a tournament (interactively or via --select N / --tournament-id).
   4. Fetch the event schedule.
   5. For each event: fetch final results (or competitor list if not finished)
-     and check for NB fencers by matching against fenb-1/data/clubs.yaml.
+     and check for NB fencers by matching against fenb-1/data/clubs.yaml,
+     or by exact name for fencers passed via --nb-fencer.
+     Entries with country CAN that don't match are collected for manual review.
   6. Save JSON to scripts/output/{slug}-{date}.json.
 
 WORKFLOW (hosted)
@@ -98,6 +105,9 @@ OUTPUT
           "results_url": "https://www.fencingtimelive.com/events/results/{id}",
           "nb_fencers": [ { "name": ..., "place": ..., "club": ..., "license": ... } ]
         }
+      ],
+      "canadian_fencers_to_review": [
+        { "name": ..., "club": ..., "events": [ { "event_name": ..., "place": ... } ] }
       ]
     }
 
@@ -427,6 +437,25 @@ def is_nb_entry(entry: dict, nb_ids: set[str], nb_names: set[str]) -> bool:
     return False
 
 
+def normalize_name(name: str) -> str:
+    """Casefold and collapse whitespace so --nb-fencer matching tolerates case/spacing."""
+    return " ".join(name.split()).casefold()
+
+
+def is_forced_nb_entry(entry: dict, forced_names: set[str]) -> bool:
+    """
+    True if the entry's name was passed via --nb-fencer.
+
+    Outside Canada, FTL lists foreign fencers by country with no club, so the
+    club match in is_nb_entry() can't see them. The country must be CAN (or
+    missing) so a same-named local fencer isn't picked up — e.g. a US
+    "HAN Ethan" competing at the same tournament as NB's Ethan Han.
+    """
+    if normalize_name(entry.get("name") or "") not in forced_names:
+        return False
+    return (entry.get("country") or "CAN") == "CAN"
+
+
 # ---------------------------------------------------------------------------
 # Tournament list
 # ---------------------------------------------------------------------------
@@ -701,12 +730,23 @@ def main():
             "Used by the fenb-data-get-results skill."
         ),
     )
+    parser.add_argument(
+        "--nb-fencer", action="append", default=[], metavar="NAME",
+        help=(
+            "Away mode: treat this fencer as NB even though their club doesn't match "
+            "clubs.yaml. Use the name exactly as FTL shows it (e.g. \"SINGH RANGER Harvir\"); "
+            "case-insensitive, only matches entries with country CAN. Repeatable."
+        ),
+    )
     args = parser.parse_args()
 
     # --tournament-id is incompatible with --list and --select (they only make
     # sense when going through the tournament list search).
     if args.tournament_id and (args.list or args.select):
         log("--tournament-id cannot be combined with --list or --select.", "error")
+        sys.exit(1)
+    if args.nb_fencer and args.location != "away":
+        log("--nb-fencer only applies to --location away.", "error")
         sys.exit(1)
 
     # Obtain session cookies — browser login (Option A) or manual paste (Option B).
@@ -907,8 +947,12 @@ def main():
     else:
         nb_ids, nb_names, nb_clubs = load_nb_clubs(CLUBS_YAML)
         log(f"Loaded {len(nb_ids)} NB clubs: {', '.join(sorted(nb_ids))}", "info")
+        forced_names = {normalize_name(n) for n in args.nb_fencer}
+        forced_seen = set()
 
         nb_events = []
+        # Unmatched CAN-country entries, keyed by name, for manual review.
+        canadians_to_review: dict[str, dict] = {}
         errors = 0
         for i, event in enumerate(events, 1):
             status_oneline = event["status"].replace("\n", " ")
@@ -925,7 +969,25 @@ def main():
                 time.sleep(RATE_LIMIT_SECS)
                 continue
 
-            nb_fencers = [e for e in entries if is_nb_entry(e, nb_ids, nb_names)]
+            nb_fencers = []
+            for e in entries:
+                if is_nb_entry(e, nb_ids, nb_names):
+                    nb_fencers.append(e)
+                elif is_forced_nb_entry(e, forced_names):
+                    nb_fencers.append(e)
+                    forced_seen.add(normalize_name(e["name"]))
+                elif e.get("country") == "CAN":
+                    review = canadians_to_review.setdefault(e["name"], {
+                        "name": e["name"],
+                        "club": e.get("club1") or e.get("clubs") or e.get("clubNames") or "",
+                        "events": [],
+                    })
+                    review["events"].append({
+                        "event_name": event["name"],
+                        "place": next(
+                            (e[k] for k in ("place", "rank") if e.get(k) is not None), ""
+                        ),
+                    })
 
             if nb_fencers:
                 log(f"{len(nb_fencers)} NB fencer(s) found (source: {source})", "ok")
@@ -966,6 +1028,9 @@ def main():
             },
             "nb_clubs_checked": nb_clubs,
             "events_with_nb_fencers": nb_events,
+            "canadian_fencers_to_review": sorted(
+                canadians_to_review.values(), key=lambda c: c["name"].casefold()
+            ),
         }
         slug = re.sub(r"[^a-z0-9]+", "-", tourn["name"].lower()).strip("-")
         out_path = OUTPUT_DIR / f"{slug}-{date.today()}.json"
@@ -975,6 +1040,15 @@ def main():
             f"Done. {len(events)} events checked, {len(nb_events)} had NB fencers{error_note}.",
             "ok",
         )
+        if canadians_to_review:
+            log(
+                f"{len(canadians_to_review)} other Canadian fencer(s) listed under "
+                "canadian_fencers_to_review — check whether any are NB and re-run with --nb-fencer.",
+                "warn",
+            )
+        for name in args.nb_fencer:
+            if normalize_name(name) not in forced_seen:
+                log(f"--nb-fencer \"{name}\" matched no CAN entry — check spelling against FTL.", "warn")
 
     # -------------------------------------------------------------------------
     # Save output

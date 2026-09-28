@@ -1,7 +1,7 @@
 ---
 title: "Final Results: NB Fencers at the Sylvie Clément Memorial Canada Cup #1"
 date: 2026-09-26
-category: results
+category: national
 results_table: true
 results_hide_placements: true
 summary: "Final results for the ten New Brunswick fencers at the Sylvie Clément Memorial Canada Cup #1 in Montréal, led by Flynn Stevens' 5th-place finish in Cadet Men's Sabre."

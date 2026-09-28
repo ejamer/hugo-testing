@@ -123,7 +123,7 @@ Fetches tournament results from [fencingtimelive.com](https://www.fencingtimeliv
 
 > **Skill available:** run `/fenb-data-get-results` in Claude Code — it handles parameters, login, tournament selection, and result reporting interactively.
 
-**`--location away`** — NB athletes competed out of province. Scans every event for NB fencer participation (matched against `fenb-1/data/clubs.yaml`) and saves only events where NB athletes appear. Output: `scripts/output/{slug}-{date}.json` with an `events_with_nb_fencers` key.
+**`--location away`** — NB athletes competed out of province. Scans every event for NB fencer participation (matched against `fenb-1/data/clubs.yaml`) and saves only events where NB athletes appear. Output: `scripts/output/{slug}-{date}.json` with an `events_with_nb_fencers` key. Unmatched fencers with country `CAN` are listed under `canadian_fencers_to_review` — US tournaments often list foreign fencers with no club, so NB fencers can slip past the club match. Re-run with `--nb-fencer "NAME"` for each one confirmed as NB.
 
 **`--location hosted`** — tournament held in NB. Fetches full final standings for every finished event and extracts the top-4 medalists (gold, silver, two tied bronze). NB-club filtering is not applied. Output: `scripts/output/{slug}-podiums-{date}.json` with an `events[].podium` key.
 
@@ -142,6 +142,9 @@ python3 scripts/fencingtimelive-results.py --location hosted
 # Hosted — direct tournament ID (bypasses --days limit):
 python3 scripts/fencingtimelive-results.py --location hosted --tournament-id 4A78131AF1154821BF95F71B1D4FD913
 
+# Away — direct ID, force-include NB fencers the club match missed:
+python3 scripts/fencingtimelive-results.py --location away --tournament-id 77895A9FF3BD47DE85A252315AC61C47 --nb-fencer "HAN Ethan" --nb-fencer "SINGH RANGER Harvir"
+
 # Manual cookie instead of browser login:
 python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid=...;AWSALB=..."
 ```
@@ -155,6 +158,7 @@ python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid
 | `--tournament-id` | — | Bypass the tournament list; use this hex ID directly (useful for old tournaments) |
 | `--list` | — | Print tournament list as JSON and exit (used by skill) |
 | `--select N` | — | Skip interactive picker, use tournament N from the list (used by skill) |
+| `--nb-fencer NAME` | — | Away only, repeatable: treat this fencer as NB (exact FTL name, case-insensitive, country CAN only) |
 
 **Authentication:** the site uses Google OAuth, which cannot be automated. On first run, system Chrome opens and you complete the Google login normally. The session is saved to `scripts/.browser-profile/` (gitignored) and reused on subsequent runs until it expires.
 
