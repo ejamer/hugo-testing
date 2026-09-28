@@ -83,14 +83,13 @@ All seven pages need a full review pass for both style and content quality befor
 ## Project skills
 
 - [ ] **Skill automation and non-AI tooling** — `plans/skill-assessment.md` proposes shell scripts to reduce AI dependency and make common updates executable without Claude. Remaining: `create-news-stub.sh` (file creation + year-folder logic shared by `/fenb-content-add-news` and `/fenb-content-add-results`), then optionally `page-audit.sh`. **Don't build** the plan's `git-preflight.sh` or `list-feature-branches.sh` — `/fenb-git-commit` was simplified and `/fenb-git-merge` removed (2026-09-27), so they're obsolete. Per CLAUDE.md, scripts never run git commit/push. Ties into the **Editor tooling** item under Non-technical content maintenance.
-- [ ] **Test scripts on macOS** — written and tested on Linux only (2026-09-27). The macOS paths (Chrome at `/Applications/Google Chrome.app/...`, the Xcode Command Line Tools `python3` stub message, and the `--fix` pip fallback for older pip that rejects `--break-system-packages`) were only simulated with stubs. The all-present path is now confirmed on macOS (2026-09-27: `check-ftl-deps.sh --fix` printed five accurate PASS lines, found system Chrome at the `/Applications/...` path, Python 3.14.7). Still untested on a Mac: the FAIL lines, the Xcode `python3` stub message, and the `--fix` install/pip fallback — run it on a Mac missing PyYAML/Playwright to check those. Also run `scripts/compute-next-version.sh` and `scripts/generate-version-json.sh --out /tmp/v.json --untagged <any PR URL>` there (both written for bash 3.2, Linux-tested only) and check the output matches a Linux run.
 
 Skills still needing an end-to-end test run — remove a row once its skill passes a real run.
 
 | Skill | Status | Notes |
 |---|---|---|
 | `/fenb-content-add-page` | Never run | |
-| `/fenb-git-commit` | Rewritten, untested | Restructured 2026-09-27 to a single confirmation popup (shows drafted message); absorbed the removed `/fenb-git-merge` as "Commit, push & merge into dev" on feature branches |
+| `/fenb-git-commit` | Partly tested | Restructured 2026-09-27 to a single confirmation popup (shows drafted message); absorbed the removed `/fenb-git-merge` as "Commit, push & merge into dev" on feature branches. "Commit & push" on `dev` passed a real run (2026-09-27, `9d5e0c8`); still untested: "Commit to new branch…" and "Commit, push & merge into dev" |
 | `/fenb-git-release` | Rewritten, untested | Restructured 2026-09-27 — up-front confirm removed; tag + open-PR + merge prompts combined into one two-question popup; uses `compute-next-version.sh` / `generate-version-json.sh` |
 
 ## Events data
