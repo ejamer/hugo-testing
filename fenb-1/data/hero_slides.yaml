@@ -15,6 +15,13 @@
 #   - If every slide is currently hidden, the carousel shows a default FENB logo slate
 #     instead of going empty.
 slides:
+  - src_en: images/hero/hero-register-october-en.png
+    src_fr: images/hero/hero-register-october-fr.png
+    alt: "Fencer lunging beside an October calendar and a Register Now clipboard — October tournaments and events / Escrimeur en fente près d'un calendrier d'octobre — tournois et événements d'octobre, inscrivez-vous"
+    link_en: "news/2026/oct-01-october-competitions-registration/"
+    link_fr: ""
+    publish_from: ""
+    expires: "2026-10-20"
   - src_en: images/hero/hero-canada-cup-1-en.jpg
     src_fr: images/hero/hero-canada-cup-1-fr.jpg
     alt: "Fencers celebrate with the Canadian flag — follow NB fencers at Canada Cup #1 / Escrimeurs célèbrent avec le drapeau canadien — suivez les escrimeurs du N.-B. à la Coupe Canada #1"
@@ -22,13 +29,6 @@ slides:
     link_fr: ""
     publish_from: ""
     expires: "2026-10-04"
-  - src_en: images/hero/hero-damocles-armoury-clinic-en.jpg
-    src_fr: images/hero/hero-damocles-armoury-clinic-fr.jpg
-    alt: "Damocles blade wiring armoury clinic — August 26, 2026 / Clinique d'armurerie Damocles — câblage des lames — 26 août 2026"
-    link_en: "news/2026/aug-23-damocles-armoury-clinic/"
-    link_fr: ""
-    publish_from: ""
-    expires: "2026-08-26"
   - src_en: images/hero/hero5.jpg
     src_fr: ""
     alt: ""
