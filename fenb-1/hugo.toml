@@ -5,6 +5,7 @@
 defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = false
 theme = 'ananke'
+enableRobotsTXT = true
 
 [outputs]
   home    = ["HTML"]
