@@ -15,15 +15,10 @@
 {{- $categories := hugo.Data.event_categories.event_categories -}}
 
 <section class="fenb-section fenb-schedule-section">
-  <div class="fenb-container fenb-container--sched">
-
-    {{/* Screen-only controls (back link + print) */}}
-    <div class="fenb-schedule-controls">
-      <a href="{{ "events/" | relLangURL }}" class="fenb-schedule-back-link">
-        &larr; {{ i18n "back_to_calendar" }}
-      </a>
-      <button class="fenb-schedule-print-btn" onclick="window.print()">{{ i18n "schedule_print" }}</button>
-    </div>
+  {{/* Same container width as the calendar view (layouts/events/list.html) so the
+       shared view bar lands in exactly the same place on both pages. */}}
+  <div class="fenb-container fenb-container--narrow">
+    {{ partial "events-viewbar.html" (dict "page" . "view" "list") }}
 
     <div class="fenb-schedule-layout">
 
@@ -75,11 +70,15 @@
                       {{- $showRegister := and $registerUrl ($evDate.After $todayMidnight) -}}
                       {{- $resultsUrl := .results_url_en -}}
                       {{- if and (eq site.Language.Lang "fr") .results_url_fr -}}{{- $resultsUrl = .results_url_fr -}}{{- end -}}
-                      {{ if or $detailsUrl $showRegister $resultsUrl }}
+                      {{- $evEnd := $evDate -}}
+                      {{- with .end_date }}{{ $evEnd = time . }}{{ end -}}
+                      {{- $showIcs := not ($evEnd.Before $todayMidnight) -}}
+                      {{ if or $detailsUrl $showRegister $resultsUrl $showIcs }}
                       <div class="fenb-schedule-links">
                         {{ with $detailsUrl }}<a class="fenb-event-details-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>{{ end }}
                         {{ if $showRegister }}<a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer" data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>{{ end }}
                         {{ with $resultsUrl }}<a class="fenb-event-results-link" href="{{ . }}"{{ if not (hasPrefix . "/") }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>{{ end }}
+                        {{ if $showIcs }}<a class="fenb-event-ics-link" href="{{ partialCached "ics/event-url.html" . .start_date .title site.Language.Lang }}" download="{{ partial "ics/event-filename.html" . }}">{{ i18n "event_add_calendar" }}</a>{{ end }}
                       </div>
                       {{ end }}
                     </li>

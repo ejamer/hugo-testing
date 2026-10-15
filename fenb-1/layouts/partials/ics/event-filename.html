@@ -1,0 +1,21 @@
+{{- /*
+  Readable download name for a single-event .ics, in the current site language:
+    fenb_{start_date}_{title-slug}.ics   e.g. fenb_2026-10-17_epees-de-lest.ics
+  Used as the link's download="" attribute only — the published file keeps its short
+  hashed path (partials/ics/event-url.html), so URLs never depend on title wording.
+
+  French accents are folded to ASCII by hand: Hugo's removePathAccents would do it but
+  is a site-wide setting that would also change existing page URLs.
+
+  Call with: {{ partial "ics/event-filename.html" $event }}
+*/ -}}
+{{- $title := cond (and (eq site.Language.Lang "fr") .title_fr) .title_fr .title -}}
+{{- $s := lower $title -}}
+{{- range $from, $to := dict "[àâä]" "a" "[éèêë]" "e" "[îï]" "i" "[ôö]" "o" "[ùûü]" "u" "ç" "c" "œ" "oe" "æ" "ae" "ÿ" "y" -}}
+  {{- $s = replaceRE $from $to $s -}}
+{{- end -}}
+{{- /* Careful: Hugo's strings.Trim is (INPUT, CUTSET) but strings.TrimRight is
+       (CUTSET, INPUT) — getting this backwards silently empties the slug. */ -}}
+{{- $s = strings.Trim (replaceRE `[^a-z0-9]+` "-" $s) "-" -}}
+{{- $s = strings.TrimRight "-" (substr $s 0 60) -}}
+{{- return printf "fenb_%s_%s.ics" .start_date $s -}}

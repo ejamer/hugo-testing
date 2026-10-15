@@ -122,12 +122,6 @@
   .fenb-cal-legend { display: none; }
 
   .fenb-cal-nav { flex-wrap: wrap; }
-  .fenb-cal-schedule-link {
-    margin-left: 0;
-    width: 100%;
-    text-align: center;
-    padding-top: 0.25rem;
-  }
 
   .fenb-cal-select { font-size: 0.95rem; padding: 0.3rem 0.45rem; }
 
@@ -181,8 +175,10 @@
 /* ── Print ────────────────────────────────────── */
 @media print {
   .fenb-nav-wrap,
-  .fenb-schedule-controls,
+  .fenb-events-viewbar,
   .fenb-schedule-sidebar,
+  .fenb-event-ics-link,
+  .fenb-event-ics-btn,
   footer { display: none !important; }
 
   body, .fenb-schedule-section { background: #fff !important; }

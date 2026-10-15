@@ -74,6 +74,13 @@ sort .MyCollection "FieldName" "desc"
 replace ($myString | urlquery) "+" "%20"
 ```
 
+**Related trap — inconsistent argument order in `strings.Trim*`:** `strings.Trim` is `(INPUT, CUTSET)`, but `strings.TrimLeft` / `strings.TrimRight` are `(CUTSET, INPUT)`. Swapping them treats your string as the cutset and returns `""` or a stray `-` with no error — this silently blanked every `.ics` download filename (2026-10-15, `partials/ics/event-filename.html`). Write them positionally and check the order in the docs each time:
+
+```go
+strings.Trim $s "-"        {{/* input, cutset */}}
+strings.TrimRight "-" $s   {{/* cutset, input */}}
+```
+
 ---
 
 ## Embedding Hugo data in `<script>` tags

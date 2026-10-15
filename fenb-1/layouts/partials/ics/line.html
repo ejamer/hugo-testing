@@ -1,0 +1,20 @@
+{{- /*
+  Returns one iCalendar content line, folded per RFC 5545 §3.1: lines longer than
+  75 octets are split with CRLF + a single space. Splits on whole UTF-8 characters
+  (`split . ""` yields characters, `len` counts bytes) so accented French text is
+  never cut mid-character. The returned string ends with CRLF.
+  Call with: {{ partial "ics/line.html" "SUMMARY:Escaped value" }}
+*/ -}}
+{{- $out := "" -}}
+{{- $line := "" -}}
+{{- $limit := 75 -}}
+{{- range split (. | string) "" -}}
+  {{- if gt (add (len $line) (len .)) $limit -}}
+    {{- $out = printf "%s%s\r\n " $out $line -}}
+    {{- $line = . -}}
+    {{- $limit = 74 -}}{{/* continuation lines spend one octet on the leading space */}}
+  {{- else -}}
+    {{- $line = printf "%s%s" $line . -}}
+  {{- end -}}
+{{- end -}}
+{{- return printf "%s%s\r\n" $out $line -}}

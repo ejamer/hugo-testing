@@ -1,0 +1,13 @@
+{{- /*
+  Publishes a single-event .ics file for "Add to Calendar" links and returns its
+  RelPermalink. The file is only written to public/ when this partial is called, at
+  calendar/{lang}/{start_date}-{hash}.ics.
+
+  Always call via partialCached, keyed per event and language, so each file is built
+  once per language even though the homepage, events page and schedule all link it:
+    {{ partialCached "ics/event-url.html" . .start_date .title site.Language.Lang }}
+*/ -}}
+{{- $name := printf "%s — %s" (cond (and (eq site.Language.Lang "fr") .title_fr) .title_fr .title) site.Title -}}
+{{- $body := partial "ics/calendar.html" (dict "events" (slice .) "name" $name) -}}
+{{- $path := printf "calendar/%s/%s-%s.ics" site.Language.Lang .start_date (substr (md5 .title) 0 8) -}}
+{{- return (resources.FromString $path $body).RelPermalink -}}

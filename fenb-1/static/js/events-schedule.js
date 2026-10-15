@@ -46,7 +46,46 @@
     });
   }
 
-  seasonSelect.addEventListener('change', applyFilters);
+  // Deep-link format: #YYYY-YYYY (e.g. /events/schedule/#2025-2026) — mirrors the
+  // calendar view's #YYYY-MM (static/js/events-calendar.js). Season labels in the data
+  // use an en dash ("2025–2026"); the hash uses a plain hyphen so it's easy to type and
+  // share, and either form is accepted. Unknown/malformed hashes are ignored, leaving
+  // the server-selected current season.
+  function seasonFromHash() {
+    var hash = location.hash;
+    try { hash = decodeURIComponent(hash); } catch (e) { /* malformed escape — match as-is */ }
+    var m = hash.match(/^#(\d{4})[-–](\d{4})$/);
+    if (!m) return null;
+    var label = m[1] + '–' + m[2];
+    for (var i = 0; i < seasonSelect.options.length; i++) {
+      if (seasonSelect.options[i].value === label) return label;
+    }
+    return null;
+  }
+
+  function updateHash() {
+    var target = '#' + seasonSelect.value.replace('–', '-');
+    if (location.hash !== target) {
+      history.replaceState(null, '', target);
+    }
+  }
+
+  var initial = seasonFromHash();
+  if (initial) seasonSelect.value = initial;
+
+  seasonSelect.addEventListener('change', function () {
+    updateHash();
+    applyFilters();
+  });
+
+  // Editing the hash in the address bar doesn't reload the page; follow it.
+  // replaceState() in updateHash() doesn't fire 'hashchange', so this can't loop.
+  window.addEventListener('hashchange', function () {
+    var fromHash = seasonFromHash();
+    if (!fromHash) return;
+    seasonSelect.value = fromHash;
+    applyFilters();
+  });
 
   filterBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
