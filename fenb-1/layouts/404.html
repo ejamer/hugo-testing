@@ -4,7 +4,7 @@
      coloured page-header band (which would show Hugo's default, untranslated
      "404 Page not found" title) is skipped in favour of the page's own
      hand-translated heading below. */}}
-{{ define "header" }}{{ partial "nav.html" . }}{{ end }}
+{{ define "header" }}{{ partial "nav.html" . }}<span id="main-content" class="fenb-skip-target" tabindex="-1"></span>{{ end }}
 
 {{ define "main" }}
 <div class="fenb-404">

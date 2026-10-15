@@ -83,8 +83,11 @@
       </button>
     </div>
 
-    {{/* Search overlay — drops down from the nav bar */}}
-    <div class="fenb-search-overlay" id="fenb-search-overlay" aria-hidden="true">
+    {{/* Search overlay — drops down from the nav bar. Closed state uses `inert`, not
+         aria-hidden: the overlay is hidden with opacity (for the fade), which leaves its
+         close button and search input in the Tab order; inert removes them from both the
+         Tab order and assistive tech. Toggled in openSearch()/closeSearch() below. */}}
+    <div class="fenb-search-overlay" id="fenb-search-overlay" inert>
       <div class="fenb-search-overlay-inner">
         <div class="fenb-search-row">
           <div id="fenb-search"></div>
@@ -245,7 +248,7 @@
     function openSearch() {
       closeThemeMenu();
       searchOverlay.classList.add('is-open');
-      searchOverlay.setAttribute('aria-hidden', 'false');
+      searchOverlay.removeAttribute('inert');
       searchBtn.setAttribute('aria-expanded', 'true');
       if (!pagefindReady) {
         var link = document.createElement('link');
@@ -284,10 +287,14 @@
     }
 
     function closeSearch() {
-      searchOverlay.classList.remove('is-open');
-      searchOverlay.setAttribute('aria-hidden', 'true');
-      searchBtn.setAttribute('aria-expanded', 'false');
+      // No-op when already closed — otherwise every Escape press anywhere on the page
+      // (and every theme-menu open) would yank focus to the search button.
+      if (!searchOverlay.classList.contains('is-open')) return;
+      // Return focus before making the overlay inert, so focus is never stranded inside it.
       searchBtn.focus();
+      searchOverlay.classList.remove('is-open');
+      searchOverlay.setAttribute('inert', '');
+      searchBtn.setAttribute('aria-expanded', 'false');
     }
 
     if (searchBtn && searchOverlay) {
