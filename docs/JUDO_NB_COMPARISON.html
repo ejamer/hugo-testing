@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FENB × Judo NB Website Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;1,6..12,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column (~70ch) for the narrative, widening to full container for the comparison tables and roadmap; FENB teal is the accent, crimson marks issues. */
+:root{
+  --bg:#f6f8f7; --surface:#ffffff; --fg:#17211f; --muted:#56635f; --line:#d9e1de;
+  --teal:#006156; --teal-soft:#e3efec; --crimson:#b3122e; --crimson-soft:#fbe7ea;
+  --navy:#1e3a5f; --navy-soft:#e6edf6; --amber:#8a5a00; --amber-soft:#fbf1dc;
+  --good:#1f6b3a; --good-soft:#e2f2e7;
+  --f-display:'Barlow Semi Condensed','Arial Narrow',system-ui,sans-serif;
+  --f-body:'Nunito Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1715; --surface:#16211e; --fg:#e4ece9; --muted:#9db0aa; --line:#2a3a36;
+  --teal:#4dbfad; --teal-soft:#173430; --crimson:#ff7a8f; --crimson-soft:#3a1a20;
+  --navy:#8cb8e8; --navy-soft:#1a2738; --amber:#f0c060; --amber-soft:#33290f;
+  --good:#7fd59a; --good-soft:#15301f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1715; --surface:#16211e; --fg:#e4ece9; --muted:#9db0aa; --line:#2a3a36;
+  --teal:#4dbfad; --teal-soft:#173430; --crimson:#ff7a8f; --crimson-soft:#3a1a20;
+  --navy:#8cb8e8; --navy-soft:#1a2738; --amber:#f0c060; --amber-soft:#33290f;
+  --good:#7fd59a; --good-soft:#15301f; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:1080px;margin:0 auto}
+.read{max-width:70ch}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.75rem;font-weight:700;margin-bottom:.4rem}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+a{color:var(--teal)}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+code,.mono{font-family:var(--f-mono);font-size:.86em}
+code{background:var(--teal-soft);padding:.05em .35em;border-radius:3px;overflow-wrap:anywhere}
+.eyebrow{font-family:var(--f-display);font-weight:600;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.muted{color:var(--muted)}
+
+header.top{padding-block:40px 28px;border-bottom:3px solid var(--teal);display:grid;gap:12px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.9rem;color:var(--muted)}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 14px;padding-block:14px;border-bottom:1px solid var(--line);font-size:.92rem}
+nav.toc a{text-decoration:none;font-weight:600}
+nav.toc a:hover{text-decoration:underline}
+
+section{padding-block:40px 8px;display:grid;gap:16px}
+.lede{font-size:1.1rem}
+
+/* verdict pair */
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.site{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--teal);padding:18px 20px;display:grid;gap:10px;align-content:start;min-width:0}
+.site.judo{border-top-color:var(--navy)}
+.site ul{margin:0;padding-left:1.1rem;display:grid;gap:4px}
+.site .tag{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+thead th{font-family:var(--f-display);font-weight:600;font-size:.95rem;letter-spacing:.02em;background:var(--teal-soft)}
+tbody tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+.group td{background:var(--bg);font-family:var(--f-display);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.8rem;color:var(--muted)}
+
+/* chips */
+.chip{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.c-fenb{background:var(--teal-soft);color:var(--teal)}
+.c-judo{background:var(--navy-soft);color:var(--navy)}
+.c-par{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.c-gap{background:var(--crimson-soft);color:var(--crimson)}
+.c-s{background:var(--good-soft);color:var(--good)}
+.c-m{background:var(--amber-soft);color:var(--amber)}
+.c-l{background:var(--crimson-soft);color:var(--crimson)}
+
+/* callout */
+.callout{border-left:4px solid var(--crimson);background:var(--crimson-soft);padding:14px 18px;display:grid;gap:6px}
+.callout h3{color:var(--crimson)}
+pre{margin:0;background:var(--surface);border:1px solid var(--line);padding:10px 12px;overflow-x:auto;font-family:var(--f-mono);font-size:.82rem;line-height:1.5}
+
+/* borrow list */
+.borrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.borrow article{background:var(--surface);border:1px solid var(--line);padding:16px 18px;display:grid;gap:8px;align-content:start;min-width:0}
+.borrow .where{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+
+/* roadmap */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filters button{font:inherit;font-size:.85rem;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:5px 12px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:var(--surface)}
+.filters .lbl{font-size:.8rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:4px}
+.tier{display:grid;gap:10px}
+.tier > h3{font-size:1.35rem;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.tier > h3 small{font-family:var(--f-body);font-weight:400;font-size:.9rem;color:var(--muted)}
+.rec{background:var(--surface);border:1px solid var(--line);display:grid;grid-template-columns:3.2rem 1fr;min-width:0}
+.rec .id{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);padding:14px 0 0 14px}
+.rec .body{padding:12px 16px 14px 0;display:grid;gap:6px;min-width:0}
+.rec .head{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.rec .head strong{font-size:1.02rem;margin-right:auto}
+.rec dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:3px 12px;font-size:.9rem}
+.rec dt{color:var(--muted);font-weight:600}
+.rec dd{margin:0;min-width:0}
+.rec .status{font:inherit;font-size:.82rem;padding:2px 6px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px}
+.rec[data-status="done"]{opacity:.6}
+.rec[data-status="rejected"] strong{text-decoration:line-through}
+@media (max-width:520px){.rec{grid-template-columns:1fr}.rec .id{padding:12px 14px 0}.rec .body{padding:6px 14px 14px}.rec dl{grid-template-columns:1fr}.rec dt{margin-top:4px}}
+
+ul.plain{margin:0;padding-left:1.1rem;display:grid;gap:6px}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <span class="eyebrow">Website review · 15 October 2026</span>
+  <h1>FENB × Judo NB</h1>
+  <p class="lede read">A comparison of <a href="https://www.fenb.ca/">fenb.ca</a> (Fencing-Escrime NB) and <a href="https://www.judonb.org/en">judonb.org</a> (Judo New Brunswick), with an effort-ranked list of ideas FENB can take from the comparison. Every recommendation is meant to stay on Hugo + GitHub Pages, cost nothing, and add little ongoing upkeep.</p>
+  <div class="meta">
+    <span>Judo NB: 22 requests, spaced ~3 s apart</span>
+    <span>fenb.ca: 4 requests</span>
+    <span>FENB source: <code>hugo-testing</code> @ v0.5.18 (read only)</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <a href="#summary">Summary</a><a href="#tech">Technology</a><a href="#content">Features &amp; content</a><a href="#borrow">Worth borrowing</a><a href="#seo">FENB technical findings</a><a href="#roadmap">Roadmap</a><a href="#avoid">Pitfalls to avoid</a><a href="#ahead">Where FENB leads</a><a href="#later">Open questions</a><a href="#notes">Implementation notes</a><a href="#method">Method</a>
+</nav>
+
+<!-- SUMMARY -->
+<section id="summary">
+  <span class="eyebrow">At a glance</span>
+  <h2>Two good sites with opposite strengths</h2>
+  <p class="read">Judo NB's site is a polished custom web app built by a vendor. Its best parts explain a pathway: how to become a coach, how to become a referee, and how a child progresses through kata. It also profiles the provincial team. Several menu destinations are still stub pages, though, and it skips basic SEO plumbing. FENB's site is more complete and technically sounder, with search, RSS, an archived season schedule, results, and full bilingual policy pages. FENB's gaps are mostly in <em>content</em>: pathways shown visually, a Team NB roster, per-event actions such as calendar export, and a way to follow updates besides Facebook. There is also one real configuration bug (canonical host) worth fixing now.</p>
+  <div class="pair">
+    <div class="site">
+      <span class="tag">www.fenb.ca · Hugo 0.168 · GitHub Pages</span>
+      <h3>FENB: strong foundation</h3>
+      <ul>
+        <li>Every menu item leads to a finished page</li>
+        <li>Pagefind site search, RSS, smart 404 with search</li>
+        <li>Season schedule with past-season archive and results links</li>
+        <li>16 policies as bilingual HTML pages, Hall of Fame, Join hub</li>
+        <li>Content is YAML and Markdown, with Claude skills for routine updates</li>
+      </ul>
+    </div>
+    <div class="site judo">
+      <span class="tag">www.judonb.org · Next.js (App Router) · Vercel</span>
+      <h3>Judo NB: strong storytelling</h3>
+      <ul>
+        <li>Interactive "Where should I start?" coaching pathway tool</li>
+        <li>Referee pathway from Provincial C to IJF</li>
+        <li>Kids kata learning hub with glossary and videos</li>
+        <li>Provincial team roster; per-event pages with .ics export</li>
+        <li>Newsletter signup; fundraising page; partner logo strip</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech">
+  <span class="eyebrow">Technology</span>
+  <h2>How each site is built</h2>
+  <p class="read">Judo NB's stack was identified from response headers (<code>x-powered-by: Next.js</code>, <code>server: Vercel</code>), the React Server Components payload in the HTML, and Tailwind utility classes. Its footer credits <strong>SportsVision Atlantic</strong> as the builder. Any change beyond content data probably needs that developer.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Area</th><th>FENB (fenb.ca)</th><th>Judo NB (judonb.org)</th><th></th></tr></thead>
+    <tbody>
+      <tr class="group"><td colspan="4">Platform</td></tr>
+      <tr><td>Framework</td><td>Hugo 0.168 static site generator, Ananke theme with custom layouts</td><td>Next.js (App Router, React Server Components, Turbopack build)</td><td><span class="chip c-par">Different</span></td></tr>
+      <tr><td>Hosting</td><td>GitHub Pages via Actions (dev → main release PR)</td><td>Vercel, prerendered pages, stale-while-revalidate cache</td><td><span class="chip c-par">Both free-tier capable</span></td></tr>
+      <tr><td>Styling / type</td><td>Hand-written CSS (12 files), custom properties, Avenir / Nunito Sans</td><td>Tailwind CSS; Oswald + Source Sans 3 via <code>next/font</code></td><td><span class="chip c-par">Parity</span></td></tr>
+      <tr><td>Homepage HTML</td><td>~50 KB, minimal JS</td><td>~83 KB (pages up to 164 KB) plus a JS framework runtime</td><td><span class="chip c-fenb">FENB lighter</span></td></tr>
+      <tr><td>Content editing</td><td>YAML data + Markdown, <code>/fenb-*</code> skills; Decap CMS planned</td><td>Unknown CMS; documents on Cloudflare R2 with generated filenames</td><td><span class="chip c-fenb">FENB more transparent</span></td></tr>
+      <tr><td>Dark mode</td><td>Light / dark / system toggle</td><td>None</td><td><span class="chip c-fenb">FENB</span></td></tr>
+      <tr class="group"><td colspan="4">Discoverability</td></tr>
+      <tr><td>Sitemap</td><td>Sitemap index → EN/FR sitemaps with hreflang + XSL styling</td><td><code>/sitemap.xml</code> returns 404</td><td><span class="chip c-fenb">FENB</span></td></tr>
+      <tr><td>robots.txt</td><td>Returns 404 page</td><td>Returns 404 page</td><td><span class="chip c-gap">Both missing</span></td></tr>
+      <tr><td>Canonical URL</td><td>Present, but points to <code>fenb.ca</code>, which 301-redirects to <code>www.fenb.ca</code></td><td>None</td><td><span class="chip c-gap">FENB bug</span></td></tr>
+      <tr><td>hreflang</td><td>In sitemap only; not in page <code>&lt;head&gt;</code></td><td>HTTP <code>Link</code> header (en / fr / x-default)</td><td><span class="chip c-judo">Judo</span></td></tr>
+      <tr><td>Social share image</td><td>No <code>og:image</code>; "summary" Twitter card</td><td>Default <code>og-default.png</code>, large-image card</td><td><span class="chip c-judo">Judo</span></td></tr>
+      <tr><td>Page titles</td><td>Homepage title is just "Fencing-Escrime NB"</td><td>Task-led: "Judo New Brunswick — Find a club, train, compete"</td><td><span class="chip c-judo">Judo</span></td></tr>
+      <tr><td>Structured data</td><td>None (JSON-LD)</td><td>None</td><td><span class="chip c-gap">Both missing</span></td></tr>
+      <tr><td>Site search</td><td>Pagefind (bilingual), also on the 404 page</td><td>None</td><td><span class="chip c-fenb">FENB</span></td></tr>
+      <tr><td>RSS</td><td>News feed, linked in footer</td><td>None</td><td><span class="chip c-fenb">FENB</span></td></tr>
+      <tr class="group"><td colspan="4">Accessibility &amp; services</td></tr>
+      <tr><td>Skip link</td><td>None found on homepage</td><td>"Skip to content"</td><td><span class="chip c-judo">Judo</span></td></tr>
+      <tr><td>Analytics</td><td>GA4 (respects Do Not Track)</td><td>None visible in HTML</td><td><span class="chip c-par">n/a</span></td></tr>
+      <tr><td>Maps</td><td>Google My Maps embed on Clubs</td><td>Custom club map; "Get directions" link per event</td><td><span class="chip c-par">Parity</span></td></tr>
+      <tr><td>Calendar export</td><td>None</td><td>Per-event <code>event.ics</code></td><td><span class="chip c-judo">Judo</span></td></tr>
+      <tr><td>Email list</td><td>None (Facebook + RSS)</td><td>Subscribe form on homepage</td><td><span class="chip c-judo">Judo</span></td></tr>
+      <tr><td>Registration</td><td>Links out per event (2mev, etc.)</td><td>Links out to Judo Canada registration</td><td><span class="chip c-par">Parity</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- CONTENT -->
+<section id="content">
+  <span class="eyebrow">Features &amp; content</span>
+  <h2>Section-by-section</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Section</th><th>FENB</th><th>Judo NB</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>Homepage</td><td>Hero slider, next 4 events, 3 latest news, quick links</td><td>Hero with 2 CTAs ("Find a club near you", "See what's on"), partner logos, About teaser, 3 events, newsletter</td><td><span class="chip c-par">Parity</span></td></tr>
+      <tr><td>Events</td><td>Month calendar grid + printable season schedule, category filters, season archive, results links</td><td>List/Calendar toggle, Upcoming/Past, type filter, 37 events; each event has its own page (date, venue, register, .ics, share, directions)</td><td><span class="chip c-judo">Judo (per-event)</span></td></tr>
+      <tr><td>Results</td><td>Results articles in News, linked from events</td><td>"This page is on the way"</td><td><span class="chip c-fenb">FENB</span></td></tr>
+      <tr><td>News</td><td>48 articles, categories, filter, RSS</td><td>Intro text and a Facebook link</td><td><span class="chip c-fenb">FENB</span></td></tr>
+      <tr><td>Clubs</td><td>8 clubs: logo, city, email, website; map</td><td>13 clubs, region filter, a page per club (address, schedule, contact); several fields say "To be confirmed"</td><td><span class="chip c-par">Mixed</span></td></tr>
+      <tr><td>Coaching</td><td>Coach Training: 5 CFF pathway cards, modals, PDFs</td><td>NCCP page: 4-question "Where should I start?" tool, 5 stages with age/rank prerequisites and trained/certified status</td><td><span class="chip c-judo">Judo (interactive)</span></td></tr>
+      <tr><td>Officials</td><td>Referee, Armourer, Secretariat development pages</td><td>Referees: 3-step "become a referee", 8-rank pathway ladder, IJF/Judo Canada resources</td><td><span class="chip c-par">FENB broader, Judo more visual</span></td></tr>
+      <tr><td>Athletes / team</td><td>Athlete Development (LTAD), Canada Games 2027 page</td><td>Provincial team roster: 13 athletes by age group, weight class, club, photo</td><td><span class="chip c-judo">Judo</span></td></tr>
+      <tr><td>Learning hub</td><td>None</td><td>Kodomo-no-Kata: 8-step roadmap, glossary, video library, coach resources, FAQ</td><td><span class="chip c-judo">Judo</span></td></tr>
+      <tr><td>About / board</td><td>Mission &amp; Leadership, board (roles partly unconfirmed), Hall of Fame</td><td>Mission, values, stats (13 clubs · 6 zones · 13 athletes), board with executive, zone directors and committees</td><td><span class="chip c-par">Mixed</span></td></tr>
+      <tr><td>Policies</td><td>16 bilingual HTML policy pages + Policies, Plans &amp; Reports</td><td>~9 PDFs on R2, two of them links to other organizations' copies</td><td><span class="chip c-fenb">FENB</span></td></tr>
+      <tr><td>Join / volunteer</td><td>Membership, volunteer roles, start-a-club</td><td>None as a section</td><td><span class="chip c-fenb">FENB</span></td></tr>
+      <tr><td>Fundraising</td><td>None</td><td>"Support Team NB": Support Your Sport NB Gold Rush beneficiary</td><td><span class="chip c-judo">Judo</span></td></tr>
+      <tr><td>Contact</td><td>Contact page</td><td>"This page is on the way" (office details are on About)</td><td><span class="chip c-fenb">FENB</span></td></tr>
+      <tr><td>Recognition</td><td>Hall of Fame (5 inductees)</td><td>None</td><td><span class="chip c-fenb">FENB</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- BORROW -->
+<section id="borrow">
+  <span class="eyebrow">Worth borrowing</span>
+  <h2>What Judo NB does well</h2>
+  <div class="borrow">
+    <article><span class="where">/en/nccp</span><h3>A pathway you can locate yourself on</h3><p>Four questions (age, belt, focus, current certification) produce a recommended starting stage, with a note to confirm with the PSO. FENB already has the pathway data in <code>coach_pathways.yaml</code>, so the same tool is a small piece of JavaScript.</p></article>
+    <article><span class="where">/en/referees</span><h3>The whole ladder on one screen</h3><p>Provincial C → B → A, National C → B → A, Continental, International. Each rung lists what you can officiate, the minimum grade and the uniform. People can see where they are going before they start.</p></article>
+    <article><span class="where">/en/kata</span><h3>Evergreen learning content</h3><p>A roadmap, a searchable glossary, and curated official videos. It is written once, rarely changes, gives families a reason to come back, and is good for search traffic.</p></article>
+    <article><span class="where">/en/team</span><h3>Faces of the provincial team</h3><p>Grouped by age category, with weight class and home club. It shows that the clubs feed the provincial team, and it gives sponsors and families something to share.</p></article>
+    <article><span class="where">/en/events/&lt;slug&gt;</span><h3>Every event is actionable</h3><p>Each event has a dedicated URL with "Register now", "Add to calendar (.ics)", "Share" and "Get directions". Parents want exactly these actions.</p></article>
+    <article><span class="where">/en (homepage)</span><h3>Task-first homepage copy</h3><p>The headline is "Find judo in New Brunswick." with two buttons for the two most common tasks. The partner logo strip (Judo Canada, Sport NB, CSI Atlantic) adds credibility at no cost.</p></article>
+    <article><span class="where">/en/support-team-nb</span><h3>Low-effort fundraising</h3><p>The PSO is a beneficiary of the Sport NB Gold Rush lottery, so the page only needs one outbound link. It earns money without anyone running an event.</p></article>
+    <article><span class="where">/en/about/board</span><h3>Role-based contact addresses</h3><p>The site publishes <code>president@</code> and <code>executivedirector@</code> addresses instead of personal emails, so the site doesn't need an update when a role changes hands.</p></article>
+  </div>
+</section>
+
+<!-- SEO -->
+<section id="seo">
+  <span class="eyebrow">FENB technical findings</span>
+  <h2>Issues found on the live site</h2>
+  <div class="callout">
+    <h3>Canonical host mismatch</h3>
+    <p class="read">GitHub Pages serves the site at <code>https://www.fenb.ca/</code>, and <code>fenb.ca</code> answers with a 301 redirect to www. The production <code>baseURL</code> is <code>https://fenb.ca/</code>, so every canonical tag, <code>og:url</code>, sitemap <code>&lt;loc&gt;</code>, hreflang link and absolute asset URL (favicon, <code>lightbox.js</code>) points at a URL that redirects. Search engines get mixed signals, and each absolute asset costs an extra round trip.</p>
+<pre>fenb-1/config/production/hugo.toml
+- baseURL = "https://fenb.ca/"
++ baseURL = "https://www.fenb.ca/"
+# …or switch the GitHub Pages custom domain to the apex instead. Pick one host and use it everywhere.</pre>
+  </div>
+  <ul class="plain read">
+    <li><strong>No robots.txt.</strong> <code>/robots.txt</code> returns the 404 page. Set <code>enableRobotsTXT = true</code> and add a <code>layouts/robots.txt</code> that names the sitemap.</li>
+    <li><strong>No social share image.</strong> A Facebook share shows no picture. Add a default <code>og:image</code> (1200×630 with the bilingual logo) and let news articles override it with their own photo.</li>
+    <li><strong>hreflang only in the sitemap.</strong> Also add <code>&lt;link rel="alternate" hreflang&gt;</code> per translation, plus <code>x-default</code>, in <code>head-additions.html</code>.</li>
+    <li><strong>No skip link.</strong> Add a visually hidden "Skip to content" link before the nav (it's an accessibility basic Judo NB already has).</li>
+    <li><strong>Thin descriptions.</strong> For example, Events is "2026–2027 season schedule". Write one task-led sentence per section page, in both languages.</li>
+    <li><strong>No structured data.</strong> <code>SportsOrganization</code> JSON-LD on the homepage and <code>SportsEvent</code> per event, generated from <code>events.yaml</code>, can surface FENB events in Google's event listings.</li>
+  </ul>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <span class="eyebrow">Roadmap</span>
+  <h2>Recommendations, ranked by effort and impact</h2>
+  <p class="read muted">Every item is $0 and stays on Hugo + GitHub Pages. Effort: <span class="chip c-s">S</span> under a day · <span class="chip c-m">M</span> a few sessions · <span class="chip c-l">L</span> a multi-session plan. You can mark each item's status. Statuses are saved only in this browser.</p>
+  <div class="filters" role="group" aria-label="Filter by area">
+    <span class="lbl">Area</span>
+    <button type="button" data-f="all" aria-pressed="true">All</button>
+    <button type="button" data-f="seo" aria-pressed="false">Technical / SEO</button>
+    <button type="button" data-f="content" aria-pressed="false">Content &amp; features</button>
+    <button type="button" data-f="ux" aria-pressed="false">UX &amp; navigation</button>
+  </div>
+  <div id="tiers"></div>
+</section>
+
+<!-- AVOID -->
+<section id="avoid">
+  <span class="eyebrow">Pitfalls to avoid</span>
+  <h2>Lessons from Judo NB's weak spots</h2>
+  <ul class="plain read">
+    <li><strong>Stub pages in the menu.</strong> Results, Programs, Coaches &amp; officials and Contact all say "This page is on the way". A missing link is better than a dead end. FENB's practice of tracking placeholders in TODO.md before release is worth keeping.</li>
+    <li><strong>Fields you can't keep filled.</strong> Most Judo NB club pages show "Schedule: To be confirmed / Email: To be confirmed". Add a field to <code>clubs.yaml</code> only if someone will maintain it, and hide it when it's empty.</li>
+    <li><strong>Vendor lock-in.</strong> A custom Next.js app is fast to look at but hard for volunteers to change. FENB's static YAML and Markdown approach is the right fit for a volunteer organization.</li>
+    <li><strong>Linking other organizations' copies of documents.</strong> Judo NB's concussion protocol points to a 2018 PDF on judoalberta.com. Host your own copy or link to the national body's canonical URL.</li>
+    <li><strong>Messy URLs and filenames.</strong> Event URLs containing spaces (<code>/events/Fall camp- Camp d'automne 2026</code>) and a policy file named <code>julio-new-brunswick-safe-sport.pdf</code>. FENB's slug conventions already prevent this.</li>
+    <li><strong>Cards that don't go anywhere specific.</strong> Judo NB's homepage event cards all link to the generic events list. If FENB adds event pages, link each card to its own event.</li>
+    <li><strong>Missing SEO basics.</strong> Judo NB has no sitemap, no robots.txt and no canonical tags. FENB is already ahead here, so don't regress.</li>
+  </ul>
+</section>
+
+<!-- AHEAD -->
+<section id="ahead">
+  <span class="eyebrow">Where FENB leads</span>
+  <h2>Keep and protect these</h2>
+  <ul class="plain read">
+    <li>Full-site bilingual search (Pagefind), including on the 404 page</li>
+    <li>Real news and results content, with RSS, instead of a Facebook redirect</li>
+    <li>Printable season schedule, past-season archive, and results linked from events</li>
+    <li>Policies as readable, searchable, bilingual HTML instead of PDFs</li>
+    <li>Join section for members, volunteers and new clubs; Hall of Fame</li>
+    <li>Programs beyond coaching and refereeing (armourer, secretariat)</li>
+    <li>Sitemap with hreflang, dark mode, light page weight, documented workflow and release process</li>
+  </ul>
+</section>
+
+<!-- LATER -->
+<section id="later">
+  <span class="eyebrow">Open questions</span>
+  <h2>For future consideration</h2>
+  <ul class="plain read">
+    <li>Is FENB eligible as a <strong>Support Your Sport NB Gold Rush</strong> beneficiary? It is a Sport NB program; ask Sport NB directly.</li>
+    <li>Does FENB control mail for <strong>fenb.ca</strong>? Role-based aliases (president@, info@) forwarded to current volunteers would make board and contact data almost maintenance-free.</li>
+    <li><strong>Athlete consent.</strong> Before publishing a Team NB roster, agree on a consent rule for minors (name + club only, or photos with parental consent).</li>
+    <li>Revisit the <strong>Decap CMS</strong> plan (<code>plans/non-technical-maintenance.md</code>). New data-driven pages (team, glossary, event pages) are easier for non-developers if they land as YAML that a CMS can edit.</li>
+    <li>Watch Judo NB's stub pages (Results, Programs, Coaches). When they ship, they may be worth another look.</li>
+  </ul>
+</section>
+
+<!-- IMPLEMENTATION NOTES -->
+<section id="notes">
+  <span class="eyebrow">Implementation notes</span>
+  <h2>For whoever acts on these recommendations</h2>
+  <p class="read">Approval and completion are tracked in <code>docs/TODO.md</code> under "Judo NB comparison". That is the source of truth, not the status menus above, which save only in one viewer's browser. Follow <code>CLAUDE.md</code> for branches, bilingual pairs, i18n and dark-mode rules.</p>
+  <h3>Owner's constraints</h3>
+  <p class="read">From the site owner: every recommendation will be reviewed, but platform changes and paid services are unlikely to be adopted. The aim is to do more with what FENB already has, and the site must stay <strong>low-maintenance and low-cost</strong>. If an idea fits technically but adds recurring volunteer work, flag it instead of building it.</p>
+  <h3>Needs a decision before building</h3>
+  <ul class="plain read">
+    <li><strong>R14 Team NB roster:</strong> needs an agreed consent rule for minors (name and club only, or photos with parental consent).</li>
+    <li><strong>R19 Support FENB page:</strong> Sport NB must confirm FENB's eligibility as a Gold Rush beneficiary.</li>
+    <li><strong>R21 Role-based contacts:</strong> depends on whether FENB controls mail forwarding for fenb.ca.</li>
+    <li><strong>R18 Email updates:</strong> free-tier limits of RSS-to-email services were not checked; verify them before recommending one.</li>
+  </ul>
+  <h3>Checks before acting</h3>
+  <ul class="plain read">
+    <li><strong>R1 canonical host:</strong> the conclusion that the Pages custom domain is <code>www.fenb.ca</code> came from the live redirect (<code>fenb.ca</code> → 301 → <code>www.fenb.ca</code>), not from the repo's GitHub Pages settings. Confirm the custom domain first. Change <code>baseURL</code> and the Pages domain together; changing only one can break the site. <code>config/development/hugo.toml</code> is unaffected.</li>
+    <li><strong>R9, R11, R20 event-driven features:</strong> build from <code>partials/all-events.html</code>, which merges <code>events.yaml</code> with <code>data/events_archive/</code>, not from <code>events.yaml</code> alone.</li>
+    <li><strong>R4 skip link:</strong> confirmed missing on the homepage only. Check <code>baseof.html</code> and the other layouts.</li>
+    <li><strong>R3 share image:</strong> <code>head-additions.html</code> currently holds only the theme script. Check what Ananke's own head partials already emit before adding OG tags, to avoid duplicates.</li>
+    <li><strong>Snapshot date:</strong> live-site findings date from 15 Oct 2026 (repo v0.5.18). Re-verify any finding before acting on it.</li>
+  </ul>
+  <h3>Re-checking Judo NB</h3>
+  <p class="read">If you need another look, fetch only the specific page, one request at a time, a few seconds apart. Don't crawl the site or download its JS bundles.</p>
+</section>
+
+<!-- METHOD -->
+<section id="method">
+  <span class="eyebrow">Method</span>
+  <h2>How this was gathered</h2>
+  <p class="read muted">On 15 October 2026, judonb.org got one HEAD request, then robots.txt, sitemap.xml, the EN homepage, 15 top-level section pages, one French page, one event page and one club page. Requests were sequential, about 3 seconds apart, with no crawling of assets or JS bundles. fenb.ca got 4 requests: apex HEAD, homepage, robots.txt and sitemap.xml. Everything else about FENB comes from reading the <code>hugo-testing</code> repository; no files there were changed. Judo NB content may change after this date.</p>
+</section>
+
+<footer>Prepared for the FENB web team · Sources: judonb.org, fenb.ca, hugo-testing repo (v0.5.18)</footer>
+</div>
+
+<script>
+const RECS = [
+ // tier: quick | next | later
+ {id:"R1",tier:"quick",area:"seo",effort:"S",impact:"High",title:"Fix the canonical host (fenb.ca vs www.fenb.ca)",
+  why:"Every canonical, sitemap and og:url currently points at a redirecting URL.",
+  how:"Change production baseURL to https://www.fenb.ca/ (or move the Pages custom domain to the apex). Rebuild, then confirm in Google Search Console.",
+  upkeep:"None"},
+ {id:"R2",tier:"quick",area:"seo",effort:"S",impact:"Medium",title:"Add robots.txt that names the sitemap",
+  why:"/robots.txt currently returns the 404 page.",
+  how:"enableRobotsTXT = true in hugo.toml, plus layouts/robots.txt with a 'Sitemap: {{ \"sitemap.xml\" | absURL }}' line.",
+  upkeep:"None"},
+ {id:"R3",tier:"quick",area:"seo",effort:"S",impact:"High",title:"Default social share image + large card",
+  why:"Facebook is FENB's main channel, and shared links show no image. Judo NB uses og-default.png.",
+  how:"Add a 1200×630 bilingual card to static/images, set params.images or a featured_image fallback, and switch twitter:card to summary_large_image. Let news photos override it.",
+  upkeep:"None"},
+ {id:"R4",tier:"quick",area:"ux",effort:"S",impact:"Medium",title:"Skip-to-content link",
+  why:"Keyboard and screen-reader users have to tab through the whole nav, search and theme menu on every page.",
+  how:"First element in baseof.html: <a class=\"fenb-skip\" href=\"#main\">, hidden until it gets focus; give <main> id=\"main\". Add an i18n string.",
+  upkeep:"None"},
+ {id:"R5",tier:"quick",area:"seo",effort:"S",impact:"Medium",title:"hreflang alternates in <head>",
+  why:"The sitemap has them, but page-level tags are the stronger signal. Judo NB sends them as HTTP headers.",
+  how:"In head-additions.html, range over .AllTranslations and emit <link rel=\"alternate\" hreflang>, plus x-default pointing to EN.",
+  upkeep:"None"},
+ {id:"R6",tier:"quick",area:"ux",effort:"S",impact:"Medium",title:"Partner / funder logo strip",
+  why:"Judo NB's 'Proudly affiliated with' row is cheap credibility and acknowledges funders.",
+  how:"data/partners.yaml (name, logo, url) → partial on the homepage or in the footer. Candidates: Fencing Canada, Sport NB, Government of NB, Canada Games.",
+  upkeep:"Rare"},
+ {id:"R7",tier:"quick",area:"content",effort:"S",impact:"Low",title:"Auto-counted 'by the numbers' on About",
+  why:"Judo NB shows '13 clubs · 6 zones · 13 athletes'. FENB can compute the same figures from its data files.",
+  how:"Use len hugo.Data.clubs.clubs, the count of this season's events, and the Hall of Fame page count. Figures update themselves.",
+  upkeep:"None"},
+ {id:"R8",tier:"quick",area:"seo",effort:"S",impact:"Medium",title:"Task-led titles and descriptions",
+  why:"Judo NB's title states the jobs: 'Find a club, train, compete'. FENB's section descriptions are thin.",
+  how:"One sentence per section _index in EN and FR, e.g. Clubs: 'Find a fencing club near you…'. Homepage title: 'Fencing-Escrime NB — Find a club, compete, get involved'.",
+  upkeep:"None"},
+
+ {id:"R9",tier:"next",area:"content",effort:"M",impact:"High",title:"Calendar export: season feed + per-event .ics",
+  why:"Judo NB offers 'Add to calendar' on every event. Parents want events in their phone's calendar.",
+  how:"A custom Hugo output format (text/calendar) builds events.ics from events.yaml. Add a 'Subscribe' (webcal://) link on Events and a per-event download link on cards. The feed updates on every release.",
+  upkeep:"None"},
+ {id:"R10",tier:"next",area:"ux",effort:"S",impact:"Medium",title:"'Get directions' on events and clubs",
+  why:"Judo NB links each venue to a Google Maps search. No API key is needed.",
+  how:"In event-card.html and clubs/list.html, build https://www.google.com/maps/search/?api=1&query={{ .location | urlquery }}.",
+  upkeep:"None"},
+ {id:"R11",tier:"next",area:"seo",effort:"M",impact:"High",title:"JSON-LD: SportsOrganization + SportsEvent",
+  why:"Neither site has structured data. Event markup can put FENB tournaments in Google's event search.",
+  how:"A partial emits SportsOrganization (name, logo, sameAs Facebook) on the homepage and SportsEvent per upcoming event (name, startDate, endDate, location, url) on the Events page, all from events.yaml.",
+  upkeep:"None"},
+ {id:"R12",tier:"next",area:"content",effort:"M",impact:"High",title:"Interactive 'Where do I start?' coaching tool",
+  why:"Judo NB's strongest page. Four questions point a would-be coach to the right NCCP stage.",
+  how:"On /programs/coach-training/, add a small inline form (age, experience, fencing level, current NCCP status) whose rules map to the existing coach_pathways.yaml cards. Plain JS, with the rules in YAML.",
+  upkeep:"Low (only when the CFF changes the pathway)"},
+ {id:"R13",tier:"next",area:"content",effort:"M",impact:"Medium",title:"Officials pathway ladder (referee, armourer, secretariat)",
+  why:"Judo NB shows all 8 referee ranks with eligibility on one screen.",
+  how:"data/referee_levels.yaml (level, who grades, what you can officiate, prerequisites) → a stepped visual on referee-development. Reuse the same component for armourer and secretariat levels.",
+  upkeep:"Low"},
+ {id:"R14",tier:"next",area:"content",effort:"M",impact:"Medium",title:"Team NB roster (Canada Games 2027 first)",
+  why:"Judo NB profiles 13 provincial team athletes by category and club. FENB already has a Canada Games 2027 page to build on.",
+  how:"data/team_nb.yaml (name, weapon, category, club, optional photo) → a section on the Canada Games page, later its own page. Agree on a consent rule for minors first.",
+  upkeep:"Once per season"},
+ {id:"R15",tier:"next",area:"ux",effort:"S",impact:"Medium",title:"Task-first homepage CTAs",
+  why:"Judo NB's hero gets visitors to the two most common tasks in one click.",
+  how:"Below the slider, add two fixed buttons: 'Find a club' and 'See upcoming events' (Trouver un club / Voir les événements). Slides keep the news role.",
+  upkeep:"None"},
+ {id:"R16",tier:"next",area:"content",effort:"S",impact:"Medium",title:"Richer club cards: weapons, ages, beginner program",
+  why:"Judo NB has a page per club, but most fields say 'To be confirmed'. FENB can do better with fewer fields that stay filled.",
+  how:"Add optional weapons: [foil, epee, sabre], ages, and beginners: true to clubs.yaml. Render as chips and hide when empty. A 'Filter by weapon' toggle is optional.",
+  upkeep:"Low (clubs report changes)"},
+
+ {id:"R17",tier:"later",area:"content",effort:"L",impact:"Medium",title:"'Learn fencing' hub with a bilingual glossary",
+  why:"Judo NB's kata hub is evergreen and family-friendly. A bilingual fencing glossary (en garde, parry/parade, right-of-way/priorité) is natural for an NB audience.",
+  how:"data/glossary.yaml (term_en, term_fr, definition_en/fr) → a searchable page (Pagefind already indexes it). Add pages on the three weapons, a first-class FAQ, and links to Fencing Canada / FIE rules and videos.",
+  upkeep:"Very low"},
+ {id:"R18",tier:"later",area:"content",effort:"M",impact:"Medium",title:"Email updates without a paid service",
+  why:"Judo NB collects emails on the homepage. FENB's only push channels are Facebook and RSS.",
+  how:"Choose in this order: (1) promote the existing RSS feed; (2) a Google Form signup with a BCC'd seasonal digest; (3) the free tier of an RSS-to-email service, which turns news posts into emails automatically. Check each tier's limits before committing.",
+  upkeep:"Low to medium"},
+ {id:"R19",tier:"later",area:"content",effort:"S",impact:"Medium",title:"'Support FENB' page",
+  why:"Judo NB earns money as a Sport NB Gold Rush beneficiary with nothing more than a single link.",
+  how:"Confirm eligibility with Sport NB, then add a short bilingual page (how it works, 19+, NB residents) and a homepage slide. Include sponsor and donation info if those apply.",
+  upkeep:"Very low"},
+ {id:"R20",tier:"later",area:"content",effort:"M",impact:"Medium",title:"Per-event pages for FENB-hosted events",
+  why:"A dedicated URL per event can be shared, indexed and linked from Facebook. Judo NB has one for all 37 events.",
+  how:"Only for NB-hosted events: a Hugo content adapter (_content.gotmpl) generates pages from events.yaml, with schedule, venue, directions, .ics, registration, and results once posted. Out-of-province events keep linking out.",
+  upkeep:"None beyond events.yaml"},
+ {id:"R21",tier:"later",area:"ux",effort:"S",impact:"Low",title:"Role-based contacts on the board page",
+  why:"Judo NB publishes president@ and executivedirector@ instead of personal emails, so the site survives turnover.",
+  how:"If FENB can set up fenb.ca mail forwarding, add role_email to board_members.yaml and show it instead of personal addresses.",
+  upkeep:"None after setup"}
+];
+const TIERS = {quick:["Quick wins","Do these first; each takes under a day"],next:["Next up","High value, a few sessions each"],later:["Later / consider","Worth it once the basics are done"]};
+const AREA = {seo:"Technical / SEO",content:"Content & features",ux:"UX & navigation"};
+const STATUS = [["","Not reviewed"],["planned","Planned"],["done","Done"],["rejected","Not doing"]];
+let saved = {};
+try{ saved = JSON.parse(localStorage.getItem("fenb-judo-status")||"{}")||{}; }catch(e){ saved = {}; }
+function save(){ try{ localStorage.setItem("fenb-judo-status", JSON.stringify(saved)); }catch(e){} }
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const effCls = {S:"c-s",M:"c-m",L:"c-l"};
+function render(){
+  const root = document.getElementById("tiers");
+  root.innerHTML = Object.entries(TIERS).map(([k,[name,sub]])=>{
+    const items = RECS.filter(r=>r.tier===k);
+    return `<div class="tier" data-tier="${k}"><h3>${name} <small>${sub}</small></h3>` + items.map(r=>`
+      <article class="rec" data-area="${r.area}" data-status="${saved[r.id]||""}">
+        <span class="id">${r.id}</span>
+        <div class="body">
+          <div class="head"><strong>${esc(r.title)}</strong>
+            <span class="chip ${effCls[r.effort]}">Effort ${r.effort}</span>
+            <span class="chip c-par">Impact ${r.impact}</span>
+            <span class="chip c-fenb">${AREA[r.area]}</span>
+            <label class="sr" for="st-${r.id}" style="position:absolute;left:-9999px">Status for ${r.id}</label>
+            <select class="status" id="st-${r.id}" data-id="${r.id}">${STATUS.map(([v,l])=>`<option value="${v}"${(saved[r.id]||"")===v?" selected":""}>${l}</option>`).join("")}</select>
+          </div>
+          <dl><dt>Why</dt><dd>${esc(r.why)}</dd><dt>How</dt><dd>${esc(r.how)}</dd><dt>Upkeep</dt><dd>${esc(r.upkeep)}</dd></dl>
+        </div>
+      </article>`).join("") + `</div>`;
+  }).join("");
+  root.querySelectorAll("select.status").forEach(s=>s.addEventListener("change",e=>{
+    const id=e.target.dataset.id; if(e.target.value) saved[id]=e.target.value; else delete saved[id]; save();
+    e.target.closest(".rec").dataset.status=e.target.value;
+  }));
+}
+render();
+document.querySelectorAll(".filters button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".filters button").forEach(x=>x.setAttribute("aria-pressed", x===b?"true":"false"));
+  const f=b.dataset.f;
+  document.querySelectorAll(".rec").forEach(r=>{ r.hidden = !(f==="all"||r.dataset.area===f); });
+  document.querySelectorAll(".tier").forEach(t=>{ t.hidden = !t.querySelector(".rec:not([hidden])"); });
+}));
+</script>
