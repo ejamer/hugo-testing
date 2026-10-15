@@ -24,9 +24,8 @@ enableRobotsTXT = true
 
 [params]
   background_color_class = "bg-fenb-teal"
-  # Default social share image (og:image / twitter:image), 1200×630. News articles
-  # with a `photos` list use their first photo instead — see
-  # layouts/partials/_funcs/get-page-images.html. No leading slash (absURL rule).
+  # Default social share image (og:image / twitter:image), 1200×630, used on every
+  # page unless its front matter sets `images: [...]`. No leading slash (absURL rule).
   images = ["images/og-default.png"]
 
   [params.announcement]

@@ -67,7 +67,7 @@ image: "images/event-logos/ecg.png"           # optional — centred logo above 
 image_alt: "East Coast Games 2026"             # optional — alt text for image
 image_wide: true                               # optional — raises logo max-width 220px → 480px, for wide/banner-shaped images
 results_table: true  # optional — add to load the interactive sortable table on articles with result tables
-photos:              # optional — photo gallery rendered below the article body; the first photo is also the social share image
+photos:              # optional — photo gallery rendered below the article body
   - src: "images/news/2026/action-shot.jpg"   #   no leading slash
     alt: "Athletes competing"
     caption: "Caption shown below photo"       #   caption is optional per item
@@ -84,7 +84,7 @@ related_news:         # optional — "Related News" sidebar, shown above "Recent
 Full post body here (Markdown).
 ```
 
-**Social share image (`og:image`):** an article's share image is its first `photos` entry, else the site default `images/og-default.png` (set in `hugo.toml` → `params.images`). The `image` logo/flyer is deliberately *not* used — Facebook crops to a 1.91:1 strip, which mangles tall flyers and small logos. To hand-pick one, add `images: ["images/news/2026/share.jpg"]` to the front matter (no leading slash; ideally 1200×630) — it overrides both.
+**Social share image (`og:image`):** every page shares the site default `images/og-default.png` (set in `hugo.toml` → `params.images`). Neither `image` nor `photos` is used automatically — Facebook crops to a 1.91:1 strip and needs at least 600×315 in JPEG/PNG/WebP, which tall flyers, small logos, headshots and `.avif` files fail. To hand-pick one, add `images: ["images/news/2026/share.jpg"]` to the front matter (no leading slash; ideally 1200×630 JPEG or PNG).
 
 **Category values:** news articles share the same category IDs as events (see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full colour table and typical mapping guidance).
 
