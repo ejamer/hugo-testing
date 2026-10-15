@@ -1,0 +1,9 @@
+User-agent: *
+{{/* Overrides Ananke's robots.txt to avoid a leading slash in absURL (see CLAUDE.md URL rule). Production allows crawling; any other environment disallows it. */ -}}
+{{ if hugo.IsProduction -}}
+Allow: /
+Disallow: /pagefind/
+Sitemap: {{ "sitemap.xml" | absURL }}
+{{ else -}}
+Disallow: /
+{{ end -}}
