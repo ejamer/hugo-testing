@@ -97,12 +97,17 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 
 ---
 
+## Social share images
+
+- [ ] **Per-category default share images** — every page currently shares the single site default `images/og-default.png` (`hugo.toml` → `params.images`), with `images: [...]` front matter as a manual per-article override. Consider a distinct default per article type (e.g. news vs. results vs. training/events — could key off `category`). Needs design thought first: which categories get their own image, who makes the 1200×630 artwork (EN/FR text or text-free?), and how to wire it without re-overriding Hugo's internal `_funcs/get-page-images` partial (an earlier first-photo override was dropped — see README "Social share image" for why `image`/`photos` aren't used).
+
+---
+
 ## Judo NB comparison — recommendations (2026-10-15)
 
 From the site comparison against judonb.org — read `docs/JUDO_NB_COMPARISON.html` first, especially its **Implementation notes** section (owner constraints: no platform change, no paid services, low maintenance; pre-flight checks per item). IDs match the report's roadmap. Not yet approved — confirm with the site owner which items to build. Items marked ⏸ are blocked on a human decision.
 
 ### Quick wins
-- [ ] **R3 Default social share image** — 1200×630 bilingual `og:image`, `summary_large_image`; news photos override
 - [ ] **R4 Skip-to-content link** — in `baseof.html`, `<main id="main">`, i18n string
 - [ ] **R5 hreflang alternates in `<head>`** — per translation + `x-default` (sitemap already has them)
 - [ ] **R6 Partner / funder logo strip** — `data/partners.yaml` → homepage or footer partial

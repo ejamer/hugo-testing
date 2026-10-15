@@ -133,6 +133,9 @@ not_found_action:  "Use the search bar below to search for what you need, or sta
 not_found_tip:      "Tip: Be sure to update any bookmarks or saved links once you find the content you need!"
 back_home:          "Go to Homepage"
 
+# ── Accessibility ──────────────────────────────────────────
+skip_to_content: "Skip to main content"
+
 # ── Search ─────────────────────────────────────────────────
 search_placeholder:    "Search…"
 search_clear:          "Clear"

@@ -72,6 +72,10 @@
   {{- if .IsSection -}}{{- $body_classes = $body_classes | append "is-section" -}}{{- end -}}
 
   <body class="{{ delimit $body_classes " " }}">
+    {{/* Skip link — first focusable element; visible only on keyboard focus. Targets
+         #main-content, placed right after the nav (site-header.html, and 404.html's own
+         header block) so it lands on the page <h1> band rather than skipping it. */}}
+    <a class="fenb-skip-link" href="#main-content">{{ i18n "skip_to_content" }}</a>
     {{ block "header" . }}{{ partials.Include "site-header.html" .}}{{ end }}
     <main class="pb7" role="main">
       {{/* Pagefind indexes only within <main> (--root-selector "main"). The visible

@@ -134,6 +134,9 @@ not_found_action:  "Utilisez la barre de recherche ci-dessous pour trouver ce qu
 not_found_tip:      "Astuce : pensez à mettre à jour vos favoris ou liens enregistrés une fois que vous avez trouvé ce que vous cherchez!"
 back_home:          "Retour à l'accueil"
 
+# ── Accessibilité ──────────────────────────────────────────
+skip_to_content: "Passer au contenu principal"
+
 # ── Recherche ──────────────────────────────────────────────
 search_placeholder:    "Rechercher…"
 search_clear:          "Effacer"
