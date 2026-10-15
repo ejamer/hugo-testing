@@ -315,7 +315,7 @@ The script reads `data-image` / `data-title` / `data-alt` from the clicked trigg
 
 ### `events-viewbar.html` partial — Calendar | List view bar
 
-Shared by `/events/` (`list.html`) and `/events/schedule/` (`schedule.html`): a segmented `[Calendar | List]` toggle on the left (`.fenb-view-toggle` / `.fenb-view-toggle-btn`, plain links between the two pages, current view marked `aria-current="page"`), and `.fenb-events-viewbar-actions` on the right — Print (list view only) and the Subscribe menu (`.fenb-cal-subscribe`, a native `<details>` — no JS, keyboard-accessible).
+Shared by `/events/` (`list.html`) and `/events/schedule/` (`schedule.html`): a segmented `[Calendar | List]` toggle on the left (`.fenb-view-toggle` / `.fenb-view-toggle-btn`, plain links between the two pages, current view marked `aria-current="page"`), and `.fenb-events-viewbar-actions` on the right — Print (list view only) and Subscribe, which opens the shared calendar dialog (see below).
 
 ```go-html-template
 {{ partial "events-viewbar.html" (dict "page" . "view" "calendar") }}   {{/* or "list" */}}
@@ -325,15 +325,26 @@ Render it as the **first child of the same `.fenb-container--narrow`** on both p
 
 ### Icon button with tooltip — `.fenb-event-ics-btn`
 
-Icon-only action pinned to a card's bottom-right corner (currently: Add to Calendar on event cards). The visible label is a CSS tooltip from `data-tooltip` via `::after`, shown on `:hover` and `:focus-visible`; the same text goes in `aria-label` for screen readers.
+Icon-only `<button>` (currently: Add to Calendar, rendered by `partials/ics/add-button.html`) — pinned to a card's bottom-right corner on event cards, and in-flow at the right end of the links row on the printable schedule (`fenb-schedule.css` resets the absolute positioning). The visible label is a CSS tooltip from `data-tooltip` via `::after`, shown on `:hover` and `:focus-visible`; the same text goes in `aria-label` for screen readers.
 
-```html
-<a class="fenb-event-ics-btn" href="…" aria-label="{{ i18n "event_add_calendar" }}" data-tooltip="{{ i18n "event_add_calendar" }}">
-  {{ partial "icon.html" (dict "name" "calendar-plus.svg" "w" 18 "h" 18) }}
-</a>
+```go-html-template
+{{ partial "ics/add-button.html" . }}   {{/* context = the event */}}
 ```
 
 The tooltip opens **upward and right-aligned** so it stays inside the card (`.fenb-event-card` has `overflow: hidden`), and the card body reserves a bottom strip (`padding-bottom: 2.9rem`) so the icon never covers wrapped text on phones. Reuse the pattern for other icon-only card actions rather than adding a new tooltip style.
+
+### `calendar-dialog.html` partial — shared modal (`.fenb-cal-dialog`)
+
+One native `<dialog>` per page (`showModal()` gives the backdrop, Escape-to-close and focus containment), filled in by `static/js/calendar-dialog.js` from the `data-cal-*` attributes of the trigger that opened it. Two modes via `data-cal-dialog`: `"event"` (heading, event title + date · location summary, Apple/Outlook `.ics` + Google buttons) and `"subscribe"` (heading, intro line, Apple/Outlook `webcal://`, Google, and the plain feed URL). Closes on Escape, backdrop click, ✕, or choosing an option; focus returns to the trigger.
+
+Include it once on any page with triggers (currently the homepage, `/events/` and `/events/schedule/`):
+
+```go-html-template
+{{ partial "calendar-dialog.html" . }}
+<script src="{{ "js/calendar-dialog.js" | absURL }}" defer></script>
+```
+
+Triggers are delegated, so cards built later by `events-calendar.js` work without re-binding. `.fenb-cal-dialog [hidden] { display: none !important; }` is required — the action links are `.fenb-btn` (`display: inline-flex`), which would otherwise beat the `hidden` attribute (docs/GOTCHAS.md). For a different modal use, extend this one with a new mode rather than adding another dialog.
 
 ## Dark mode
 

@@ -1,8 +1,8 @@
 {{- /*
   Readable download name for a single-event .ics, in the current site language:
     fenb_{start_date}_{title-slug}.ics   e.g. fenb_2026-10-17_epees-de-lest.ics
-  Used as the link's download="" attribute only — the published file keeps its short
-  hashed path (partials/ics/event-url.html), so URLs never depend on title wording.
+  Used as the published file name (partials/ics/event-url.html), so the file's URL
+  changes if an event's title or date changes — harmless, links are rebuilt each build.
 
   French accents are folded to ASCII by hand: Hugo's removePathAccents would do it but
   is a site-wide setting that would also change existing page URLs.

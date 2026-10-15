@@ -64,6 +64,12 @@ The pages below need a full review pass for both style and content quality befor
 - [ ] **`/programs/referee-development/`** 
 - [ ] **`/programs/secretariat-development/`** 
 
+## Dark mode
+
+- [ ] **Dark-mode crimson text contrast** — Register Now links (event cards + list view, `fenb-events.css` / `fenb-schedule.css`) use `--crimson-light` (`#943040`) on `#141f1d` in dark mode — ~2.2:1, fails WCAG AA (4.5:1). Same colour is used as dark-mode text for the "See all" hover (`fenb-base.css`) and the crimson news sidebar heading + link hovers (`fenb-news.css`). **Rejected so far (2026-10-15):** a pink `--crimson-text` token (`#ef8593`, too light/pink) and crimson pills with white text. **Still open:** a softer rose (e.g. `#e06b7a`, 5.3:1), light text with a crimson accent (underline/arrow), or teal in dark mode. Don't lighten `--crimson-light` itself — the About and Hall of Fame gradients use it as a background.
+
+---
+
 ## Policies
 
 - [ ] **Concussion Protocol — broken embedded image** — `content/about/policies/concussion-protocol.en.md` line ~242 has `![][image1]` with `[image1]` defined as a base64 `data:image/png` URI (Google Docs export leftover). Hugo's URL sanitiser blocks `data:` URIs, so the live page renders `<img src="#ZgotmplZ">` — a broken image. The FR file has no image at all. Fix: decode the PNG into `static/images/policies/`, reference it by path (no leading slash) in both EN and FR, and confirm what the image shows (likely a return-to-sport chart) so the FR page gets an equivalent. Found 2026-10-15 while building R9.
@@ -117,7 +123,6 @@ From the site comparison against judonb.org — read `docs/JUDO_NB_COMPARISON.ht
 - [ ] **R8 Task-led titles and descriptions** — section `_index` descriptions + homepage title, EN/FR
 
 ### Next up
-- [ ] **R9 Calendar export** — season `.ics` feed (webcal subscribe) + per-event download, via a custom output format over `partials/all-events.html`
 - [ ] **R10 "Get directions" links** — Google Maps search URL from `location` on event cards and clubs
 - [ ] **R11 JSON-LD** — `SportsOrganization` on home, `SportsEvent` per upcoming event
 - [ ] **R12 "Where do I start?" coaching tool** — small JS form on coach-training mapped to `coach_pathways.yaml`

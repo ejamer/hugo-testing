@@ -24,7 +24,11 @@
 
 {{- $descParts := slice -}}
 {{- with $pick.desc }}{{ $descParts = $descParts | append . }}{{ end -}}
-{{- with $pick.details }}{{ $descParts = $descParts | append (printf "%s: %s" (i18n "event_details") .) }}{{ end -}}
+{{- /* Site-relative links (e.g. /documents/….pdf) are made absolute — a calendar app
+       can't resolve a bare path. TrimLeft is (CUTSET, INPUT); absURL needs no leading /. */ -}}
+{{- $detailsAbs := "" -}}
+{{- with $pick.details }}{{ $detailsAbs = cond (hasPrefix . "/") (absURL (strings.TrimLeft "/" .)) . }}{{ end -}}
+{{- with $detailsAbs }}{{ $descParts = $descParts | append (printf "%s: %s" (i18n "event_details") .) }}{{ end -}}
 {{- with $pick.register }}{{ $descParts = $descParts | append (printf "%s: %s" (i18n "event_register") .) }}{{ end -}}
 
 {{- $lines := slice
@@ -40,7 +44,7 @@
 {{- with $descParts }}
   {{- $lines = $lines | append (printf "DESCRIPTION:%s" (partial "ics/escape.html" (delimit . "\n\n"))) -}}
 {{- end -}}
-{{- with $pick.details }}{{ if hasPrefix . "http" }}
+{{- with $detailsAbs }}{{ if hasPrefix . "http" }}
   {{- $lines = $lines | append (printf "URL:%s" .) -}}
 {{- end }}{{ end -}}
 {{- $lines = $lines | append "END:VEVENT" -}}

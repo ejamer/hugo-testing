@@ -147,3 +147,18 @@ Caught on `.fenb-hof-filter-badge` (used `display: inline-flex`, stayed visible 
 ## Page header band — content vs. style confusion
 
 When a user says "use the same header as page X", confirm whether they mean the *content* of the band (which title is shown) or just the *style* (height, colours). They look similar in words but require completely different fixes — the former is a front matter/cascade change, the latter is a CSS change.
+
+---
+
+## `hugo server` keeps serving deleted partials
+
+After deleting or renaming a partial, a long-running `hugo server` can keep a stale template state and serve pages with whole sections silently missing — no error in the server log, the page just ends early or renders without its main content (2026-10-15: the homepage lost every event card after `partials/ics/add-menu.html` was replaced). Restart the server after removing or renaming partials, and when verifying template output prefer a fresh build into a scratch directory (`hugo --environment development -d <scratch>`) over the running server. Don't use `make build`/`make build-prod` for that while someone's `make serve` is running — both `clean` away `fenb-1/public/`, which `make serve` serves from.
+
+---
+
+## Hugo's built-in `calendar` output format has a `webcal://` Permalink
+
+`(.OutputFormats.Get "calendar").Permalink` returns `webcal://www.fenb.ca/events/index.ics`, not `https://…` — the built-in format sets its protocol to `webcal://`. Two consequences (see `partials/events-viewbar.html`):
+
+- To get the plain URL, swap the scheme for the **site's own** (`(urls.Parse site.BaseURL).Scheme`) — hard-coding `https://` broke the link on the local dev server, which is plain HTTP (`ERR_SSL_PROTOCOL_ERROR`).
+- Put the `webcal://` value in an `href` with `| safeURL`, or Go's HTML sanitiser replaces it with `#ZgotmplZ` (it only trusts http/https/mailto).

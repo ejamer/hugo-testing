@@ -190,8 +190,8 @@ The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ to
 
 Nothing to maintain — all generated from `data/events.yaml` + `data/events_archive/` at build time:
 
-- **Season feed** — `/events/index.ics` and `/fr/events/index.ics` (template `layouts/events/list.calendar.ics`, enabled by `outputs:` in `content/events/_index{,.fr}.md`). Every event from `partials/all-events.html`, so archived seasons stay in subscribers' calendars. The **Subscribe ▾** menu offers Apple Calendar / Outlook (`webcal://`), Google Calendar, and the plain feed URL (saves as `fenb_schedule.ics`).
-- **Add to Calendar** — the calendar icon on each upcoming event card (and the text link on the list view) downloads a one-event `.ics` named e.g. `fenb_2026-10-17_epees-de-l-est.ics`. Hidden once the event has ended. Built by the `partials/ics/` partials.
+- **Season feed** — `/events/index.ics` and `/fr/events/index.ics` (template `layouts/events/list.calendar.ics`, enabled by `outputs:` in `content/events/_index{,.fr}.md`). Every event from `partials/all-events.html`, so archived seasons stay in subscribers' calendars. **Subscribe** opens a dialog offering Apple Calendar / Outlook (`webcal://`), Google Calendar, and the plain feed URL (saves as `fenb_schedule.ics`).
+- **Add to Calendar** — the calendar icon on each upcoming event card and list-view row opens a dialog with two options: Apple Calendar / Outlook (a one-event `.ics` at a readable path, e.g. `calendar/en/fenb_2026-10-17_epees-de-l-est.ics` — iPhone/Mac Safari add it straight to Calendar) and Google Calendar (pre-filled add-event page). Hidden once the event has ended. Built by the `partials/ics/` partials; the dialog is `partials/calendar-dialog.html`.
 - **Calendar | List views** — `/events/` and `/events/schedule/` share the "Events & Calendar" header and a view bar (`partials/events-viewbar.html`) so the toggle doesn't move when switching.
 - **Deep links** — calendar month: `/events/#2026-10`; list-view season: `/events/schedule/#2025-2026` (an unknown or missing season falls back to the current one).
 
