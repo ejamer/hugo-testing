@@ -43,6 +43,20 @@
       <link rel="canonical" href="{{ .Permalink }}">
     {{ end }}
 
+    {{/* hreflang alternates — mirrors the sitemap's (layouts/_default/sitemap.xml):
+         only on translated pages, one per language incl. this page, plus x-default
+         pointing at the default-language (English) version. Skipped on the 404 page:
+         GitHub Pages serves it for every missing URL, and error pages take no hreflang. */}}
+    {{ if and .IsTranslated (ne .Kind "404") }}
+      {{ $defaultLang := hugo.Sites.Default.Language.Lang }}
+      {{ range .AllTranslations }}
+        <link rel="alternate" hreflang="{{ .Language.Locale }}" href="{{ .Permalink }}">
+        {{ if eq .Language.Lang $defaultLang }}
+          <link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
     {{/* NOTE: These Hugo Internal Templates can be found starting at https://github.com/gohugoio/hugo/tree/master/tpl/tplimpl/embedded/templates */}}
     {{/* former internal templates */}}
     {{ partial "opengraph.html" . -}}
