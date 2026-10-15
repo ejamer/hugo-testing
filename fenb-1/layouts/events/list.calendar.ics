@@ -1,0 +1,10 @@
+{{- /*
+  Season calendar feed — /events/index.ics (EN) and /fr/events/index.ics (FR).
+  Enabled by `outputs` in content/events/_index{,.fr}.md; subscribe links live in
+  layouts/events/list.html. Built from partials/all-events.html (current season +
+  archive) so events stay in subscribers' calendars after a season rollover.
+*/ -}}
+{{- partial "ics/calendar.html" (dict
+      "events" (partial "all-events.html" .)
+      "name"   (printf "%s — %s" site.Title (i18n "cal_feed_name"))
+    ) -}}

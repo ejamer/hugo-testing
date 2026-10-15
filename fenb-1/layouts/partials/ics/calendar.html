@@ -1,0 +1,19 @@
+{{- /*
+  Wraps a list of events in a complete VCALENDAR (folded, CRLF line endings) in the
+  current site language. Used by the season feed and the per-event download files.
+  Call with: {{ partial "ics/calendar.html" (dict "events" $events "name" "Calendar name") }}
+*/ -}}
+{{- $header := slice
+      "BEGIN:VCALENDAR"
+      "VERSION:2.0"
+      (printf "PRODID:-//Fencing-Escrime NB//fenb.ca//%s" (upper site.Language.Lang))
+      "CALSCALE:GREGORIAN"
+      "METHOD:PUBLISH"
+      (printf "X-WR-CALNAME:%s" (partial "ics/escape.html" .name))
+      "REFRESH-INTERVAL;VALUE=DURATION:PT12H"
+      "X-PUBLISHED-TTL:PT12H"
+-}}
+{{- $out := "" -}}
+{{- range $header }}{{ $out = printf "%s%s" $out (partial "ics/line.html" .) }}{{ end -}}
+{{- range .events }}{{ $out = printf "%s%s" $out (partial "ics/vevent.html" .) }}{{ end -}}
+{{- return printf "%s%s" $out (partial "ics/line.html" "END:VCALENDAR") -}}

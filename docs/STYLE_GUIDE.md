@@ -48,9 +48,8 @@ The load order is declared in `hugo.toml` under `params.ananke.custom_css`. File
 
 | Class | Max-width | Used by |
 |---|---|---|
-| `.fenb-container--narrow` | 1100px | Events calendar, board, about overview, policies |
+| `.fenb-container--narrow` | 1100px | Events calendar + list views (must match — see `partials/events-viewbar.html`), board, about overview, policies |
 | `.fenb-container--tight` | 900px | Contact page |
-| `.fenb-container--sched` | 1000px | Season schedule |
 
 ### Hero breakout
 
@@ -313,6 +312,28 @@ A centred modal dialog showing a full-size CFF pathway diagram with a title and 
 The script reads `data-image` / `data-title` / `data-alt` from the clicked trigger into the modal, and closes on close-button click, backdrop click, or `Escape` — restoring focus to the trigger element on close.
 
 ---
+
+### `events-viewbar.html` partial — Calendar | List view bar
+
+Shared by `/events/` (`list.html`) and `/events/schedule/` (`schedule.html`): a segmented `[Calendar | List]` toggle on the left (`.fenb-view-toggle` / `.fenb-view-toggle-btn`, plain links between the two pages, current view marked `aria-current="page"`), and `.fenb-events-viewbar-actions` on the right — Print (list view only) and the Subscribe menu (`.fenb-cal-subscribe`, a native `<details>` — no JS, keyboard-accessible).
+
+```go-html-template
+{{ partial "events-viewbar.html" (dict "page" . "view" "calendar") }}   {{/* or "list" */}}
+```
+
+Render it as the **first child of the same `.fenb-container--narrow`** on both pages — that, plus the schedule page's `page_header_uses_section: true`, is what keeps the toggle at an identical position when switching views. Don't give either page a different container width or its own header.
+
+### Icon button with tooltip — `.fenb-event-ics-btn`
+
+Icon-only action pinned to a card's bottom-right corner (currently: Add to Calendar on event cards). The visible label is a CSS tooltip from `data-tooltip` via `::after`, shown on `:hover` and `:focus-visible`; the same text goes in `aria-label` for screen readers.
+
+```html
+<a class="fenb-event-ics-btn" href="…" aria-label="{{ i18n "event_add_calendar" }}" data-tooltip="{{ i18n "event_add_calendar" }}">
+  {{ partial "icon.html" (dict "name" "calendar-plus.svg" "w" 18 "h" 18) }}
+</a>
+```
+
+The tooltip opens **upward and right-aligned** so it stays inside the card (`.fenb-event-card` has `overflow: hidden`), and the card body reserves a bottom strip (`padding-bottom: 2.9rem`) so the icon never covers wrapped text on phones. Reuse the pattern for other icon-only card actions rather than adding a new tooltip style.
 
 ## Dark mode
 

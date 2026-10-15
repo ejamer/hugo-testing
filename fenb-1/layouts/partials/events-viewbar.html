@@ -1,0 +1,52 @@
+{{- /*
+  Events view bar — shared by the calendar (layouts/events/list.html) and list
+  (layouts/events/schedule.html) views. Render it as the FIRST child of the page's
+  .fenb-container--narrow inside a .fenb-section, on both pages, so the toggle sits at
+  exactly the same spot when switching views (both pages also share the "Events &
+  Calendar" header band via page_header_uses_section on the schedule page).
+
+  Left:  [Calendar | List] segmented toggle — plain links between the two pages; the
+         current view gets aria-current="page".
+  Right: Print (list view only) and the Subscribe menu for the season .ics feed
+         (layouts/events/list.calendar.ics). Native <details>: no JS, keyboard-accessible.
+         webcal:// opens Apple Calendar / Outlook; Google Calendar takes it via ?cid=.
+
+  Call with: {{ partial "events-viewbar.html" (dict "page" . "view" "calendar") }}   (or "list")
+*/ -}}
+{{- $section := .page.CurrentSection -}}
+{{- $view := .view -}}
+<div class="fenb-events-viewbar">
+  <nav class="fenb-view-toggle" aria-label="{{ i18n "events_view_label" }}">
+    <a href="{{ "events/" | relLangURL }}" class="fenb-view-toggle-btn"{{ if eq $view "calendar" }} aria-current="page"{{ end }}>
+      {{ partial "icon.html" (dict "name" "calendar.svg" "w" 16 "h" 16) }}
+      <span>{{ i18n "events_view_calendar" }}</span>
+    </a>
+    <a href="{{ "events/schedule/" | relLangURL }}" class="fenb-view-toggle-btn"{{ if eq $view "list" }} aria-current="page"{{ end }}>
+      {{ partial "icon.html" (dict "name" "list.svg" "w" 16 "h" 16) }}
+      <span>{{ i18n "events_view_list" }}</span>
+    </a>
+  </nav>
+
+  <div class="fenb-events-viewbar-actions">
+    {{ if eq $view "list" }}
+    <button type="button" class="fenb-viewbar-action" onclick="window.print()">{{ i18n "schedule_print" }}</button>
+    {{ end }}
+    {{/* Hugo's built-in calendar format gives a webcal:// Permalink; the plain feed URL
+         swaps webcal:// for the site's own scheme (https in production, http on the
+         local dev server — hard-coding https broke the link locally). */}}
+    {{ with $section.OutputFormats.Get "calendar" }}
+      {{- $webcal := .Permalink -}}
+      {{- $scheme := (urls.Parse site.BaseURL).Scheme | default "https" -}}
+      {{- $feed := replaceRE `^webcal://` (printf "%s://" $scheme) $webcal -}}
+      <details class="fenb-cal-subscribe">
+        <summary class="fenb-viewbar-action">{{ i18n "cal_subscribe" }}</summary>
+        <div class="fenb-cal-subscribe-menu">
+          <a href="{{ $webcal | safeURL }}">{{ i18n "cal_subscribe_apple" }}</a>
+          <a href="https://calendar.google.com/calendar/render?cid={{ $webcal | urlquery }}" target="_blank" rel="noopener noreferrer">{{ i18n "cal_subscribe_google" }}</a>
+          {{/* download= names the saved file; the feed URL itself stays events/index.ics. */}}
+          <a href="{{ $feed | safeURL }}" download="fenb_schedule.ics">{{ i18n "cal_subscribe_feed" }}</a>
+        </div>
+      </details>
+    {{ end }}
+  </div>
+</div>

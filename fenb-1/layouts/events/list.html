@@ -13,6 +13,7 @@
 {{/* ── Calendar ────────────────────────────────────────── */}}
 <section class="fenb-section fenb-events-cal-section">
   <div class="fenb-container fenb-container--narrow">
+    {{ partial "events-viewbar.html" (dict "page" . "view" "calendar") }}
     <div class="fenb-cal-layout">
 
       {{/* ── Main calendar column ── */}}
@@ -30,7 +31,6 @@
           <button class="fenb-cal-btn" id="cal-next" aria-label="{{ i18n "events_cal_next" }}">
             {{ partial "icon.html" (dict "name" "arrow-right.svg" "w" 16 "h" 16) }}
           </button>
-          <a href="{{ "events/schedule/" | relLangURL }}" class="fenb-cal-schedule-link">{{ i18n "schedule_view_all" }}</a>
         </div>
 
         {{/* Calendar grid — JS populates this */}}
@@ -65,9 +65,14 @@
 </section>
 
 {{/* ── Embed data and i18n strings for the calendar JS ── */}}
+{{/* Each event gets ics_url — its single-event "Add to Calendar" file. */}}
+{{- $calEvents := slice -}}
+{{- range $allEvents -}}
+  {{- $calEvents = $calEvents | append (merge . (dict "ics_url" (partialCached "ics/event-url.html" . .start_date .title site.Language.Lang) "ics_name" (partial "ics/event-filename.html" .))) -}}
+{{- end -}}
 <script>
 window.FENB_CAL = {
-  events: {{ $allEvents | jsonify | safeJS }},
+  events: {{ $calEvents | jsonify | safeJS }},
   months: [
     "{{ i18n "cal_month_jan" }}", "{{ i18n "cal_month_feb" }}", "{{ i18n "cal_month_mar" }}",
     "{{ i18n "cal_month_apr" }}", "{{ i18n "cal_month_may" }}", "{{ i18n "cal_month_jun" }}",
@@ -89,6 +94,7 @@ window.FENB_CAL = {
   detailsLabel: "{{ i18n "event_details" }}",
   registerLabel: "{{ i18n "event_register" }}",
   resultsLabel: "{{ i18n "event_results" }}",
+  icsLabel: "{{ i18n "event_add_calendar" }}",
   categoryLabels: {{ $catLabels | jsonify | safeJS }}
 };
 </script>

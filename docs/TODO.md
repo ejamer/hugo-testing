@@ -64,6 +64,10 @@ The pages below need a full review pass for both style and content quality befor
 - [ ] **`/programs/referee-development/`** 
 - [ ] **`/programs/secretariat-development/`** 
 
+## Policies
+
+- [ ] **Concussion Protocol — broken embedded image** — `content/about/policies/concussion-protocol.en.md` line ~242 has `![][image1]` with `[image1]` defined as a base64 `data:image/png` URI (Google Docs export leftover). Hugo's URL sanitiser blocks `data:` URIs, so the live page renders `<img src="#ZgotmplZ">` — a broken image. The FR file has no image at all. Fix: decode the PNG into `static/images/policies/`, reference it by path (no leading slash) in both EN and FR, and confirm what the image shows (likely a return-to-sport chart) so the FR page gets an equivalent. Found 2026-10-15 while building R9.
+
 ## Hall of Fame
 
 - [ ] **Marc-André LeBlanc bio** — `content/about/hall-of-fame/marc-andre-leblanc.{en,fr}.md` currently have no body content; update both files when his biography is published on the original site.

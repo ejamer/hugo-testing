@@ -1,0 +1,12 @@
+{{- /*
+  Escapes a value for an iCalendar (RFC 5545) TEXT property: backslash, semicolon,
+  comma, and newlines. Returns a string; outputs nothing.
+  Call with: {{ partial "ics/escape.html" "some text" }}
+*/ -}}
+{{- $s := . | string -}}
+{{- $s = replace $s "\\" "\\\\" -}}
+{{- $s = replace $s ";" "\\;" -}}
+{{- $s = replace $s "," "\\," -}}
+{{- $s = replace $s "\r\n" "\\n" -}}
+{{- $s = replace $s "\n" "\\n" -}}
+{{- return $s -}}

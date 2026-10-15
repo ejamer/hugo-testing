@@ -365,6 +365,20 @@
       if (resultsUrl) {
         linksHtml += '<a href="' + esc(resultsUrl) + '" class="fenb-event-results-link" target="_blank" rel="noopener noreferrer">' + esc(cal.resultsLabel) + ' →</a>';
       }
+      // Add to Calendar — icon button pinned bottom-right of the card (mirrors partials/event-card.html);
+      // single-event .ics built by Hugo (partials/ics/event-url.html); hidden once the event has ended.
+      var icsHtml = '';
+      var endDate = new Date((e.end_date || e.start_date) + 'T00:00:00');
+      if (e.ics_url && endDate >= today) {
+        icsHtml = '<a href="' + esc(e.ics_url) + '" class="fenb-event-ics-btn" download="' + esc(e.ics_name || '') + '"' +
+          ' aria-label="' + esc(cal.icsLabel) + '" data-tooltip="' + esc(cal.icsLabel) + '">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line>' +
+              '<line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>' +
+              '<line x1="12" y1="13" x2="12" y2="19"></line><line x1="9" y1="16" x2="15" y2="16"></line>' +
+            '</svg>' +
+          '</a>';
+      }
 
       var article = document.createElement('article');
       article.className = 'fenb-event-card fenb-event-card--' + e.category;
@@ -387,7 +401,8 @@
             esc(e.location) +
           '</p>' +
           linksHtml +
-        '</div>';
+        '</div>' +
+        icsHtml;
 
       evGrid.appendChild(article);
     });

@@ -82,7 +82,7 @@ hugo-testing/
     │   │                   organization/list.html (Mission & Leadership)
     │   ├── contact/        list.html (Contact Us form)
     │   ├── clubs/          list.html (club grid + map)
-    │   ├── events/         list.html (JS calendar), schedule.html (filterable list)
+    │   ├── events/         list.html (JS calendar), schedule.html (filterable list), list.calendar.ics (season .ics feed)
     │   ├── join/           list.html, membership.html, clubs.html, volunteer.html
     │   ├── news/           list.html, single.html, rss.xml
     │   ├── programs/       list.html + one layout per sub-page
@@ -93,8 +93,10 @@ hugo-testing/
     │                         clubs-benefits.html   Three-card benefits grid (clubs + join/clubs)
     │                         event-card.html       Single event card (YAML event object as context)
     │                         event-date.html       Return-value partial — bilingual date display
+    │                         events-viewbar.html   Calendar | List toggle + Print/Subscribe bar, shared by both events views
     │                         head-additions.html   Custom <head> additions (Analytics, etc.)
     │                         icon.html             Inline SVG renderer
+    │                         ics/                  iCalendar building blocks — escape, line (RFC 5545 folding), vevent, calendar, event-url (publishes per-event .ics), event-filename (readable download name)
     │                         nav.html              Sticky nav, language switcher, search, theme toggle
     │                         news-card.html        Single news card — data-category/data-season attrs for news-filter.js
     │                         news-season.html      Return-value partial — derives fencing-season label (Sept–Aug) from a date
@@ -113,7 +115,7 @@ hugo-testing/
         │                     coach-pathways.js    Pathway diagram modal on /programs/coach-training/
         │                     event-dates.js       Shared window.FenbEventDates helpers (todayMidnight/parseDate/isUpcoming/isWithinWindow)
         │                     events-calendar.js   JS month grid for the events calendar
-        │                     events-schedule.js   Season toggle + category filters for schedule page
+        │                     events-schedule.js   Season toggle + category filters + #YYYY-YYYY season deep links for schedule page
         │                     hero-slider.js       Homepage hero carousel; hides slides outside their publish_from/expires window and shows a fallback logo slate if none are live
         │                     upcoming-events.js   Narrows homepage event grid to true first 4 using visitor's clock
         │                     hof-table.js         Sort + category-filter dropdown for the Hall of Fame table
