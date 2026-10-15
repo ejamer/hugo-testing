@@ -94,3 +94,35 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 ## Events data
 
 - [ ] **Interscholastic finals article — photo gallery** — 4 action photos at `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; add `photos:` front matter to `jun-16-interscholastic-finals-2026.{en,fr}.md` (photo gallery system now available — see README.md)
+
+---
+
+## Judo NB comparison — recommendations (2026-10-15)
+
+From the site comparison against judonb.org — read `docs/JUDO_NB_COMPARISON.html` first, especially its **Implementation notes** section (owner constraints: no platform change, no paid services, low maintenance; pre-flight checks per item). IDs match the report's roadmap. Not yet approved — confirm with the site owner which items to build. Items marked ⏸ are blocked on a human decision.
+
+### Quick wins
+- [ ] **R2 robots.txt** — `enableRobotsTXT = true` + `layouts/robots.txt` naming the sitemap (currently 404s)
+- [ ] **R3 Default social share image** — 1200×630 bilingual `og:image`, `summary_large_image`; news photos override
+- [ ] **R4 Skip-to-content link** — in `baseof.html`, `<main id="main">`, i18n string
+- [ ] **R5 hreflang alternates in `<head>`** — per translation + `x-default` (sitemap already has them)
+- [ ] **R6 Partner / funder logo strip** — `data/partners.yaml` → homepage or footer partial
+- [ ] **R7 Auto-counted "by the numbers" on About** — computed from data files, no manual figures
+- [ ] **R8 Task-led titles and descriptions** — section `_index` descriptions + homepage title, EN/FR
+
+### Next up
+- [ ] **R9 Calendar export** — season `.ics` feed (webcal subscribe) + per-event download, via a custom output format over `partials/all-events.html`
+- [ ] **R10 "Get directions" links** — Google Maps search URL from `location` on event cards and clubs
+- [ ] **R11 JSON-LD** — `SportsOrganization` on home, `SportsEvent` per upcoming event
+- [ ] **R12 "Where do I start?" coaching tool** — small JS form on coach-training mapped to `coach_pathways.yaml`
+- [ ] **R13 Officials pathway ladder** — `data/referee_levels.yaml` → stepped visual; reuse for armourer/secretariat
+- [ ] ⏸ **R14 Team NB roster** — `data/team_nb.yaml` on the Canada Games page; **blocked:** needs agreed consent rule for minors
+- [ ] **R15 Task-first homepage CTAs** — "Find a club" / "See upcoming events" buttons under the hero slider
+- [ ] **R16 Richer club cards** — optional `weapons`, `ages`, `beginners` in `clubs.yaml`; hide when empty
+
+### Later / consider
+- [ ] **R17 "Learn fencing" hub** — bilingual glossary (`data/glossary.yaml`), weapons, first-class FAQ, rules links
+- [ ] ⏸ **R18 Email updates** — promote RSS → Google Form digest → free RSS-to-email; **blocked:** free-tier limits unverified
+- [ ] ⏸ **R19 "Support FENB" page** — Sport NB Gold Rush; **blocked:** confirm FENB eligibility with Sport NB
+- [ ] **R20 Per-event pages for NB-hosted events** — content adapter (`_content.gotmpl`) over the events data
+- [ ] ⏸ **R21 Role-based contacts on board page** — `role_email` in `board_members.yaml`; **blocked:** does FENB control fenb.ca mail forwarding?

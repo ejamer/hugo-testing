@@ -54,7 +54,7 @@ The site builds in ~100 ms. Open `http://localhost:1313/` in your browser.
 | Directory | Environment | `baseURL` | Used by |
 |---|---|---|---|
 | `config/development/` | `development` | `https://ejamer.github.io/hugo-testing/` | `make serve`, `make build` |
-| `config/production/` | `production` | `https://fenb.ca/` | `make build-prod` |
+| `config/production/` | `production` | `https://www.fenb.ca/` | `make build-prod` |
 
 Hugo defaults to `production` for the bare `hugo` command and `development` for `hugo server`. `make build` and `make serve` explicitly pass `--environment development` so local builds always use the test URL. Never put `baseURL` in the root `hugo.toml` — it belongs only in these environment files.
 
@@ -301,7 +301,7 @@ Releases may optionally be tagged with a semver version (`vMAJOR.MINOR.PATCH`). 
 `/fenb-git-release` also writes `fenb-1/static/version.json` and commits it to `dev` as part of every release. It records the version, timestamp, author, PR URL, and commit count. Check the currently deployed version with:
 
 ```bash
-curl https://fenb.ca/version.json
+curl https://www.fenb.ca/version.json
 ```
 
 ### version.json fields
