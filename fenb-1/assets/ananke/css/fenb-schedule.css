@@ -169,11 +169,15 @@
 .fenb-schedule-links .fenb-event-details-link  { color: var(--teal); }
 .fenb-schedule-links .fenb-event-register-link { color: var(--crimson); }
 .fenb-schedule-links .fenb-event-results-link  { color: var(--navy); }
+/* Add to Calendar menu summary isn't an <a>, so match the row's link sizing explicitly */
+/* Add to Calendar icon (partials/ics/add-button.html): in-flow at the right end of the links row,
+   mirroring its bottom-right spot on event cards (where it is absolutely positioned). */
+.fenb-schedule-links .fenb-event-ics-btn { position: relative; right: auto; bottom: auto; margin-left: auto; align-self: center; }
 
 /* ── Dark mode ────────────────────────────────── */
 [data-theme="dark"] .fenb-schedule-month-heading { color: var(--teal-light); border-bottom-color: var(--teal-light); }
 [data-theme="dark"] .fenb-schedule-filter-meta { border-color: var(--teal-light); color: var(--teal-light); }
 [data-theme="dark"] .fenb-schedule-filter-meta:hover { background: var(--teal-light); color: #fff; }
 [data-theme="dark"] .fenb-schedule-links .fenb-event-details-link  { color: var(--teal-light); }
-[data-theme="dark"] .fenb-schedule-links .fenb-event-register-link { color: var(--text-body); }
+[data-theme="dark"] .fenb-schedule-links .fenb-event-register-link { color: var(--crimson-light); } /* matches calendar-view cards (fenb-events.css) */
 [data-theme="dark"] .fenb-schedule-links .fenb-event-results-link  { color: var(--navy-light); }

@@ -7,9 +7,10 @@
 
   Left:  [Calendar | List] segmented toggle — plain links between the two pages; the
          current view gets aria-current="page".
-  Right: Print (list view only) and the Subscribe menu for the season .ics feed
-         (layouts/events/list.calendar.ics). Native <details>: no JS, keyboard-accessible.
-         webcal:// opens Apple Calendar / Outlook; Google Calendar takes it via ?cid=.
+  Right: Print (list view only) and Subscribe, which opens the shared calendar dialog
+         (partials/calendar-dialog.html) for the season .ics feed
+         (layouts/events/list.calendar.ics): webcal:// opens Apple Calendar / Outlook;
+         Google Calendar takes it via ?cid=; plus the plain feed URL.
 
   Call with: {{ partial "events-viewbar.html" (dict "page" . "view" "calendar") }}   (or "list")
 */ -}}
@@ -38,15 +39,12 @@
       {{- $webcal := .Permalink -}}
       {{- $scheme := (urls.Parse site.BaseURL).Scheme | default "https" -}}
       {{- $feed := replaceRE `^webcal://` (printf "%s://" $scheme) $webcal -}}
-      <details class="fenb-cal-subscribe">
-        <summary class="fenb-viewbar-action">{{ i18n "cal_subscribe" }}</summary>
-        <div class="fenb-cal-subscribe-menu">
-          <a href="{{ $webcal | safeURL }}">{{ i18n "cal_subscribe_apple" }}</a>
-          <a href="https://calendar.google.com/calendar/render?cid={{ $webcal | urlquery }}" target="_blank" rel="noopener noreferrer">{{ i18n "cal_subscribe_google" }}</a>
-          {{/* download= names the saved file; the feed URL itself stays events/index.ics. */}}
-          <a href="{{ $feed | safeURL }}" download="fenb_schedule.ics">{{ i18n "cal_subscribe_feed" }}</a>
-        </div>
-      </details>
+      {{/* Opens the shared calendar dialog in "subscribe" mode (partials/calendar-dialog.html,
+           included by both events layouts). The feed link saves as fenb_schedule.ics. */}}
+      <button type="button" class="fenb-viewbar-action" data-cal-dialog="subscribe"
+        data-cal-ics="{{ $webcal }}"
+        data-cal-google="https://calendar.google.com/calendar/render?cid={{ $webcal | urlquery }}"
+        data-cal-feed="{{ $feed }}">{{ i18n "cal_subscribe" }}</button>
     {{ end }}
   </div>
 </div>

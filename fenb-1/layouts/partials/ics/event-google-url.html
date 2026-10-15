@@ -1,0 +1,32 @@
+{{- /*
+  Returns a Google Calendar "add event" URL pre-filled from an events.yaml entry, in
+  the current site language — the Google option in the Add to Calendar menu
+  (partials/ics/add-button.html → partials/calendar-dialog.html). Mirrors partials/ics/vevent.html: all-day dates with an
+  exclusive end (end date + 1 day), and the same description + Learn More / Register
+  links. querify does the URL encoding.
+
+  Call with: {{ partial "ics/event-google-url.html" $event }}
+*/ -}}
+{{- $e := . -}}
+{{- $fr := eq site.Language.Lang "fr" -}}
+{{- $title    := cond (and $fr $e.title_fr) $e.title_fr $e.title -}}
+{{- $desc     := cond (and $fr $e.description_fr) $e.description_fr $e.description_en -}}
+{{- $details  := cond (and $fr $e.details_url_fr) $e.details_url_fr $e.details_url_en -}}
+{{- $register := cond (and $fr $e.registration_url_fr) $e.registration_url_fr $e.registration_url_en -}}
+{{- $start := time $e.start_date -}}
+{{- $end := $start -}}
+{{- with $e.end_date }}{{ $end = time . }}{{ end -}}
+
+{{- $parts := slice -}}
+{{- with $desc }}{{ $parts = $parts | append . }}{{ end -}}
+{{- with $details }}{{ $parts = $parts | append (printf "%s: %s" (i18n "event_details") (cond (hasPrefix . "/") (absURL (strings.TrimLeft "/" .)) .)) }}{{ end -}}
+{{- with $register }}{{ $parts = $parts | append (printf "%s: %s" (i18n "event_register") .) }}{{ end -}}
+
+{{- $q := querify
+      "action"   "TEMPLATE"
+      "text"     $title
+      "dates"    (printf "%s/%s" ($start.Format "20060102") (($end.AddDate 0 0 1).Format "20060102"))
+      "location" $e.location
+      "details"  (delimit $parts "\n\n")
+-}}
+{{- return printf "https://calendar.google.com/calendar/render?%s" $q -}}

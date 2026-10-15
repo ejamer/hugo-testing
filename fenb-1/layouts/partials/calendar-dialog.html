@@ -1,0 +1,38 @@
+{{- /*
+  Shared Add-to-Calendar / Subscribe modal — ONE per page, filled in by
+  static/js/calendar-dialog.js from the data-cal-* attributes of whichever trigger
+  opened it. Native <dialog> + showModal(): backdrop, Escape-to-close and focus
+  containment come from the browser.
+
+  Two modes (data-cal-dialog on the trigger):
+    "event"     — heading "Add to Calendar", event title + date · location summary,
+                  Apple/Outlook (.ics) and Google Calendar buttons.
+                  Triggers: partials/ics/add-button.html, and JS-built cards in
+                  static/js/events-calendar.js.
+    "subscribe" — heading "Subscribe…", one-line intro, Apple/Outlook (webcal://),
+                  Google Calendar, and the plain feed URL (saves as fenb_schedule.ics).
+                  Trigger: partials/events-viewbar.html.
+
+  Include once on every page that has a trigger, followed by the script:
+    {{ partial "calendar-dialog.html" . }}
+    <script src="{{ "js/calendar-dialog.js" | absURL }}" defer></script>
+*/ -}}
+<dialog class="fenb-cal-dialog" id="fenb-cal-dialog" aria-labelledby="fenb-cal-dialog-title"
+        data-heading-event="{{ i18n "event_add_calendar" }}" data-heading-subscribe="{{ i18n "cal_subscribe_title" }}">
+  <div class="fenb-cal-dialog-head">
+    <h2 class="fenb-cal-dialog-title" id="fenb-cal-dialog-title"></h2>
+    <button type="button" class="fenb-cal-dialog-close" data-cal-dialog-close aria-label="{{ i18n "dialog_close" }}">
+      {{ partial "icon.html" (dict "name" "close.svg" "w" 18 "h" 18) }}
+    </button>
+  </div>
+  <div class="fenb-cal-dialog-summary" data-cal-part="summary">
+    <p class="fenb-cal-dialog-event" data-cal-field="title"></p>
+    <p class="fenb-cal-dialog-meta" data-cal-field="meta"></p>
+  </div>
+  <p class="fenb-cal-dialog-intro" data-cal-part="intro">{{ i18n "cal_subscribe_intro" }}</p>
+  <div class="fenb-cal-dialog-actions">
+    <a class="fenb-btn fenb-btn-teal" data-cal-link="ics">{{ i18n "cal_subscribe_apple" }}</a>
+    <a class="fenb-btn fenb-btn-teal-outline" data-cal-link="google" target="_blank" rel="noopener noreferrer">{{ i18n "cal_subscribe_google" }}</a>
+    <a class="fenb-cal-dialog-feed" data-cal-link="feed" data-cal-part="feed" download="fenb_schedule.ics">{{ i18n "cal_subscribe_feed" }}</a>
+  </div>
+</dialog>

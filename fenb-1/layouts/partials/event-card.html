@@ -34,15 +34,11 @@
     <a class="fenb-event-results-link" href="{{ $resultsUrl }}"{{ if not (or (hasPrefix $resultsUrl "mailto:") (hasPrefix $resultsUrl "tel:") (hasPrefix $resultsUrl "/")) }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>
     {{ end }}
   </div>
-  {{- /* Add to Calendar — icon button pinned bottom-right, label shown as a CSS tooltip
-         (data-tooltip) and exposed via aria-label. Single-event .ics from
-         partials/ics/event-url.html; hidden once the event has ended. */ -}}
+  {{- /* Add to Calendar — icon pinned bottom-right; opens the calendar dialog
+         (partials/ics/add-button.html). Hidden once the event has ended. */ -}}
   {{- $endObj := $dateObj -}}
   {{- with .end_date }}{{ $endObj = time . }}{{ end -}}
   {{ if not ($endObj.Before $todayMidnight) }}
-  <a class="fenb-event-ics-btn" href="{{ partialCached "ics/event-url.html" . .start_date .title site.Language.Lang }}" download="{{ partial "ics/event-filename.html" . }}"
-     aria-label="{{ i18n "event_add_calendar" }}" data-tooltip="{{ i18n "event_add_calendar" }}">
-    {{ partial "icon.html" (dict "name" "calendar-plus.svg" "w" 18 "h" 18) }}
-  </a>
+  {{ partial "ics/add-button.html" . }}
   {{ end }}
 </article>

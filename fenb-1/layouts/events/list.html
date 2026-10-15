@@ -65,10 +65,10 @@
 </section>
 
 {{/* ── Embed data and i18n strings for the calendar JS ── */}}
-{{/* Each event gets ics_url — its single-event "Add to Calendar" file. */}}
+{{/* Each event gets ics_url + google_url — its Add to Calendar dialog options (see partials/ics/add-button.html). */}}
 {{- $calEvents := slice -}}
 {{- range $allEvents -}}
-  {{- $calEvents = $calEvents | append (merge . (dict "ics_url" (partialCached "ics/event-url.html" . .start_date .title site.Language.Lang) "ics_name" (partial "ics/event-filename.html" .))) -}}
+  {{- $calEvents = $calEvents | append (merge . (dict "ics_url" (partialCached "ics/event-url.html" . .start_date .title site.Language.Lang) "google_url" (partial "ics/event-google-url.html" .))) -}}
 {{- end -}}
 <script>
 window.FENB_CAL = {
@@ -100,5 +100,7 @@ window.FENB_CAL = {
 </script>
 <script src="{{ "js/event-dates.js" | absURL }}" defer></script>
 <script src="{{ "js/events-calendar.js" | absURL }}" defer></script>
+{{ partial "calendar-dialog.html" . }}
+<script src="{{ "js/calendar-dialog.js" | absURL }}" defer></script>
 
 {{ end }}

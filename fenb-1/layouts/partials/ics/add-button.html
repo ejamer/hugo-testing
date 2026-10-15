@@ -1,0 +1,29 @@
+{{- /*
+  Per-event "Add to Calendar" trigger — opens the shared calendar dialog
+  (partials/calendar-dialog.html + static/js/calendar-dialog.js) with this event's
+  options:
+    • Apple Calendar / Outlook → the event's .ics (partials/ics/event-url.html). No
+      download="" attribute: iPhone/Mac Safari open it straight into Calendar; other
+      browsers save it under its readable file name.
+    • Google Calendar → pre-filled "add event" page (partials/ics/event-google-url.html).
+  static/js/events-calendar.js renders the same markup for JS-built cards — keep them in
+  sync. The page must include the dialog partial once.
+
+  Renders the calendar-plus icon with a tooltip (data-tooltip) + aria-label. Placement
+  comes from CSS: pinned to the bottom-right corner on event cards, and at the right end
+  of the links row on the printable schedule (fenb-schedule.css).
+
+  Call with: {{ partial "ics/add-button.html" $event }}
+*/ -}}
+{{- $e := . -}}
+{{- $label := i18n "event_add_calendar" -}}
+{{- $title := cond (and (eq site.Language.Lang "fr") $e.title_fr) $e.title_fr $e.title -}}
+<button type="button" class="fenb-event-ics-btn"
+  data-cal-dialog="event"
+  data-cal-title="{{ $title }}"
+  data-cal-meta="{{ partial "event-date.html" $e }} · {{ $e.location }}"
+  data-cal-ics="{{ partialCached "ics/event-url.html" $e $e.start_date $e.title site.Language.Lang }}"
+  data-cal-google="{{ partial "ics/event-google-url.html" $e }}"
+  aria-label="{{ $label }}" data-tooltip="{{ $label }}">
+  {{- partial "icon.html" (dict "name" "calendar-plus.svg" "w" 18 "h" 18) -}}
+</button>

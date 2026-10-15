@@ -93,10 +93,11 @@ hugo-testing/
     │                         clubs-benefits.html   Three-card benefits grid (clubs + join/clubs)
     │                         event-card.html       Single event card (YAML event object as context)
     │                         event-date.html       Return-value partial — bilingual date display
+    │                         calendar-dialog.html  Shared Add to Calendar / Subscribe modal (<dialog>) — once per page with triggers
     │                         events-viewbar.html   Calendar | List toggle + Print/Subscribe bar, shared by both events views
     │                         head-additions.html   Custom <head> additions (Analytics, etc.)
     │                         icon.html             Inline SVG renderer
-    │                         ics/                  iCalendar building blocks — escape, line (RFC 5545 folding), vevent, calendar, event-url (publishes per-event .ics), event-filename (readable download name)
+    │                         ics/                  iCalendar building blocks — escape, line (RFC 5545 folding), vevent, calendar, event-url (publishes per-event .ics at a readable path), event-filename (readable file name), event-google-url (pre-filled Google Calendar link), add-button (Add to Calendar trigger → calendar dialog)
     │                         nav.html              Sticky nav, language switcher, search, theme toggle
     │                         news-card.html        Single news card — data-category/data-season attrs for news-filter.js
     │                         news-season.html      Return-value partial — derives fencing-season label (Sept–Aug) from a date
@@ -114,6 +115,7 @@ hugo-testing/
         ├── js/             Client-side scripts:
         │                     coach-pathways.js    Pathway diagram modal on /programs/coach-training/
         │                     event-dates.js       Shared window.FenbEventDates helpers (todayMidnight/parseDate/isUpcoming/isWithinWindow)
+        │                     calendar-dialog.js   Opens/fills the shared Add to Calendar / Subscribe dialog
         │                     events-calendar.js   JS month grid for the events calendar
         │                     events-schedule.js   Season toggle + category filters + #YYYY-YYYY season deep links for schedule page
         │                     hero-slider.js       Homepage hero carousel; hides slides outside their publish_from/expires window and shows a fallback logo slate if none are live

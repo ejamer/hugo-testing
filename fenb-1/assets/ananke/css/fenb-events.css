@@ -65,10 +65,12 @@
   letter-spacing: 0.03em;
 }
 .fenb-event-results-link:hover { text-decoration: underline; }
-/* Add to Calendar on event cards (R9) — icon button pinned to the card's bottom-right
-   corner; label appears as a tooltip on hover / keyboard focus (data-tooltip) and is
-   read by screen readers via aria-label. The tooltip opens upward and right-aligned so
-   it stays inside the card (.fenb-event-card has overflow: hidden). */
+/* Add to Calendar trigger (R9) — partials/ics/add-button.html; opens the shared
+   calendar dialog (.fenb-cal-dialog below). Calendar-plus icon; label is a tooltip on
+   hover / keyboard focus (data-tooltip) and aria-label for screen readers. On event
+   cards it's pinned to the bottom-right corner; on the printable schedule it sits at
+   the right end of the links row (fenb-schedule.css). Tooltip opens upward +
+   right-aligned so it stays inside the card (.fenb-event-card has overflow: hidden). */
 .fenb-event-card { position: relative; }
 .fenb-event-ics-btn {
   position: absolute;
@@ -79,8 +81,12 @@
   justify-content: center;
   width: 34px;
   height: 34px;
+  padding: 0;
+  border: none;
   border-radius: 50%;
+  background: none;
   color: var(--text-muted);
+  cursor: pointer;
   transition: background var(--transition), color var(--transition);
 }
 .fenb-event-ics-btn:hover,
@@ -109,19 +115,64 @@
    wrap across the full card width on phones, so checking for a links row isn't enough. */
 .fenb-event-card:has(.fenb-event-ics-btn) .fenb-event-body { padding-bottom: 2.9rem; }
 
-/* Add to Calendar text link — printable schedule rows (R9); muted so it reads as secondary to Register */
-.fenb-event-ics-link {
-  display: inline-block;
-  margin-top: auto;
-  padding-top: 0.35rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-decoration: none;
-  letter-spacing: 0.03em;
+
+/* ── Calendar dialog (partials/calendar-dialog.html, js/calendar-dialog.js) ──
+   One native <dialog> per page for Add to Calendar (event mode) and Subscribe.
+   [hidden] needs !important: .fenb-btn sets display: inline-flex, which would otherwise
+   beat the hidden attribute (docs/GOTCHAS.md). */
+.fenb-cal-dialog {
+  width: min(26rem, calc(100vw - 2rem));
+  padding: 1.25rem 1.4rem 1.4rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--text-body);
+  box-shadow: var(--shadow-lg);
 }
-.fenb-event-ics-link::before { content: "+ "; }
-.fenb-event-ics-link:hover { text-decoration: underline; color: var(--teal); }
+.fenb-cal-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+.fenb-cal-dialog [hidden] { display: none !important; }
+.fenb-cal-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+.fenb-cal-dialog-title { margin: 0; font-size: 1.15rem; color: var(--text-dark); }
+.fenb-cal-dialog-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.fenb-cal-dialog-close:hover,
+.fenb-cal-dialog-close:focus-visible { background: var(--teal-pale); color: var(--teal); }
+.fenb-cal-dialog-summary {
+  margin-bottom: 1.1rem;
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid var(--teal);
+  border-radius: 6px;
+  background: var(--off-white);
+}
+.fenb-cal-dialog-event { margin: 0 0 0.2rem; font-weight: 700; color: var(--text-dark); }
+.fenb-cal-dialog-meta  { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
+.fenb-cal-dialog-intro { margin: 0 0 1.1rem; font-size: 0.92rem; }
+.fenb-cal-dialog-actions { display: flex; flex-direction: column; gap: 0.6rem; }
+.fenb-cal-dialog-actions .fenb-btn { justify-content: center; }
+.fenb-cal-dialog-feed {
+  align-self: center;
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--teal);
+}
 
 /* Date badge sidebar */
 .fenb-event-date-badge {
@@ -390,39 +441,6 @@
 }
 .fenb-viewbar-action:hover { text-decoration: underline; }
 
-/* Subscribe menu (R9) — native <details>; summary is a .fenb-viewbar-action.
-   Right-anchored: it sits at the right end of the view bar, so it opens leftward and
-   stays on-screen at phone widths too. */
-.fenb-cal-subscribe { position: relative; }
-.fenb-cal-subscribe > summary { cursor: pointer; list-style: none; }
-.fenb-cal-subscribe > summary::-webkit-details-marker { display: none; }
-.fenb-cal-subscribe > summary::after { content: " ▾"; }
-.fenb-cal-subscribe[open] > summary::after { content: " ▴"; }
-.fenb-cal-subscribe-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 0.4rem);
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  min-width: 15rem;
-  padding: 0.35rem;
-  background: var(--white);
-  border: 1px solid var(--light-gray);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-md);
-}
-.fenb-cal-subscribe-menu a {
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  text-decoration: none;
-  white-space: nowrap;
-}
-.fenb-cal-subscribe-menu a:hover,
-.fenb-cal-subscribe-menu a:focus-visible { background: var(--teal-pale); color: var(--teal-dark); }
 
 .fenb-cal-selectors {
   display: flex;
@@ -591,4 +609,8 @@
 [data-theme="dark"] .fenb-view-toggle-btn { color: var(--teal-light); }
 [data-theme="dark"] .fenb-view-toggle-btn[aria-current="page"] { background: var(--teal-light); color: var(--white); } /* --white is the dark page colour here */
 [data-theme="dark"] .fenb-viewbar-action { color: var(--teal-light); }
+[data-theme="dark"] .fenb-cal-dialog-feed { color: var(--teal-light); }
+[data-theme="dark"] .fenb-cal-dialog-summary { border-left-color: var(--teal-light); }
+[data-theme="dark"] .fenb-cal-dialog-close:hover,
+[data-theme="dark"] .fenb-cal-dialog-close:focus-visible { color: var(--teal-light); }
 [data-theme="dark"] .fenb-cal-select { border-color: var(--teal-light); }
