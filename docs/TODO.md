@@ -102,7 +102,6 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 From the site comparison against judonb.org — read `docs/JUDO_NB_COMPARISON.html` first, especially its **Implementation notes** section (owner constraints: no platform change, no paid services, low maintenance; pre-flight checks per item). IDs match the report's roadmap. Not yet approved — confirm with the site owner which items to build. Items marked ⏸ are blocked on a human decision.
 
 ### Quick wins
-- [ ] **R2 robots.txt** — `enableRobotsTXT = true` + `layouts/robots.txt` naming the sitemap (currently 404s)
 - [ ] **R3 Default social share image** — 1200×630 bilingual `og:image`, `summary_large_image`; news photos override
 - [ ] **R4 Skip-to-content link** — in `baseof.html`, `<main id="main">`, i18n string
 - [ ] **R5 hreflang alternates in `<head>`** — per translation + `x-default` (sitemap already has them)

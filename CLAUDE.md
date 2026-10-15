@@ -90,6 +90,7 @@ See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bi
         caption: "Jim Stevens — Team Coach"
     ```
     Paths must not have a leading slash (see URL paths rule above).
+  - **Social share image** — the first `photos` entry becomes the article's `og:image`; otherwise the site default (`images/og-default.png`) is used. `image` is never used (flyers/logos crop badly). Override with `images: ["path"]` in front matter. See README.md.
 
 ## Pattern reuse — check before creating
 
