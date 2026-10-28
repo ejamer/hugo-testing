@@ -1,35 +1,43 @@
 ---
 description: Prepare and open a release PR from `dev` into `main` for the FencingNB Hugo site. Runs a production build check, bilingual parity check, and opens a PR.
 disable-model-invocation: true
-allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(script *) Bash(scripts/compute-next-version.sh) Bash(scripts/generate-version-json.sh *) Read AskUserQuestion
+allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(scripts/compute-next-version.sh) Bash(scripts/check-hugo-version.sh) Bash(scripts/check-hugo-version.sh *) Bash(brew upgrade hugo) Bash(scripts/generate-version-json.sh *) Read AskUserQuestion
 ---
 
-Run the checks, then ask **once** (Step 7) — that single popup is the release gate. This skill can only be started by the user (`disable-model-invocation`), so don't add an up-front "are you sure?" prompt. Report each step's result briefly as you go.
+Run the checks, then ask **once** (Step 8) — that single popup is the release gate. This skill can only be started by the user (`disable-model-invocation`), so don't add an up-front "are you sure?" prompt. Report each step's result briefly as you go.
 
 **Stash rule:** if Step 2 stashes changes, then no matter how or where the skill exits — failure, cancel, or success — run `git stash pop` before stopping and tell the user "Stashed changes have been restored."
 
 ---
 
-1. **Tag lookup** — run `scripts/compute-next-version.sh`. It prints `current=` (latest `vX.Y.Z` tag, or `v0.0.0` if none), `tagged=` (`yes`/`no`), and the candidates `patch=`, `minor=`, `major=`. Keep these for Step 7. Report the current tag (e.g. "Current release tag: v1.2.3", or "No release tags exist yet" when `tagged=no`).
+1. **Tag lookup** — run `scripts/compute-next-version.sh`. It prints `current=` (latest `vX.Y.Z` tag, or `v0.0.0` if none), `tagged=` (`yes`/`no`), and the candidates `patch=`, `minor=`, `major=`. Keep these for Step 8. Report the current tag (e.g. "Current release tag: v1.2.3", or "No release tags exist yet" when `tagged=no`).
 
 2. **Branch and remote state** — run `git fetch origin`, `git branch --show-current`, and `git status`:
    - **Not on `dev`:** stop and tell the user.
    - **`dev` behind `origin/dev`:** run `git pull --ff-only`; if it fails, stop and report.
-   - **Uncommitted changes:** list them, then `AskUserQuestion` — the only other prompt this skill may show:
+   - **Uncommitted changes:** list them, then `AskUserQuestion` — one of only two other prompts this skill may show (the other is Step 3's Hugo update):
      - **Question:** "The working tree has uncommitted changes. How would you like to proceed?"
      - label `"Stash and release"` — description `"Stash changes, release what's committed, then restore the stash"` → `git stash push -m "fenb-git-release: pre-release stash"` and continue (see stash rule)
      - label `"Cancel release"` — description `"Stop — run /fenb-git-commit first, then re-run /fenb-git-release"` → stop
-   - **Sync local `main`:** `git merge-base --is-ancestor main origin/main`; if it succeeds run `git fetch origin main:main` (safe — `main` is never checked out). If it fails (local `main` diverged), stop and alert the user. Needed because `gh pr merge` updates `origin/main` but not local `main`, which would make Step 5's `main..dev` list stale.
+   - **Sync local `main`:** `git merge-base --is-ancestor main origin/main`; if it succeeds run `git fetch origin main:main` (safe — `main` is never checked out). If it fails (local `main` diverged), stop and alert the user. Needed because `gh pr merge` updates `origin/main` but not local `main`, which would make Step 6's `main..dev` list stale.
 
-3. **Production build** — `make build-prod`. Report errors or warnings; a clean build is required to continue.
+3. **Hugo version check** — run `scripts/check-hugo-version.sh` (read-only). It prints `pinned=` (the `hugo-version` in both GitHub workflows), `local=`, `installable=` (newest Homebrew version), `latest_release=` (newest GitHub release), `update_available=` and `local_matches_pin=`. If it exits non-zero (the two workflows pin different versions), stop and report. Report one line, e.g. "Hugo: pinned 0.166.0 · local 0.166.0 · latest 0.169.0".
+   - **`update_available=yes`:** `AskUserQuestion`, header `"Hugo"`:
+     - **Question:** "Hugo <installable> is available (pinned: <pinned>). Update before this release? Release notes: https://github.com/gohugoio/hugo/releases"
+     - label `"Update to <installable>"` — description `"Upgrade local Hugo and pin <installable> in both workflows — the build check below then tests the new version"` → run `brew upgrade hugo`, re-run the script, then `scripts/check-hugo-version.sh --set <new local>` (pin the version the local build will actually test). Remember `hugo_bump=<version>` for Steps 6, 9 and 10.
+     - label `"Keep <pinned>"` — description `"Release with the current pin — you'll be asked again next release"` → continue
+   - **`local_matches_pin=no`** (after any update): warn "Build check uses local Hugo <local>, but production is pinned to <pinned>" — not blocking.
+   - If the release later stops or is cancelled after an update, tell the user the pin change in `.github/workflows/` is left uncommitted.
 
-4. **Bilingual parity** — `make check-parity`. Report any `MISSING FR:` / `MISSING EN:` lines (no output = all paired).
+4. **Production build** — `make build-prod`. Report errors or warnings; a clean build is required to continue.
 
-5. **Commit summary** — `git log main..dev --oneline`. If empty, report "Nothing to release" and stop.
+5. **Bilingual parity** — `make check-parity`. Report any `MISSING FR:` / `MISSING EN:` lines (no output = all paired).
 
-6. **TODO.md review** — read `docs/TODO.md` and flag unchecked items the commits above appear to address.
+6. **Commit summary** — `git log main..dev --oneline`. If empty and there's no `hugo_bump`, report "Nothing to release" and stop. (A Hugo bump alone is a valid release.)
 
-7. **Release decision (the only gate)** — present the results of Steps 3–6 compactly, then one `AskUserQuestion` call with **two questions**:
+7. **TODO.md review** — read `docs/TODO.md` and flag unchecked items the commits above appear to address.
+
+8. **Release decision (the only gate)** — present the results of Steps 3–7 compactly (include the Hugo line, noting any bump), then one `AskUserQuestion` call with **two questions**:
 
    **Question 1** — header `"Version"`, "Which version for this release?"
    - label `"Content update (→ <patch>)"` — description `"Content updates and fixes"`
@@ -42,36 +50,36 @@ Run the checks, then ask **once** (Step 7) — that single popup is the release 
    - label `"Leave open"` — description `"Open the PR; merge later in GitHub"`
    - label `"Cancel release"` — description `"Stop without opening a PR"`
 
-   Substitute the real version strings from Step 1 into the labels. If the checks in Steps 3–4 failed, don't offer to proceed — report and stop instead. If Question 2 is "Cancel release", stop (stash rule applies). Otherwise answering is the approval — continue without further prompts.
+   Substitute the real version strings from Step 1 into the labels. If the checks in Steps 4–5 failed, don't offer to proceed — report and stop instead. If Question 2 is "Cancel release", stop (stash rule applies). Otherwise answering is the approval — continue without further prompts.
 
-8. **Open PR** — check for an existing one: `script -q -c "gh pr list --base main --head dev --state open --json url,number" /dev/null`. If found, reuse it ("Using existing PR #N"). Otherwise:
+9. **Open PR** — check for an existing one: `gh pr list --base main --head dev --state open --json url,number`. If found, reuse it ("Using existing PR #N"). Otherwise:
    ```bash
-   gh pr create --base main --head dev --title "Release: <summary of changes>" --body "<commit summary from Step 5>
+   gh pr create --base main --head dev --title "Release: <summary of changes>" --body "<commit summary from Step 6, plus \"Pin Hugo <version>\" if hugo_bump>
 
    🤖 Generated with [Claude Code](https://claude.com/claude-code)"
    ```
    Capture the PR URL and number. If it fails, report and stop.
 
-9. **Write and commit version.json**:
+10. **Write and commit version.json**:
    ```bash
    scripts/generate-version-json.sh <target-version | --untagged> <PR-URL>
    ```
-   Pass the version chosen in Step 7 (e.g. `v0.1.0`), or `--untagged` for "No tag". The script writes `fenb-1/static/version.json` and prints it — keep `commits_since_tag` for the summary. It never touches git; if it exits non-zero, report its error and stop. Then:
+   Pass the version chosen in Step 8 (e.g. `v0.1.0`), or `--untagged` for "No tag". The script writes `fenb-1/static/version.json` and prints it — keep `commits_since_tag` for the summary. It never touches git; if it exits non-zero, report its error and stop. Then:
    ```bash
-   git add fenb-1/static/version.json
-   git commit -m "Update version.json for release <version>"
+   git add fenb-1/static/version.json          # + .github/workflows/release-website.yml .github/workflows/pr-check.yml if hugo_bump
+   git commit -m "Update version.json for release <version>"   # append " and pin Hugo <hugo_bump>" if hugo_bump
    git push
    ```
    The open PR picks up this commit automatically.
 
-10. **Merge and tag** — only if Step 7 chose "Merge now":
-    - `script -q -c "gh pr merge <PR-number> --merge --body ''" /dev/null` — always the explicit PR number; never `--delete-branch` (`dev` is permanent).
+11. **Merge and tag** — only if Step 8 chose "Merge now":
+    - `gh pr merge <PR-number> --merge --body ''` — always the explicit PR number; never `--delete-branch` (`dev` is permanent).
     - `git fetch origin`. Don't merge or reset `dev` — GitHub will show `dev` "1 behind main"; the content is identical and it resolves with the next commit on `dev`.
     - If a version was chosen: `git tag -a <version> -m "Release <version>" origin/main && git push origin <version>`.
 
     If "Leave open" was chosen with a version, remind the user to apply the tag after merging: `git tag -a <version> -m "Release <version>" origin/main && git push origin <version>`.
 
-11. **Summary** — pop the stash if one was taken, then show as plain text (not a code block):
+12. **Summary** — pop the stash if one was taken, then show as plain text (not a code block):
 
     ┌─ Release Summary ────────────────────────────
     │  PR:      <PR URL>

@@ -242,6 +242,8 @@ image_alt: "Canada Winter Games 2027 — Québec City"
 
 If only one image exists, omit `image_dark` — the single `image` is used in both themes.
 
+**Test before making a dark variant:** composite the logo onto the dark-mode background (`#141f1d`) and look at it first. Line-art logos with **opaque white fills** (e.g. the Halifax Enguardians wings/shield) already read well on dark and need no `image_dark`. Don't auto-generate one by recolouring every pixel white — on a filled logo that produces a solid white blob — and a plain colour inversion turns the fills black, which reads worse. A recolour-to-white variant only suits logos that are purely dark strokes on a transparent background.
+
 **Wide/banner-shaped logos:** the default 220px max-width assumes a roughly square-ish logo. A wide banner image (e.g. a flyer graphic, aspect ratio wider than ~3:1) gets crushed to a sliver at that width. Add `image_wide: true` to raise the max-width to 480px via the `fenb-article-event-logo--wide` modifier class:
 
 ```yaml

@@ -33,6 +33,6 @@ Avec des épreuves U17 et Open à l'épée, au fleuret et au sabre, il y en a po
 
 Les catégories d'âge sont établies au 31 décembre 2026. Les épreuves ne sont pas sanctionnées. Vous ne pouvez participer qu'à une épreuve à la fois — si deux de vos épreuves se chevauchent, vous devrez en choisir une.
 
-**[Inscrivez-vous ici d'ici le mercredi 11 novembre 2026](https://us.list-manage.com/GBA2t17hhPA?e=eeae2e0430&c2id=b1384f35c909fc0e3bd5aaa0361cf8bb)**
+**[Inscrivez-vous ici d'ici le mercredi 11 novembre 2026](https://docs.google.com/forms/d/e/1FAIpQLSde4EyMcCbtAcQ7vhYN65QrNhULqgBFFEfcEtLQsVoqoBfINw/viewform)**
 
 Bonne chance à tous ceux qui feront le voyage jusqu'à Bedford!
