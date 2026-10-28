@@ -34,7 +34,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.166.0'  # pinned — managed by scripts/check-hugo-version.sh
+          hugo-version: '0.169.0'  # pinned — managed by scripts/check-hugo-version.sh
           extended: true
 
       - name: Build
