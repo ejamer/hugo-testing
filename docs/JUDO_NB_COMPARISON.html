@@ -338,6 +338,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-si
   <ul class="plain read">
     <li><strong>R1 canonical host:</strong> the conclusion that the Pages custom domain is <code>www.fenb.ca</code> came from the live redirect (<code>fenb.ca</code> → 301 → <code>www.fenb.ca</code>), not from the repo's GitHub Pages settings. Confirm the custom domain first. Change <code>baseURL</code> and the Pages domain together; changing only one can break the site. <code>config/development/hugo.toml</code> is unaffected.</li>
     <li><strong>R9, R11, R20 event-driven features:</strong> build from <code>partials/all-events.html</code>, which merges <code>events.yaml</code> with <code>data/events_archive/</code>, not from <code>events.yaml</code> alone.</li>
+    <li><strong>R6 partner strip:</strong> affiliations already appear on <code>/about/organization/</code>, read from <code>hugo.Data.board_members.affiliations</code> in <code>layouts/about/organization/list.html</code>. Don't start a second list. Move <code>affiliations</code> out of <code>board_members.yaml</code> into a new <code>data/partners.yaml</code>, since partners aren't board data, and have both the strip and the Organization sidebar read from it so the two never drift apart. Grep for <code>board_members.affiliations</code> before removing the old key.</li>
     <li><strong>R4 skip link:</strong> confirmed missing on the homepage only. Check <code>baseof.html</code> and the other layouts.</li>
     <li><strong>R3 share image:</strong> <code>head-additions.html</code> currently holds only the theme script. Check what Ananke's own head partials already emit before adding OG tags, to avoid duplicates.</li>
     <li><strong>Snapshot date:</strong> live-site findings date from 15 Oct 2026 (repo v0.5.18). Re-verify any finding before acting on it.</li>
@@ -381,7 +382,7 @@ const RECS = [
   upkeep:"None"},
  {id:"R6",tier:"quick",area:"ux",effort:"S",impact:"Medium",title:"Partner / funder logo strip",
   why:"Judo NB's 'Proudly affiliated with' row is cheap credibility and acknowledges funders.",
-  how:"data/partners.yaml (name, logo, url) → partial on the homepage or in the footer. Candidates: Fencing Canada, Sport NB, Government of NB, Canada Games.",
+  how:"FENB already lists its affiliations (Fencing Canada, Sport NB) on About → Organization, from board_members.yaml → affiliations. Partners aren't board data, so move the list to a new data/partners.yaml (name_en/name_fr, url, logo) and point the Organization page at it. Then render a logo partial on the homepage or in the footer from the same file. Further candidates: Government of NB, Canada Games. Any partner added or removed must appear on the Organization page too.",
   upkeep:"Rare"},
  {id:"R7",tier:"quick",area:"content",effort:"S",impact:"Low",title:"Auto-counted 'by the numbers' on About",
   why:"Judo NB shows '13 clubs · 6 zones · 13 athletes'. FENB can compute the same figures from its data files.",

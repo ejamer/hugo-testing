@@ -1,0 +1,25 @@
+# Sport organizations (not member clubs) whose logos are reused across articles —
+# used by the host-logo shortcode (layouts/shortcodes/host-logo.html).
+# Logos live in static/images/organizations/. name_fr falls back to name_en if blank.
+# logo_dark is optional — a light-on-dark variant swapped in under dark mode.
+organizations:
+  - id: CFF
+    name_en: "Fencing Canada"
+    name_fr: "Escrime Canada"
+    logo: images/organizations/fencing-canada.png
+    logo_dark: ""
+    website: "https://fencing.ca/"
+
+  - id: OFA
+    name_en: "Ontario Fencing Association"
+    name_fr: ""
+    logo: images/organizations/ontario-fencing-association.jpg
+    logo_dark: ""
+    website: "https://fencingontario.ca/"
+
+  - id: FEQ
+    name_en: "Fédération d'escrime du Québec"
+    name_fr: ""
+    logo: images/organizations/federation-escrime-quebec.png
+    logo_dark: ""
+    website: "https://escrimequebec.qc.ca/"

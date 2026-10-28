@@ -162,3 +162,11 @@ After deleting or renaming a partial, a long-running `hugo server` can keep a st
 
 - To get the plain URL, swap the scheme for the **site's own** (`(urls.Parse site.BaseURL).Scheme`) — hard-coding `https://` broke the link on the local dev server, which is plain HTTP (`ERR_SSL_PROTOCOL_ERROR`).
 - Put the `webcal://` value in an `href` with `| safeURL`, or Go's HTML sanitiser replaces it with `#ZgotmplZ` (it only trusts http/https/mailto).
+
+---
+
+## Headless Chrome screenshots clip the right side below ~500px
+
+When checking a mobile layout with `Google Chrome --headless=new --window-size=390,…`, the page renders wider than the window and the screenshot cuts text off on the right. It looks like horizontal overflow from your change, but every page does it — Chrome won't shrink a headless window that far, so the viewport stays wider than 390px.
+
+Before treating it as a layout bug, screenshot a known-good page (e.g. an older news article) at the same size: if it clips identically, it's the tool. For a true phone-width render, use device emulation (Chrome DevTools Protocol / Puppeteer `setViewport`) rather than `--window-size`.
