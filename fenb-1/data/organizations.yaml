@@ -23,3 +23,10 @@ organizations:
     logo: images/organizations/federation-escrime-quebec.png
     logo_dark: ""
     website: "https://escrimequebec.qc.ca/"
+
+  - id: ENG
+    name_en: "Halifax Enguardians Fencing Club"
+    name_fr: "Club d'escrime Halifax Enguardians"
+    logo: images/organizations/halifax-enguardians.png
+    logo_dark: ""
+    website: "https://www.enguardians.ca/"
