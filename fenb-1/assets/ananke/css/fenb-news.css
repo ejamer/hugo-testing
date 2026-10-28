@@ -547,6 +547,32 @@
 [data-theme="dark"] .fenb-article-event-logo .fenb-article-event-logo-img--light { display: none; }
 [data-theme="dark"] .fenb-article-event-logo .fenb-article-event-logo-img--dark { display: block; }
 
+/* ── Host logo (host-logo shortcode — floated beside section text) ── */
+.fenb-host-logo {
+  float: right;
+  width: 130px;
+  margin: 0.25rem 0 1rem 1.5rem;
+}
+.fenb-host-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.fenb-host-logo .fenb-host-logo-img--dark { display: none; }
+[data-theme="dark"] .fenb-host-logo .fenb-host-logo-img--light { display: none; }
+[data-theme="dark"] .fenb-host-logo .fenb-host-logo-img--dark { display: block; }
+/* Keep a floated logo inside its own section — never beside the next heading or a table */
+.fenb-article-body h2,
+.fenb-article-body h3,
+.fenb-article-body table { clear: both; }
+@media (max-width: 540px) {
+  .fenb-host-logo {
+    float: none;
+    width: 110px;
+    margin: 0 auto 1rem;
+  }
+}
+
 /* ── Article photo gallery (bottom, optional) ──── */
 .fenb-article-photo-gallery {
   margin: 1.75rem 0 0.5rem;

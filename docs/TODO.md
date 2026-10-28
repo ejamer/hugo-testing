@@ -104,6 +104,7 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 ## Events data
 
 - [ ] **Interscholastic finals article — photo gallery** — 4 action photos at `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; add `photos:` front matter to `jun-16-interscholastic-finals-2026.{en,fr}.md` (photo gallery system now available — see README.md)
+- [ ] **Fencing Canada logo — replace with vector** — `static/images/organizations/fencing-canada.png` is a temporary raster (downloaded from 2mev.com, resized to 626×800). Replace with an official vector (SVG) version and update `logo:` for `CFF` in `data/organizations.yaml` — every article using `{{< host-logo id="CFF" >}}` picks it up automatically.
 
 ---
 
@@ -118,7 +119,7 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 From the site comparison against judonb.org — read `docs/JUDO_NB_COMPARISON.html` first, especially its **Implementation notes** section (owner constraints: no platform change, no paid services, low maintenance; pre-flight checks per item). IDs match the report's roadmap. Not yet approved — confirm with the site owner which items to build. Items marked ⏸ are blocked on a human decision.
 
 ### Quick wins
-- [ ] **R6 Partner / funder logo strip** — `data/partners.yaml` → homepage or footer partial
+- [ ] **R6 Partner / funder logo strip** — homepage or footer partial. Affiliations already appear on `/about/organization/` (sidebar, from `board_members.yaml` → `affiliations`). Move that list to a new `data/partners.yaml` (partners aren't board data), add a `logo` field, and repoint `layouts/about/organization/list.html` so the strip and the sidebar share one source. Also update README.md (~line 230), which documents `affiliations` under `board_members.yaml`. Any partner change must also update the Organization page.
 - [ ] **R7 Auto-counted "by the numbers" on About** — computed from data files, no manual figures
 - [ ] **R8 Task-led titles and descriptions** — section `_index` descriptions + homepage title, EN/FR
 

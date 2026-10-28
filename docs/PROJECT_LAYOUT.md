@@ -62,6 +62,7 @@ hugo-testing/
     │   ├── hero_slides.yaml        Homepage hero carousel images
     │   ├── join.yaml               Seasonal portal URLs for the Join section (2MEV, club form)
     │   ├── join_paths.yaml         Path cards on the Join landing page
+    │   ├── organizations.yaml      Non-club organization logos (e.g. Fencing Canada) for the host-logo shortcode
     │   ├── policies.yaml           Policy and report documents on /about/policies-and-reports/
     │   ├── program_cards.yaml      Path cards on the Programs landing page
     │   └── quick_links.yaml        Quick-link cards on the homepage
@@ -86,7 +87,7 @@ hugo-testing/
     │   ├── join/           list.html, membership.html, clubs.html, volunteer.html
     │   ├── news/           list.html, single.html, rss.xml
     │   ├── programs/       list.html + one layout per sub-page
-    │   ├── shortcodes/     Custom Hugo shortcodes (currently empty; add fenb-specific shortcodes here)
+    │   ├── shortcodes/     Custom Hugo shortcodes — host-logo.html (club/organization logo floated beside an article section)
     │   └── partials/       Shared template components:
     │                         all-events.html       Return-value partial — flat slice of current + all archived seasons' events, sorted by start_date (used by homepage + calendar so archived-but-current events stay visible)
     │                         back-link.html        Back-navigation link
@@ -111,7 +112,7 @@ hugo-testing/
         ├── documents/      PDFs served at /documents/ — subfolders: about/agm-minutes/,
         │                   about/governance/, canada-games/, programs/coach-training/ (CFF pathway PDFs)
         ├── images/         Site images — subfolders: canada-games/, clubs/, coach-pathways/ (CFF pathway
-        │                   diagram PNGs, EN/FR), hall-of-fame/, hero/, svg/
+        │                   diagram PNGs, EN/FR), hall-of-fame/, hero/, organizations/, svg/
         ├── js/             Client-side scripts:
         │                     coach-pathways.js    Pathway diagram modal on /programs/coach-training/
         │                     event-dates.js       Shared window.FenbEventDates helpers (todayMidnight/parseDate/isUpcoming/isWithinWindow)

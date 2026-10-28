@@ -258,6 +258,23 @@ image_wide: true
 
 CSS targets `.fenb-article-event-logo img`; the light/dark swap uses `.fenb-article-event-logo-img--light` / `--dark` toggled by `[data-theme="dark"]`.
 
+### `host-logo` shortcode — host logo beside a section's opening text
+
+For articles covering more than one event (e.g. a multi-tournament registration roundup), put the host's logo beside each event section instead of using the single top `image`. Place the shortcode on its own line directly under the section heading:
+
+```markdown
+## Hoplite Invitational — November 7–8 (Fredericton, NB)
+
+{{</* host-logo id="DAM" */>}}
+
+The Damocles Fencing Club is hosting…
+```
+
+- **`id`** — looks up `data/clubs.yaml` (club `id`, e.g. `DAM`), then `data/organizations.yaml` (non-club bodies, e.g. `CFF` for Fencing Canada). The logo path and alt text come from the data file, and organizations get a bilingual `name_en`/`name_fr`, so the same line works in both language files. Add recurring non-club logos (national/regional federations, Games organizers) to `organizations.yaml` rather than hard-coding paths in articles.
+- **`src` + `alt`** — one-off image instead of an `id` (no leading slash). **`alt`** also overrides the looked-up name. **`src_dark`** (or `logo_dark` in `organizations.yaml`) — optional dark-mode variant.
+
+Rendered as `figure.fenb-host-logo` (in `fenb-news.css`): floated right at 130px on desktop, centred above the text at 110px under 540px. `h2`, `h3` and `table` inside `.fenb-article-body` have `clear: both`, so the logo never sits beside the next heading or a schedule table. The template errors at build time if an `id` doesn't match a club or organization.
+
 ### `fenb-article-photo-gallery` — optional photo grid at the bottom of a news article
 
 Set `photos:` in front matter to render a responsive image grid below the article body. `caption` is optional per item. The grid is hidden when the list is absent — no empty space.

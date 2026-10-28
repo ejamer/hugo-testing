@@ -1,0 +1,42 @@
+{{- /*
+  Host logo floated beside the opening text of an article section (stacks above it on mobile).
+
+  By id — looks up data/clubs.yaml, then data/organizations.yaml:
+    {{< host-logo id="DAM" >}}
+    {{< host-logo id="CFF" >}}
+  One-off image (no leading slash):
+    {{< host-logo src="images/event-logos/ecg.png" alt="East Coast Games 2026" >}}
+
+  Optional: alt (overrides the looked-up name), src_dark (dark-mode variant).
+*/ -}}
+{{- $id := .Get "id" }}
+{{- $src := .Get "src" }}
+{{- $srcDark := .Get "src_dark" }}
+{{- $alt := "" }}
+{{- $lang := .Page.Language.Lang }}
+{{- with $id }}
+  {{- range hugo.Data.clubs.clubs }}
+    {{- if eq .id $id }}
+      {{- $src = .logo }}
+      {{- $alt = .name }}
+    {{- end }}
+  {{- end }}
+  {{- range hugo.Data.organizations.organizations }}
+    {{- if eq .id $id }}
+      {{- $src = .logo }}
+      {{- with .logo_dark }}{{ $srcDark = . }}{{ end }}
+      {{- $alt = .name_en }}
+      {{- if and (eq $lang "fr") .name_fr }}{{ $alt = .name_fr }}{{ end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- $alt = .Get "alt" | default $alt }}
+{{- if not $src }}
+  {{- errorf "host-logo: no logo found for id %q (and no src given) — %s" $id .Position }}
+{{- end }}
+<figure class="fenb-host-logo">
+  <img src="{{ $src | relURL }}" alt="{{ $alt }}"{{ if $srcDark }} class="fenb-host-logo-img--light"{{ end }}>
+  {{- with $srcDark }}
+  <img src="{{ . | relURL }}" alt="{{ $alt }}" class="fenb-host-logo-img--dark">
+  {{- end }}
+</figure>

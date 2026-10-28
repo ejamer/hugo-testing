@@ -46,6 +46,8 @@ Then:
 
 Both files get the same `category` value — it's a canonical ID, not a display string. The badge label is derived from i18n at render time.
 
+**Multi-event articles** (e.g. a registration roundup covering several tournaments): give each event its own `##` section and put `{{< host-logo id="..." >}}` on its own line directly under each heading, instead of `image` or `photos` — `id` is the host's club id from `fenb-1/data/clubs.yaml` or an organization id from `fenb-1/data/organizations.yaml` (e.g. `CFF`). Use the same line in both language files; the shortcode picks the localized name. If the host isn't in either file, add it to `organizations.yaml` (see README.md for sourcing logos) rather than using a one-off `src`. See `docs/STYLE_GUIDE.md` → `host-logo` shortcode.
+
 **Critical:** the language code is separated by a **dot** (`.en.md`, `.fr.md`), never a dash (`-en.md`). A dash breaks Hugo's translation linking between the two files.
 
 After both files are written, ask the user via `AskUserQuestion` whether they'd also like a sample Facebook post for this article. If yes, invoke `/fenb-content-social-summary` against the two files just created.

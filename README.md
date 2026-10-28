@@ -86,6 +86,8 @@ Full post body here (Markdown).
 
 **Social share image (`og:image`):** every page shares the site default `images/og-default.png` (set in `hugo.toml` → `params.images`). Neither `image` nor `photos` is used automatically — Facebook crops to a 1.91:1 strip and needs at least 600×315 in JPEG/PNG/WebP, which tall flyers, small logos, headshots and `.avif` files fail. To hand-pick one, add `images: ["images/news/2026/share.jpg"]` to the front matter (no leading slash; ideally 1200×630 JPEG or PNG).
 
+**Host logo beside a section:** in multi-event articles, add `{{< host-logo id="DAM" >}}` on its own line under an event's `##` heading to float the host's logo beside that section's text. `id` is a club id from `data/clubs.yaml` or an organization id from `data/organizations.yaml` (e.g. `CFF` for Fencing Canada); `src="images/..." alt="..."` works for one-offs. See [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md).
+
 **Category values:** news articles share the same category IDs as events (see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full colour table and typical mapping guidance).
 
 | `category` | Badge label (EN) | Badge label (FR) | Colour |
@@ -349,6 +351,19 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
   website: "https://example.com"   # omit if none
   city: "City, NB"
 ```
+
+**Non-club organization logos** (e.g. Fencing Canada) that articles reuse go in `data/organizations.yaml`, with the logo in `static/images/organizations/`:
+
+```yaml
+- id: CFF
+  name_en: "Fencing Canada"
+  name_fr: "Escrime Canada"        # falls back to name_en if blank
+  logo: images/organizations/fencing-canada.png
+  logo_dark: ""                    # optional dark-mode variant
+  website: "https://fencing.ca/"
+```
+
+Sourcing a third-party logo: prefer the organization's own transparent PNG or SVG (registration platforms like 2mev often host a better version than the org's site header), name the file after the brand on the logo (`fencing-canada.png`, not `cff.png`), and resize rasters to at most 800px on the long side. Show the candidate to the site owner before wiring it in.
 
 </details>
 
