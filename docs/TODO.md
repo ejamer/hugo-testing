@@ -8,7 +8,7 @@ Items that need follow-up — kept current as pages are built and content is add
 
 `data/events.yaml` was populated for the full 2026–2027 season from the FENB tentative calendar (`~/Downloads/fenb_events/fenb 2026-2027 Calendar.pdf`), cross-referenced against the OFA and Quebec (FEQ) provisional calendars for out-of-province dates/locations. Needs a full review pass before publishing — in particular:
 
-- [ ] **Tentative status** — several FENB-listed events were marked "(Tentative)" or "(? - TBD)" in the source PDF (e.g. Masquerade). Confirm which entries are locked in before publishing.
+- [ ] **Tentative status** — several FENB-listed events were marked "(Tentative)" or "(? - TBD)" in the source PDF. Masquerade (now "Mask-erade: Lights Out!", Oct 31) was confirmed 2026-10-27 from unbfencing.com. Confirm which entries are locked in before publishing.
 - [ ] **Unconfirmed participant categories** — Trisword (Halifax, NS, Nov 14–15) and PEI Open (Charlottetown, PE, Nov 28–29) had no participant categories listed in the source calendar (marked "?"); `description_en/fr` currently says "Details unconfirmed — TBD." — fill in once known.
 - [ ] **"UNB?" placeholders not added** — the FENB source calendar had three unconfirmed "UNB? - TBD" rows (Dec 5–6, 2026; Mar 13–14, 2027; Mar 20–21, 2027) with no title/category — these were intentionally left out of `events.yaml` rather than guessed. Add once the event name/details are confirmed.
 - [ ] **TBA/TBD locations** — Challenge Desjarlais, Coupe du Printemps, Quebec Youth Provincials, and Quebec Senior Provincials all have `location: "TBA, QC"` (Quebec's own provisional calendar also had these as "à définir") — update once venues are confirmed.

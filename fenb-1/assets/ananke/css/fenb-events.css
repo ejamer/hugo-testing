@@ -65,6 +65,9 @@
   letter-spacing: 0.03em;
 }
 .fenb-event-results-link:hover { text-decoration: underline; }
+/* Only the first link pushes to the bottom — with margin-top: auto on every link, the
+   free space is split between them, so the gap varies with each card's content height. */
+.fenb-event-body > a + a { margin-top: 0; }
 /* Add to Calendar trigger (R9) — partials/ics/add-button.html; opens the shared
    calendar dialog (.fenb-cal-dialog below). Calendar-plus icon; label is a tooltip on
    hover / keyboard focus (data-tooltip) and aria-label for screen readers. On event
