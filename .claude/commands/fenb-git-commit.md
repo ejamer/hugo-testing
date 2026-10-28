@@ -1,6 +1,6 @@
 ---
 description: Stage, commit, and push changes for the FencingNB Hugo site, following the project's branch strategy.
-allowed-tools: Bash(git *) Bash(gh *) Bash(script *) AskUserQuestion
+allowed-tools: Bash(git *) Bash(gh *) AskUserQuestion
 ---
 
 Inspect first, then ask **once**, then commit and push. The single popup in Step 3 is the confirmation gate — it shows exactly what will be committed. Don't add other confirmation prompts.
@@ -84,7 +84,7 @@ gh pr create --base dev --head <branch> --title "<message>" --body "<one-line su
 Capture the PR number from the URL it prints, then — always with the explicit number:
 
 ```bash
-script -q -c "gh pr merge <PR-number> --merge --delete-branch" /dev/null
+gh pr merge <PR-number> --merge --delete-branch
 git checkout dev && git pull origin dev && git branch -d <branch>
 ```
 

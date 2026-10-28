@@ -33,6 +33,6 @@ With U17 and Open events in épée, foil and sabre, there's something for every 
 
 Age categories are as of December 31, 2026. Events are not sanctioned. You can only fence one event at a time — if two of your events overlap, you will need to choose one.
 
-**[Register here by Wednesday, November 11, 2026](https://us.list-manage.com/GBA2t17hhPA?e=eeae2e0430&c2id=b1384f35c909fc0e3bd5aaa0361cf8bb)**
+**[Register here by Wednesday, November 11, 2026](https://docs.google.com/forms/d/e/1FAIpQLSde4EyMcCbtAcQ7vhYN65QrNhULqgBFFEfcEtLQsVoqoBfINw/viewform)**
 
 Good luck to everyone making the trip to Bedford!

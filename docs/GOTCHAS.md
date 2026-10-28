@@ -170,3 +170,14 @@ After deleting or renaming a partial, a long-running `hugo server` can keep a st
 When checking a mobile layout with `Google Chrome --headless=new --window-size=390,…`, the page renders wider than the window and the screenshot cuts text off on the right. It looks like horizontal overflow from your change, but every page does it — Chrome won't shrink a headless window that far, so the viewport stays wider than 390px.
 
 Before treating it as a layout bug, screenshot a known-good page (e.g. an older news article) at the same size: if it clips identically, it's the tool. For a true phone-width render, use device emulation (Chrome DevTools Protocol / Puppeteer `setViewport`) rather than `--window-size`.
+
+---
+
+## Editing a third-party PDF in place
+
+Fixing a typo or stripping a footer from a host's flyer: edit the PDF's content stream rather than regenerating it, so fonts, layout and links stay intact (2026-10-28, Tri-Sword flyer). No PDF tools are installed system-wide (`pdftotext`, `qpdf`, `mutool`, `gs` are all missing), so make a scratch venv and install `pikepdf` (plus `pypdf` for text extraction, `pillow` for images). Run with `python -I`.
+
+- **Text is glyph IDs, not characters.** Browser-printed PDFs (Chrome/Skia, e.g. a Gmail "Print") use subset `Type0`/`Identity-H` fonts. Each `Tj` string is 2-byte glyph IDs, and in these subsets glyph ID = character code − 29 (`'0'` = `0x13`, `'5'` = `0x18`, `'6'` = `0x19`). Decode every `Tj` on the page to find the run, and check the replacement glyph already occurs in the **same font** (a subset only has glyphs it uses). Digits in Helvetica/Arial are equal width, so swapping one never shifts the layout; letters are not.
+- **Removing a block:** drop its `BT … ET` text ops or its `q … Do /Xn … Q` image ops, delete the unused `/XObject` entry, and remove any `/Link` annotations over the area — the clickable region survives otherwise (Mailchimp footers carry unsubscribe/profile/tracking links).
+- **Browser tab title** comes from `docinfo['/Title']` (e.g. "Gmail - FW: …") — set it.
+- **Verify both ways:** `pypdf` text extraction for the content, and a render for the visuals — `Read` can't render PDFs without `pdftoppm`, but `qlmanage -t -s 1100 -o <dir> <file>.pdf` (macOS Quick Look) renders page 1; to see another page, save it as a one-page PDF first.

@@ -6,7 +6,12 @@ See [PROJECT_LAYOUT.md](PROJECT_LAYOUT.md) for the full directory tree.
 
 Hosted on **GitHub Pages**: <https://ejamer.github.io/hugo-testing/>
 
-Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/hugo.yml`), which builds with Hugo and deploys automatically.
+Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/release-website.yml`), which builds with Hugo and deploys automatically. The same workflow also:
+
+- **Rebuilds `main` daily** (`schedule`, 09:00 UTC ≈ 5–6 am Atlantic) — so future-dated news articles appear on their date without a release, and build-time dates (homepage upcoming events, Register links, hero slide expiry, footer year) stay current. A post dated `YYYY-MM-DD` goes live with the first daily build on or after that date. GitHub may start scheduled runs late (up to ~an hour at busy times), and disables them after 60 days without repo activity (it emails a warning first).
+- **Can be run manually** (`workflow_dispatch`) — Actions tab → *Deploy Hugo site to Pages* → *Run workflow* rebuilds `main` immediately, no commit needed.
+
+**Hugo version is pinned** (`hugo-version` in both `release-website.yml` and `pr-check.yml`) so a new Hugo release can't change the live site on a day nobody released. `scripts/check-hugo-version.sh` reports the pin vs. local vs. latest, and `--set X.Y.Z` updates both workflows; `/fenb-git-release` runs it as Step 3 and offers an update (upgrading local Hugo via Homebrew so the release build check tests the same version).
 
 ---
 
@@ -107,7 +112,7 @@ Git and release workflows are automated as Claude Code skills (invoked with `/fe
 | Skill | What it does |
 |---|---|
 | `/fenb-git-commit` | Inspect changes, draft a message, then one popup: commit & push (or new branch / cancel). On a feature branch it also offers "Commit, push & merge into dev" |
-| `/fenb-git-release` | Production build + parity checks, then one popup choosing the version tag and whether to merge now; opens the PR, commits `version.json`, merges and tags |
+| `/fenb-git-release` | Hugo version check (optional pin update), production build + parity checks, then one popup choosing the version tag and whether to merge now; opens the PR, commits `version.json` (plus the Hugo pin if updated), merges and tags |
 
 For content and data skills (`/fenb-content-add-news`, `/fenb-content-add-page`, `/fenb-data-get-results`), see `README.md`. See `CLAUDE.md` for the full skill list and naming convention. 
 
@@ -170,7 +175,7 @@ python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid
 
 | Layer | Choice |
 |-------|--------|
-| Static site generator | [Hugo](https://gohugo.io) v0.161+ (extended) |
+| Static site generator | [Hugo](https://gohugo.io) extended — CI version pinned in `.github/workflows/` (see [Live site](#live-site)) |
 | Theme | [Ananke](https://github.com/gohugo-ananke/ananke) (git submodule — pinned at a specific commit) |
 | CSS | Ten scoped files in `fenb-1/assets/ananke/css/fenb-*.css`, merged by Ananke's `resources.Concat` pipeline |
 | i18n | Hugo built-in — English (`en-CA`) · French (`fr-CA`) |
@@ -268,6 +273,7 @@ Before opening a PR from `dev` into `main`, verify:
 
 - [ ] **On `dev` branch** — confirm `git branch` shows `dev` and `git status` is clean
 - [ ] **Remote in sync** — `git fetch origin && git status` shows `dev` is not behind `origin/dev`
+- [ ] **Hugo pin current** — `scripts/check-hugo-version.sh`; if `update_available=yes`, `brew upgrade hugo` then `scripts/check-hugo-version.sh --set <new local version>`
 - [ ] **Production build passes** — `make build-prod` completes with no errors or warnings
 - [ ] **Bilingual parity** — every `.en.md` in `fenb-1/content/` has a matching `.fr.md` (and vice versa)
 - [ ] **TODO.md reviewed** — no unchecked items are left addressed but unmarked
@@ -320,13 +326,13 @@ curl https://www.fenb.ca/version.json
 
 ## `gh` CLI quirks
 
-### TTY and output
+### Run `gh` directly
 
-All `gh` commands that produce output (lists, JSON, status) must be wrapped with `script -q -c "..." /dev/null` to get visible output in non-TTY environments. Without the wrapper, commands silently return nothing — including `--json` variants.
+Run `gh` commands directly — plain output and `--json` both work. An earlier workaround wrapped them in `script -q -c "..." /dev/null`; don't use it: macOS's BSD `script` has no `-c` flag, so it fails with `illegal option -- c` and the wrapped command never runs (verified 2026-10-28 — a wrapped `gh pr merge` would silently not merge).
 
 ```bash
-script -q -c "gh pr list --state open" /dev/null
-script -q -c "gh pr merge 33 --merge --body ''" /dev/null
+gh pr list --base main --head dev --state open --json url,number
+gh pr merge 33 --merge --body ''
 ```
 
 Use `--input` for complex `gh api` payloads that contain special characters.

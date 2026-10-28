@@ -99,7 +99,7 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 |---|---|---|
 | `/fenb-content-add-page` | Never run | |
 | `/fenb-git-commit` | Partly tested | Restructured 2026-09-27 to a single confirmation popup (shows drafted message); absorbed the removed `/fenb-git-merge` as "Commit, push & merge into dev" on feature branches. "Commit & push" on `dev` passed a real run (2026-09-27, `9d5e0c8`); still untested: "Commit to new branch…" and "Commit, push & merge into dev" |
-| `/fenb-git-release` | Rewritten, untested | Restructured 2026-09-27 — up-front confirm removed; tag + open-PR + merge prompts combined into one two-question popup; uses `compute-next-version.sh` / `generate-version-json.sh` |
+| `/fenb-git-release` | Partly tested | Restructured 2026-09-27 (single two-question popup). Full "Merge now" + tag path passed a real run 2026-10-28 (v0.6.4, PR #118). Still untested: Step 3 Hugo update (added 2026-10-28), "Leave open", "No tag", and the stash path |
 
 ## Events data
 

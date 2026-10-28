@@ -10,7 +10,7 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - **`docs/PROJECT_LAYOUT.md`** — full directory tree with file-by-file descriptions. Read it when navigating an unfamiliar part of the repo.
 - **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, shared components, and page header band usage.
 - **`docs/TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
-- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, git submodules, or any JS-driven show/hide toggle (filters, dropdowns, modals) — CSS `display` set via a class selector silently defeats the `hidden` attribute; see the entry for the fix.
+- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, git submodules, editing a third-party PDF (flyer typos, email footers), or any JS-driven show/hide toggle (filters, dropdowns, modals) — CSS `display` set via a class selector silently defeats the `hidden` attribute; see the entry for the fix.
 - **`plans/`** — detailed implementation plans for multi-session features. Read the relevant plan file before starting any TODO item that links to one.
 
 ## Outstanding TODOs
@@ -29,7 +29,7 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 |---|---|
 | `/fenb-git-commit` | Stage, commit, and push after one confirmation popup (shows the drafted message); on a feature branch it can also PR-and-merge into `dev` |
 | `/fenb-docs-update` | Review current git changes and assess whether system docs (CLAUDE.md, README.md, docs/*.md) need updating |
-| `/fenb-git-release` | Production build + bilingual parity checks, then one popup (version + merge now/leave open) to open and optionally merge a PR from `dev` into `main` |
+| `/fenb-git-release` | Hugo version check (offers to update the pinned CI version), production build + bilingual parity checks, then one popup (version + merge now/leave open) to open and optionally merge a PR from `dev` into `main` |
 | `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
@@ -43,6 +43,10 @@ When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/comma
 ## version.json
 
 `fenb-1/static/version.json` is managed automatically by `/fenb-git-release` — do not edit it manually. See `docs/DEVELOPMENT.md` for the field schema.
+
+## Hugo version pin
+
+The `hugo-version` in `.github/workflows/release-website.yml` and `pr-check.yml` is changed only via `scripts/check-hugo-version.sh --set X.Y.Z` (which `/fenb-git-release` offers when a newer Hugo is available) — don't hand-edit it or set it back to `latest`. The script keeps both workflows in step. See `docs/DEVELOPMENT.md` → Live site.
 
 ## Content creation — use skills, not `hugo new`
 
@@ -107,12 +111,12 @@ After completing a feature, ask the user whether a post-mortem is needed. A post
 
 Always get user approval on the proposed changes before editing any docs.
 
-## `gh` CLI — TTY and output quirks
+## `gh` CLI — run it directly, never via `script`
 
-All `gh` commands that produce output (lists, JSON, status) must be wrapped with `script -q -c "..." /dev/null` to get visible output in non-TTY environments. Without the wrapper, commands silently return nothing — including `--json` variants.
+Run `gh` commands directly — plain output and `--json` both come back fine. **Don't wrap them in `script -q -c "..." /dev/null`** (an old workaround): macOS's BSD `script` has no `-c` flag, so it fails with `illegal option -- c` and the wrapped command never runs — a wrapped `gh pr merge` silently doesn't merge. For machine-readable output use `--json` (add `-q <jq expr>` to extract a field):
 
 ```bash
-script -q -c "gh pr list --state open" /dev/null
+gh pr list --base main --head dev --state open --json url,number
 ```
 
 Use `--input` for complex `gh api` payloads that contain special characters.

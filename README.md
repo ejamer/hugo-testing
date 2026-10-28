@@ -54,6 +54,8 @@ The banner is rendered by `layouts/partials/site-announcement.html` and hidden f
 
 Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 
+**Scheduling a post:** give it a future `date:` and release it as normal — Hugo leaves future-dated pages out of the build, and the daily scheduled rebuild (≈ 5–6 am Atlantic) publishes it on that date. To preview it locally before then, temporarily set `date:` to today (the dev server also hides future posts).
+
 **Front matter:**
 
 ```yaml
@@ -187,6 +189,16 @@ Each category drives three visual elements: the date badge on the event card, th
 **Adding a new category:** add the ID to `data/event_categories.yaml`, add i18n keys to both `i18n/en.yaml` and `i18n/fr.yaml`, and add the corresponding CSS colour rules to `fenb-events.css`.
 
 The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today). This pulls from `partials/all-events.html` — current season + every archived season merged — so an event archived mid-season (e.g. a rollover run before the outgoing season's last event has happened) doesn't disappear from the homepage or the `/events/` calendar just because it moved to `events_archive/`. When there's a genuine gap in scheduled events (off-season), add a placeholder entry (category `announcement`) so the section stays populated instead of showing "more coming soon" placeholders.
+
+#### Event flyers and registration links
+
+Host flyers go in `static/documents/events/{season}/` (e.g. `2026-27/`) and are linked from `details_url_en` as `/documents/events/2026-27/<file>.pdf` (spaces as `%20`). Third-party flyers often arrive as a printed email or forward — before committing one, check it for:
+
+- **Wrong years/dates** — copy-pasted from last year's flyer (e.g. "Tri-Sword 2025", "until 11 Nov 25"). Fix them in the PDF and cross-check against the event dates.
+- **Email-forward leftovers** — Mailchimp/newsletter footers ("View email in browser", "unsubscribe" — those links are tied to the forwarder's subscription), the Mailchimp logo, and the PDF's internal title (e.g. "Gmail - FW: …", which shows in the browser tab).
+- **Keep the original** in `~/Downloads` — edit the copy in `static/`. See `docs/GOTCHAS.md` → "Editing a third-party PDF in place".
+
+**Registration URLs from newsletters** often carry a per-subscriber tracking parameter (Mailchimp `list-manage.com/...?e=<id>`), which attributes every click from the site to whoever forwarded the email. Prefer the host's own registration page or a clean link without `e=`; if only the tracked link exists, use it, but ask the host for a clean one.
 
 #### Calendar export and views
 
