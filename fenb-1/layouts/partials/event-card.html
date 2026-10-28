@@ -17,8 +17,7 @@
       {{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}
       {{ .location }}
     </p>
-    {{- $detailsUrl := .details_url_en -}}
-    {{- if and (eq site.Language.Lang "fr") .details_url_fr -}}{{- $detailsUrl = .details_url_fr -}}{{- end -}}
+    {{- $detailsUrl := partial "event-details-url.html" . -}}
     {{ if $detailsUrl }}
     <a class="fenb-event-details-link" href="{{ $detailsUrl }}"{{ if not (or (hasPrefix $detailsUrl "mailto:") (hasPrefix $detailsUrl "tel:")) }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_details" }} &rarr;</a>
     {{ end }}

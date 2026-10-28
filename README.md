@@ -88,7 +88,7 @@ Full post body here (Markdown).
 
 **Social share image (`og:image`):** every page shares the site default `images/og-default.png` (set in `hugo.toml` → `params.images`). Neither `image` nor `photos` is used automatically — Facebook crops to a 1.91:1 strip and needs at least 600×315 in JPEG/PNG/WebP, which tall flyers, small logos, headshots and `.avif` files fail. To hand-pick one, add `images: ["images/news/2026/share.jpg"]` to the front matter (no leading slash; ideally 1200×630 JPEG or PNG).
 
-**Host logo beside a section:** in multi-event articles, add `{{< host-logo id="DAM" >}}` on its own line under an event's `##` heading to float the host's logo beside that section's text. `id` is a club id from `data/clubs.yaml` or an organization id from `data/organizations.yaml` (e.g. `CFF` for Fencing Canada); `src="images/..." alt="..."` works for one-offs. See [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md).
+**Host logo beside a section:** in multi-event articles, add `{{< host-logo id="DAM" >}}` on its own line under an event's `##` heading to float the host's logo beside that section's text. In a single-event article it can replace the top `image` — put it on its own line after the greeting so the logo sits beside the intro. `id` is a club id from `data/clubs.yaml` or an organization id from `data/organizations.yaml` (e.g. `CFF` for Fencing Canada); `src="images/..." alt="..."` works for one-offs. See [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md).
 
 **Category values:** news articles share the same category IDs as events (see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full colour table and typical mapping guidance).
 
@@ -144,7 +144,7 @@ Add an entry to `data/events.yaml`.
 | `location` | ✅ | Display string shown on the card. Use `"City, Province"` when there is no specific venue, or `"Venue Name, City, Province"` when there is one. |
 | `description_en` | — | Optional English description. Shown on the schedule page; not shown on homepage cards |
 | `description_fr` | — | Optional French description. Falls back to `description_en` if blank |
-| `details_url_en` | — | English URL for the **Learn More →** badge. Used for both languages when `details_url_fr` is blank |
+| `details_url_en` | — | English URL for the **Learn More →** badge. Used for both languages when `details_url_fr` is blank. Can point to a scheduled (future-dated) news article, e.g. `/news/2026/oct-30-slug/` + `/fr/news/2026/oct-30-slug/` — the badge stays hidden until the article is published (`layouts/partials/event-details-url.html`) |
 | `details_url_fr` | — | Optional French URL override for the **Learn More →** badge |
 | `registration_url_en` | — | English URL for the **Register Now →** badge. Used for both languages when `registration_url_fr` is blank. Hidden for past events (date < today). |
 | `registration_url_fr` | — | Optional French URL override for the **Register Now →** badge. Falls back to `registration_url_en` if blank. |

@@ -1,0 +1,23 @@
+{{- /*
+  Returns an events.yaml entry's Learn More URL in the current site language
+  (details_url_fr falls back to details_url_en), or "" when it points to a site page
+  that isn't in this build — e.g. a news article with a future date. Hugo leaves
+  future-dated pages out, so the link would 404 until the daily rebuild publishes the
+  article; returning "" hides it until then.
+
+  Only site-relative page paths (leading and trailing "/", e.g.
+  "/fr/news/2026/oct-30-slug/") are checked. Files (/documents/….pdf) and external
+  URLs are returned as-is.
+
+  Call with: {{ partial "event-details-url.html" $event }}
+*/ -}}
+{{- $e := . -}}
+{{- $url := cond (and (eq site.Language.Lang "fr") $e.details_url_fr) $e.details_url_fr $e.details_url_en -}}
+{{- if and $url (hasPrefix $url "/") (hasSuffix $url "/") -}}
+  {{- $path := strings.TrimSuffix "/" $url -}}
+  {{- if hasPrefix $path "/fr/" }}{{ $path = strings.TrimPrefix "/fr" $path }}{{ end -}}
+  {{- if not (site.GetPage $path) -}}
+    {{- $url = "" -}}
+  {{- end -}}
+{{- end -}}
+{{- return $url -}}

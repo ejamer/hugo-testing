@@ -47,8 +47,7 @@
                 <ul class="fenb-schedule-list">
                   {{- range $seasonEvents -}}
                     {{- if eq ((time .start_date).Format "2006-01") $mk -}}
-                    {{- $detailsUrl := .details_url_en -}}
-                    {{- if and (eq site.Language.Lang "fr") .details_url_fr -}}{{- $detailsUrl = .details_url_fr -}}{{- end -}}
+                    {{- $detailsUrl := partial "event-details-url.html" . -}}
                     {{- $desc := .description_en -}}
                     {{- if and (eq site.Language.Lang "fr") .description_fr -}}{{- $desc = .description_fr -}}{{- end -}}
                     {{- $title := .title -}}
