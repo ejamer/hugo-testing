@@ -94,6 +94,7 @@ hugo-testing/
     │                         clubs-benefits.html   Three-card benefits grid (clubs + join/clubs)
     │                         event-card.html       Single event card (YAML event object as context)
     │                         event-date.html       Return-value partial — bilingual date display
+    │                         event-details-url.html Return-value partial — an event's Learn More URL in the current language; blank when it points to a page that isn't published yet (e.g. a future-dated article)
     │                         calendar-dialog.html  Shared Add to Calendar / Subscribe modal (<dialog>) — once per page with triggers
     │                         events-viewbar.html   Calendar | List toggle + Print/Subscribe bar, shared by both events views
     │                         head-additions.html   Custom <head> additions (Analytics, etc.)

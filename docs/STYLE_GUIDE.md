@@ -262,7 +262,7 @@ CSS targets `.fenb-article-event-logo img`; the light/dark swap uses `.fenb-arti
 
 ### `host-logo` shortcode — host logo beside a section's opening text
 
-For articles covering more than one event (e.g. a multi-tournament registration roundup), put the host's logo beside each event section instead of using the single top `image`. Place the shortcode on its own line directly under the section heading:
+For articles covering more than one event (e.g. a multi-tournament registration roundup), put the host's logo beside each event section instead of using the single top `image`. Place the shortcode on its own line directly under the section heading. A single-event article can use it too, in place of the top `image`: put it on its own line after the greeting (e.g. `{{</* host-logo id="PEIFA" */>}}` in the PEI Foil Invitational article) so the logo floats beside the intro:
 
 ```markdown
 ## Hoplite Invitational — November 7–8 (Fredericton, NB)

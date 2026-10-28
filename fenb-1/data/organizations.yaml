@@ -30,3 +30,10 @@ organizations:
     logo: images/organizations/halifax-enguardians.png
     logo_dark: ""
     website: "https://www.enguardians.ca/"
+
+  - id: PEIFA
+    name_en: "PEI Fencing Association"
+    name_fr: "Association d'escrime de l'Î.-P.-É."
+    logo: images/organizations/pei-fencing-association.png
+    logo_dark: ""
+    website: ""

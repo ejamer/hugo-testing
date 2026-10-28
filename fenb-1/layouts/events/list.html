@@ -65,10 +65,13 @@
 </section>
 
 {{/* ── Embed data and i18n strings for the calendar JS ── */}}
-{{/* Each event gets ics_url + google_url — its Add to Calendar dialog options (see partials/ics/add-button.html). */}}
+{{/* Each event gets ics_url + google_url — its Add to Calendar dialog options (see partials/ics/add-button.html).
+     details_url_en/fr are replaced with this language's resolved Learn More URL, blank when it
+     links to an article that isn't published yet (see partials/event-details-url.html). */}}
 {{- $calEvents := slice -}}
 {{- range $allEvents -}}
-  {{- $calEvents = $calEvents | append (merge . (dict "ics_url" (partialCached "ics/event-url.html" . .start_date .title site.Language.Lang) "google_url" (partial "ics/event-google-url.html" .))) -}}
+  {{- $details := partial "event-details-url.html" . -}}
+  {{- $calEvents = $calEvents | append (merge . (dict "ics_url" (partialCached "ics/event-url.html" . .start_date .title site.Language.Lang) "google_url" (partial "ics/event-google-url.html" .) "details_url_en" $details "details_url_fr" $details)) -}}
 {{- end -}}
 <script>
 window.FENB_CAL = {

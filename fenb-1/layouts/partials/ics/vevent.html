@@ -15,7 +15,7 @@
 {{- $pick := dict
       "title"    (cond (and $fr $e.title_fr) $e.title_fr $e.title)
       "desc"     (cond (and $fr $e.description_fr) $e.description_fr $e.description_en)
-      "details"  (cond (and $fr $e.details_url_fr) $e.details_url_fr $e.details_url_en)
+      "details"  (partial "event-details-url.html" $e)
       "register" (cond (and $fr $e.registration_url_fr) $e.registration_url_fr $e.registration_url_en)
 -}}
 {{- $start := time $e.start_date -}}

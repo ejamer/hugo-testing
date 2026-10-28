@@ -94,7 +94,7 @@ See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bi
         caption: "Jim Stevens — Team Coach"
     ```
     Paths must not have a leading slash (see URL paths rule above).
-  - **Host logo beside a section** — for multi-event articles, put `{{< host-logo id="DAM" >}}` on its own line under each event's `##` heading. `id` is a club id (`data/clubs.yaml`) or organization id (`data/organizations.yaml`, e.g. `CFF`). This is a shortcode, not front matter — see docs/STYLE_GUIDE.md.
+  - **Host logo beside a section** — for multi-event articles, put `{{< host-logo id="DAM" >}}` on its own line under each event's `##` heading. In a single-event article it can replace the top `image`: put it on its own line after the greeting so the logo floats beside the intro. `id` is a club id (`data/clubs.yaml`) or organization id (`data/organizations.yaml`, e.g. `CFF`). This is a shortcode, not front matter — see docs/STYLE_GUIDE.md.
   - **Social share image** — every page uses the site default (`images/og-default.png`); `image` and `photos` are never used automatically (flyers, logos, headshots and `.avif` render badly or not at all). Hand-pick one with `images: ["path"]` in front matter (≥600×315, ideally 1200×630 JPEG/PNG). See README.md.
 
 ## Pattern reuse — check before creating
@@ -157,6 +157,8 @@ Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as host-root-relativ
 **Rule: never use a leading `/` with any Hugo URL function.** This applies to hardcoded strings in templates and to paths stored in data YAML files piped through URL functions.
 
 **Exception — `results_url_en`/`results_url_fr` in `events.yaml`:** these are rendered as a raw `href` in `layouts/partials/event-card.html` and `layouts/events/schedule.html`, never piped through `relLangURL`/`absURL`, so a leading `/` is correct there when the value is an internal news article (e.g. `/news/2026/.../` and `/fr/news/2026/.../`). The templates also key off that leading `/` to decide whether to skip `target="_blank"` for internal links — don't "fix" these paths to remove the leading slash.
+
+**Same for `details_url_en`/`details_url_fr`:** also rendered raw (event card, schedule, calendar JSON, `.ics`). An internal page link keeps its leading and trailing `/` (e.g. `/news/2026/oct-30-slug/` + `/fr/news/2026/oct-30-slug/`) — `layouts/partials/event-details-url.html` keys off that shape to check the page exists and hides the Learn More link until it's published (so it can point to a future-dated article).
 
 ## Sweep rule — before any structural git or template change
 
