@@ -54,7 +54,7 @@ The banner is rendered by `layouts/partials/site-announcement.html` and hidden f
 
 Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 
-**Scheduling a post:** give it a future `date:` and release it as normal — Hugo leaves future-dated pages out of the build, and the daily scheduled rebuild (≈ 5–6 am Atlantic) publishes it on that date. To preview it locally before then, temporarily set `date:` to today (the dev server also hides future posts).
+**Scheduling a post:** give it a future `date:` and release it as normal — Hugo leaves future-dated pages out of the build, and the scheduled rebuild (just before 7 am Atlantic, with a backup run around noon) publishes it on that date. To preview it locally before then, temporarily set `date:` to today (the dev server also hides future posts).
 
 **Front matter:**
 

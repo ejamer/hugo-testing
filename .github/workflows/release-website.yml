@@ -4,11 +4,16 @@ on:
   push:
     branches:
       - main
-  # Daily rebuild of main so future-dated articles appear on their date, and
-  # build-time dates (homepage upcoming events, Register links, hero slide
-  # expiry) stay current between releases. Runs ~5–6 am Atlantic.
+  # Twice-daily rebuild of main so future-dated articles appear on their date,
+  # and build-time dates (homepage upcoming events, Register links, hero slide
+  # expiry) stay current between releases. Cron is UTC and ignores daylight
+  # saving: 09:53 UTC = 6:53 am ADT / 5:53 am AST (always before 7 am), and
+  # 15:47 UTC = 12:47 pm ADT / 11:47 am AST (always after 11:45 am). The second
+  # run is also a backup — GitHub can drop scheduled runs at busy times, worst
+  # at the top of the hour, hence the odd minutes.
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "53 9 * * *"
+    - cron: "47 15 * * *"
   # "Run workflow" button in the Actions tab — rebuild now without a release.
   workflow_dispatch:
 
