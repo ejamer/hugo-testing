@@ -138,8 +138,8 @@ events:
     details_url_fr: "https://www.escrimequebec.qc.ca/id-evenement?id=NHUzblJjRittUWRmbSsvZStTV1JiZz09"
     registration_url_en: ""
     registration_url_fr: ""
-    results_url_en: ""
-    results_url_fr: ""
+    results_url_en: "/news/2026/nov-02-2026-10-31-circuit-des-jeunes-1/"
+    results_url_fr: "/fr/news/2026/nov-02-2026-10-31-circuit-des-jeunes-1/"
 
   - title: "Mask-erade: Lights Out!"
     title_fr: ""

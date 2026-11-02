@@ -132,6 +132,8 @@ Verbose progress is written to stderr; only the JSON goes to stdout:
   python3 scripts/fencingtimelive-results.py --location away > out.json
 """
 
+from __future__ import annotations
+
 import argparse
 import json
 import re
