@@ -6,6 +6,9 @@ defaultContentLanguage = 'en'
 defaultContentLanguageInSubdir = false
 theme = 'ananke'
 enableRobotsTXT = true
+# Dates without a time (e.g. `date: 2026-11-02`) mean midnight New Brunswick
+# time, not UTC — otherwise future-dated articles go live the evening before.
+timeZone = 'America/Moncton'
 
 [outputs]
   home    = ["HTML"]

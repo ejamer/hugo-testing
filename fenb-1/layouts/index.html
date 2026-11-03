@@ -11,7 +11,17 @@
       {{ $today := now.Format "2006-01-02" }}
       {{ $visibleSlides := slice }}
       {{ range hugo.Data.hero_slides.slides }}
-        {{ if or (not .expires) (ge .expires $today) }}
+        {{/* A slide linking to a site page (e.g. "news/2026/nov-03-slug/") is left out until
+             that page is in the build — a future-dated article only appears at the first build
+             after its date, so the slide would otherwise 404 until then. Files and external
+             links aren't checked. */}}
+        {{ $link := .link_en }}
+        {{ if and (eq site.Language.Lang "fr") .link_fr }}{{ $link = .link_fr }}{{ end }}
+        {{ $pageExists := true }}
+        {{ if and $link (not (hasPrefix $link "http")) (hasSuffix $link "/") }}
+          {{ $pageExists = site.GetPage (printf "/%s" (strings.TrimSuffix "/" $link)) }}
+        {{ end }}
+        {{ if and $pageExists (or (not .expires) (ge .expires $today)) }}
           {{ $visibleSlides = $visibleSlides | append . }}
         {{ end }}
       {{ end }}

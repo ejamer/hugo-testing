@@ -414,6 +414,7 @@ slides:
 - `expires`: slide is hidden starting the day *after* this date (it stays visible through the date itself); omit/empty = never expires.
 - If every slide is currently outside its window, the carousel shows a default FENB logo slate instead of going empty.
 - A slide that has already expired by the last site build is dropped from the page entirely (never shipped in the HTML); a slide with a future `publish_from` can be added ahead of time and will just wait for its date.
+- A slide whose link is a site page (e.g. `news/2026/nov-03-slug/`) is also dropped until that page is in the build. A future-dated article only goes live at the first build after its date (the scheduled rebuild runs at ~5:53 AM Atlantic), so this keeps the slide from linking to a 404 in between — no need to line `publish_from` up with the build. Slides with no link, an external link, or a file (PDF) link aren't checked.
 
 Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; click the prev/next arrows or the dot indicators to navigate manually; use the pause/play button (top-right corner) to stop or resume auto-advance.
 
