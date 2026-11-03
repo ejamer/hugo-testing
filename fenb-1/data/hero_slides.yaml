@@ -14,6 +14,10 @@
 #     through the date itself); omit/empty = never expires.
 #   - If every slide is currently hidden, the carousel shows a default FENB logo slate
 #     instead of going empty.
+# A slide whose link is a site page (e.g. "news/2026/nov-03-slug/") is also left out of
+# the build until that page is published — a future-dated article goes live at the first
+# build after its date, and the slide appears with it. Slides with no link, an external
+# link, or a link to a file (PDF) aren't checked.
 slides:
   - src_en: images/hero/hero-cwg-training-camp-en.jpg
     src_fr: images/hero/hero-cwg-training-camp-fr.jpg
