@@ -181,3 +181,9 @@ Fixing a typo or stripping a footer from a host's flyer: edit the PDF's content 
 - **Removing a block:** drop its `BT … ET` text ops or its `q … Do /Xn … Q` image ops, delete the unused `/XObject` entry, and remove any `/Link` annotations over the area — the clickable region survives otherwise (Mailchimp footers carry unsubscribe/profile/tracking links).
 - **Browser tab title** comes from `docinfo['/Title']` (e.g. "Gmail - FW: …") — set it.
 - **Verify both ways:** `pypdf` text extraction for the content, and a render for the visuals — `Read` can't render PDFs without `pdftoppm`, but `qlmanage -t -s 1100 -o <dir> <file>.pdf` (macOS Quick Look) renders page 1; to see another page, save it as a one-page PDF first.
+
+## Render hooks — trailing newline becomes a space before punctuation
+
+A render hook's output is inserted inline, including the file's final newline. `layouts/_default/_markup/render-link.html` once ended with a newline after `</a>`, so every Markdown link followed by punctuation rendered as `link .` / `link ,` site-wide.
+
+Fix: end the hook with a trimming action — `{{- /* comment */ -}}` after the last output — so the newline is stripped no matter what the editor does with the end of the file. Apply the same to any new render hook (images, headings, code blocks).

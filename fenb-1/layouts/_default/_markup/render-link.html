@@ -1,2 +1,3 @@
 {{- $isExternal := and (strings.HasPrefix .Destination "http") (not (strings.HasPrefix .Destination .Page.Site.BaseURL)) -}}
 <a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $isExternal }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- /* trim the file's trailing newline — otherwise it renders as a space before following punctuation */ -}}
