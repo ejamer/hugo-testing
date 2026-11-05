@@ -37,3 +37,10 @@ organizations:
     logo: images/organizations/pei-fencing-association.png
     logo_dark: ""
     website: ""
+
+  - id: OLY
+    name_en: "Olympia Longueuil Fencing Club"
+    name_fr: "Club d'escrime Olympia de Longueuil"
+    logo: images/organizations/olympia-longueuil.png
+    logo_dark: ""
+    website: "https://olympialongueuil.com/"
