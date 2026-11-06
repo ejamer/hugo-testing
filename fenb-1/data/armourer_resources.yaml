@@ -1,0 +1,80 @@
+# Study resources for armourer candidates, shown on /programs/armourer-development/.
+# Each group renders as one card. Group titles come from i18n: programs_armourer_resources_{id}_title.
+# Same item fields as referee_resources.yaml; both are rendered by partials/program-resource-cards.html.
+# source_name: optional owner name for the source link label, for files hosted on a third-party domain.
+armourer_resources:
+  - id: official
+    items:
+      - title_en: "FIE rules"
+        title_fr: "Règlements de la FIE"
+        desc_en: "The International Fencing Federation's current rules. The Material rules set the equipment standards armourers check against."
+        desc_fr: "Les règlements en vigueur de la Fédération internationale d'escrime. Le règlement du matériel établit les normes d'équipement que les armuriers doivent vérifier."
+        url_en: "https://fie.org/documents/rules"
+        english_only: true
+      - title_en: "Alberta armourer pathway"
+        title_fr: "Parcours d'armurier de l'Alberta"
+        desc_en: "The Alberta Fencing Association's certification steps, from tournament armourer through to national armourer."
+        desc_fr: "Les étapes de certification de l'Alberta Fencing Association, d'armurier de tournoi à armurier national."
+        url_en: "https://www.fencing.ab.ca/sport-development/armoury/"
+        english_only: true
+      - title_en: "Ontario Armourer Development Program (2022)"
+        title_fr: "Programme de développement des armuriers de l'Ontario (2022)"
+        desc_en: "The Ontario Fencing Association's training streams and the skills expected at each level."
+        desc_fr: "Les volets de formation de l'Ontario Fencing Association et les compétences attendues à chaque niveau."
+        file_en: "documents/programs/armourer-development/ofa-armourer-development-program-2022.pdf"
+        source_url_en: "https://fencingontario.ca/cms/wp-content/uploads/OFA-Armourer-Development-Program.pdf"
+        english_only: true
+
+  - id: study
+    items:
+      - title_en: "Introduction to fencing armoring"
+        title_fr: "Introduction à l'armurerie d'escrime"
+        desc_en: "Bob Lightner's slide presentation for parents and beginning fencers."
+        desc_fr: "La présentation de Bob Lightner pour les parents et les escrimeurs débutants."
+        file_en: "documents/programs/armourer-development/usa-fencing-intro-to-armoring.pdf"
+        source_url_en: "https://teamusa-org-migration.s3.amazonaws.com/USA%20Fencing/Migration/Documents/United_States_Fencing_Intro_to_Armoring-Lightner.pdf"
+        source_name: "USA Fencing"
+        english_only: true
+      - title_en: "Weapon repair and maintenance"
+        title_fr: "Réparation et entretien des armes"
+        desc_en: "Ted Li's short step-by-step repair guide, starting with removing and cleaning foil tips."
+        desc_fr: "Le court guide de réparation étape par étape de Ted Li, qui commence par le retrait et le nettoyage des pointes de fleuret."
+        file_en: "documents/programs/armourer-development/usa-fencing-weapon-repair-and-maintenance.pdf"
+        source_url_en: "https://teamusa-org-migration.s3.amazonaws.com/USA%20Fencing/Migration/Documents/Li-Weapon_Repair_and_Maintenance.pdf"
+        source_name: "USA Fencing"
+        english_only: true
+      - title_en: "How to check personal equipment at control (2025)"
+        title_fr: "Comment vérifier l'équipement personnel au contrôle (2025)"
+        desc_en: "USA Fencing's guide to inspecting masks, lamés, and other personal equipment."
+        desc_fr: "Le guide de USA Fencing sur l'inspection des masques, des cuirasses électriques et d'autres pièces d'équipement personnel."
+        file_en: "documents/programs/armourer-development/usa-fencing-how-to-check-personal-equipment-2025.pdf"
+        source_url_en: "https://assets.contentstack.io/v3/assets/blteb7d012fc7ebef7f/bltebdd32ec5d55d0bf/682743d0676bf7be59e478a1/How_to_Check_Personal_Equipment_at_Controle_05-14-2025.pdf"
+        source_name: "USA Fencing"
+        english_only: true
+      - title_en: "US armorers' exam study guide (c. 2000)"
+        title_fr: "Guide d'étude de l'examen américain d'armurier (vers 2000)"
+        desc_en: "Sample questions on rules, equipment control, repairs, and scoring equipment."
+        desc_fr: "Exemples de questions sur les règlements, le contrôle de l'équipement, les réparations et l'appareillage de pointage."
+        note_en: "Rules and equipment have changed since this was written. Where they differ, follow the FIE rules."
+        note_fr: "Les règlements et l'équipement ont changé depuis sa rédaction. En cas de différence, suivez les règlements de la FIE."
+        file_en: "documents/programs/armourer-development/usfa-armorers-exam-study-guide-2000.pdf"
+        source_url_en: "https://www.fencingarchive.com/wp-content/uploads/usfa/armorersstudyguide/Armorers%20Study%20Guide.pdf"
+        english_only: true
+      - title_en: "USA Fencing: personal and club equipment armorers"
+        title_fr: "USA Fencing : armuriers d'équipement personnel et de club"
+        desc_en: "An overview of the role, with links to further USA Fencing guides."
+        desc_fr: "Un survol du rôle, avec des liens vers d'autres guides de USA Fencing."
+        url_en: "https://www.usafencing.org/personal-and-club-equipment-armorers"
+        english_only: true
+      - title_en: "Ask an Armourer (YouTube)"
+        title_fr: "Ask an Armourer (YouTube)"
+        desc_en: "Videos on maintenance, diagnostics, and repairs from a national-level armourer working in Canada and the US."
+        desc_fr: "Vidéos sur l'entretien, le diagnostic et les réparations, sur une chaîne animée par une personne de niveau national en armurerie, active au Canada et aux États-Unis."
+        url_en: "https://www.youtube.com/@askanarmourer9549/videos"
+        english_only: true
+      - title_en: "Fencing armorer: what the role does"
+        title_fr: "Fencing armorer : le rôle de l'armurier"
+        desc_en: "A plain-language article from a US fencing club on the role and the equipment involved."
+        desc_fr: "Un article en langage simple d'un club américain sur le rôle et l'équipement concerné."
+        url_en: "https://www.fencingsports.net/fencing-armorer/"
+        english_only: true

@@ -1,0 +1,5 @@
+{{/* Pull quote for officials program pages. Params: quote (i18n key); optional source (i18n key) and url for an attribution. */}}
+<blockquote class="fenb-callout fenb-callout--quote">
+  {{ i18n .quote }}
+  {{ with .source }}<cite class="fenb-referee-quote-source">— <a href="{{ $.url }}" target="_blank" rel="noopener noreferrer">{{ i18n . }}</a></cite>{{ end }}
+</blockquote>

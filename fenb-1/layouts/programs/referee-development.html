@@ -10,7 +10,7 @@
     {{/* ── Overview ── */}}
     <p class="fenb-section-label">{{ i18n "programs_referee_label" }}</p>
     <p class="fenb-program-intro">{{ i18n "programs_referee_intro" }}</p>
-    {{ partial "referee-contact-cta.html" . }}
+    {{ partial "program-contact-cta.html" (dict "title" "programs_referee_contact_title" "body" "programs_referee_contact_body") }}
 
     {{/* ── Five Core Elements ── */}}
     <p class="fenb-section-label">{{ i18n "programs_referee_elements_label" }}</p>
@@ -66,51 +66,18 @@
 
     </div>
 
-    {{ $lang := .Site.Language.Lang }}
-
     {{/* ── Candidate resources (data/referee_resources.yaml) ── */}}
     <p class="fenb-section-label">{{ i18n "programs_referee_resources_label" }}</p>
     <h2 class="fenb-section-title">{{ i18n "programs_referee_resources_title" }}</h2>
     <p>{{ i18n "programs_referee_resources_intro" }}</p>
-    <blockquote class="fenb-callout fenb-callout--quote">
-      {{ i18n "programs_referee_resources_quote" }}
-      <cite class="fenb-referee-quote-source">— <a href="https://www.referee.com/master-of-the-rules/" target="_blank" rel="noopener noreferrer">{{ i18n "programs_referee_resources_quote_source" }}</a></cite>
-    </blockquote>
-    <div class="fenb-referee-levels">
-      {{ range hugo.Data.referee_resources.referee_resources }}
-      <div class="fenb-referee-level-card">
-        <h3>{{ i18n (printf "programs_referee_resources_%s_title" .id) }}</h3>
-        {{ range .items }}
-        {{ $title := or (index . (printf "title_%s" $lang)) .title_en }}
-        {{ $desc := or (index . (printf "desc_%s" $lang)) .desc_en }}
-        {{ $note := or (index . (printf "note_%s" $lang)) .note_en }}
-        {{ $file := or (index . (printf "file_%s" $lang)) .file_en }}
-        {{ $url := or (index . (printf "url_%s" $lang)) .url_en }}
-        {{ $source := or (index . (printf "source_url_%s" $lang)) .source_url_en }}
-        <div class="fenb-referee-part">
-          <h4>
-            {{ if $file }}<a href="{{ $file | relURL }}">{{ $title }}</a>
-            {{ else }}<a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{{ $title }}</a>{{ end }}
-            {{ if and .english_only (eq $lang "fr") }}<span class="fenb-referee-lang-tag">{{ i18n "programs_referee_resources_english_only" }}</span>{{ end }}
-          </h4>
-          <p>{{ $desc }}{{ with $note }}<br>{{ . }}{{ end }}{{ if $source }} {{ $sourceLabel := i18n "programs_referee_resources_source" (dict "Host" (strings.TrimPrefix "www." (urls.Parse $source).Host)) }}<a href="{{ $source }}" class="fenb-referee-source-link" target="_blank" rel="noopener noreferrer" aria-label="{{ $sourceLabel }}" title="{{ $sourceLabel }}">{{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}</a>{{ end }}</p>
-        </div>
-        {{ end }}
-      </div>
-      {{ end }}
-    </div>
+    {{ partial "program-quote.html" (dict "quote" "programs_referee_resources_quote" "source" "programs_referee_resources_quote_source" "url" "https://www.referee.com/master-of-the-rules/") }}
+    {{ partial "program-resource-cards.html" (dict "groups" hugo.Data.referee_resources.referee_resources "prefix" "programs_referee_resources_") }}
 
-    {{/* ── Officials pay scale: links to the source document only. Don't copy rates here; they'd go stale. ── */}}
-    <p class="fenb-section-label">{{ i18n "programs_referee_pay_label" }}</p>
-    <h2 class="fenb-section-title">{{ i18n "programs_referee_pay_title" }}</h2>
-    <p>{{ i18n "programs_referee_pay_intro" }}</p>
-    <p class="fenb-referee-links">
-      <a href="https://docs.google.com/document/d/11ChewHXa5ONLh3k7uNjivKgnuZcby2fVaD4qNUuqHe8/preview" target="_blank" rel="noopener noreferrer">{{ i18n "programs_referee_pay_doc_link" }}</a> ·
-      <a href="{{ "about/policies/human-resources/" | relLangURL }}">{{ i18n "programs_referee_pay_policy_link" }}</a>
-    </p>
+    {{/* ── Officials pay scale ── */}}
+    {{ partial "program-pay-section.html" (dict "intro" "programs_officials_pay_intro_referee") }}
 
     {{/* ── Contact CTA ── */}}
-    {{ partial "referee-contact-cta.html" . }}
+    {{ partial "program-contact-cta.html" (dict "title" "programs_referee_contact_title" "body" "programs_referee_contact_body") }}
 
   </div>
 </section>

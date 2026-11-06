@@ -1,0 +1,26 @@
+{{/* Resource cards for officials program pages. Params: groups (data list), prefix (i18n prefix; group title key is <prefix><id>_title). */}}
+{{ $lang := site.Language.Lang }}
+{{ $prefix := .prefix }}
+<div class="fenb-referee-levels">
+  {{ range .groups }}
+  <div class="fenb-referee-level-card">
+    <h3>{{ i18n (printf "%s%s_title" $prefix .id) }}</h3>
+    {{ range .items }}
+    {{ $title := or (index . (printf "title_%s" $lang)) .title_en }}
+    {{ $desc := or (index . (printf "desc_%s" $lang)) .desc_en }}
+    {{ $note := or (index . (printf "note_%s" $lang)) .note_en }}
+    {{ $file := or (index . (printf "file_%s" $lang)) .file_en }}
+    {{ $url := or (index . (printf "url_%s" $lang)) .url_en }}
+    {{ $source := or (index . (printf "source_url_%s" $lang)) .source_url_en }}
+    <div class="fenb-referee-part">
+      <h4>
+        {{ if $file }}<a href="{{ $file | relURL }}">{{ $title }}</a>
+        {{ else }}<a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{{ $title }}</a>{{ end }}
+        {{ if and .english_only (eq $lang "fr") }}<span class="fenb-referee-lang-tag">{{ i18n "programs_resources_english_only" }}</span>{{ end }}
+      </h4>
+      <p>{{ $desc }}{{ with $note }}<br>{{ . }}{{ end }}{{ if $source }} {{ $sourceLabel := i18n "programs_resources_source" (dict "Host" (or .source_name (strings.TrimPrefix "www." (urls.Parse $source).Host))) }}<a href="{{ $source }}" class="fenb-referee-source-link" target="_blank" rel="noopener noreferrer" aria-label="{{ $sourceLabel }}" title="{{ $sourceLabel }}">{{ partial "icon.html" (dict "name" "external-link.svg" "w" 12 "h" 12) }}</a>{{ end }}</p>
+    </div>
+    {{ end }}
+  </div>
+  {{ end }}
+</div>

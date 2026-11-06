@@ -57,6 +57,7 @@ hugo-testing/
     │   ├── clubs.yaml              Member club cards on /clubs/
     │   ├── coach_pathways.yaml     CFF coach certification pathway cards on /programs/coach-training/
     │   ├── referee_resources.yaml  Study resource cards on /programs/referee-development/
+    │   ├── armourer_resources.yaml  Study resource cards on /programs/armourer-development/
     │   ├── event_categories.yaml   Canonical category IDs for calendar legend and schedule filters
     │   ├── events.yaml             Current season event list (homepage + /events/)
     │   ├── events_archive/         Past seasons (picked up automatically by /events/schedule/)
@@ -105,7 +106,10 @@ hugo-testing/
     │                         news-card.html        Single news card — data-category/data-season attrs for news-filter.js
     │                         news-season.html      Return-value partial — derives fencing-season label (Sept–Aug) from a date
     │                         page-header.html      Coloured band below the nav (title + subtitle)
-    │                         referee-contact-cta.html  Contact banner (top and bottom of the referee development page)
+    │                         program-contact-cta.html  Contact banner for officials program pages (referee, armourer)
+    │                         program-pay-section.html  Officials pay scale section; links to the source document only
+    │                         program-quote.html    Pull quote for officials program pages, with optional attribution
+    │                         program-resource-cards.html  Resource cards from data/referee_resources.yaml or armourer_resources.yaml
     │                         section-header.html   Section label + h2 + "see all" link
     │                         site-announcement.html  Site-wide banner (controlled via hugo.toml)
     │                         site-favicon.html     SVG + PNG favicon link tags
