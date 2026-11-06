@@ -399,6 +399,8 @@ Any layout that renders event links (card partial, schedule list, future widgets
 
 **Markdown links in article/page bodies** (e.g. a results table heading like `### [Event Name](https://fencingtimelive.com/...)`) follow the same same-tab/new-tab split automatically via a Hugo render hook at `layouts/_default/_markup/render-link.html`. It opens a link in a new tab (`target="_blank" rel="noopener noreferrer"`) whenever the destination is an absolute `http(s)` URL that doesn't match the current environment's `Site.BaseURL`; anything else (relative paths, root-relative internal paths, anchors) stays same-tab. This applies site-wide to all Markdown content — no per-article markup needed.
 
+**Google Docs and Sheets links:** always link to the `/preview` URL (`https://docs.google.com/document/d/{id}/preview`, or `spreadsheets/d/{id}/preview`). Never link to `/edit` or the bare document URL, because both open the editor view. Google Forms links (`/viewform`) are fine.
+
 ---
 
 ## i18n — UI text

@@ -16,7 +16,7 @@ Hello FENB Members,
 
 We are pleased to announce the first NB tournament of the season, the 2026 Fundy Open, happening in Saint John on September 19–20 at Harbour View High School (305 Douglas Ave.).
 
-View the [event flyer](https://docs.google.com/document/d/1Sk3KRkRMvHuvHp5qStZF93Om--giqMs9AsmEnrWind4/edit?usp=sharing) for full details, and [register here](https://prettyform.addxt.com/a/form/vf/1FAIpQLSeBWHmVLGI72WkVppXx9jtRfLvITFf6YWnerQoogovJsynF_A).
+View the [event flyer](https://docs.google.com/document/d/1Sk3KRkRMvHuvHp5qStZF93Om--giqMs9AsmEnrWind4/preview) for full details, and [register here](https://prettyform.addxt.com/a/form/vf/1FAIpQLSeBWHmVLGI72WkVppXx9jtRfLvITFf6YWnerQoogovJsynF_A).
 
 ## Schedule
 

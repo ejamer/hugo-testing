@@ -20,5 +20,4 @@ Final selections have been made for the Core Team athletes who will continue tra
 
 
 #### Related links:
-- See the CWG 2027 Athlete Rankings for [Final Team selection](https://docs.google.com/spreadsheets/d/1ztJF9W5ARAyNTdwTgKNDbQL9DPqqoos6).
-- Review CWG 2027 Athlete Rankings that were used during [Core Team selection](https://docs.google.com/spreadsheets/d/1bXPWEDCEGpDcTOufhtHJ6ZuYdDx-Kaqe).
+- See the CWG 2027 Athlete Rankings for [Final Team selection](https://docs.google.com/spreadsheets/d/1ztJF9W5ARAyNTdwTgKNDbQL9DPqqoos6/preview).

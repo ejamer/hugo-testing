@@ -5,7 +5,7 @@ translationKey: "human-resources"
 
 **2.7 Politique des ressources humaines**
 
-**Annexe – Barèmes salariaux de la FENB : [Barème salarial de la FENB \- Google Docs](https://docs.google.com/document/d/11ChewHXa5ONLh3k7uNjivKgnuZcby2fVaD4qNUuqHe8/edit?tab=t.0)**
+**Annexe – Barèmes salariaux de la FENB : [Barème salarial de la FENB \- Google Docs](https://docs.google.com/document/d/11ChewHXa5ONLh3k7uNjivKgnuZcby2fVaD4qNUuqHe8/preview)**
 
 **Objectif**
 
@@ -102,7 +102,7 @@ La FENB peut approuver, à sa discrétion, d'autres congés sans solde ou de cou
 **8\. Barème de rémunération**
 
 * La FENB maintiendra un cadre de rémunération transparent définissant les fourchettes salariales ou les taux standardisés des contrats et des honoraires.  
-* [Échelle salariale de la FENB](https://docs.google.com/document/d/11ChewHXa5ONLh3k7uNjivKgnuZcby2fVaD4qNUuqHe8/edit?usp=sharing)  
+* [Échelle salariale de la FENB](https://docs.google.com/document/d/11ChewHXa5ONLh3k7uNjivKgnuZcby2fVaD4qNUuqHe8/preview)  
 * Les périodes de paie, les indemnités de vacances, les jours fériés et les avantages sociaux admissibles seront conformes aux normes d'emploi du Nouveau-Brunswick.  
 * Des ajustements pourront être apportés en fonction des performances, des niveaux de financement ou des comparaisons avec le marché.
 
