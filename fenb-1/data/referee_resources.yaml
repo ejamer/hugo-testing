@@ -1,0 +1,64 @@
+# Study resources for referee candidates, shown on /programs/referee-development/.
+# Each group renders as one card. Group titles come from i18n: programs_referee_resources_{id}_title.
+#
+# Item fields (bilingual fields: _fr falls back to _en when empty or omitted):
+#   title_en/_fr, desc_en/_fr  Display text
+#   note_en/_fr                Optional: caveat shown on its own line under the description
+#   file_en/_fr                PDF hosted on this site (no leading slash), OR
+#   url_en/_fr                 External link
+#   source_url_en/_fr          Optional: where a hosted copy originally came from
+#   english_only: true         Adds an "in English" tag on the French page
+referee_resources:
+  - id: official
+    items:
+      - title_en: "FIE rules"
+        title_fr: "Règlements de la FIE"
+        desc_en: "The International Fencing Federation's current rules. Use these as the authority on rule wording and numbering."
+        desc_fr: "Les règlements en vigueur de la Fédération internationale d'escrime. Ils font autorité pour le libellé et la numérotation des règles."
+        url_en: "https://fie.org/documents/rules"
+        english_only: true
+      - title_en: "CFF Referee Manual (2005)"
+        title_fr: "Manuel d'arbitrage de la FCE (2005)"
+        desc_en: "The Canadian Fencing Federation's handbook on referee levels, ethics, and how to call right-of-way, penalties, and bout control."
+        desc_fr: "Le guide de la Fédération canadienne d'escrime sur les niveaux d'arbitrage, l'éthique, la priorité, les pénalités et le contrôle de l'assaut."
+        note_en: "Some rule numbers and calls have changed since 2005, including corps à corps. Where they differ, follow the FIE rules."
+        note_fr: "Certains numéros de règles et certaines décisions ont changé depuis 2005, notamment pour le corps à corps. En cas de différence, suivez les règlements de la FIE."
+        file_en: "documents/programs/referee-development/cff-referee-manual-2005-en.pdf"
+        file_fr: "documents/programs/referee-development/cff-referee-manual-2005-fr.pdf"
+        source_url_en: "https://fencing.ca/wp-content/documents/referee/referee_manual_2005_eng.pdf"
+        source_url_fr: "https://fencing.ca/wp-content/documents/referee/referee_manual_2005_fr.pdf"
+
+  - id: study
+    items:
+      - title_en: "USA Fencing referee exam study guide (2022)"
+        title_fr: "Guide d'étude de l'examen d'arbitre de USA Fencing (2022)"
+        desc_en: "Practice questions and practical guidance, and the most recent guide in the Fencing Archive."
+        desc_fr: "Questions d'entraînement et conseils pratiques, et le guide le plus récent de Fencing Archive."
+        file_en: "documents/programs/referee-development/usa-fencing-referee-exam-study-guide-2022.pdf"
+        source_url_en: "https://www.fencingarchive.com/wp-content/uploads/usfa/refstudyguides/Study_Guide_Final_2022v1.pdf"
+        english_only: true
+      - title_en: "USA Fencing Refereeing Handbook (2010)"
+        title_fr: "Guide d'arbitrage de USA Fencing (2010)"
+        desc_en: "A longer handbook on the craft of refereeing."
+        desc_fr: "Un guide plus long sur le métier d'arbitre."
+        file_en: "documents/programs/referee-development/usa-fencing-refereeing-handbook-2010.pdf"
+        source_url_en: "https://www.fencingarchive.com/wp-content/uploads/referee/handbooks/Refereeing%20Handbook%20v1.1%2010-2010.pdf"
+        english_only: true
+      - title_en: "Fencing Archive: study guides"
+        title_fr: "Fencing Archive : guides d'étude"
+        desc_en: "Earlier editions of the US exam study guide with sample questions, from 1994 onward."
+        desc_fr: "Éditions antérieures du guide d'étude de l'examen américain, avec des exemples de questions, depuis 1994."
+        url_en: "https://www.fencingarchive.com/index.php/documents-and-media/study-guides/"
+        english_only: true
+      - title_en: "The Fencing Referee (YouTube)"
+        title_fr: "The Fencing Referee (YouTube)"
+        desc_en: "Short video lessons on refereeing."
+        desc_fr: "Courtes leçons vidéo sur l'arbitrage."
+        url_en: "https://www.youtube.com/@TheFencingReferee/videos"
+        english_only: true
+      - title_en: "8 essential skills for young fencing referees"
+        title_fr: "8 compétences essentielles pour les jeunes arbitres d'escrime"
+        desc_en: "A 2018 article from a US fencing club on the habits of a good beginner referee."
+        desc_fr: "Un article publié en 2018 par un club américain sur les habitudes d'un bon arbitre débutant."
+        url_en: "https://academyoffencingmasters.com/blog/8-essential-skills-for-young-fencing-referees/"
+        english_only: true

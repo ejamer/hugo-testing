@@ -10,6 +10,7 @@
     {{/* ── Overview ── */}}
     <p class="fenb-section-label">{{ i18n "programs_armourer_label" }}</p>
     <p class="fenb-program-intro">{{ i18n "programs_armourer_intro" }}</p>
+    {{ partial "program-contact-cta.html" (dict "title" "programs_armourer_contact_title" "body" "programs_armourer_contact_body") }}
 
     {{/* ── Four Responsibility Areas ── */}}
     <div class="fenb-armourer-sections">
@@ -39,6 +40,48 @@
       </div>
 
     </div>
+
+    {{/* ── What training covers ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_armourer_training_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_armourer_training_title" }}</h2>
+    <p>{{ i18n "programs_armourer_training_intro" }}</p>
+    <div class="fenb-referee-levels">
+      <div class="fenb-referee-level-card">
+        <h3>{{ i18n "programs_armourer_tasks_title" }}</h3>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_armourer_tasks_tournament_title" }}</h4>
+          <p>{{ i18n "programs_armourer_tasks_tournament_body" }}</p>
+        </div>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_armourer_tasks_club_title" }}</h4>
+          <p>{{ i18n "programs_armourer_tasks_club_body" }}</p>
+        </div>
+      </div>
+      <div class="fenb-referee-level-card">
+        <h3>{{ i18n "programs_armourer_course_title" }}</h3>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_armourer_course_topics_title" }}</h4>
+          <p>{{ i18n "programs_armourer_course_topics_body" }}</p>
+        </div>
+        <div class="fenb-referee-part">
+          <h4>{{ i18n "programs_armourer_course_format_title" }}</h4>
+          <p>{{ i18n "programs_armourer_course_format_body" }} <a href="https://fencing.ca/event/2025-canadian-national-championships-armoury-workshop/" target="_blank" rel="noopener noreferrer">{{ i18n "programs_armourer_course_link" }}</a></p>
+        </div>
+      </div>
+    </div>
+
+    {{/* ── Candidate resources (data/armourer_resources.yaml) ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_armourer_resources_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_armourer_resources_title" }}</h2>
+    <p>{{ i18n "programs_armourer_resources_intro" }}</p>
+    {{ partial "program-quote.html" (dict "quote" "programs_armourer_resources_quote") }}
+    {{ partial "program-resource-cards.html" (dict "groups" hugo.Data.armourer_resources.armourer_resources "prefix" "programs_armourer_resources_") }}
+
+    {{/* ── Officials pay scale ── */}}
+    {{ partial "program-pay-section.html" (dict "intro" "programs_officials_pay_intro_armourer") }}
+
+    {{/* ── Contact CTA ── */}}
+    {{ partial "program-contact-cta.html" (dict "title" "programs_armourer_contact_title" "body" "programs_armourer_contact_body") }}
 
   </div>
 </section>

@@ -10,6 +10,7 @@
     {{/* ── Overview ── */}}
     <p class="fenb-section-label">{{ i18n "programs_referee_label" }}</p>
     <p class="fenb-program-intro">{{ i18n "programs_referee_intro" }}</p>
+    {{ partial "program-contact-cta.html" (dict "title" "programs_referee_contact_title" "body" "programs_referee_contact_body") }}
 
     {{/* ── Five Core Elements ── */}}
     <p class="fenb-section-label">{{ i18n "programs_referee_elements_label" }}</p>
@@ -64,6 +65,19 @@
       </div>
 
     </div>
+
+    {{/* ── Candidate resources (data/referee_resources.yaml) ── */}}
+    <p class="fenb-section-label">{{ i18n "programs_referee_resources_label" }}</p>
+    <h2 class="fenb-section-title">{{ i18n "programs_referee_resources_title" }}</h2>
+    <p>{{ i18n "programs_referee_resources_intro" }}</p>
+    {{ partial "program-quote.html" (dict "quote" "programs_referee_resources_quote" "source" "programs_referee_resources_quote_source" "url" "https://www.referee.com/master-of-the-rules/") }}
+    {{ partial "program-resource-cards.html" (dict "groups" hugo.Data.referee_resources.referee_resources "prefix" "programs_referee_resources_") }}
+
+    {{/* ── Officials pay scale ── */}}
+    {{ partial "program-pay-section.html" (dict "intro" "programs_officials_pay_intro_referee") }}
+
+    {{/* ── Contact CTA ── */}}
+    {{ partial "program-contact-cta.html" (dict "title" "programs_referee_contact_title" "body" "programs_referee_contact_body") }}
 
   </div>
 </section>

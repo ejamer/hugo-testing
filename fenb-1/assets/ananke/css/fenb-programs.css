@@ -581,6 +581,22 @@
   line-height: 1.6;
 }
 
+/* The site has no global link colour, so links need one set or they fall back to browser blue */
+.fenb-referee-part a,
+.fenb-referee-quote-source a,
+.fenb-referee-links a { color: var(--teal); }
+.fenb-referee-source-link svg { vertical-align: -0.1em; }
+.fenb-referee-quote-source {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-style: normal;
+}
+.fenb-referee-lang-tag {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
 /* ── Secretariat Development ──────────────────────── */
 .fenb-program-duties-grid {
   display: grid;
@@ -657,6 +673,9 @@
 [data-theme="dark"] .fenb-program-resource-links li a { color: var(--teal-light); }
 [data-theme="dark"] .fenb-referee-level-card { background: var(--off-white); }
 [data-theme="dark"] .fenb-referee-part h4 { color: var(--teal-light); }
+[data-theme="dark"] .fenb-referee-part a,
+[data-theme="dark"] .fenb-referee-quote-source a,
+[data-theme="dark"] .fenb-referee-links a { color: var(--teal-light); }
 [data-theme="dark"] .fenb-program-duty-card { background: var(--off-white); }
 [data-theme="dark"] .fenb-armourer-section-card { background: var(--off-white); }
 

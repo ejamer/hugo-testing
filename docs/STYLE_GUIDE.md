@@ -221,6 +221,25 @@ Use this partial for all back-navigation links. Never add a new page-specific ba
 
 Place it at the top of the page, above all content, outside any grid or two-column layout wrapper.
 
+### `program-*.html` partials — officials program pages
+
+Shared by `/programs/referee-development/` and `/programs/armourer-development/`. Reuse them for any further officials page (e.g. secretariat) rather than copying the markup.
+
+| Partial | Params | Renders |
+|---|---|---|
+| `program-contact-cta.html` | `title`, `body` (i18n keys) | `fenb-cta-banner` linking to the contact page; used at the top and bottom of the page |
+| `program-pay-section.html` | `intro` (i18n key) | Pay scale section; links to the source document only, never copied rates |
+| `program-quote.html` | `quote` (i18n key); optional `source` (i18n key) and `url` | `fenb-callout--quote` pull quote, with an attribution when `source` is set |
+| `program-resource-cards.html` | `groups` (data list), `prefix` (i18n prefix) | Resource cards from `data/*_resources.yaml`; see README.md for the fields |
+
+### Third-party files and source links
+
+When a page offers a third-party document, host an unmodified local copy and link its title to that copy. Put the date in the filename and title when the document states one. Link back to the original with the `external-link.svg` icon as the only link content, and give the link an `aria-label` and `title` naming the source. `program-resource-cards.html` does all of this from the data file.
+
+### Link colour
+
+The site has no global link colour. A link in a new section falls back to browser blue, which is nearly unreadable in dark mode, unless that section sets a colour. Set `color: var(--teal)`, plus `color: var(--teal-light)` under `[data-theme="dark"]`.
+
 ### `fenb-article-event-logo` — event logo in a news article
 
 Displays a centred logo/image above the article body — 220 px max-width by default, rounded corners, dark-mode drop shadow.
@@ -398,6 +417,8 @@ Three link types appear on event cards and schedule rows. Each has a specific CS
 Any layout that renders event links (card partial, schedule list, future widgets) must use these classes — **not** a plain `<a>` with a local colour rule — so that print and dark-mode overrides apply automatically.
 
 **Markdown links in article/page bodies** (e.g. a results table heading like `### [Event Name](https://fencingtimelive.com/...)`) follow the same same-tab/new-tab split automatically via a Hugo render hook at `layouts/_default/_markup/render-link.html`. It opens a link in a new tab (`target="_blank" rel="noopener noreferrer"`) whenever the destination is an absolute `http(s)` URL that doesn't match the current environment's `Site.BaseURL`; anything else (relative paths, root-relative internal paths, anchors) stays same-tab. This applies site-wide to all Markdown content — no per-article markup needed.
+
+**Google Docs and Sheets links:** always link to the `/preview` URL (`https://docs.google.com/document/d/{id}/preview`, or `spreadsheets/d/{id}/preview`). Never link to `/edit` or the bare document URL, because both open the editor view. Google Forms links (`/viewform`) are fine.
 
 ---
 

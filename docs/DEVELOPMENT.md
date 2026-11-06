@@ -122,54 +122,15 @@ For content and data skills (`/fenb-content-add-news`, `/fenb-content-add-page`,
 
 Utility scripts live in `scripts/`. They are independent of the Hugo build — run them from the repo root. For example: `python3 scripts/<name>.py`. (Note: Season rollover is a script, not a skill — `scripts/season-rollover.sh`, see `README.md`.)
 
-### fencingtimelive-results.py
+### FencingTimeLive results
 
-Fetches tournament results from [fencingtimelive.com](https://www.fencingtimelive.com). Requires `--location` to specify the tournament type — this determines what is fetched and how the output is structured.
+FencingTimeLive's terms of service prevent scripted access. `scripts/fencingtimelive-results.py` now prints a message and exits with an error as its first action; the rest of its code is unused, and `scripts/check-ftl-deps.sh` only supports it.
 
-> **Skill available:** run `/fenb-data-get-results` in Claude Code — it handles parameters, login, tournament selection, and result reporting interactively.
-
-**`--location away`** — NB athletes competed out of province. Scans every event for NB fencer participation (matched against `fenb-1/data/clubs.yaml`) and saves only events where NB athletes appear. Output: `scripts/output/{slug}-{date}.json` with an `events_with_nb_fencers` key. Unmatched fencers with country `CAN` are listed under `canadian_fencers_to_review` — US tournaments often list foreign fencers with no club, so NB fencers can slip past the club match. Re-run with `--nb-fencer "NAME"` for each one confirmed as NB.
-
-**`--location hosted`** — tournament held in NB. Fetches full final standings for every finished event and extracts the top-4 medalists (gold, silver, two tied bronze). NB-club filtering is not applied. Output: `scripts/output/{slug}-podiums-{date}.json` with an `events[].podium` key.
-
-**Usage:**
+Save the event schedule and each event's final results page by hand into a folder, then run `/fenb-data-get-results`. It gives saving instructions and uses `scripts/ftl-read-saved-pages.py`, which reads local files only:
 
 ```bash
-# Away — search recent CAN tournaments, pick interactively:
-python3 scripts/fencingtimelive-results.py --location away
-
-# Away — USA, last 30 days, skip picker:
-python3 scripts/fencingtimelive-results.py --location away --country USA --days -2 --select 1
-
-# Hosted — search and pick interactively:
-python3 scripts/fencingtimelive-results.py --location hosted
-
-# Hosted — direct tournament ID (bypasses --days limit):
-python3 scripts/fencingtimelive-results.py --location hosted --tournament-id 4A78131AF1154821BF95F71B1D4FD913
-
-# Away — direct ID, force-include NB fencers the club match missed:
-python3 scripts/fencingtimelive-results.py --location away --tournament-id 77895A9FF3BD47DE85A252315AC61C47 --nb-fencer "HAN Ethan" --nb-fencer "SINGH RANGER Harvir"
-
-# Manual cookie instead of browser login:
-python3 scripts/fencingtimelive-results.py --location away --cookie "connect.sid=...;AWSALB=..."
+python3 scripts/ftl-read-saved-pages.py path/to/folder > scripts/output/saved-pages.txt
 ```
-
-| Flag | Default | Notes |
-|---|---|---|
-| `--location` | *(required)* | `hosted` or `away` — determines fetch mode and output structure |
-| `--cookie` | *(opens browser)* | Full `Cookie:` header string from DevTools; omit to use browser login |
-| `--country` | `CAN` | FIE country code (away mode only) |
-| `--days` | `-1` | `-2` last 30 days, `-1` last 10 days, `0` in progress, `1` next 7 days |
-| `--tournament-id` | — | Bypass the tournament list; use this hex ID directly (useful for old tournaments) |
-| `--list` | — | Print tournament list as JSON and exit (used by skill) |
-| `--select N` | — | Skip interactive picker, use tournament N from the list (used by skill) |
-| `--nb-fencer NAME` | — | Away only, repeatable: treat this fencer as NB (exact FTL name, case-insensitive, country CAN only) |
-
-**Authentication:** the site uses Google OAuth, which cannot be automated. On first run, system Chrome opens and you complete the Google login normally. The session is saved to `scripts/.browser-profile/` (gitignored) and reused on subsequent runs until it expires.
-
-**Dependencies:** `pip install playwright pyyaml` — no extra browser install needed; the script uses system Chrome (Google Chrome specifically — it launches with `channel="chrome"`, so Chromium won't do). Run `scripts/check-ftl-deps.sh` to verify everything (Python 3.9+, PyYAML, Playwright, Chrome, `clubs.yaml`) in one go; add `--fix` to pip-install missing Python packages. `/fenb-data-get-results` runs this as its Step 0.
-
----
 
 ## Stack
 

@@ -1,0 +1,11 @@
+{{/* Contact banner for officials program pages. Params: title, body (i18n keys). */}}
+<div class="fenb-cta-banner">
+  <div class="fenb-cta-banner-body">
+    <p class="fenb-section-label">{{ i18n "programs_contact_label" }}</p>
+    <h3 class="fenb-cta-banner-heading">{{ i18n .title }}</h3>
+    <p>{{ i18n .body }}</p>
+  </div>
+  <div class="fenb-cta-banner-action">
+    <a href="{{ "contact/" | relLangURL }}" class="fenb-btn fenb-btn-white">{{ i18n "programs_contact_btn" }}</a>
+  </div>
+</div>

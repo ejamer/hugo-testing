@@ -134,6 +134,11 @@ Verbose progress is written to stderr; only the JSON goes to stdout:
 
 from __future__ import annotations
 
+import sys
+
+print("Terms of service prevent scripted access to FencingTimeLive content.", file=sys.stderr)
+sys.exit(1)
+
 import argparse
 import json
 import re

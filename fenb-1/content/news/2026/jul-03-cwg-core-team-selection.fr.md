@@ -20,5 +20,4 @@ Les sélections finales ont été faites pour les athlètes de l'équipe de base
 
 
 #### Liens connexes :
-- Consultez les classements des athlètes JHC 2027 pour la [sélection de l'équipe finale](https://docs.google.com/spreadsheets/d/1ztJF9W5ARAyNTdwTgKNDbQL9DPqqoos6).
-- Consultez les classements des athlètes JHC 2027 utilisés lors de la [sélection de l'équipe de base](https://docs.google.com/spreadsheets/d/1bXPWEDCEGpDcTOufhtHJ6ZuYdDx-Kaqe).
+- Consultez les classements des athlètes JHC 2027 pour la [sélection de l'équipe finale](https://docs.google.com/spreadsheets/d/1ztJF9W5ARAyNTdwTgKNDbQL9DPqqoos6/preview).

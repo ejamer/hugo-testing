@@ -1,5 +1,5 @@
 ---
-description: Generate a bilingual EN/FR news article from a saved fenb-get-results JSON output file.
+description: Generate a bilingual EN/FR news article from a results JSON file saved by /fenb-data-get-results.
 allowed-tools: AskUserQuestion Read Write Skill Bash(ls *) Bash(find *)
 ---
 

@@ -14,11 +14,12 @@ hugo-testing/
 │   ├── DEVELOPMENT.md     Branch strategy and build commands
 │   ├── GOTCHAS.md         Past build/template gotchas and their fixes
 │   ├── PROJECT_LAYOUT.md  This file — full directory tree
+│   ├── REFEREE_PROGRAM_COMPARISON.md  Internal report: FENB referee program vs. CFF manual, FIE rules, and other provinces
 │   ├── STYLE_GUIDE.md     Brand, CSS, and content conventions
 │   └── TODO.md            Outstanding items — keep current
 ├── .claude/               Project skills and settings (see CLAUDE.md for skill descriptions)
 ├── plans/                 Detailed plans for multi-session features (referenced from docs/TODO.md)
-├── scripts/               Utility scripts: fencingtimelive-results.py (tournament results), season-rollover.sh (events.yaml archive + fresh season file), check-ftl-deps.sh (prerequisite check for the results scraper), compute-next-version.sh (latest tag + next version candidates), generate-version-json.sh (writes static/version.json for a release), check-hugo-version.sh (CI Hugo pin vs. local/latest; --set updates the pin)
+├── scripts/               Utility scripts: fencingtimelive-results.py (retired: exits with a terms-of-service message), ftl-read-saved-pages.py (reads hand-saved FTL pages for /fenb-data-get-results), season-rollover.sh (events.yaml archive + fresh season file), check-ftl-deps.sh (prerequisite check for the results scraper), compute-next-version.sh (latest tag + next version candidates), generate-version-json.sh (writes static/version.json for a release), check-hugo-version.sh (CI Hugo pin vs. local/latest; --set updates the pin)
 ├── design-sources/        Editable source for generated graphics (e.g. typographic hero slides) — not served by Hugo; re-export to static/images/ when reused or edited. Two source formats: HTML/CSS (re-render with headless Chrome), and Inkscape SVG templates (e.g. hero/fenb-hero-template.svg — export panels directly to JPG/PNG)
 └── fenb-1/                Hugo site root
     ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)
@@ -56,6 +57,8 @@ hugo-testing/
     │   ├── hof_categories.yaml     Canonical Hall of Fame category IDs (drives filter dropdown + CSS badge classes)
     │   ├── clubs.yaml              Member club cards on /clubs/
     │   ├── coach_pathways.yaml     CFF coach certification pathway cards on /programs/coach-training/
+    │   ├── referee_resources.yaml  Study resource cards on /programs/referee-development/
+    │   ├── armourer_resources.yaml  Study resource cards on /programs/armourer-development/
     │   ├── event_categories.yaml   Canonical category IDs for calendar legend and schedule filters
     │   ├── events.yaml             Current season event list (homepage + /events/)
     │   ├── events_archive/         Past seasons (picked up automatically by /events/schedule/)
@@ -104,6 +107,10 @@ hugo-testing/
     │                         news-card.html        Single news card — data-category/data-season attrs for news-filter.js
     │                         news-season.html      Return-value partial — derives fencing-season label (Sept–Aug) from a date
     │                         page-header.html      Coloured band below the nav (title + subtitle)
+    │                         program-contact-cta.html  Contact banner for officials program pages (referee, armourer)
+    │                         program-pay-section.html  Officials pay scale section; links to the source document only
+    │                         program-quote.html    Pull quote for officials program pages, with optional attribution
+    │                         program-resource-cards.html  Resource cards from data/referee_resources.yaml or armourer_resources.yaml
     │                         section-header.html   Section label + h2 + "see all" link
     │                         site-announcement.html  Site-wide banner (controlled via hugo.toml)
     │                         site-favicon.html     SVG + PNG favicon link tags
@@ -111,7 +118,8 @@ hugo-testing/
     │                         site-header.html      Entry point — delegates to nav.html + page-header.html
     └── static/
         ├── documents/      PDFs served at /documents/ — subfolders: about/agm-minutes/,
-        │                   about/governance/, canada-games/, programs/coach-training/ (CFF pathway PDFs)
+        │                   about/governance/, canada-games/, programs/coach-training/ (CFF pathway PDFs),
+        │                   programs/referee-development/ and programs/armourer-development/ (hosted study documents)
         ├── images/         Site images — subfolders: canada-games/, clubs/, coach-pathways/ (CFF pathway
         │                   diagram PNGs, EN/FR), hall-of-fame/, hero/, organizations/, svg/
         ├── js/             Client-side scripts:

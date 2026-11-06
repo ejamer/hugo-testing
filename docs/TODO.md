@@ -58,10 +58,39 @@ All four join pages need a visual review in the dev server before release. Key i
 The pages below need a full review pass for both style and content quality before release. For each page: assess layout, spacing, typography, content accuracy, and French translation quality. Revise layout HTML, CSS, i18n strings, and/or content structure as needed.
 
 - [ ] **`/programs/` (landing)** 
+- [ ] **`/programs/armourer-development/`** — training examples, candidate resources, a quote, a link to the officials pay scale, and contact CTAs at the top and bottom were added around the original content (2026-11-06); review those too.
 - [ ] **`/programs/athlete-development/`** 
 - [ ] **`/programs/coach-training/`** — content is done (5 CFF pathway cards with "Learn more" modals and PDF downloads, plus the full-guide PDF link); only a layout/styling polish pass remains.
-- [ ] **`/programs/referee-development/`** 
+- [ ] **`/programs/referee-development/`** — candidate resources, a quote, a link to the officials pay scale, and contact CTAs at the top and bottom were added around the original content (2026-11-06); review those too.
 - [ ] **`/programs/secretariat-development/`** 
+
+## Referee development — follow-up (2026-11-06)
+
+Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
+
+- [ ] **Check for an updated CFF Referee Manual** — copies of the 2005 EN/FR manual are hosted in `static/documents/programs/referee-development/`. Check `https://fencing.ca/officials/` at least each season and replace both PDFs if a new edition appears. The CFF Officials Committee terms (approved 2026-02-08) call for a national training and certification program, so a replacement may be coming. Ask the CFF whether the 2005 requirements still apply, and where to find its Study Guide. Also tell them the English edition is wrong on hits scored while covering target (the report has the details).
+- [ ] **FENB program vs. CFF manual** — needs a board decision: written pass mark (75% vs. 80%), provincial practical score and setting, renewal rules, and the out-of-province evaluator. The published program text was deliberately left unchanged. The page has no note explaining these differences, so candidates can see the manual's 80% beside FENB's 75% with no explanation.
+- [ ] **Pay scale clarifications** — the FENB Pay Scale has a "Regional" level but the program has "Club"; "CFF rate" has no published figure; "flat" doesn't say per day or per tournament; the meal allowance guidelines are blank. Mileage and armoury rates look low against other provinces.
+- [ ] **French review** — `data/referee_resources.yaml` and the new `programs_referee_resources_*`, `programs_resources_*`, `programs_officials_pay_*`, and `programs_referee_contact_*` strings need review by a French speaker, including the translated Referee.com quote.
+- [ ] **Check hosted USA Fencing copies** — the 2022 study guide and 2010 handbook are unmodified copies in `static/documents/programs/referee-development/`. Check for newer editions each season. The handbook is CC BY-NC-ND 3.0 US, which allows this copy. The study guide states no licence, so confirm with USA Fencing that hosting it is OK.
+- [ ] **Recheck external study links each season** — `data/referee_resources.yaml`. The Fencing Referee YouTube channel has had no uploads since 2018-05-30; remove it if it disappears or becomes misleading.
+
+## Armourer development — follow-up (2026-11-06)
+
+- [ ] **Define FENB's armourer pathway** — unlike the referee page, the armourer page has no FENB certification levels or requirements. The page's task and course examples come from Alberta, Ontario, and the 2025 CFF course, and it says FENB training may differ. Decide what FENB offers. Alberta's page refers to a CFF National Armoury Certification Pathway, but no CFF document for it was found, so ask the CFF.
+- [ ] **Check hosted armourer documents** — copies are in `static/documents/programs/armourer-development/` (Ontario 2022, three USA Fencing documents, the c. 2000 US study guide). Check for newer editions each season. None states a licence, so confirm with the owners that hosting them is OK.
+- [ ] **Decide on "How to be an Armorer" (Chris Green)** — this USA Fencing guide is a 16 MB Word file, so it isn't hosted or linked directly. It's reachable through the USA Fencing page on the armourer page.
+- [ ] **French review** — `data/armourer_resources.yaml` and the `programs_armourer_contact_*`, `programs_armourer_training_*`, `programs_armourer_tasks_*`, `programs_armourer_course_*`, and `programs_armourer_resources_*` strings need review by a French speaker.
+- [ ] **Recheck external armourer links each season** — `data/armourer_resources.yaml`. The Ask an Armourer YouTube channel's last upload was 2024-02-23; remove it if it disappears or becomes misleading. The Fencing Sports Academy article credits a marketing agency (KME.digital) as author; have an armourer confirm it's accurate.
+
+## FencingTimeLive results — follow-up (2026-11-06)
+
+- [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). Still unseen: a results page with a Club column (Canadian and NB-hosted events), a pools-only event, a `/events/competitors/` page, and a full run into `/fenb-content-add-results`.
+- [ ] **Decide what to remove** — `scripts/fencingtimelive-results.py` exits immediately and `scripts/check-ftl-deps.sh` only supports it. Delete them once the manual process is proven. `scripts/.browser-profile/` (49 MB, gitignored) can hold a saved FTL login and is no longer needed.
+
+## Google document links
+
+- [ ] **Confirm Google file sharing is view-only** — `/preview` links only change what visitors see. Anyone with a file's ID can still open its `/edit` URL, so each linked file should be set to Viewer for anyone with the link.
 
 ## Dark mode
 

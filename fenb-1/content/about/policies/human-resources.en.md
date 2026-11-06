@@ -5,7 +5,7 @@ translationKey: "human-resources"
 
 **2.7 Human Resources Policy (Revised)**
 
-**Annex – FENB Pay Scales: [FENB Pay Scale \- Google Docs](https://docs.google.com/document/d/11ChewHXa5ONLh3k7uNjivKgnuZcby2fVaD4qNUuqHe8/edit?tab=t.0)**
+**Annex – FENB Pay Scales: [FENB Pay Scale \- Google Docs](https://docs.google.com/document/d/11ChewHXa5ONLh3k7uNjivKgnuZcby2fVaD4qNUuqHe8/preview)**
 
 **Purpose**
 
@@ -125,7 +125,7 @@ FENB may approve additional unpaid or short-term leaves at its discretion.
 
 * FENB will maintain a transparent compensation framework outlining salary ranges or standardized contract/honoraria rates.
 
-* [FENB Pay Scale](https://docs.google.com/document/d/11ChewHXa5ONLh3k7uNjivKgnuZcby2fVaD4qNUuqHe8/edit?usp=sharing)
+* [FENB Pay Scale](https://docs.google.com/document/d/11ChewHXa5ONLh3k7uNjivKgnuZcby2fVaD4qNUuqHe8/preview)
 
 * Pay periods, vacation pay, holidays, and allowable benefits will comply with NB Employment Standards.
 
