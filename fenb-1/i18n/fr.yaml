@@ -439,8 +439,6 @@ programs_referee_resources_title:     "Ressources pour les candidats à l'arbitr
 programs_referee_resources_intro:     "Vous songez à devenir arbitre? Commencez par les règlements et le manuel de la FCE, puis exercez-vous à l'aide du matériel d'étude supplémentaire."
 programs_referee_resources_official_title: "Documents officiels"
 programs_referee_resources_study_title: "Matériel d'étude supplémentaire"
-programs_referee_resources_note:      "Les ressources ci-dessous peuvent être désuètes ou provenir d'autres régions, mais elles peuvent tout de même être utiles pour apprendre à devenir un meilleur arbitre."
-programs_referee_resources_note_contact: "Veuillez communiquer avec la FENB pour confirmer ce qui s'applique à votre certification."
 programs_referee_resources_quote:     "Ne cessez jamais d'apprendre. Se tenir à jour sur les règles, c'est comme faire de l'exercice : il est plus facile de rester en forme que de se remettre en forme."
 programs_referee_resources_quote_source: "Referee.com (traduction libre)"
 programs_resources_source:    "Original sur {{ .Host }}"

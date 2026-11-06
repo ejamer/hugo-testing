@@ -1,143 +1,147 @@
 ---
-description: Fetch recent tournament results from fencingtimelive.com and report NB fencer placements.
-allowed-tools: Bash(scripts/check-ftl-deps.sh *) Bash(python3 scripts/fencingtimelive-results.py *) AskUserQuestion Read
+description: Read tournament results from FencingTimeLive pages the user saved by hand and report podiums or NB fencer placements.
+allowed-tools: Bash(python3 scripts/ftl-read-saved-pages.py *) AskUserQuestion Read Write Grep
 ---
 
-Fetch tournament results from fencingtimelive.com. Two modes:
+Build a results JSON file from FencingTimeLive (FTL) pages the user saved by hand. Two modes:
 
-- **Away** — NB athletes competed out of province. Scan all events for NB fencer placements; report only events where NB athletes appear.
-- **Hosted** — tournament was held in New Brunswick. Report the full podium (all medalists, any province) for every event. NB fencer filtering is irrelevant.
+- **Away** — NB athletes competed out of province. Report only events where NB athletes appear.
+- **Hosted** — tournament was held in New Brunswick. Report the full podium (all medalists, any province) for every event.
 
----
-
-## Step 0 — Prerequisites
-
-```bash
-scripts/check-ftl-deps.sh --fix
-```
-
-Checks Python 3.9+, PyYAML, Playwright, system Google Chrome, and `fenb-1/data/clubs.yaml`, printing one `PASS`/`FAIL` line each; `--fix` pip-installs missing PyYAML/Playwright. If it exits non-zero, show its output to the user and stop.
+**Never access fencingtimelive.com.** FTL's terms of service prevent scripted access, so don't use WebFetch, curl, a browser tool, or `scripts/fencingtimelive-results.py` (which now exits with an error). FTL URLs are only written into the output as links.
 
 ---
 
-## Step 1 — Tournament type and source
+## Step 1 — Tournament type and folder
 
-Ask the user two questions via `AskUserQuestion`:
+Ask both via `AskUserQuestion`, skipping anything the user already said:
 
-1. **Tournament type**: Is this an NB-hosted tournament (held in NB) or an away tournament (NB athletes travelled to compete)?
-   - Options: "NB-hosted" / "Away"
+1. **Tournament type:** "NB-hosted" / "Away"
+2. **Folder of saved pages:** options "Already saved — I'll paste the path" (user types it under Other) / "Not saved yet — show me how"
 
-2. **Tournament source**: Was a direct FTL URL provided, or should we search the tournament list?
-   - If the user already provided a URL in their message (e.g. `https://www.fencingtimelive.com/tournaments/eventSchedule/{id}`), skip this question and note that you'll use the direct URL.
-   - Otherwise ask: "Direct URL" (user pastes it via Other) / "Search recent tournaments"
+If the pages aren't saved yet, show these steps and stop until the user returns with the path:
 
-If "Search recent tournaments": also ask country (default CAN) and date range (default last 10 days / `--days -1`, offer last 30 days / `--days -2`).
-
----
-
-## HOSTED PATH — Steps H2 through H3
-
-*Follow this path when the user said NB-hosted.*
-
-### Step H2 — Run hosted scrape
-
-If the user provided a direct URL, extract the tournament ID from the path (the hex string after `/eventSchedule/`) and run:
-
-```bash
-python3 scripts/fencingtimelive-results.py --location hosted --tournament-id {ID} 2>/tmp/ftl-scrape.stderr
-```
-
-If no direct URL was provided, run with search parameters and let the user pick interactively, or use `--select N` to skip the picker:
-
-```bash
-python3 scripts/fencingtimelive-results.py --location hosted --select {N} --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-scrape.stderr
-```
-
-**Do not use `2>&1`.** The script handles session, schedule fetching, and podium extraction automatically. Output is saved to `scripts/output/{slug}-podiums-{today}.json` (path logged to stderr as `[ ok ] Output saved to …`). This may take a minute or two — keep the user informed.
-
-### Step H3 — Report and publish
-
-Read the saved `*-podiums-{today}.json` file. Report the podium for each event. For events with an empty `podium` array, note that final results were not posted in the system — except events with `pools_only: true`, which are seeding pools with no DE bracket; list those separately as "pool round only (no podium)".
-
-Check whether the tournament matches an event in `fenb-1/data/events.yaml` (same match logic as Step A5.5 below). If matched and `results_url_en` is empty, ask the user to confirm before setting it.
-
-Tell the user to run the next command, given as its own fenced code block (not inline backticks) so it can be copied with a click:
-
-```
-/fenb-content-add-results scripts/output/{slug}-podiums-{today}.json
-```
+1. Create a new folder for this tournament, outside the repo.
+2. Wait until the tournament is over, and keep FTL set to English.
+3. Save the tournament's **event schedule** page.
+4. Save the **Final Results** page of every event, including events with no NB fencers. Wait for the table to load first. An unfinished event opens on its pools or tableau instead, and those pages don't count.
+5. In Chrome, use **Save as → Webpage, Complete** and keep the suggested filename. "HTML Only" and "Single File" won't work. The `_files` folders Chrome adds are ignored.
 
 ---
 
-## AWAY PATH — Steps A2 through A6
-
-*Follow this path when the user said away tournament.*
-
-### Step A2 — Fetch tournament list
+## Step 2 — Read the saved pages
 
 ```bash
-python3 scripts/fencingtimelive-results.py --location away --list --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-list.stderr
+python3 scripts/ftl-read-saved-pages.py "{FOLDER}" > scripts/output/saved-pages.txt
 ```
 
-**Do not use `2>&1`** — stderr has log lines that break JSON parsing. Parse the JSON array from stdout. Print stderr after for context. Stop and report clearly if the list is empty or the command fails.
+The output has one `=== FILE:` block per page, with `EV` lines for schedule rows (`EV`, event ID, day, then the row's cells) and `ROW` lines for table rows. Read it in parts or search it with Grep if it's long. `scripts/output/` is gitignored.
 
-### Step A3 — Select tournament
+The helper doesn't interpret columns. Work out each column from the table's header row and contents, and tell the user if a page's layout looks different from the others.
 
-List `scripts/output/` to find files already checked today (`{slug}-{today}.json`).
+---
 
-**≤ 4 tournaments:** `AskUserQuestion` with one option per tournament (name as label, location + dates as description).
+## Step 3 — Check the pages are complete
 
-**> 4 tournaments:** print a markdown table (#, Name, Location, Dates; ✓ = already checked today), then ask with four options: "All of them" / "New ones only" / "Specific tournament(s)" (Other field) / "Just one" (Other field).
+Report these problems before going further, and ask whether to continue or wait for corrected pages:
 
-When "All of them" or "New ones only": run scrapes sequentially without prompting again.
+- **`unsupported_format` line** — files saved in a format the helper can't read.
+- **No schedule page** (no block has `EV` lines) — ask for it. Without it, events can't be listed or checked for completeness.
+- **A results page with `table_rows: 0`** — most likely saved as "HTML Only" or before the table loaded.
+- **A page that isn't a results page** — only `/events/results/` in `saved_from` with a "Final Results" heading counts as results, and `/events/competitors/` counts as an entry list. A `/pools/` or `/tableaus/` page holds no final placements, so list that event as not checked.
+- **A schedule event with no saved page** — match pages to events using the event ID in `saved_from`, then the page title and headings. If a page can't be matched, ask the user.
+- **A schedule event that isn't finished** — its status doesn't start with "Finished".
 
-### Step A4 — Run NB-fencer scrape
+**Never treat a missing page as "no NB fencers" or "no results".** List it as not checked.
 
-```bash
-python3 scripts/fencingtimelive-results.py --location away --select {N} --country {COUNTRY} --days {DAYS} 2>/tmp/ftl-scrape.stderr
+---
+
+## Step 4 — Write the JSON file
+
+Take the tournament name from the schedule page's title. Take dates from the `EV` day values, formatted like `September 19, 2026 - September 20, 2026`. Saved pages don't show the location, so ask the user for it in the form `Saint John, NB, CAN`.
+
+Build URLs without visiting them:
+- `schedule_url`: the schedule page's `saved_from`, without any `#today` fragment
+- `results_url`: `https://www.fencingtimelive.com/events/results/{event ID}`
+
+`{slug}` is the tournament name lowercased, with each run of other characters replaced by `-`. `{today}` is today's date. Both shapes below are what `/fenb-content-add-results` reads, so keep the keys exactly.
+
+### Hosted — `scripts/output/{slug}-podiums-{today}.json`
+
+```json
+{
+  "tournament": { "name": "", "location": "", "dates": "", "schedule_url": "" },
+  "events": [
+    {
+      "event_name": "", "day": "", "results_url": "",
+      "podium": [ { "place": "1", "name": "", "club": "" } ],
+      "pools_only": false
+    }
+  ]
+}
 ```
 
-If the user provided a direct URL, skip Steps A2–A3 and use `--tournament-id {ID}` in place of `--select`/`--country`/`--days` (ID extracted as in Step H2).
+- **Podium:** every entry whose place, with any trailing `T` removed, is 3 or better. Keep place text as shown, such as `3T`. Both tied bronze medalists must be included.
+- **Pools only:** a finished event with `tableau_link: False` is a seeding pool whose ranking isn't a real result. Set `pools_only: true` and leave `podium` empty, but only when the page has a populated table.
+- **Unfinished or missing:** set `podium` to `[]` and `pools_only` to false.
 
-If the user already named NB fencers who won't match a club (see Step A5.2), pass each one as `--nb-fencer "NAME"` on the first run.
+### Away — `scripts/output/{slug}-{today}.json`
 
-Do not use `2>&1`. Output is saved to `scripts/output/{slug}-{today}.json` (path logged to stderr as `[ ok ] Output saved to …`). This may take a minute or two — keep the user informed.
+```json
+{
+  "tournament": { "name": "", "location": "", "dates": "", "schedule_url": "" },
+  "nb_clubs_checked": [],
+  "events_with_nb_fencers": [
+    {
+      "event_name": "", "day": "", "start_time": "", "status": "",
+      "source": "results", "total_fencers": 0, "results_url": "",
+      "nb_fencers": [ { "name": "", "place": "", "club": "", "license": "" } ]
+    }
+  ],
+  "canadian_fencers_to_review": [
+    { "name": "", "club": "", "events": [ { "event_name": "", "place": "" } ] }
+  ]
+}
+```
 
-### Step A5 — Report NB fencer results
+- **NB match:** read `fenb-1/data/clubs.yaml` and match each entry's club against club names and IDs, including a `DAM - Damocles...` form. Also match a division shown as `NB` or `New Brunswick`. List the clubs checked in `nb_clubs_checked`.
+- **`source`:** `"results"` for a Final Results page. Use `"competitors"`, with empty `place` values, for a saved `/events/competitors/` page.
+- **`total_fencers`:** the number of fencers in that event's table, not counting the header row. It should match the competitor count in the schedule status, so flag any difference.
+- **`license`:** leave it empty unless the page shows it.
+- **`canadian_fencers_to_review`:** entries with country `CAN` that didn't match a club. Some tournaments show a Country column and no Club column, so every Canadian lands here and the user has to pick out the NB fencers. If a page shows neither column, say so and ask the user to name them.
 
-**If `events_with_nb_fencers` is empty:** report no NB fencers found. Show tournament name, location, dates, and total events checked.
+---
 
-**If NB fencers were found:** split events by `source` — this also doubles as the registrations view for a tournament still in progress, with no separate fetch needed:
-- **Completed** (`source: "results"`) — final placements are posted.
-- **Upcoming / in progress** (`source: "competitors"`) — no results yet; fencers are registered or seeded but each entry's `place` is empty.
+## Step 5 — Report
 
-Report each group under its own heading (omit a group with no events). For each event, show:
-- Event name, day, start time
-- Table of NB fencer results: Place | Name | Club (drop the Place column for the upcoming group, since it's blank)
-- Direct link to `results_url` (an entry list for the upcoming group, a results page for the completed group)
+### Hosted
 
-End with a summary: events with NB fencers (completed vs upcoming counts if both are present), total NB fencer appearances. If any events are in the upcoming group, note that the tournament is still in progress and the fetch can be re-run later for final results.
+Report the podium for each event. For events with an empty `podium`, note that final results weren't available, except `pools_only` events, which go in a separate "pool round only (no podium)" list. List anything not checked from Step 3.
 
-### Step A5.2 — Review other Canadian fencers
+### Away
 
-NB matching is by club (`clubs.yaml`) or division. Outside Canada — especially at US tournaments — FTL often lists foreign fencers with only `country: CAN` and no club, so NB fencers are missed. The script collects every unmatched CAN entry under `canadian_fencers_to_review`.
+**If `events_with_nb_fencers` is empty:** report no NB fencers found among the pages checked. Show the tournament name, location, dates, events checked, and any events not checked.
 
-If that list is non-empty, show it as a table (Name | Club | Event | Place, one row per event) and ask the user which, if any, are NB fencers. Then re-run Step A4 with one `--nb-fencer "NAME"` per confirmed fencer, using the name exactly as FTL shows it (e.g. `--nb-fencer "SINGH RANGER Harvir"`). Only entries with country CAN match, so a same-named fencer from another country is not picked up. Check stderr for `matched no CAN entry` warnings (typos), then report Step A5 again from the new output.
+**If NB fencers were found:** split events by `source` under "Completed" and "Upcoming / in progress" headings, leaving out an empty group. For each event, show the event name, day, and start time, a table of Place | Name | Club (no Place column for the upcoming group), and the `results_url` link. End with events with NB fencers and total NB fencer appearances.
 
-### Step A5.5 — Update events.yaml results_url
+**Review other Canadian fencers:** if `canadian_fencers_to_review` isn't empty, show it as a table (Name | Club | Event | Place, one row per event) and ask which, if any, are NB fencers. Move those people to `nb_fencers` in the matching events, add any events this newly qualifies, and report again.
 
-Check whether the tournament matches an event in `fenb-1/data/events.yaml`:
-- Tournament dates overlap the event's `start_date` / `end_date`, AND
-- Event title is a plausible match for the tournament name (case-insensitive substring or fuzzy match)
+---
 
-If matched and `results_url_en` is empty: ask the user before setting it to `{tournament.schedule_url}`. Leave `results_url_fr` empty (FTL links are language-agnostic). If already set, report the existing URL and take no action.
+## Step 6 — Update events.yaml
 
-### Step A6 — Publish results
+Check whether the tournament matches an event in `fenb-1/data/events.yaml`: its dates overlap the event's `start_date` / `end_date`, and the event title plausibly matches the tournament name.
 
-**If any event in `events_with_nb_fencers` has `source: "competitors"`:** the tournament is still in progress. Do not suggest publishing yet — recommend re-running Step A4 once the tournament concludes so the results article reflects final placements, not partial ones.
+If matched and `results_url_en` is empty, ask the user before setting it to `schedule_url`. Leave `results_url_fr` empty, because FTL links are language-agnostic. If it's already set, report the existing URL and take no action.
 
-**If every event has `source: "results"`** (tournament fully finished): tell the user to run the next command, given as its own fenced code block (not inline backticks) so it can be copied with a click:
+---
+
+## Step 7 — Publish
+
+**If any event is unfinished, not checked, or has `source: "competitors"`:** don't suggest publishing yet. Recommend saving the final pages once the tournament ends and re-running this skill.
+
+**Otherwise,** tell the user to run the next command, given as its own fenced code block (not inline backticks) so it can be copied with a click:
 
 ```
-/fenb-content-add-results scripts/output/{slug}-{today}.json
+/fenb-content-add-results scripts/output/{output file}
 ```

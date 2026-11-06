@@ -13,7 +13,7 @@ FENB differs from the manual in one clear way and is silent on several CFF requi
 3. **Keeping certification (gap).** The CFF requires a refresher seminar and active refereeing every two years. FENB's page doesn't mention renewal.
 4. **Pay levels (internal mismatch).** FENB's pay scale pays a "Regional" level that its program doesn't define, and has no "Club" rate even though its program has that level.
 
-The page now links to the manual, so candidates can see the 75% and 80% figures side by side. A note on the page tells them to confirm requirements with FENB. That note should stay until FENB decides on item 1.
+The page now links to the manual, so candidates can see the 75% and 80% figures side by side. The page has no note explaining the difference, so the 75% and 80% figures are unexplained until FENB decides on item 1.
 
 The manual is 21 years old but is still the only one the CFF lists. Before changing FENB's rules to match it, ask the CFF whether its 2005 requirements still apply (see "Is the manual current?").
 

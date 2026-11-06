@@ -13,7 +13,7 @@ Content and data workflows are available as Claude Code skills (invoked with `/f
 | `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
-| `/fenb-data-get-results` | Fetch recent tournament results from fencingtimelive.com and report NB fencer placements |
+| `/fenb-data-get-results` | Read tournament results from FencingTimeLive pages you saved by hand and report podiums or NB fencer placements |
 
 For git and release workflow skills (`/fenb-git-commit`, `/fenb-git-release`), see `docs/DEVELOPMENT.md`.
 
@@ -148,7 +148,7 @@ Add an entry to `data/events.yaml`.
 | `details_url_fr` | — | Optional French URL override for the **Learn More →** badge |
 | `registration_url_en` | — | English URL for the **Register Now →** badge. Used for both languages when `registration_url_fr` is blank. Hidden for past events (date < today). |
 | `registration_url_fr` | — | Optional French URL override for the **Register Now →** badge. Falls back to `registration_url_en` if blank. |
-| `results_url_en` | — | English URL for the **View Results →** badge. Populated automatically by `/fenb-data-get-results` after a tournament scrape (FTL links are language-agnostic, so `_fr` is left blank). `/fenb-content-add-results` will also offer to redirect an existing FTL link here to the internal article it just created, once one exists. |
+| `results_url_en` | — | English URL for the **View Results →** badge. Offered by `/fenb-data-get-results` after it reads a tournament's saved pages (FTL links are language-agnostic, so `_fr` is left blank). `/fenb-content-add-results` will also offer to redirect an existing FTL link here to the internal article it just created, once one exists. |
 | `results_url_fr` | — | Optional French URL override for the **View Results →** badge (set when the results link is an internal bilingual news article). Falls back to `results_url_en` if blank. |
 
 **Example:**
@@ -376,6 +376,34 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
 ```
 
 Sourcing a third-party logo: prefer the organization's own transparent PNG or SVG (registration platforms like 2mev often host a better version than the org's site header), name the file after the brand on the logo (`fencing-canada.png`, not `cff.png`), and resize rasters to at most 800px on the long side. Show the candidate to the site owner before wiring it in.
+
+</details>
+
+<details>
+<summary><strong>Officials program resources (referee, armourer)</strong></summary>
+
+The resource cards on `/programs/referee-development/` and `/programs/armourer-development/` come from `data/referee_resources.yaml` and `data/armourer_resources.yaml`. Each group is one card, and its title comes from i18n (`programs_referee_resources_{id}_title` or `programs_armourer_resources_{id}_title`).
+
+```yaml
+referee_resources:
+  - id: study
+    items:
+      - title_en: "Document title (2022)"
+        title_fr: ""                    # falls back to title_en
+        desc_en: "One-line description."
+        desc_fr: ""
+        note_en: ""                     # optional — caveat on its own line under the description
+        note_fr: ""
+        file_en: "documents/programs/referee-development/document-2022.pdf"   # hosted copy, no leading slash
+        file_fr: ""
+        source_url_en: "https://example.org/document.pdf"   # where the hosted copy came from
+        source_name: ""                 # optional — owner's name for the link label, when the file's domain doesn't identify them
+        english_only: true              # adds "(en anglais)" on the French page
+```
+
+For a web page rather than a file, use `url_en`/`url_fr` instead of `file_*` and `source_url_*`.
+
+**Files:** host an unmodified copy in `static/documents/programs/<program>/`. Put the date in the filename and title when the document states one. Web pages stay as links.
 
 </details>
 
