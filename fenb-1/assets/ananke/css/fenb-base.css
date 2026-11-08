@@ -44,9 +44,10 @@
   --cat-national-pale:      #e8eef5;
   --cat-meeting:            #4a4a4a;
   --cat-meeting-pale:       #efefef;
-  --cat-results:            #5b3a8e;  /* news only — no event uses `results` */
-  --cat-results-light:      #7a55b5;
-  --cat-results-pale:       #efe9f7;
+  /* Plum for `competition` NEWS posts only (registrations) — competition EVENTS stay teal */
+  --cat-news-competition:       #5b3a8e;
+  --cat-news-competition-light: #7a55b5;
+  --cat-news-competition-pale:  #efe9f7;
 
   /* Brand colour channels — for rgba() opacity tints */
   --teal-rgb:           0, 97, 86;
@@ -74,7 +75,7 @@
   --cat-clinic-pale:       #26150a;
   --cat-national-pale:     #0d1828;
   --cat-meeting-pale:      #1e1e1e;
-  --cat-results-pale:      #1f1530;
+  --cat-news-competition-pale: #1f1530;
 }
 
 /* ── Reset / base ─────────────────────────────── */
