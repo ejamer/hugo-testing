@@ -40,7 +40,7 @@ Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped t
 The load order is declared in `hugo.toml` under `params.ananke.custom_css`. Files must live in `fenb-1/assets/ananke/css/` — **not** `fenb-1/static/css/` — so Ananke's pipeline picks them up for concatenation, minification, and (in production) fingerprinting. A file placed in `static/` would be served separately, uncached, and unminified.
 
 - No inline styles for anything reusable — add a class to the appropriate file instead
-- Use CSS custom properties defined at `:root` rather than raw hex values: `--teal`, `--crimson`, `--shadow-sm`, `--radius`, category colours (`--cat-announcement`, `--cat-training`, `--cat-clinic`, `--cat-national`, `--cat-meeting`, `--cat-results` and their `--cat-*-pale` variants; `--cat-results-light` is the gradient end for the results stripe), brand colour channels for `rgba()` (`--teal-rgb`, `--crimson-rgb`)
+- Use CSS custom properties defined at `:root` rather than raw hex values: `--teal`, `--crimson`, `--shadow-sm`, `--radius`, category colours (`--cat-announcement`, `--cat-training`, `--cat-clinic`, `--cat-national`, `--cat-meeting` and their `--cat-*-pale` variants; plus the news-only `--cat-news-competition` / `-light` / `-pale` used for competition news posts), brand colour channels for `rgba()` (`--teal-rgb`, `--crimson-rgb`)
 
 ### Container width modifiers
 
@@ -489,12 +489,12 @@ When the first article of a new calendar year arrives, create the year subfolder
 
 ## News category colours
 
-News articles use the same category IDs as events, plus the news-only `results` category (purple, so results posts stand apart from teal `competition` registration posts). The badge label is looked up via i18n; never put a display string in the front matter.
+News articles use the same category IDs as events, plus the news-only `results` category. Colours match the event categories with one exception: `competition` news posts (registrations) are plum, while `competition` events stay teal. That keeps registration posts visually distinct from teal `results` posts, the two most common article types. The badge label is looked up via i18n; never put a display string in the front matter.
 
 | `category` | Badge EN | Badge FR | CSS variable | Colour |
 |---|---|---|---|---|
-| `competition` | Competition | Compétition | `--teal` | Teal |
-| `results` | Results | Résultats | `--cat-results` | Plum (news only) |
+| `competition` | Competition | Compétition | `--cat-news-competition` | Plum (news only — competition **events** stay teal) |
+| `results` | Results | Résultats | `--teal` | Teal (news only) |
 | `national` | National Event | Événement national | `--crimson` | Crimson |
 | `provincial` | NB Provincial | Provincial NB | `--crimson` | Crimson |
 | `training` | Training Camp | Camp d'entraînement | `--cat-training` | Yellow |

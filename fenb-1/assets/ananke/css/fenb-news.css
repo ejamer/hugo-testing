@@ -35,14 +35,14 @@
   height: 6px;
   background: linear-gradient(90deg, var(--teal) 0%, var(--teal-light) 100%);
 }
-.fenb-news-card-top--competition  { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
+.fenb-news-card-top--competition  { background: linear-gradient(90deg, var(--cat-news-competition), var(--cat-news-competition-light)); }
 .fenb-news-card-top--training     { background: linear-gradient(90deg, var(--cat-training), #b08c00); }
 .fenb-news-card-top--clinic       { background: linear-gradient(90deg, var(--cat-clinic), #c9591a); }
 .fenb-news-card-top--national     { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
 .fenb-news-card-top--provincial   { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
 .fenb-news-card-top--meeting      { background: linear-gradient(90deg, var(--cat-meeting), #6a6a6a); }
 .fenb-news-card-top--announcement { background: linear-gradient(90deg, var(--cat-announcement), #2478d4); }
-.fenb-news-card-top--results      { background: linear-gradient(90deg, var(--cat-results), var(--cat-results-light)); }
+.fenb-news-card-top--results      { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
 
 .fenb-news-card-body {
   padding: 1.5rem;
@@ -71,14 +71,14 @@
   border-radius: 4px;
 }
 
-.fenb-news-category--competition  { background: var(--teal-pale);             color: var(--teal); }
+.fenb-news-category--competition  { background: var(--cat-news-competition-pale); color: var(--cat-news-competition); }
 .fenb-news-category--training     { background: var(--cat-training-pale);     color: var(--cat-training); }
 .fenb-news-category--clinic       { background: var(--cat-clinic-pale);       color: var(--cat-clinic); }
 .fenb-news-category--national     { background: var(--crimson-pale);          color: var(--crimson); }
 .fenb-news-category--provincial   { background: var(--crimson-pale);          color: var(--crimson); }
 .fenb-news-category--meeting      { background: var(--cat-meeting-pale);      color: var(--cat-meeting); }
 .fenb-news-category--announcement { background: var(--cat-announcement-pale); color: var(--cat-announcement); }
-.fenb-news-category--results      { background: var(--cat-results-pale);      color: var(--cat-results); }
+.fenb-news-category--results      { background: var(--teal-pale);             color: var(--teal); }
 
 .fenb-news-card-meta time {
   font-size: 0.78rem;
@@ -238,14 +238,14 @@
   background: var(--teal);
   margin: 0 auto 1.5rem;
 }
-.fenb-article-divider--competition  { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
+.fenb-article-divider--competition  { background: linear-gradient(90deg, var(--cat-news-competition), var(--cat-news-competition-light)); }
 .fenb-article-divider--training     { background: linear-gradient(90deg, var(--cat-training), #b08c00); }
 .fenb-article-divider--clinic       { background: linear-gradient(90deg, var(--cat-clinic), #c9591a); }
 .fenb-article-divider--national     { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
 .fenb-article-divider--provincial   { background: linear-gradient(90deg, var(--crimson), var(--crimson-light)); }
 .fenb-article-divider--meeting      { background: linear-gradient(90deg, var(--cat-meeting), #6a6a6a); }
 .fenb-article-divider--announcement { background: linear-gradient(90deg, var(--cat-announcement), #2478d4); }
-.fenb-article-divider--results      { background: linear-gradient(90deg, var(--cat-results), var(--cat-results-light)); }
+.fenb-article-divider--results      { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
 
 /* fenb-article-back replaced by shared .fenb-back-link */
 
@@ -454,7 +454,7 @@
 .fenb-news-filter-btn--provincial.is-active   { background: var(--crimson-pale);         color: var(--crimson);         border-color: var(--crimson); }
 .fenb-news-filter-btn--meeting.is-active      { background: var(--cat-meeting-pale);      color: var(--cat-meeting);     border-color: var(--cat-meeting); }
 .fenb-news-filter-btn--announcement.is-active { background: var(--cat-announcement-pale); color: var(--cat-announcement); border-color: var(--cat-announcement); }
-.fenb-news-filter-btn--results.is-active      { background: var(--cat-results-pale);      color: var(--cat-results);      border-color: var(--cat-results); }
+.fenb-news-filter-btn--competition.is-active  { background: var(--cat-news-competition-pale); color: var(--cat-news-competition); border-color: var(--cat-news-competition); }
 
 .fenb-news-filter-meta:hover { background: var(--off-white); color: var(--text-dark); border-color: var(--text-muted); }
 
@@ -656,14 +656,14 @@
 
 /* ── Dark mode ────────────────────────────────── */
 [data-theme="dark"] .fenb-news-category                           { background: var(--teal);             color: #fff; }
-[data-theme="dark"] .fenb-news-category--competition  { background: var(--teal);             color: #fff; }
+[data-theme="dark"] .fenb-news-category--competition  { background: var(--cat-news-competition); color: #fff; }
 [data-theme="dark"] .fenb-news-category--training     { background: var(--cat-training);     color: #fff; }
 [data-theme="dark"] .fenb-news-category--clinic       { background: var(--cat-clinic);        color: #fff; }
 [data-theme="dark"] .fenb-news-category--national     { background: var(--crimson);           color: #fff; }
 [data-theme="dark"] .fenb-news-category--provincial   { background: var(--crimson);           color: #fff; }
 [data-theme="dark"] .fenb-news-category--meeting      { background: var(--cat-meeting);       color: #fff; }
 [data-theme="dark"] .fenb-news-category--announcement { background: var(--cat-announcement);  color: #fff; }
-[data-theme="dark"] .fenb-news-category--results      { background: var(--cat-results);       color: #fff; }
+[data-theme="dark"] .fenb-news-category--results      { background: var(--teal);             color: #fff; }
 
 [data-theme="dark"] .fenb-news-filter-bar { background: var(--off-white); }
 [data-theme="dark"] .fenb-news-filter-meta,
@@ -675,7 +675,7 @@
 [data-theme="dark"] .fenb-news-filter-btn--provincial.is-active   { background: var(--crimson);         color: #fff; border-color: var(--crimson); }
 [data-theme="dark"] .fenb-news-filter-btn--meeting.is-active      { background: var(--cat-meeting);     color: #fff; border-color: var(--cat-meeting); }
 [data-theme="dark"] .fenb-news-filter-btn--announcement.is-active { background: var(--cat-announcement); color: #fff; border-color: var(--cat-announcement); }
-[data-theme="dark"] .fenb-news-filter-btn--results.is-active      { background: var(--cat-results);      color: #fff; border-color: var(--cat-results); }
+[data-theme="dark"] .fenb-news-filter-btn--competition.is-active  { background: var(--cat-news-competition); color: #fff; border-color: var(--cat-news-competition); }
 
 [data-theme="dark"] .fenb-404-code { color: var(--text-dark); }
 

@@ -90,14 +90,16 @@ Full post body here (Markdown).
 
 **Host logo beside a section:** in multi-event articles, add `{{< host-logo id="DAM" >}}` on its own line under an event's `##` heading to float the host's logo beside that section's text. In a single-event article it can replace the top `image` — put it on its own line after the greeting so the logo sits beside the intro. `id` is a club id from `data/clubs.yaml` or an organization id from `data/organizations.yaml` (e.g. `CFF` for Fencing Canada); `src="images/..." alt="..."` works for one-offs. See [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md).
 
-**Category values:** news articles share the same category IDs as events (see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full colour table and typical mapping guidance).
+**Category values:** news articles share the same category IDs as events, plus the news-only `results` (see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full colour table and typical mapping guidance).
 
 | `category` | Badge label (EN) | Badge label (FR) | Colour |
 |---|---|---|---|
-| `competition` | Competition | Compétition | Teal |
+| `competition` | Competition | Compétition | Plum (news only — competition events stay teal) |
+| `results` | Results | Résultats | Teal (news only) |
 | `national` | National Event | Événement national | Crimson |
 | `provincial` | NB Provincial | Provincial NB | Crimson |
 | `training` | Training Camp | Camp d'entraînement | Yellow |
+| `clinic` | Clinic | Clinique | Dark orange |
 | `announcement` | Announcement | Annonce | Blue |
 | `meeting` | FENB Meeting | Réunion FENB | Grey |
 
