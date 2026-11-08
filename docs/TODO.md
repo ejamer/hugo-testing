@@ -85,7 +85,7 @@ Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
 
 ## FencingTimeLive results — follow-up (2026-11-06)
 
-- [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). Still unseen: a results page with a Club column (Canadian and NB-hosted events), a pools-only event, a `/events/competitors/` page, and a full run into `/fenb-content-add-results`.
+- [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). A second international tournament (Dormagen, 2026-11-08) also worked and went all the way through `/fenb-content-add-results`. Still unseen: a results page with a Club column (Canadian and NB-hosted events), a pools-only event, and a `/events/competitors/` page.
 - [ ] **Decide what to remove** — `scripts/fencingtimelive-results.py` exits immediately and `scripts/check-ftl-deps.sh` only supports it. Delete them once the manual process is proven. `scripts/.browser-profile/` (49 MB, gitignored) can hold a saved FTL login and is no longer needed.
 
 ## Google document links
