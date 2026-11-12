@@ -89,10 +89,6 @@ Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
 - [ ] **Pools-only rule misfires on small events** — `/fenb-data-get-results` (hosted mode) marks any finished event with `tableau_link: False` as `pools_only` (no podium). At the Hoplite Invitational, Cadet Women's Épée (4 fencers, placings 1/2/3T/3T) and Senior Women's Épée (2 fencers) had no tableau link but were real standalone events; the user overrode the rule by hand. Refine the rule in `.claude/commands/fenb-data-get-results.md` — e.g. only treat it as a seeding pool when the name has "Pool(s)" or spans age groups, or when a separate DE event for the same group exists — and keep `/fenb-content-add-results` Step 5 in step with it.
 - [ ] **Decide what to remove** — `scripts/fencingtimelive-results.py` exits immediately and `scripts/check-ftl-deps.sh` only supports it. Delete them once the manual process is proven. `scripts/.browser-profile/` (49 MB, gitignored) can hold a saved FTL login and is no longer needed.
 
-## News — follow-up (2026-11-12)
-
-- [ ] **French quote in the new Executive Director article** — `fenb-1/content/news/2026/nov-12-new-executive-director.fr.md` shows Jean-Marc Sinnasse's quote in the original English. A French translation may only replace it once he approves the wording (it can't be presented as his quote otherwise). Update the `>` blockquote in the FR file when approved.
-
 ## Google document links
 
 - [ ] **Confirm Google file sharing is view-only** — `/preview` links only change what visitors see. Anyone with a file's ID can still open its `/edit` URL, so each linked file should be set to Viewer for anyone with the link.

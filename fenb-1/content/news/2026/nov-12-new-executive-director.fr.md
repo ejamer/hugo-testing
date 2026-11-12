@@ -11,7 +11,11 @@ Escrime NB est ravi d'annoncer que **Jean-Marc Sinnasse** s'est joint à nous à
 
 Jean-Marc a découvert l'escrime enfant et, plus récemment, il a encadré des activités de badminton et mis sur pied des séances d'initiation pour adultes débutants. Dans ses propres mots :
 
-> "Hi everyone! Originally from France, I have been living in Summerside, Prince Edward Island, since January 2022. I bring over 25 years of experience in administrative and financial management, as well as team leadership, notably with the City of Paris and as Director of Support Services at Collège de l'Île. Currently working as a language monitor and mentor for the Department of Education, I am also a lifelong sports enthusiast and an avid badminton player. I look forward to working together to support and grow fencing across New Brunswick!"
+> « Bonjour à toutes et à tous!
+>
+> Originaire de France, je vis à Summerside, à l'Île-du-Prince-Édouard, depuis janvier 2022. Fort de plus de 25 ans d'expérience en gestion administrative et financière ainsi qu'en direction d'équipes, notamment à la Ville de Paris et à titre de directeur des services de soutien au Collège de l'Île, je travaille actuellement comme moniteur de langues et mentor auprès du ministère de l'Éducation. Je suis également un passionné de sport depuis toujours et un fervent joueur de badminton.
+>
+> J'ai hâte de collaborer avec vous pour soutenir et développer l'escrime partout au Nouveau-Brunswick! »
 
 Joignez-vous à nous pour souhaiter chaleureusement la bienvenue à Jean-Marc au sein de la communauté de l'escrime du Nouveau-Brunswick.
 
