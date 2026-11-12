@@ -80,7 +80,7 @@ padding: 1rem 1.25rem;
 background: var(--off-white);
 ```
 
-**Responsive:** the schedule sidebar hides (`display: none`) at ≤720px when the layout collapses to a single column. The calendar legend reflows to 100% width at ≤720px and hides entirely at ≤540px; at that same breakpoint the calendar grid switches from text bars to coloured dot indicators (one dot per event, each a tappable button). Informational sidebars also hide at their page's single-column breakpoint. Neither type stacks below the main content on narrow screens.
+**Responsive:** the schedule sidebar hides (`display: none`) at ≤720px when the layout collapses to a single column. The calendar legend reflows to 100% width at ≤720px and hides entirely at ≤540px; at that same breakpoint the calendar grid switches from text bars to coloured dot indicators (one dot per event, each a tappable button). The grid always starts on a Sunday and ends on a Saturday. Days from the previous or next month that fill out the first and last weeks are drawn dimmed (`.fenb-cal-cell--outside`) but still show their events. Clicking one switches the calendar to that month and scrolls to the event's card. An event that overlaps the displayed month (e.g. Oct 31–Nov 1) just scrolls, since its card is already listed. Informational sidebars also hide at their page's single-column breakpoint. Neither type stacks below the main content on narrow screens.
 
 #### Informational sidebars (links/metadata)
 

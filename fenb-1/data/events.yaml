@@ -158,6 +158,21 @@ events:
 
   # ── November 2026 ─────────────────────────────────────────
 
+  - title: "FENB Board Meeting"
+    title_fr: "Réunion du conseil d'administration de la FENB"
+    start_date: "2026-11-02"
+    end_date: ""
+    location: ""
+    category: "meeting"
+    description_en: "Monthly board meeting of the FENB Board of Directors."
+    description_fr: "Réunion mensuelle du conseil d'administration de la FENB."
+    details_url_en: ""
+    details_url_fr: ""
+    registration_url_en: ""
+    registration_url_fr: ""
+    results_url_en: ""
+    results_url_fr: ""
+
   - title: "Hoplite Invitational"
     title_fr: ""
     start_date: "2026-11-07"
@@ -203,6 +218,21 @@ events:
     results_url_en: ""
     results_url_fr: ""
 
+  - title: "FENB Board Meeting"
+    title_fr: "Réunion du conseil d'administration de la FENB"
+    start_date: "2026-11-23"
+    end_date: ""
+    location: ""
+    category: "meeting"
+    description_en: "Monthly board meeting of the FENB Board of Directors."
+    description_fr: "Réunion mensuelle du conseil d'administration de la FENB."
+    details_url_en: ""
+    details_url_fr: ""
+    registration_url_en: ""
+    registration_url_fr: ""
+    results_url_en: ""
+    results_url_fr: ""
+
   - title: "Canada Cup #2"
     title_fr: "Coupe Canada #2"
     start_date: "2026-11-28"
@@ -234,6 +264,21 @@ events:
     results_url_fr: ""
 
   # ── December 2026 ─────────────────────────────────────────
+
+  - title: "FENB Annual General Meeting"
+    title_fr: "Assemblée générale annuelle de la FENB"
+    start_date: "2026-12-06"
+    end_date: ""
+    location: ""
+    category: "meeting"
+    description_en: "Annual General Meeting — all members welcome."
+    description_fr: "Assemblée générale annuelle — tous les membres sont les bienvenus."
+    details_url_en: ""
+    details_url_fr: ""
+    registration_url_en: ""
+    registration_url_fr: ""
+    results_url_en: ""
+    results_url_fr: ""
 
   - title: "Circuit des Jeunes #2"
     title_fr: "Circuit des Jeunes #2"

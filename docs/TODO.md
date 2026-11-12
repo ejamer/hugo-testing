@@ -132,6 +132,7 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 
 ## Events data
 
+- [ ] **FENB AGM (Dec 6, 2026) — details missing** — the entry in `data/events.yaml` was copied from last season's AGM and has a blank `location`, no start time, and no details link. All members are invited, so add the venue (or "Online"), the time (it can go in `description_en`/`description_fr`), and a details link (e.g. a meeting notice or agenda, via `details_url_en`/`details_url_fr`) once known.
 - [ ] **Interscholastic finals article — photo gallery** — 4 action photos at `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; add `photos:` front matter to `jun-16-interscholastic-finals-2026.{en,fr}.md` (photo gallery system now available — see README.md)
 - [ ] **Fencing Canada logo — replace with vector** — `static/images/organizations/fencing-canada.png` is a temporary raster (downloaded from 2mev.com, resized to 626×800). Replace with an official vector (SVG) version and update `logo:` for `CFF` in `data/organizations.yaml` — every article using `{{< host-logo id="CFF" >}}` picks it up automatically.
 
