@@ -98,6 +98,8 @@
       {{ $today    := now.Format "2006-01-02" }}
       {{/* Merged across current + archived seasons — see partials/all-events.html for why. */}}
       {{ $upcoming := where (partial "all-events.html" .) "start_date" "ge" $today }}
+      {{/* hide_card: true events (e.g. private board meetings) appear on the calendar grid only. */}}
+      {{ $upcoming = where $upcoming "hide_card" "ne" true }}
       {{ range $upcoming }}
       {{ partial "event-card.html" . }}
       {{ end }}

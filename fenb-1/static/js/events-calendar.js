@@ -242,7 +242,10 @@
 
         var dayItems = byDate[key];
         if (dayItems) {
-          cell.classList.add('fenb-cal-cell--has-events');
+          // hide_card events have no card to scroll to, so they render as plain labels.
+          // The cell is only clickable when at least one event on it has a card.
+          var cardItems = dayItems.filter(function (it) { return !it.e.hide_card; });
+          if (cardItems.length) cell.classList.add('fenb-cal-cell--has-events');
 
           var bars = document.createElement('div');
           bars.className = 'fenb-cal-bars';
@@ -255,6 +258,7 @@
           var labelSuffix = outside ? ' (' + cal.months[cellM] + ' ' + cellY + ')' : '';
 
           dayItems.forEach(function (it) {
+            var hasCard = !it.e.hide_card;
             var activate = function (ev) {
               if (ev.type === 'keydown') {
                 if (ev.key !== 'Enter' && ev.key !== ' ') return;
@@ -268,28 +272,40 @@
             bar.className = 'fenb-cal-bar fenb-cal-bar--' + it.e.category;
             bar.textContent = evTitle(it.e);
             bar.title = evTitle(it.e) + labelSuffix;
-            bar.setAttribute('role', 'button');
-            bar.setAttribute('tabindex', '0');
-            if (outside) bar.setAttribute('aria-label', evTitle(it.e) + labelSuffix);
-            bar.addEventListener('click', activate);
-            bar.addEventListener('keydown', activate);
-            bars.appendChild(bar);
 
             var dot = document.createElement('span');
             dot.className = 'fenb-cal-dot fenb-cal-dot--' + it.e.category;
-            dot.setAttribute('role', 'button');
-            dot.setAttribute('tabindex', '0');
-            dot.setAttribute('aria-label', evTitle(it.e) + labelSuffix);
-            dot.addEventListener('click', activate);
-            dot.addEventListener('keydown', activate);
+            dot.title = evTitle(it.e);
+
+            if (hasCard) {
+              bar.setAttribute('role', 'button');
+              bar.setAttribute('tabindex', '0');
+              if (outside) bar.setAttribute('aria-label', evTitle(it.e) + labelSuffix);
+              bar.addEventListener('click', activate);
+              bar.addEventListener('keydown', activate);
+
+              dot.setAttribute('role', 'button');
+              dot.setAttribute('tabindex', '0');
+              dot.setAttribute('aria-label', evTitle(it.e) + labelSuffix);
+              dot.addEventListener('click', activate);
+              dot.addEventListener('keydown', activate);
+            } else {
+              bar.classList.add('fenb-cal-bar--no-card');
+              dot.classList.add('fenb-cal-bar--no-card');
+              dot.setAttribute('role', 'img');
+              dot.setAttribute('aria-label', evTitle(it.e));
+            }
+            bars.appendChild(bar);
             dots.appendChild(dot);
           });
 
-          // Cell-level gap-click: goes to the chronologically first event.
+          // Cell-level gap-click: goes to the chronologically first event with a card.
           // Bar/dot clicks stopPropagation so they take priority on their own tap target.
-          cell.addEventListener('click', function () {
-            goToEvent(dayItems[0], cellY, cellM);
-          });
+          if (cardItems.length) {
+            cell.addEventListener('click', function () {
+              goToEvent(cardItems[0], cellY, cellM);
+            });
+          }
 
           cell.appendChild(bars);
           cell.appendChild(dots);
@@ -348,7 +364,8 @@
     var listEl = document.getElementById('cal-events');
     listEl.innerHTML = '';
 
-    var items = getMonthEventsWithIndex();
+    // hide_card events (e.g. private board meetings) show on the grid only — no card.
+    var items = getMonthEventsWithIndex().filter(function (item) { return !item.e.hide_card; });
 
     if (items.length === 0) {
       var msg = document.createElement('p');
