@@ -152,29 +152,59 @@
     renderEventList();
   }
 
+  function isoDate(dt) {
+    var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+    return dt.getFullYear() + '-' + pad(dt.getMonth() + 1) + '-' + pad(dt.getDate());
+  }
+
+  // Click handler for an event shown in the grid. cellY/cellM is the month of the
+  // cell it was clicked in. Events from an adjacent month (shown in the padding
+  // cells before the 1st / after the last day) switch the calendar to that month
+  // first — unless the event also overlaps the displayed month (e.g. Oct 31–Nov 1),
+  // in which case its card is already in the list below.
+  function goToEvent(item, cellY, cellM) {
+    if (cellY !== year || cellM !== month) {
+      var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+      var monthFirst = year + '-' + pad(month + 1) + '-01';
+      var monthLast  = year + '-' + pad(month + 1) + '-' + pad(new Date(year, month + 1, 0).getDate());
+      var e = item.e;
+      var effectiveEnd = (e.end_date && e.end_date > e.start_date) ? e.end_date : e.start_date;
+      if (!(e.start_date <= monthLast && effectiveEnd >= monthFirst)) {
+        year = cellY;
+        month = cellM;
+        render();
+      }
+    }
+    scrollToEventCard(item.idx);
+  }
+
   function renderGrid() {
     var grid = document.getElementById('cal-grid');
     grid.innerHTML = '';
 
+    // Visible range: the Sunday on/before the 1st through the Saturday on/after the
+    // last day. Padding days from the adjacent months are drawn as real (dimmed)
+    // cells with their own events.
     var firstOfMonth = new Date(year, month, 1);
     var lastOfMonth  = new Date(year, month + 1, 0);
+    var gridStart = new Date(year, month, 1 - firstOfMonth.getDay());
+    var gridEnd   = new Date(year, month + 1, 0 + (6 - lastOfMonth.getDay()));
+    var rangeFirst = isoDate(gridStart);
+    var rangeLast  = isoDate(gridEnd);
 
-    // Build day -> [{e, idx}] map, expanding multi-day events across the month
-    var byDay = {};
-    getMonthEventsWithIndex().forEach(function (item) {
-      var startD = new Date(item.e.start_date + 'T00:00:00');
-      var endD   = (item.e.end_date && item.e.end_date > item.e.start_date)
-                   ? new Date(item.e.end_date + 'T00:00:00')
-                   : startD;
-
-      // Clamp to current month
-      var cur = new Date(Math.max(startD.getTime(), firstOfMonth.getTime()));
-      var end = new Date(Math.min(endD.getTime(),   lastOfMonth.getTime()));
-
+    // Build 'YYYY-MM-DD' -> [{e, idx}] map, expanding multi-day events across the range
+    var byDate = {};
+    events.forEach(function (e, idx) {
+      var effectiveEnd = (e.end_date && e.end_date > e.start_date) ? e.end_date : e.start_date;
+      if (e.start_date > rangeLast || effectiveEnd < rangeFirst) return;
+      var startD = new Date(e.start_date + 'T00:00:00');
+      var endD   = new Date(effectiveEnd + 'T00:00:00');
+      var cur = new Date(Math.max(startD.getTime(), gridStart.getTime()));
+      var end = new Date(Math.min(endD.getTime(),   gridEnd.getTime()));
       while (cur <= end) {
-        var d = cur.getDate();
-        if (!byDay[d]) byDay[d] = [];
-        byDay[d].push(item);
+        var key = isoDate(cur);
+        if (!byDate[key]) byDate[key] = [];
+        byDate[key].push({ e: e, idx: idx });
         cur = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate() + 1);
       }
     });
@@ -190,38 +220,28 @@
       grid.appendChild(cell);
     });
 
-    var firstDow    = new Date(year, month, 1).getDay(); // 0 = Sunday
-    var daysInMonth = new Date(year, month + 1, 0).getDate();
-    var today  = new Date();
-    var todayY = today.getFullYear();
-    var todayM = today.getMonth();
-    var todayD = today.getDate();
+    var todayKey = isoDate(new Date());
 
-    // Empty padding cells before first day
-    for (var i = 0; i < firstDow; i++) {
-      var empty = document.createElement('div');
-      empty.className = 'fenb-cal-cell fenb-cal-cell--empty';
-      empty.setAttribute('aria-hidden', 'true');
-      grid.appendChild(empty);
-    }
+    for (var dt = new Date(gridStart); dt <= gridEnd; dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() + 1)) {
+      (function (cellDate) {
+        var cellY = cellDate.getFullYear();
+        var cellM = cellDate.getMonth();
+        var key = isoDate(cellDate);
+        var outside = cellY !== year || cellM !== month;
 
-    // Day cells
-    for (var d = 1; d <= daysInMonth; d++) {
-      (function (day) {
         var cell = document.createElement('div');
         cell.className = 'fenb-cal-cell';
         cell.setAttribute('role', 'gridcell');
-
-        if (todayY === year && todayM === month && todayD === day) {
-          cell.classList.add('fenb-cal-cell--today');
-        }
+        if (outside) cell.classList.add('fenb-cal-cell--outside');
+        if (key === todayKey) cell.classList.add('fenb-cal-cell--today');
 
         var numEl = document.createElement('span');
         numEl.className = 'fenb-cal-day-num';
-        numEl.textContent = day;
+        numEl.textContent = cellDate.getDate();
         cell.appendChild(numEl);
 
-        if (byDay[day]) {
+        var dayItems = byDate[key];
+        if (dayItems) {
           cell.classList.add('fenb-cal-cell--has-events');
 
           var bars = document.createElement('div');
@@ -230,50 +250,45 @@
           var dots = document.createElement('div');
           dots.className = 'fenb-cal-dots';
 
-          byDay[day].forEach(function (item) {
-            (function (it) {
-              var bar = document.createElement('div');
-              bar.className = 'fenb-cal-bar fenb-cal-bar--' + it.e.category;
-              bar.textContent = evTitle(it.e);
-              bar.title = evTitle(it.e);
-              bar.setAttribute('role', 'button');
-              bar.setAttribute('tabindex', '0');
-              bar.addEventListener('click', function (ev) {
-                ev.stopPropagation();
-                scrollToEventCard(it.idx);
-              });
-              bar.addEventListener('keydown', function (ev) {
-                if (ev.key === 'Enter' || ev.key === ' ') {
-                  ev.preventDefault();
-                  scrollToEventCard(it.idx);
-                }
-              });
-              bars.appendChild(bar);
+          // On padding cells, tell screen readers which month the event is in —
+          // activating it switches the calendar there.
+          var labelSuffix = outside ? ' (' + cal.months[cellM] + ' ' + cellY + ')' : '';
 
-              var dot = document.createElement('span');
-              dot.className = 'fenb-cal-dot fenb-cal-dot--' + it.e.category;
-              dot.setAttribute('role', 'button');
-              dot.setAttribute('tabindex', '0');
-              dot.setAttribute('aria-label', evTitle(it.e));
-              dot.addEventListener('click', function (ev) {
-                ev.stopPropagation();
-                scrollToEventCard(it.idx);
-              });
-              dot.addEventListener('keydown', function (ev) {
-                if (ev.key === 'Enter' || ev.key === ' ') {
-                  ev.preventDefault();
-                  scrollToEventCard(it.idx);
-                }
-              });
-              dots.appendChild(dot);
-            }(item));
+          dayItems.forEach(function (it) {
+            var activate = function (ev) {
+              if (ev.type === 'keydown') {
+                if (ev.key !== 'Enter' && ev.key !== ' ') return;
+                ev.preventDefault();
+              }
+              ev.stopPropagation();
+              goToEvent(it, cellY, cellM);
+            };
+
+            var bar = document.createElement('div');
+            bar.className = 'fenb-cal-bar fenb-cal-bar--' + it.e.category;
+            bar.textContent = evTitle(it.e);
+            bar.title = evTitle(it.e) + labelSuffix;
+            bar.setAttribute('role', 'button');
+            bar.setAttribute('tabindex', '0');
+            if (outside) bar.setAttribute('aria-label', evTitle(it.e) + labelSuffix);
+            bar.addEventListener('click', activate);
+            bar.addEventListener('keydown', activate);
+            bars.appendChild(bar);
+
+            var dot = document.createElement('span');
+            dot.className = 'fenb-cal-dot fenb-cal-dot--' + it.e.category;
+            dot.setAttribute('role', 'button');
+            dot.setAttribute('tabindex', '0');
+            dot.setAttribute('aria-label', evTitle(it.e) + labelSuffix);
+            dot.addEventListener('click', activate);
+            dot.addEventListener('keydown', activate);
+            dots.appendChild(dot);
           });
 
-          // Cell-level gap-click: scrolls to the chronologically first event.
-          // Dot clicks stopPropagation so they take priority on their own tap target.
-          var firstIdx = byDay[day][0].idx;
+          // Cell-level gap-click: goes to the chronologically first event.
+          // Bar/dot clicks stopPropagation so they take priority on their own tap target.
           cell.addEventListener('click', function () {
-            scrollToEventCard(firstIdx);
+            goToEvent(dayItems[0], cellY, cellM);
           });
 
           cell.appendChild(bars);
@@ -281,7 +296,7 @@
         }
 
         grid.appendChild(cell);
-      }(d));
+      }(dt));
     }
   }
 

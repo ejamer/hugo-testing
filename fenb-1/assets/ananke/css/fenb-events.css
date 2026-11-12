@@ -496,7 +496,14 @@
   gap: 0.25rem;
   overflow: hidden;
 }
-.fenb-cal-cell--empty { background: var(--off-white); }
+/* Padding days from the previous/next month — dimmed but still show their events;
+   clicking one switches the calendar to that month (events-calendar.js). */
+/* Light mode: --off-white is too close to white to read as "not this month", so use a
+   darker grey here. Dark mode's --off-white already contrasts enough (override below). */
+.fenb-cal-cell--outside { background: #e4e9e8; }
+.fenb-cal-cell--outside .fenb-cal-day-num { color: var(--text-muted); font-weight: 500; }
+.fenb-cal-cell--outside .fenb-cal-bar,
+.fenb-cal-cell--outside .fenb-cal-dot { opacity: 0.55; }
 
 .fenb-cal-cell--today .fenb-cal-day-num {
   background: var(--crimson);
@@ -510,6 +517,9 @@
 }
 
 .fenb-cal-cell--has-events:hover { background: var(--off-white); }
+.fenb-cal-cell--outside.fenb-cal-cell--has-events:hover { background: #d8dfdd; }
+.fenb-cal-cell--outside .fenb-cal-bar:hover,
+.fenb-cal-cell--outside .fenb-cal-dot:hover { opacity: 0.85; }
 .fenb-cal-cell--has-events:focus-visible {
   outline: 2px solid var(--teal);
   outline-offset: -2px;
@@ -617,3 +627,5 @@
 [data-theme="dark"] .fenb-cal-dialog-close:hover,
 [data-theme="dark"] .fenb-cal-dialog-close:focus-visible { color: var(--teal-light); }
 [data-theme="dark"] .fenb-cal-select { border-color: var(--teal-light); }
+[data-theme="dark"] .fenb-cal-cell--outside { background: var(--off-white); }
+[data-theme="dark"] .fenb-cal-cell--outside.fenb-cal-cell--has-events:hover { background: var(--light-gray); }
