@@ -48,7 +48,7 @@ All four join pages need a visual review in the dev server before release. Key i
 ## About page
 
 - [ ] **Board member roles** — only Celine Fournet (President) and the Executive Director role were confirmed from source data. The remaining 6 members are listed as "Director" — verify actual officer roles (Secretary, Treasurer, etc.) and update `fenb-1/data/board_members.yaml`.
-- [ ] **Board member start dates** — `start_date` was added to every entry in `fenb-1/data/board_members.yaml` (2026-08-17) but left blank for all current members since the actual month/year each joined isn't recorded anywhere; fill in when known. Doesn't block anything — `start_date` is historical record only, doesn't affect display.
+- [ ] **Board member start dates** — `start_date` was added to every entry in `fenb-1/data/board_members.yaml` (2026-08-17) but left blank for most current members (only Sheena Singh-Ranger `2026-08` and Jean-Marc Sinnasse `2026-10` are known), and for Kathryn Howe's `previous_members` entry, since the actual month/year each joined isn't recorded anywhere; fill in when known. Doesn't block anything — `start_date` is historical record only, doesn't affect display.
 - [ ] **Board history page** — `fenb-1/data/board_members.yaml` now has a `previous_members` list (added 2026-08-17) for past board members — populated when someone leaves the current `members` roster (see the file's header comment for the exact workflow) but not displayed anywhere yet. Build a "Board History" view when wanted.
 
 ## Programs page
@@ -88,6 +88,10 @@ Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
 - [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). A second international tournament (Dormagen, 2026-11-08) and an NB-hosted one with a Club/Division column (Hoplite Invitational, 2026-11-08) also worked and went all the way through `/fenb-content-add-results`. Still unseen: a genuine pools-only seeding event and a `/events/competitors/` page.
 - [ ] **Pools-only rule misfires on small events** — `/fenb-data-get-results` (hosted mode) marks any finished event with `tableau_link: False` as `pools_only` (no podium). At the Hoplite Invitational, Cadet Women's Épée (4 fencers, placings 1/2/3T/3T) and Senior Women's Épée (2 fencers) had no tableau link but were real standalone events; the user overrode the rule by hand. Refine the rule in `.claude/commands/fenb-data-get-results.md` — e.g. only treat it as a seeding pool when the name has "Pool(s)" or spans age groups, or when a separate DE event for the same group exists — and keep `/fenb-content-add-results` Step 5 in step with it.
 - [ ] **Decide what to remove** — `scripts/fencingtimelive-results.py` exits immediately and `scripts/check-ftl-deps.sh` only supports it. Delete them once the manual process is proven. `scripts/.browser-profile/` (49 MB, gitignored) can hold a saved FTL login and is no longer needed.
+
+## News — follow-up (2026-11-12)
+
+- [ ] **French quote in the new Executive Director article** — `fenb-1/content/news/2026/nov-12-new-executive-director.fr.md` shows Jean-Marc Sinnasse's quote in the original English. A French translation may only replace it once he approves the wording (it can't be presented as his quote otherwise). Update the `>` blockquote in the FR file when approved.
 
 ## Google document links
 
