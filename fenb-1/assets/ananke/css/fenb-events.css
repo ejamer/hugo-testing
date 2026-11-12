@@ -565,6 +565,9 @@
 .fenb-cal-bar--meeting,     .fenb-cal-dot--meeting      { background: var(--cat-meeting); }
 .fenb-cal-bar--announcement,.fenb-cal-dot--announcement { background: var(--cat-announcement); }
 
+/* hide_card events — shown on the grid as plain labels, no card to jump to */
+.fenb-cal-bar--no-card { cursor: default; }
+
 .fenb-cal-no-events {
   text-align: center;
   color: var(--text-muted);

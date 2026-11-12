@@ -152,6 +152,7 @@ Add an entry to `data/events.yaml`.
 | `registration_url_fr` | — | Optional French URL override for the **Register Now →** badge. Falls back to `registration_url_en` if blank. |
 | `results_url_en` | — | English URL for the **View Results →** badge. Offered by `/fenb-data-get-results` after it reads a tournament's saved pages (FTL links are language-agnostic, so `_fr` is left blank). `/fenb-content-add-results` will also offer to redirect an existing FTL link here to the internal article it just created, once one exists. |
 | `results_url_fr` | — | Optional French URL override for the **View Results →** badge (set when the results link is an internal bilingual news article). Falls back to `results_url_en` if blank. |
+| `hide_card` | — | `true` = the event shows on the calendar grid (as a non-clickable bar) and the schedule page only. It gets no event card (homepage upcoming events, cards below the calendar) and is left out of the `.ics` subscription feed. Use for events the public can't attend, e.g. FENB Board Meetings. Omit otherwise. |
 
 **Example:**
 
@@ -170,6 +171,7 @@ Add an entry to `data/events.yaml`.
   registration_url_fr: ""          # optional French override; falls back to _en if blank
   results_url_en: ""               # optional; populated by /fenb-data-get-results
   results_url_fr: ""               # optional French override; falls back to _en if blank
+  hide_card: true                  # optional; calendar grid + schedule only (e.g. board meetings) — omit otherwise
 ```
 
 **Category colours:**

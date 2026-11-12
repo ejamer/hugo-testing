@@ -599,6 +599,7 @@ events:
     end_date: ""
     location: ""
     category: "meeting"
+    hide_card: true
     description_en: "Monthly board meeting of the FENB Board of Directors."
     description_fr: "Réunion mensuelle du conseil d'administration de la FENB."
     details_url_en: ""
@@ -630,6 +631,7 @@ events:
     end_date: ""
     location: ""
     category: "meeting"
+    hide_card: true
     description_en: "Monthly board meeting of the FENB Board of Directors."
     description_fr: "Réunion mensuelle du conseil d'administration de la FENB."
     details_url_en: ""

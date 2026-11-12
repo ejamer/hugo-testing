@@ -3,8 +3,10 @@
   Enabled by `outputs` in content/events/_index{,.fr}.md; subscribe links live in
   layouts/events/list.html. Built from partials/all-events.html (current season +
   archive) so events stay in subscribers' calendars after a season rollover.
+  hide_card: true events (e.g. private board meetings) are left out — they appear on
+  the calendar grid and schedule page only.
 */ -}}
 {{- partial "ics/calendar.html" (dict
-      "events" (partial "all-events.html" .)
+      "events" (where (partial "all-events.html" .) "hide_card" "ne" true)
       "name"   (printf "%s — %s" site.Title (i18n "cal_feed_name"))
     ) -}}

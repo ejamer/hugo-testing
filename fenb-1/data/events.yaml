@@ -15,6 +15,10 @@
 #                   registration_url_fr — French override; falls back to registration_url_en if blank
 #                   results_url_en  — View Results link (EN); populated by /fenb-data-get-results
 #                   results_url_fr  — French override; falls back to results_url_en if blank
+#                   hide_card       — true = show on the calendar grid and schedule page only:
+#                                     no event card (homepage, below the calendar) and not in
+#                                     the .ics feed. For events the public can't attend, e.g.
+#                                     FENB Board Meetings.
 season: "2026–2027"
 
 events:
@@ -164,6 +168,7 @@ events:
     end_date: ""
     location: ""
     category: "meeting"
+    hide_card: true
     description_en: "Monthly board meeting of the FENB Board of Directors."
     description_fr: "Réunion mensuelle du conseil d'administration de la FENB."
     details_url_en: ""
@@ -224,6 +229,7 @@ events:
     end_date: ""
     location: ""
     category: "meeting"
+    hide_card: true
     description_en: "Monthly board meeting of the FENB Board of Directors."
     description_fr: "Réunion mensuelle du conseil d'administration de la FENB."
     details_url_en: ""
