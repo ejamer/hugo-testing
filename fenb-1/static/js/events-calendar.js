@@ -339,6 +339,11 @@
       .replace(/"/g, '&quot;');
   }
 
+  // Only links to other sites open a new tab — same rule as partials/event-card.html.
+  function targetAttr(url) {
+    return /^https?:/i.test(url) ? ' target="_blank" rel="noopener noreferrer"' : '';
+  }
+
   function formatEventDate(e) {
     var sD   = new Date(e.start_date + 'T00:00:00');
     var eD   = (e.end_date && e.end_date > e.start_date) ? new Date(e.end_date + 'T00:00:00') : sD;
@@ -387,15 +392,15 @@
       var linksHtml = '';
       var detailsUrl = (fr && e.details_url_fr) ? e.details_url_fr : e.details_url_en;
       if (detailsUrl) {
-        linksHtml += '<a href="' + esc(detailsUrl) + '" class="fenb-event-details-link" target="_blank" rel="noopener noreferrer">' + esc(cal.detailsLabel) + ' →</a>';
+        linksHtml += '<a href="' + esc(detailsUrl) + '" class="fenb-event-details-link"' + targetAttr(detailsUrl) + '>' + esc(cal.detailsLabel) + ' →</a>';
       }
       var registerUrl = (fr && e.registration_url_fr) ? e.registration_url_fr : e.registration_url_en;
-      if (registerUrl && eventDate >= today) {
-        linksHtml += '<a href="' + esc(registerUrl) + '" class="fenb-event-register-link" target="_blank" rel="noopener noreferrer">' + esc(cal.registerLabel) + ' →</a>';
+      if (registerUrl && eventDate > today) {   // closes on the event day itself
+        linksHtml += '<a href="' + esc(registerUrl) + '" class="fenb-event-register-link"' + targetAttr(registerUrl) + '>' + esc(cal.registerLabel) + ' →</a>';
       }
       var resultsUrl = (fr && e.results_url_fr) ? e.results_url_fr : e.results_url_en;
       if (resultsUrl) {
-        linksHtml += '<a href="' + esc(resultsUrl) + '" class="fenb-event-results-link" target="_blank" rel="noopener noreferrer">' + esc(cal.resultsLabel) + ' →</a>';
+        linksHtml += '<a href="' + esc(resultsUrl) + '" class="fenb-event-results-link"' + targetAttr(resultsUrl) + '>' + esc(cal.resultsLabel) + ' →</a>';
       }
       // Add to Calendar — icon pinned bottom-right of the card that opens the shared
       // calendar dialog (js/calendar-dialog.js). Mirrors the "icon" style of

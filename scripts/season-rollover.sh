@@ -75,28 +75,17 @@ mkdir -p "$ARCHIVE_DIR"
 cp "$EVENTS_FILE" "$ARCHIVE_FILE"
 echo "✓ Archived: $ARCHIVE_FILE"
 
-cat > "$EVENTS_FILE" <<EOF
-# Fencing-Escrime NB — $NEW_LABEL Event Calendar
-# Sorted chronologically by start_date. Homepage shows the next 4 upcoming events.
-#
-# Required fields:  title, start_date (YYYY-MM-DD), location ("City, Province" or
-#                   "Venue Name, City, Province"), category (must match a key in
-#                   data/event_categories.yaml and i18n files)
-#
-# Optional fields:  title_fr        — French override for the title; falls back to title if blank
-#                   end_date        — omit or leave blank for single-day events
-#                   description_en  — short note shown on the schedule page (not homepage)
-#                   description_fr  — French override; falls back to description_en if blank
-#                   details_url_en  — Learn More link (used for both languages if _fr is blank)
-#                   details_url_fr  — French override for the Learn More link
-#                   registration_url_en — Register Now link (EN); hidden once event date has passed
-#                   registration_url_fr — French override; falls back to registration_url_en if blank
-#                   results_url_en  — View Results link (EN); populated by /fenb-data-get-results
-#                   results_url_fr  — French override; falls back to results_url_en if blank
-season: "$NEW_LABEL"
-
-events: []
-EOF
+# Carry the outgoing file's header comment (everything above `season:`) forward, so
+# the field documentation in events.yaml is the only copy and never drifts. Only the
+# season label in the title line changes.
+{
+  awk -v old="$CURRENT_SEASON" -v new="$NEW_LABEL" '
+    /^season:/ { exit }
+    NR == 1 { i = index($0, old); if (i) $0 = substr($0, 1, i - 1) new substr($0, i + length(old)) }
+    { print }
+  ' "$ARCHIVE_FILE"
+  printf 'season: "%s"\n\nevents: []\n' "$NEW_LABEL"
+} > "$EVENTS_FILE"
 echo "✓ Fresh events file: $EVENTS_FILE (season: \"$NEW_LABEL\")"
 
 sed -i.bak -E "s/^description: \".*season schedule\"/description: \"$NEW_LABEL season schedule\"/" "$INDEX_EN" && rm -f "$INDEX_EN.bak"

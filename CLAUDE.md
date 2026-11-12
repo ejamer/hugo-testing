@@ -145,7 +145,7 @@ Before implementing anything that touches the nav bar layout (adding/moving butt
 
 Match the top-level YAML key to the filename exactly. Only create data files for genuinely editable content — static structural elements belong directly in the template.
 
-**Bilingual data fields use an `_en` / `_fr` suffix pair, with `_fr` falling back to `_en` when empty or omitted** (e.g. `title_en`/`title_fr`, `url_en`/`url_fr`, `src_en`/`src_fr` in `hero_slides.yaml`, `image_en`/`image_fr` in `coach_pathways.yaml`). Apply this pattern to any new bilingual field on a data YAML file rather than inventing a different naming scheme.
+**Bilingual data fields use an `_en` / `_fr` suffix pair, with `_fr` falling back to `_en` when empty or omitted** (e.g. `title_en`/`title_fr`, `url_en`/`url_fr`, `src_en`/`src_fr` and `alt_en`/`alt_fr` in `hero_slides.yaml`, `image_en`/`image_fr` in `coach_pathways.yaml`). Apply this pattern to any new bilingual field on a data YAML file rather than inventing a different naming scheme. In templates, read these fields with `partial "localized.html" (dict "item" . "field" "title")` — it handles both `title`/`title_fr` and `x_en`/`x_fr` — and never write the fallback out inline, so the rule lives in one place.
 
 ## URL paths — the no-leading-slash rule
 
@@ -156,7 +156,7 @@ Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as host-root-relativ
 
 **Rule: never use a leading `/` with any Hugo URL function.** This applies to hardcoded strings in templates and to paths stored in data YAML files piped through URL functions.
 
-**Exception — `results_url_en`/`results_url_fr` in `events.yaml`:** these are rendered as a raw `href` in `layouts/partials/event-card.html` and `layouts/events/schedule.html`, never piped through `relLangURL`/`absURL`, so a leading `/` is correct there when the value is an internal news article (e.g. `/news/2026/.../` and `/fr/news/2026/.../`). The templates also key off that leading `/` to decide whether to skip `target="_blank"` for internal links — don't "fix" these paths to remove the leading slash.
+**Exception — `results_url_en`/`results_url_fr` in `events.yaml`:** these are rendered as a raw `href` in `layouts/partials/event-card.html` and `layouts/events/schedule.html`, never piped through `relLangURL`/`absURL`, so a leading `/` is correct there when the value is an internal news article (e.g. `/news/2026/.../` and `/fr/news/2026/.../`). Don't "fix" these paths to remove the leading slash. The templates open only `http(s)` links in a new tab, so internal paths (leading `/`) and `mailto:` links open in the same tab.
 
 **Same for `details_url_en`/`details_url_fr`:** also rendered raw (event card, schedule, calendar JSON, `.ics`). An internal page link keeps its leading and trailing `/` (e.g. `/news/2026/oct-30-slug/` + `/fr/news/2026/oct-30-slug/`) — `layouts/partials/event-details-url.html` keys off that shape to check the page exists and hides the Learn More link until it's published (so it can point to a future-dated article).
 

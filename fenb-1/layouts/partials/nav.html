@@ -28,6 +28,15 @@
           {{ end }}
         </ul>
         {{ end }}
+        {{- /* Phones only (≤480px, fenb-responsive.css): the bar has no room for the
+               Facebook icon, so it's offered here at the bottom of the menu instead. Kept
+               outside the <ul> — the menu's last <li> is styled as the Join button. */}}
+        {{ with site.Params.ananke.social.facebook.profilelink }}
+        <div class="fenb-nav-social-menu">
+          <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "nav_facebook" }}">
+            {{- partial "icon.html" (dict "name" "facebook.svg" "w" 18 "h" 18) }} Facebook</a>
+        </div>
+        {{ end }}
       </div>
       <div class="fenb-nav-actions">
         <button class="fenb-search-btn" id="fenb-search-btn"
@@ -37,6 +46,13 @@
                 data-lang="{{ .Site.Language.Lang }}">
           {{ partial "icon.html" (dict "name" "search.svg" "w" 21 "h" 21) }}
         </button>
+        {{- /* Hidden on phones (≤480px) — see .fenb-nav-social-menu above. */}}
+        {{ with site.Params.ananke.social.facebook.profilelink }}
+        <a href="{{ . }}" class="fenb-nav-social" target="_blank" rel="noopener noreferrer"
+           aria-label="{{ i18n "nav_facebook" }}">
+          {{- partial "icon.html" (dict "name" "facebook.svg" "w" 20 "h" 20) -}}
+        </a>
+        {{ end }}
         <div class="fenb-theme-wrap">
           <button class="fenb-theme-toggle" id="fenb-theme-toggle"
                   aria-haspopup="menu" aria-expanded="false" aria-label="Theme">
@@ -69,10 +85,11 @@
             <a href="{{ .RelPermalink }}" class="fenb-lang-btn" lang="{{ .Language.Lang }}" hreflang="{{ .Language.Lang }}">{{ .Language.Lang | upper }}</a>
             {{- end }}
           {{- else }}
-            {{- range .Site.Languages }}
-              {{- if ne .Lang $.Site.Language.Lang }}
-              {{- $href := cond (eq .Lang "en") "/" (printf "/%s/" .Lang) }}
-              <a href="{{ $href }}" class="fenb-lang-btn" lang="{{ .Lang }}" hreflang="{{ .Lang }}">{{ .Lang | upper }}</a>
+            {{- /* The other language's real home page — works under any baseURL
+                   (e.g. "/fr/" in production, "/hugo-testing/fr/" on the preview). */}}
+            {{- range hugo.Sites }}
+              {{- if ne .Language.Lang $.Site.Language.Lang }}
+              <a href="{{ .Home.RelPermalink }}" class="fenb-lang-btn" lang="{{ .Language.Lang }}" hreflang="{{ .Language.Lang }}">{{ .Language.Lang | upper }}</a>
               {{- end }}
             {{- end }}
           {{- end }}
@@ -169,6 +186,14 @@
     const iconMoon    = themeToggle && themeToggle.querySelector('.fenb-theme-icon--moon');
     const iconSystem  = themeToggle && themeToggle.querySelector('.fenb-theme-icon--system');
 
+    // localStorage throws (SecurityError) when the visitor blocks site data. A theme
+    // choice that can't be remembered would reset on every page, so in that case the
+    // theme menu is hidden and the site just follows the OS light/dark setting.
+    const canStore = (function () {
+      try { localStorage.setItem('fenb-test', '1'); localStorage.removeItem('fenb-test'); return true; }
+      catch (e) { return false; }
+    })();
+
     function applyTheme(pref) {
       const isDark = pref === 'dark' || (pref === 'system' && sysDark.matches);
       if (isDark) document.documentElement.setAttribute('data-theme', 'dark');
@@ -179,7 +204,6 @@
       if (themeMenu) themeMenu.querySelectorAll('.fenb-theme-option').forEach(function (btn) {
         btn.classList.toggle('is-active', btn.dataset.pref === pref);
       });
-      localStorage.setItem('fenb-theme', pref);
     }
 
     function openThemeMenu() {
@@ -198,7 +222,12 @@
       themeToggle.setAttribute('aria-expanded', 'false');
     }
 
-    if (themeToggle && themeMenu) {
+    if (themeToggle && themeMenu && !canStore) {
+      themeToggle.closest('.fenb-theme-wrap').hidden = true;
+      sysDark.addEventListener('change', function () { applyTheme('system'); });
+    }
+
+    if (themeToggle && themeMenu && canStore) {
       applyTheme(localStorage.getItem('fenb-theme') || 'system');
 
       sysDark.addEventListener('change', function () {
@@ -212,6 +241,7 @@
       themeMenu.querySelectorAll('.fenb-theme-option').forEach(function (btn) {
         btn.addEventListener('click', function () {
           applyTheme(btn.dataset.pref);
+          localStorage.setItem('fenb-theme', btn.dataset.pref);
           closeThemeMenu();
           themeToggle.focus();
         });

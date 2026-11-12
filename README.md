@@ -148,7 +148,7 @@ Add an entry to `data/events.yaml`.
 | `description_fr` | — | Optional French description. Falls back to `description_en` if blank |
 | `details_url_en` | — | English URL for the **Learn More →** badge. Used for both languages when `details_url_fr` is blank. Can point to a scheduled (future-dated) news article, e.g. `/news/2026/oct-30-slug/` + `/fr/news/2026/oct-30-slug/` — the badge stays hidden until the article is published (`layouts/partials/event-details-url.html`) |
 | `details_url_fr` | — | Optional French URL override for the **Learn More →** badge |
-| `registration_url_en` | — | English URL for the **Register Now →** badge. Used for both languages when `registration_url_fr` is blank. Hidden for past events (date < today). |
+| `registration_url_en` | — | English URL for the **Register Now →** badge. Used for both languages when `registration_url_fr` is blank. Hidden from the event day on (shown only while start_date > today). |
 | `registration_url_fr` | — | Optional French URL override for the **Register Now →** badge. Falls back to `registration_url_en` if blank. |
 | `results_url_en` | — | English URL for the **View Results →** badge. Offered by `/fenb-data-get-results` after it reads a tournament's saved pages (FTL links are language-agnostic, so `_fr` is left blank). `/fenb-content-add-results` will also offer to redirect an existing FTL link here to the internal article it just created, once one exists. |
 | `results_url_fr` | — | Optional French URL override for the **View Results →** badge (set when the results link is an internal bilingual news article). Falls back to `results_url_en` if blank. |
@@ -167,7 +167,7 @@ Add an entry to `data/events.yaml`.
   description_fr: ""               # optional; falls back to description_en if blank
   details_url_en: ""               # optional Learn More link (used for both languages if _fr is blank)
   details_url_fr: ""               # optional French override for the Learn More link
-  registration_url_en: ""          # optional; hidden once event date has passed
+  registration_url_en: ""          # optional; hidden from the event day on
   registration_url_fr: ""          # optional French override; falls back to _en if blank
   results_url_en: ""               # optional; populated by /fenb-data-get-results
   results_url_fr: ""               # optional French override; falls back to _en if blank
@@ -420,14 +420,16 @@ Drop replacement images into `static/images/hero/` and update `data/hero_slides.
 slides:
   - src_en: images/hero/hero1.jpg
     src_fr: ""                                    # optional — French-language variant of the image
-    alt: "Alt text for accessibility"
+    alt_en: "What the image shows"               # required — alt text for accessibility
+    alt_fr: "Ce que montre l'image"              # leave empty to fall back to alt_en
     link_en: "news/2026/jun-16-some-article/"   # optional — makes slide clickable
     link_fr: ""                                  # leave empty to fall back to link_en
     publish_from: ""                              # optional — hide until this date
     expires: ""                                   # optional — hide after this date
   - src_en: images/hero/hero2.jpg
     src_fr: ""
-    alt: ""
+    alt_en: "A fencer lunging at an opponent"
+    alt_fr: "Un escrimeur en fente contre son adversaire"
     link_en: ""
     link_fr: ""
     publish_from: ""

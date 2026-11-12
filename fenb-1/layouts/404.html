@@ -24,9 +24,15 @@
   </div>
 </div>
 
+{{- /* Paths are computed at build time so the page works under any baseURL
+       (e.g. "/" in production, "/hugo-testing/" on the GitHub Pages preview). */ -}}
+{{- $frHome := "" -}}
+{{- range hugo.Sites }}{{ if eq .Language.Lang "fr" }}{{ $frHome = .Home.RelPermalink }}{{ end }}{{ end }}
 <script>
 (function () {
-  var isFr = window.location.pathname.indexOf('/fr/') >= 0;
+  var base   = '{{ "" | relURL }}';   // site root, e.g. "/" or "/hugo-testing/"
+  var frHome = '{{ $frHome }}';       // French home, e.g. "/fr/" or "/hugo-testing/fr/"
+  var isFr   = window.location.pathname.indexOf(frHome) === 0;
 
   // ── Mount an always-visible Pagefind search bar ────────
   // (Strings mirror i18n/en.yaml + i18n/fr.yaml — Hugo's build-time i18n
@@ -85,28 +91,30 @@
   document.getElementById('fenb-404-tip').textContent   = "Astuce : pensez à mettre à jour vos favoris ou liens enregistrés une fois que vous avez trouvé ce que vous cherchez!";
   var homeBtn = document.getElementById('fenb-404-home');
   homeBtn.textContent = "Retour à l’accueil";
-  homeBtn.href = '/fr/';
+  homeBtn.href = frHome;
 
   // ── French nav labels (from Hugo's French menu) ────────
   // Keyed by the raw, un-prefixed menu url (e.g. "events/") — matched below
-  // against the *end* of each rendered href, since the href's prefix varies
-  // by environment (e.g. "/events/" in production, "/hugo-testing/events/"
-  // in dev) while the raw url configured in hugo.toml never does.
+  // against the *end* of each rendered href, so the environment's base path
+  // doesn't matter.
   var frLabels = {
     {{- range hugo.Sites -}}
       {{- if eq .Language.Lang "fr" -}}
         {{- range .Menus.main -}}
           "{{ .URL }}": {{ .Name | jsonify | safeJS }},
+          {{- range .Children -}}
+          "{{ .URL }}": {{ .Name | jsonify | safeJS }},
+          {{- end -}}
         {{- end -}}
       {{- end -}}
     {{- end }}
   };
 
-  // ── Nav links: add /fr prefix + swap label text ────────
+  // ── Nav links: swap the site base for the French home + swap label text ──
   document.querySelectorAll('.fenb-nav-links a[href]').forEach(function (a) {
     var href = a.getAttribute('href');
-    if (!href || href.charAt(0) !== '/' || href.indexOf('/fr') === 0) return;
-    a.setAttribute('href', '/fr' + href);
+    if (!href || href.indexOf(base) !== 0 || href.indexOf(frHome) === 0) return;
+    a.setAttribute('href', frHome + href.slice(base.length));
     for (var rawUrl in frLabels) {
       if (href.slice(-('/' + rawUrl).length) === '/' + rawUrl) {
         a.textContent = frLabels[rawUrl];
@@ -117,12 +125,12 @@
 
   // ── Logo home link ─────────────────────────────────────
   var logo = document.querySelector('.fenb-nav-logo-link');
-  if (logo) logo.setAttribute('href', '/fr/');
+  if (logo) logo.setAttribute('href', frHome);
 
   // ── Language switcher: flip to the English 404, matching the
   //    "EN"/"FR" abbreviation used by nav.html's fenb-lang-btn everywhere else ──
   document.querySelectorAll('.fenb-lang-btn').forEach(function (btn) {
-    btn.href        = '/404.html';
+    btn.href        = '{{ "404.html" | relURL }}';
     btn.lang        = 'en';
     btn.setAttribute('hreflang', 'en');
     btn.textContent = 'EN';

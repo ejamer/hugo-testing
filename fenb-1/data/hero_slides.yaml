@@ -1,5 +1,7 @@
 # Homepage hero carousel — used by layouts/index.html
-# Images live in static/images/hero/. alt text is required for accessibility.
+# Images live in static/images/hero/.
+# Required: alt_en — alt text for accessibility, describing what the image shows.
+#   - alt_fr: French alt text; falls back to alt_en if omitted or empty.
 # Optional: add link_en / link_fr to make a slide clickable with a "Read more" badge.
 #   - Internal paths: no leading slash, e.g. "news/2026/jun-16-results/"
 #   - External URLs: full URL, e.g. "https://example.com/page"
@@ -21,49 +23,56 @@
 slides:
   - src_en: images/hero/hero-cwg-training-camp-en.jpg
     src_fr: images/hero/hero-cwg-training-camp-fr.jpg
-    alt: "Canada Winter Games Athlete Training Camp, Nov 21–22 in Dieppe / Camp d'entraînement des athlètes en vue des Jeux d'hiver du Canada, 21 et 22 nov. à Dieppe"
+    alt_en: "Canada Winter Games Athlete Training Camp, Nov 21–22 in Dieppe"
+    alt_fr: "Camp d'entraînement des athlètes en vue des Jeux d'hiver du Canada, 21 et 22 nov. à Dieppe"
     link_en: "news/2026/nov-03-cwg-training-camp-2026/"
     link_fr: ""
     publish_from: "2026-11-03"
     expires: "2026-11-20"
   - src_en: images/hero/hero-register-october-en.png
     src_fr: images/hero/hero-register-october-fr.png
-    alt: "Fencer lunging beside an October calendar and a Register Now clipboard — October tournaments and events / Escrimeur en fente près d'un calendrier d'octobre — tournois et événements d'octobre, inscrivez-vous"
+    alt_en: "Fencer lunging beside an October calendar and a Register Now clipboard — October tournaments and events"
+    alt_fr: "Escrimeur en fente près d'un calendrier d'octobre — tournois et événements d'octobre, inscrivez-vous"
     link_en: "news/2026/oct-01-october-competitions-registration/"
     link_fr: ""
     publish_from: ""
     expires: "2026-10-20"
   - src_en: images/hero/hero-canada-cup-1-en.jpg
     src_fr: images/hero/hero-canada-cup-1-fr.jpg
-    alt: "Fencers celebrate with the Canadian flag — follow NB fencers at Canada Cup #1 / Escrimeurs célèbrent avec le drapeau canadien — suivez les escrimeurs du N.-B. à la Coupe Canada #1"
+    alt_en: "Fencers celebrate with the Canadian flag — follow NB fencers at Canada Cup #1"
+    alt_fr: "Escrimeurs célèbrent avec le drapeau canadien — suivez les escrimeurs du N.-B. à la Coupe Canada #1"
     link_en: "news/2026/sep-26-2026-09-25-canada-cup-1/"
     link_fr: ""
     publish_from: ""
     expires: "2026-10-04"
   - src_en: images/hero/hero5.jpg
     src_fr: ""
-    alt: ""
+    alt_en: "A fencer leaps forward in a flèche attack during a practice bout in a school gym"
+    alt_fr: "Un escrimeur s'élance en flèche lors d'un assaut d'entraînement dans un gymnase d'école"
     link_en: ""
     link_fr: ""
     publish_from: ""
     expires: ""
   - src_en: images/hero/hero3.jpg
     src_fr: ""
-    alt: ""
+    alt_en: "Black-and-white photo of two fencers in a bout, blades crossing beside a flag"
+    alt_fr: "Photo en noir et blanc de deux escrimeurs en plein assaut, les lames croisées à côté d'un drapeau"
     link_en: ""
     link_fr: ""
     publish_from: ""
     expires: ""
   - src_en: images/hero/hero-fleche.jpg
     src_fr: ""
-    alt: ""
+    alt_en: "Two fencers in a bout at the Canada Games, one leaping forward in a flèche"
+    alt_fr: "Deux escrimeurs en plein assaut aux Jeux du Canada, l'un s'élançant en flèche"
     link_en: ""
     link_fr: ""
     publish_from: ""
     expires: ""
   - src_en: images/hero/hero-mask.jpg
     src_fr: ""
-    alt: ""
+    alt_en: "A fencing mask with a Canadian maple leaf design, resting beside a piste"
+    alt_fr: "Un masque d'escrime orné d'une feuille d'érable canadienne, posé à côté d'une piste"
     link_en: ""
     link_fr: ""
     publish_from: ""

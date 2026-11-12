@@ -12,7 +12,7 @@
   Call with: {{ partial "event-details-url.html" $event }}
 */ -}}
 {{- $e := . -}}
-{{- $url := cond (and (eq site.Language.Lang "fr") $e.details_url_fr) $e.details_url_fr $e.details_url_en -}}
+{{- $url := partial "localized.html" (dict "item" $e "field" "details_url") -}}
 {{- if and $url (hasPrefix $url "/") (hasSuffix $url "/") -}}
   {{- $path := strings.TrimSuffix "/" $url -}}
   {{- if hasPrefix $path "/fr/" }}{{ $path = strings.TrimPrefix "/fr" $path }}{{ end -}}

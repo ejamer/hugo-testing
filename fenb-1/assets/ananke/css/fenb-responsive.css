@@ -8,7 +8,10 @@
   .fenb-article-layout { grid-template-columns: 1fr 260px; }
 }
 
-@media (max-width: 860px) {
+/* Nav collapses to the hamburger menu at 1000px — below that the desktop menu plus the
+   action icons (search, Facebook, theme, language) no longer fit beside the logo.
+   Page layouts switch separately, at 860px below. */
+@media (max-width: 1000px) {
   :root { --nav-height: 60px; }
 
   .fenb-nav-inner   { justify-content: flex-start; }
@@ -16,6 +19,7 @@
 
   /* Touch targets — ensure 44px minimum for action buttons */
   .fenb-search-btn,
+  .fenb-nav-social,
   .fenb-theme-toggle { min-height: 44px; min-width: 44px; }
   .fenb-lang-btn     { min-height: 44px; }
   .fenb-nav-toggle   { min-height: 44px; min-width: 44px; }
@@ -90,7 +94,9 @@
     color: var(--text-muted);
   }
   .fenb-nav-links.is-open .fenb-nav-dropdown a:hover { color: var(--teal); }
+}
 
+@media (max-width: 860px) {
   .fenb-search-overlay-inner { padding: 0 1rem; }
   .fenb-search-row { gap: 0.25rem; }
 
@@ -170,6 +176,26 @@
   .fenb-about-contact-section { padding: 3.5rem 1rem; }
   .fenb-policy-section { padding: 3rem 1rem; }
   .fenb-policy-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+}
+
+/* Phones: no room in the bar for the Facebook icon (360px leaves ~16px) — it moves to
+   the bottom of the open menu instead, below a divider.
+   Footer: the footer already has side padding here, so the copyright's own left padding
+   (ph3) is dropped — otherwise it wraps onto two lines at 360px. */
+@media (max-width: 480px) {
+  .fenb-footer-copy { padding-left: 0; padding-right: 0.5rem; }
+  .fenb-nav-social { display: none; }
+  .fenb-nav-links.is-open .fenb-nav-social-menu {
+    display: block;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--light-gray);
+    padding-top: 0.25rem;
+  }
+  .fenb-nav-links.is-open .fenb-nav-social-menu a {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
 }
 
 /* ── Print ────────────────────────────────────── */

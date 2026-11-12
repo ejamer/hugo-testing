@@ -10,8 +10,8 @@
 - `static/images/fenb-logo` — folder contains the FENB-Logo-Standards.html guidelines, and subfolders with different official logo files
 - `FENB-Logo-Landscape-FullColour` — full landscape logo for light backgrounds; used in desktop nav (`fenb-nav-logo--color`)
 - `FENB-Logo-Landscape-White` — full landscape logo for dark/teal backgrounds; used in desktop dark-mode nav (`fenb-nav-logo--white`)
-- `FENB-Logo-Small-FullColor` — compact mark for light backgrounds; used in mobile nav at ≤860px (`fenb-nav-logo--small-color`)
-- `FENB-Logo-Small-White` — compact mark for dark mode; used in mobile dark-mode nav at ≤860px (`fenb-nav-logo--small-white`)
+- `FENB-Logo-Small-FullColor` — compact mark for light backgrounds; in the nav markup (`fenb-nav-logo--small-color`) but hidden by CSS at every width — phones show the landscape logo
+- `FENB-Logo-Small-White` — compact mark for dark backgrounds; in the nav markup (`fenb-nav-logo--small-white`) but hidden there too; used by the homepage hero's fallback slide
  
 
 ### Fonts
@@ -131,7 +131,8 @@ The template renders the chevron, dropdown panel, and hover/focus behaviour auto
 **CSS rules to keep in mind:**
 - `.fenb-nav-links > ul` and `.fenb-nav-links > ul > li:last-child` use direct-child selectors deliberately — this prevents the crimson Join pill and the flex layout from bleeding into nested dropdown `<ul>` elements. Any new nav list rules must also use `> ul` rather than the bare descendant selector `ul`.
 - The dropdown `min-width` is currently `260px` — increase it if you add items with long translated labels.
-- On mobile (≤ 860px), dropdown items are always visible as indented sub-items inside the open hamburger menu.
+- The nav collapses to the hamburger menu at **≤ 1000px** (below that, the desktop menu plus the action icons no longer fit beside the logo). Page layouts switch separately, at ≤ 860px — both in `fenb-responsive.css`. In the hamburger menu, dropdown items show as indented sub-items.
+- **Action icons** (`.fenb-nav-actions`), in order: search, Facebook, theme, language. The Facebook link comes from `hugo.toml` → `params.ananke.social.facebook.profilelink` and shares the search button's look (`.fenb-nav-social`). At ≤ 480px there's no room in the bar, so it's hidden there and shown instead at the bottom of the open menu (`.fenb-nav-social-menu`). That block sits after the menu's `<ul>`, not inside it, because the last `<li>` is styled as the Join pill.
 
 ---
 
@@ -371,6 +372,8 @@ Icon-only `<button>` (currently: Add to Calendar, rendered by `partials/ics/add-
 
 The tooltip opens **upward and right-aligned** so it stays inside the card (`.fenb-event-card` has `overflow: hidden`), and the card body reserves a bottom strip (`padding-bottom: 2.9rem`) so the icon never covers wrapped text on phones. Reuse the pattern for other icon-only card actions rather than adding a new tooltip style.
 
+The footer's Website privacy icon (`.fenb-footer-icon`, `partials/site-footer.html`) uses the same tooltip — its selectors are listed alongside `.fenb-event-ics-btn` in the `::after` rules in `fenb-events.css`. Add new tooltip icons there the same way.
+
 ### `calendar-dialog.html` partial — shared modal (`.fenb-cal-dialog`)
 
 One native `<dialog>` per page (`showModal()` gives the backdrop, Escape-to-close and focus containment), filled in by `static/js/calendar-dialog.js` from the `data-cal-*` attributes of the trigger that opened it. Two modes via `data-cal-dialog`: `"event"` (heading, event title + date · location summary, Apple/Outlook `.ics` + Google buttons) and `"subscribe"` (heading, intro line, Apple/Outlook `webcal://`, Google, and the plain feed URL). Closes on Escape, backdrop click, ✕, or choosing an option; focus returns to the trigger.
@@ -410,7 +413,7 @@ Three link types appear on event cards and schedule rows. Each has a specific CS
 | Register Now → | `fenb-event-register-link` | `--crimson` | `--text-body` |
 | View Results → | `fenb-event-results-link` | `--navy` | `--navy-light` |
 
-`Register Now` is suppressed for past events (date < today). `View Results` shows regardless of date when `results_url_en` is set.
+`Register Now` is suppressed from the event day on (shown only while start_date > today). `View Results` shows regardless of date when `results_url_en` is set.
 
 `View Results` opens in the same tab when it points at an internal news article (root-relative, e.g. `/news/2026/.../`) and in a new tab for external hosts (e.g. fencingtimelive.com) — the templates decide this by checking for a leading `/`, so internal results links must keep it.
 
@@ -600,18 +603,16 @@ For data-file-driven loops where the icon filename comes from YAML, pass the siz
 {{ end }}
 ```
 
-For simple one-off uses where no size or class override is needed, `readFile` is fine:
+Even with no size or class override, use the partial — `{{ partial "icon.html" (dict "name" .icon) }}` — rather than `readFile … | safeHTML`. The partial is the one place SVG files are read, and it fails the build with a clear error if the file is missing.
 
-```html
-{{ readFile (printf "static/images/svg/%s" .icon) | safeHTML }}
-```
+**Brand logos:** `facebook.svg` is the Facebook mark copied from the Ananke theme (`themes/ananke/assets/ananke/socials/facebook.svg`; the 24×24 path matches the Simple Icons set, which is public domain). It's a brand mark, so keep it unmodified apart from `fill="currentColor"`.
 
 ### Adding a new icon
 
 1. Drop the `.svg` file in `fenb-1/static/images/svg/`.
 2. Strip any `width`/`height` attributes — keep `viewBox` only.
 3. Add `aria-hidden="true"` to the `<svg>` tag.
-4. Reference it by filename via the partial or `readFile`.
+4. Reference it by filename via the `icon.html` partial.
 
 ### Data files that reference icons
 
@@ -651,7 +652,11 @@ When display text must be computed from data (e.g. a bilingual date from `start_
 
 Called as: `{{ partial "event-date.html" . }}`
 
-This keeps the logic in one file regardless of how many templates render the same thing. `layouts/partials/event-date.html` is the established example.
+This keeps the logic in one file regardless of how many templates render the same thing. Examples:
+
+- `event-date.html` — an event's date or date range, EN/FR
+- `news-date.html` — a news article's date, long or short month (`(dict "date" .Date "month" "long")`)
+- `localized.html` — a bilingual data field in the current language, with `_fr` falling back to English (`(dict "item" . "field" "title")`). This is the only place that fallback rule is written; don't inline it.
 
 ### Filterable list pages — SSR + JS visibility pattern
 

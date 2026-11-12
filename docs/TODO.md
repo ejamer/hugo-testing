@@ -4,6 +4,15 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ---
 
+## Code audit follow-up (2026-11-12)
+
+- [ ] **Security review — 7 open items** — see `docs/SECURITY_REVIEW.md` (problem, location, proposed fix and test for each). Three are Medium: Markdown links skipping Hugo's URL check, the calendar JS not checking link schemes, and unpinned Pagefind/third-party action in CI. Two need a decision first (#5 results-report email recipient, #7 whether the bypass-permissions Claude settings stay committed). Plan and approve each fix before changing anything; delete items from that file as they're done.
+
+- [ ] **Logo files in `static/images/fenb-logo/`** — only 4 SVGs there are used by the site (nav logos and the hero fallback); the rest (`.ai`/`.eps` masters, PDF/PNG/JPG exports, TeamEquipeNB set, brand guide) is published as-is. The owner will decide what to do with them later — leave the folder untouched until then.
+- [ ] **Full docs review** — once the code-audit fixes are all made, review every project doc (`CLAUDE.md`, `README.md`, `docs/*.md`, `plans/*.md`, `.claude/commands/*.md`): remove content that's no longer needed, and confirm what remains is correct and current. Wait until all audit edits are done.
+
+---
+
 ## Events data — 2026–2027 season review (2026-09-15)
 
 `data/events.yaml` was populated for the full 2026–2027 season from the FENB tentative calendar (`~/Downloads/fenb_events/fenb 2026-2027 Calendar.pdf`), cross-referenced against the OFA and Quebec (FEQ) provisional calendars for out-of-province dates/locations. Needs a full review pass before publishing — in particular:
@@ -87,7 +96,7 @@ Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
 
 - [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). A second international tournament (Dormagen, 2026-11-08) and an NB-hosted one with a Club/Division column (Hoplite Invitational, 2026-11-08) also worked and went all the way through `/fenb-content-add-results`. Still unseen: a genuine pools-only seeding event and a `/events/competitors/` page.
 - [ ] **Pools-only rule misfires on small events** — `/fenb-data-get-results` (hosted mode) marks any finished event with `tableau_link: False` as `pools_only` (no podium). At the Hoplite Invitational, Cadet Women's Épée (4 fencers, placings 1/2/3T/3T) and Senior Women's Épée (2 fencers) had no tableau link but were real standalone events; the user overrode the rule by hand. Refine the rule in `.claude/commands/fenb-data-get-results.md` — e.g. only treat it as a seeding pool when the name has "Pool(s)" or spans age groups, or when a separate DE event for the same group exists — and keep `/fenb-content-add-results` Step 5 in step with it.
-- [ ] **Decide what to remove** — `scripts/fencingtimelive-results.py` exits immediately and `scripts/check-ftl-deps.sh` only supports it. Delete them once the manual process is proven. `scripts/.browser-profile/` (49 MB, gitignored) can hold a saved FTL login and is no longer needed.
+- [ ] **Delete the old browser profile** — `scripts/.browser-profile/` (49 MB, gitignored, local only) can hold a saved FTL login and is no longer needed. **Keep** `scripts/fencingtimelive-results.py` and `scripts/check-ftl-deps.sh` (decided 2026-11-12): the scraper's code is preserved on purpose, and it must keep exiting immediately at the top so it can't be run by mistake — don't delete it or remove that exit.
 
 ## Google document links
 

@@ -1,10 +1,13 @@
 <footer class="{{ .Site.Params.background_color_class | compare.Default "bg-black" }} bottom-0 w-100" role="contentinfo">
   <div class="flex justify-between">
-    <a class="f4 fw4 hover-white white-70 dib pv2 ph3 no-underline" href="{{ .Site.Home.RelPermalink }}">
+    <a class="fenb-footer-copy f4 fw4 hover-white white-70 dib pv2 ph3 no-underline" href="{{ .Site.Home.RelPermalink }}">
       &copy; {{ with .Site.Copyright | compare.Default .Site.Title }} {{ . | safe.HTML }} {{ now.Format "2006"}} {{ end }}
     </a>
     <div class="fenb-footer-right">
-      {{ partials.IncludeCached "social/follow.html" . }}
+      <a href="{{ "about/policies/website-privacy/" | relLangURL }}" class="fenb-footer-icon"
+         aria-label="{{ i18n "footer_privacy" }}" data-tooltip="{{ i18n "footer_privacy" }}">
+        {{- partial "icon.html" (dict "name" "shield.svg" "w" 22 "h" 22) -}}
+      </a>
       <a href="{{ "news/index.xml" | relLangURL }}" class="fenb-footer-rss" aria-label="{{ i18n "rss_feed_label" }}">
         {{ partial "icon.html" (dict "name" "rss.svg" "w" 18 "h" 18) }}
       </a>

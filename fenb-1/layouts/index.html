@@ -15,8 +15,7 @@
              that page is in the build — a future-dated article only appears at the first build
              after its date, so the slide would otherwise 404 until then. Files and external
              links aren't checked. */}}
-        {{ $link := .link_en }}
-        {{ if and (eq site.Language.Lang "fr") .link_fr }}{{ $link = .link_fr }}{{ end }}
+        {{ $link := partial "localized.html" (dict "item" . "field" "link") }}
         {{ $pageExists := true }}
         {{ if and $link (not (hasPrefix $link "http")) (hasSuffix $link "/") }}
           {{ $pageExists = site.GetPage (printf "/%s" (strings.TrimSuffix "/" $link)) }}
@@ -27,19 +26,18 @@
       {{ end }}
       {{ range $i, $slide := $visibleSlides }}
       <div class="fenb-hero-slide{{ if eq $i 0 }} is-active{{ end }}" data-publish-from="{{ $slide.publish_from }}" data-expires="{{ $slide.expires }}">
-        {{- $link := $slide.link_en -}}
-        {{- if and (eq site.Language.Lang "fr") $slide.link_fr -}}{{- $link = $slide.link_fr -}}{{- end -}}
-        {{- $src := $slide.src_en -}}
-        {{- if and (eq site.Language.Lang "fr") $slide.src_fr -}}{{- $src = $slide.src_fr -}}{{- end -}}
+        {{- $link := partial "localized.html" (dict "item" $slide "field" "link") -}}
+        {{- $src := partial "localized.html" (dict "item" $slide "field" "src") -}}
+        {{- $alt := partial "localized.html" (dict "item" $slide "field" "alt") -}}
         {{ if $link }}
         {{ $isExternal := hasPrefix $link "http" }}
         {{ $href := cond $isExternal $link ($link | relLangURL) }}
         <a href="{{ $href }}" class="fenb-hero-slide-link"{{ if $isExternal }} target="_blank" rel="noopener"{{ end }}>
-          <img src="{{ $src | relURL }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
+          <img src="{{ $src | relURL }}" alt="{{ $alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
           <span class="fenb-hero-slide-cta" aria-hidden="true">{{ i18n "read_more" }} &rarr;</span>
         </a>
         {{ else }}
-        <img src="{{ $src | relURL }}" alt="{{ $slide.alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
+        <img src="{{ $src | relURL }}" alt="{{ $alt }}" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}">
         {{ end }}
       </div>
       {{ end }}
@@ -138,7 +136,7 @@
       {{ range hugo.Data.quick_links.quick_links }}
       <a href="{{ .url | relLangURL }}" class="fenb-program-card{{ if .accent }} fenb-program-card--accent{{ end }}">
         <div class="fenb-program-icon">
-          {{ readFile (printf "static/images/svg/%s" .icon) | safeHTML }}
+          {{ partial "icon.html" (dict "name" .icon) }}
         </div>
         <h3>{{ i18n (printf "program_%s_title" .id) }}</h3>
         <p>{{ i18n (printf "program_%s_desc" .id) }}</p>

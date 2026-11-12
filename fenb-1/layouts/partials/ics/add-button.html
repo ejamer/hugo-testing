@@ -17,7 +17,7 @@
 */ -}}
 {{- $e := . -}}
 {{- $label := i18n "event_add_calendar" -}}
-{{- $title := cond (and (eq site.Language.Lang "fr") $e.title_fr) $e.title_fr $e.title -}}
+{{- $title := partial "localized.html" (dict "item" $e "field" "title") -}}
 <button type="button" class="fenb-event-ics-btn"
   data-cal-dialog="event"
   data-cal-title="{{ $title }}"

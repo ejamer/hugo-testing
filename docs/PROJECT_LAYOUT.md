@@ -15,6 +15,7 @@ hugo-testing/
 │   ├── GOTCHAS.md         Past build/template gotchas and their fixes
 │   ├── PROJECT_LAYOUT.md  This file — full directory tree
 │   ├── REFEREE_PROGRAM_COMPARISON.md  Internal report: FENB referee program vs. CFF manual, FIE rules, and other provinces
+│   ├── SECURITY_REVIEW.md Open security findings from the 2026-11-12 audit — problem, fix and test for each (TODO.md links it)
 │   ├── STYLE_GUIDE.md     Brand, CSS, and content conventions
 │   └── TODO.md            Outstanding items — keep current
 ├── .claude/               Project skills and settings (see CLAUDE.md for skill descriptions)
@@ -100,11 +101,13 @@ hugo-testing/
     │                         event-details-url.html Return-value partial — an event's Learn More URL in the current language; blank when it points to a page that isn't published yet (e.g. a future-dated article)
     │                         calendar-dialog.html  Shared Add to Calendar / Subscribe modal (<dialog>) — once per page with triggers
     │                         events-viewbar.html   Calendar | List toggle + Print/Subscribe bar, shared by both events views
-    │                         head-additions.html   Custom <head> additions (Analytics, etc.)
+    │                         head-additions.html   Early theme script — applies the saved light/dark choice before first paint
     │                         icon.html             Inline SVG renderer
+    │                         localized.html        Return-value partial — a bilingual data field in the current language (_fr falls back to English); the one place that rule lives
     │                         ics/                  iCalendar building blocks — escape, line (RFC 5545 folding), vevent, calendar, event-url (publishes per-event .ics at a readable path), event-filename (readable file name), event-google-url (pre-filled Google Calendar link), add-button (Add to Calendar trigger → calendar dialog)
-    │                         nav.html              Sticky nav, language switcher, search, theme toggle
+    │                         nav.html              Sticky nav, language switcher, search, Facebook link, theme toggle
     │                         news-card.html        Single news card — data-category/data-season attrs for news-filter.js
+    │                         news-date.html        Return-value partial — a news article's date, EN/FR, long or short month
     │                         news-season.html      Return-value partial — derives fencing-season label (Sept–Aug) from a date
     │                         page-header.html      Coloured band below the nav (title + subtitle)
     │                         program-contact-cta.html  Contact banner for officials program pages (referee, armourer)
@@ -114,7 +117,7 @@ hugo-testing/
     │                         section-header.html   Section label + h2 + "see all" link
     │                         site-announcement.html  Site-wide banner (controlled via hugo.toml)
     │                         site-favicon.html     SVG + PNG favicon link tags
-                        site-footer.html      Site footer
+    │                         site-footer.html      Site footer — copyright, Website privacy icon, RSS
     │                         site-header.html      Entry point — delegates to nav.html + page-header.html
     └── static/
         ├── documents/      PDFs served at /documents/ — subfolders: about/agm-minutes/,

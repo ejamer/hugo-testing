@@ -10,6 +10,7 @@ Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/relea
 
 - **Rebuilds `main` twice daily** (`schedule`, 09:53 UTC = 6:53 am ADT / 5:53 am AST, and 15:47 UTC = 12:47 pm ADT / 11:47 am AST — cron is UTC, so the Atlantic time shifts an hour with daylight saving) — so future-dated news articles appear on their date without a release, and build-time dates (homepage upcoming events, Register links, hero slide expiry, footer year) stay current. A post dated `YYYY-MM-DD` goes live with the first scheduled build on or after that date. GitHub may start scheduled runs late (up to ~an hour at busy times) or drop them entirely — the midday run is the backup, and the off-the-hour minutes make drops less likely — and disables them after 60 days without repo activity (it emails a warning first).
 - **Can be run manually** (`workflow_dispatch`) — Actions tab → *Deploy Hugo site to Pages* → *Run workflow* rebuilds `main` immediately, no commit needed.
+- **Deploys one at a time** (`concurrency: pages`, `cancel-in-progress: true`) — if a run starts while another is still going (e.g. a release merged just as the scheduled build begins), the older run is cancelled. Every run builds the latest `main`, and Pages swaps deployments atomically, so a cancelled run leaves the previous version live until the new one finishes. Cancelled runs show grey in the Actions tab; that's expected.
 
 **Hugo version is pinned** (`hugo-version` in both `release-website.yml` and `pr-check.yml`) so a new Hugo release can't change the live site on a day nobody released. `scripts/check-hugo-version.sh` reports the pin vs. local vs. latest, and `--set X.Y.Z` updates both workflows; `/fenb-git-release` runs it as Step 3 and offers an update (upgrading local Hugo via Homebrew so the release build check tests the same version).
 
@@ -72,6 +73,10 @@ Hugo defaults to `production` for the bare `hugo` command and `development` for 
 The site uses **Google Analytics 4 (GA4)**, tag `G-BKG2E2SKZF`. The tag ID is stored in `fenb-1/config/production/hugo.toml` under `[services.googleAnalytics]`. Hugo's built-in template emits the gtag.js snippet automatically; it is wired into the Ananke base layout behind a `{{ if hugo.IsProduction }}` guard.
 
 **Analytics only fires on production builds** (`make build-prod`). Local dev (`make serve`, `make build`) never sends tracking data. To change the tag ID, edit `config/production/hugo.toml` only.
+
+**Do Not Track is respected:** `[privacy.googleAnalytics] respectDoNotTrack = true` (same file) makes Hugo's GA snippet skip tracking for visitors whose browser sends Do Not Track. The browser still downloads `gtag.js`, but no data is sent and no `_ga` cookies are set (checked 2026-11-12 in headless Chrome). The privacy page states exactly this, so keep the two in step.
+
+**Keep the Website Privacy page in step.** `content/about/policies/website-privacy.{en,fr}.md` (linked from the footer's shield icon) tells visitors what the site collects: Google Analytics, the Google Maps embed on the Clubs page, the theme choice in `localStorage`, browser-only search, and the `mailto:` contact form. Update both languages, and its "Last updated" line, whenever any of those change or a new tracker or third-party embed is added. The page is a public statement for FENB, so the site owner approves its wording.
 
 To view reports, open [analytics.google.com](https://analytics.google.com) and select the Fencing NB property.
 

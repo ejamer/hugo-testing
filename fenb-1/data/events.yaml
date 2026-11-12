@@ -11,7 +11,7 @@
 #                   description_fr  — French override; falls back to description_en if blank
 #                   details_url_en  — Learn More link (used for both languages if _fr is blank)
 #                   details_url_fr  — French override for the Learn More link
-#                   registration_url_en — Register Now link (EN); hidden once event date has passed
+#                   registration_url_en — Register Now link (EN); hidden from the event day on
 #                   registration_url_fr — French override; falls back to registration_url_en if blank
 #                   results_url_en  — View Results link (EN); populated by /fenb-data-get-results
 #                   results_url_fr  — French override; falls back to results_url_en if blank
