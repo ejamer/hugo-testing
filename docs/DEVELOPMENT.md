@@ -135,7 +135,7 @@ Utility scripts live in `scripts/`. They are independent of the Hugo build — r
 
 ### FencingTimeLive results
 
-FencingTimeLive's terms of service prevent scripted access. `scripts/fencingtimelive-results.py` now prints a message and exits with an error as its first action; the rest of its code is unused, and `scripts/check-ftl-deps.sh` only supports it.
+FencingTimeLive's terms of service prevent scripted access. `scripts/fencingtimelive-results.py` now prints a message and exits with an error as its first action; the rest of its code is unused, and `scripts/check-ftl-deps.sh` only supports it. Both files are kept on purpose (decided 2026-11-12) to preserve the scraper's code. Don't delete them, and don't remove the early exit, which stops the scraper from being run by mistake.
 
 Save the event schedule and each event's final results page by hand into a folder, then run `/fenb-data-get-results`. It gives saving instructions and uses `scripts/ftl-read-saved-pages.py`, which reads local files only:
 

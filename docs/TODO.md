@@ -6,7 +6,7 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ## Code audit follow-up (2026-11-12)
 
-- [ ] **Logo files in `static/images/fenb-logo/`** — only 4 SVGs there are used by the site (nav logos and the hero fallback); the rest (`.ai`/`.eps` masters, PDF/PNG/JPG exports, TeamEquipeNB set, brand guide) is published as-is. The owner will decide what to do with them later — leave the folder untouched until then.
+- [ ] **Logo files in `static/images/fenb-logo/`** — only 4 SVGs there are used by the site (nav logos and the hero fallback); the rest (`.ai`/`.eps` masters, PDF/PNG/JPG exports, TeamEquipeNB set, brand guide) is published as-is. The owner will decide what to do with them later — leave the folder untouched until then. Note: the brand guide `FENB-Logo-Standards.html` is also indexed by Pagefind, so it shows up in English site search (seen 2026-11-13); deleting or moving it fixes that.
 - [ ] **Full docs review** — once the code-audit fixes are all made, review every project doc (`CLAUDE.md`, `README.md`, `docs/*.md`, `plans/*.md`, `.claude/commands/*.md`): remove content that's no longer needed, and confirm what remains is correct and current. The audit's code and security fixes are all done (2026-11-13), so this can start. Known stale spots: `plans/policy-pdf-download.md` still shows a bare `npx pagefind`, and the STYLE_GUIDE icon section claims icons have no `width`/`height` (30 of 31 do) and lists data files by the wrong names; `rss.svg` also lacks `aria-hidden`.
 
 ---
@@ -94,7 +94,6 @@ Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
 
 - [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). A second international tournament (Dormagen, 2026-11-08) and an NB-hosted one with a Club/Division column (Hoplite Invitational, 2026-11-08) also worked and went all the way through `/fenb-content-add-results`. Still unseen: a genuine pools-only seeding event and a `/events/competitors/` page.
 - [ ] **Pools-only rule misfires on small events** — `/fenb-data-get-results` (hosted mode) marks any finished event with `tableau_link: False` as `pools_only` (no podium). At the Hoplite Invitational, Cadet Women's Épée (4 fencers, placings 1/2/3T/3T) and Senior Women's Épée (2 fencers) had no tableau link but were real standalone events; the user overrode the rule by hand. Refine the rule in `.claude/commands/fenb-data-get-results.md` — e.g. only treat it as a seeding pool when the name has "Pool(s)" or spans age groups, or when a separate DE event for the same group exists — and keep `/fenb-content-add-results` Step 5 in step with it.
-- [ ] **Delete the old browser profile** — `scripts/.browser-profile/` (49 MB, gitignored, local only) can hold a saved FTL login and is no longer needed. **Keep** `scripts/fencingtimelive-results.py` and `scripts/check-ftl-deps.sh` (decided 2026-11-12): the scraper's code is preserved on purpose, and it must keep exiting immediately at the top so it can't be run by mistake — don't delete it or remove that exit.
 
 ## Google document links
 
@@ -112,10 +111,6 @@ Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
 - [ ] **Marc-André LeBlanc category** — his category is currently set to `"Athlete"` as a placeholder; confirm and correct in both language files.
 - [ ] **French bio review** — the French bios for Alfred Knappe, Rick Gosselin, and Kara Grant were machine-translated; have a French speaker review and correct `*.fr.md` files in `content/about/hall-of-fame/`.
 - [ ] **Inductee photos** — add individual photos to `static/images/hall-of-fame/` when available; set the `photo` front matter field in the corresponding `.en.md` and `.fr.md` files (the `"Builder"` class renders an initials avatar as a placeholder).
-
-## Search / Pagefind
-
-- [ ] **Pagefind language detection** — a `make build-prod` test run (2026-07-28) had Pagefind report 3 languages (`fr-ca`, `en-ca`, `en`) instead of the expected 2 (`en-ca`, `fr-ca`). Likely benign — probably an `en` fallback picked up alongside `en-ca` — but verify the search overlay still filters/ranks results correctly per language before relying on it further.
 
 ## Release workflow
 
@@ -136,7 +131,6 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 ## Events data
 
 - [ ] **FENB AGM (Dec 6, 2026) — details missing** — the entry in `data/events.yaml` was copied from last season's AGM and has a blank `location`, no start time, and no details link. All members are invited, so add the venue (or "Online"), the time (it can go in `description_en`/`description_fr`), and a details link (e.g. a meeting notice or agenda, via `details_url_en`/`details_url_fr`) once known.
-- [ ] **Interscholastic finals article — photo gallery** — 4 action photos at `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; add `photos:` front matter to `jun-16-interscholastic-finals-2026.{en,fr}.md` (photo gallery system now available — see README.md)
 - [ ] **Fencing Canada logo — replace with vector** — `static/images/organizations/fencing-canada.png` is a temporary raster (downloaded from 2mev.com, resized to 626×800). Replace with an official vector (SVG) version and update `logo:` for `CFF` in `data/organizations.yaml` — every article using `{{< host-logo id="CFF" >}}` picks it up automatically.
 
 ---
