@@ -13,6 +13,7 @@
   --crimson-dark:  #5e1c26;
   --crimson-light: #943040;
   --crimson-pale:  #f5e8ea;
+  --crimson-text:  #79242f;   /* crimson for text/links; lighter in dark mode (below) to meet 4.5:1 */
   --navy:          #1e3a5f;
   --navy-dark:     #152b47;
   --navy-light:    #274d7a;
@@ -66,6 +67,7 @@
   --teal-light:         #4dbfad;
   --navy-light:         #6aabdf;
   --crimson-pale:       #271214;
+  --crimson-text:       #cd6676;   /* 4.6:1 on --white (#141f1d); --crimson-light (2.2:1) stays for gradient backgrounds */
   --shadow-xs:          0 1px 4px rgba(0,0,0,0.4);
   --shadow-sm:          0 2px 10px rgba(0,0,0,0.4);
   --shadow-md:          0 6px 24px rgba(0,0,0,0.5);

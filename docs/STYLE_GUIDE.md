@@ -5,6 +5,7 @@
 ### Colours
 - **Primary:** `#006156` (deep teal) — CSS var `--teal` — nav, headings, buttons, section accents
 - **Accent:** `#79242f` (crimson) — CSS var `--crimson` — CTA buttons, hero badge, event category badges
+- **Crimson as text:** use `--crimson-text` for crimson text and links. It equals `--crimson` in light mode and is `#cd6676` in dark mode (4.6:1 on the dark card background, meeting WCAG AA). Never use `--crimson-light` as dark-mode text (2.2:1); it is kept for gradient backgrounds.
 
 ### Logos
 - `static/images/fenb-logo` — folder contains the FENB-Logo-Standards.html guidelines, and subfolders with different official logo files

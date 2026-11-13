@@ -181,5 +181,5 @@
 [data-theme="dark"] .fenb-schedule-filter-meta { border-color: var(--teal-light); color: var(--teal-light); }
 [data-theme="dark"] .fenb-schedule-filter-meta:hover { background: var(--teal-light); color: #fff; }
 [data-theme="dark"] .fenb-schedule-links .fenb-event-details-link  { color: var(--teal-light); }
-[data-theme="dark"] .fenb-schedule-links .fenb-event-register-link { color: var(--crimson-light); } /* matches calendar-view cards (fenb-events.css) */
+[data-theme="dark"] .fenb-schedule-links .fenb-event-register-link { color: var(--crimson-text); } /* matches calendar-view cards (fenb-events.css) */
 [data-theme="dark"] .fenb-schedule-links .fenb-event-results-link  { color: var(--navy-light); }

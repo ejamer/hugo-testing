@@ -112,7 +112,7 @@ The GA4 property was created under a personal Google account. For long-term main
 - Add individual volunteers or board members through that account as needed.
 - Keep the personal account as a backup admin until the organizational account is confirmed working.
 
-This ensures future volunteers can access analytics without needing the personal account holder's credentials. See the [Google Analytics TODO item](TODO.md) for the outstanding action on this.
+This ensures future volunteers can access analytics without needing the personal account holder's credentials.
 
 ---
 

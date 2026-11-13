@@ -35,12 +35,6 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ---
 
-## Google Analytics
-
-- [ ] **Analytics access management** — review who has access to the GA4 property and ensure an organizational account (e.g. a shared FENB admin email) is added as Administrator so access isn't tied solely to a personal Google account. See the Access Management section in `docs/DEVELOPMENT.md` for instructions.
-
----
-
 ## Join section — data maintenance
 
 - [ ] **Club registration form URL** — add Google Form URL to `fenb-1/data/join.yaml` → `club_form_url` when available; clubs page currently falls back to email contact
@@ -92,16 +86,10 @@ Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
 
 ## FencingTimeLive results — follow-up (2026-11-06)
 
-- [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). A second international tournament (Dormagen, 2026-11-08) and an NB-hosted one with a Club/Division column (Hoplite Invitational, 2026-11-08) also worked and went all the way through `/fenb-content-add-results`. Still unseen: a genuine pools-only seeding event and a `/events/competitors/` page.
-- [ ] **Pools-only rule misfires on small events** — `/fenb-data-get-results` (hosted mode) marks any finished event with `tableau_link: False` as `pools_only` (no podium). At the Hoplite Invitational, Cadet Women's Épée (4 fencers, placings 1/2/3T/3T) and Senior Women's Épée (2 fencers) had no tableau link but were real standalone events; the user overrode the rule by hand. Refine the rule in `.claude/commands/fenb-data-get-results.md` — e.g. only treat it as a seeding pool when the name has "Pool(s)" or spans age groups, or when a separate DE event for the same group exists — and keep `/fenb-content-add-results` Step 5 in step with it.
-
-## Google document links
-
-- [ ] **Confirm Google file sharing is view-only** — `/preview` links only change what visitors see. Anyone with a file's ID can still open its `/edit` URL, so each linked file should be set to Viewer for anyone with the link.
+- [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). A second international tournament (Dormagen, 2026-11-08) and an NB-hosted one with a Club/Division column (Hoplite Invitational, 2026-11-08) also worked and went all the way through `/fenb-content-add-results`. Still unseen: a `/events/competitors/` page, and a real run of the revised no-bracket rule (2026-11-13: an event with no DE bracket keeps its podium unless its name says "Pool(s)" or a later event splits its field), which so far has only been checked against the saved Fundy Open and Hoplite JSON.
 
 ## Dark mode
 
-- [ ] **Dark-mode crimson text contrast** — Register Now links (event cards + list view, `fenb-events.css` / `fenb-schedule.css`) use `--crimson-light` (`#943040`) on `#141f1d` in dark mode — ~2.2:1, fails WCAG AA (4.5:1). Same colour is used as dark-mode text for the "See all" hover (`fenb-base.css`) and the crimson news sidebar heading + link hovers (`fenb-news.css`). **Rejected so far (2026-10-15):** a pink `--crimson-text` token (`#ef8593`, too light/pink) and crimson pills with white text. **Still open:** a softer rose (e.g. `#e06b7a`, 5.3:1), light text with a crimson accent (underline/arrow), or teal in dark mode. Don't lighten `--crimson-light` itself — the About and Hall of Fame gradients use it as a background.
 
 ---
 
@@ -130,7 +118,6 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 
 ## Events data
 
-- [ ] **FENB AGM (Dec 6, 2026) — details missing** — the entry in `data/events.yaml` was copied from last season's AGM and has a blank `city`, no `address`, no start time, and no details link. All members are invited, so add the city and venue `address` (or `city: "Online"` with no address), the time (it can go in `description_en`/`description_fr`), and a details link (e.g. a meeting notice or agenda, via `details_url_en`/`details_url_fr`) once known.
 - [ ] **Fencing Canada logo — replace with vector** — `static/images/organizations/fencing-canada.png` is a temporary raster (downloaded from 2mev.com, resized to 626×800). Replace with an official vector (SVG) version and update `logo:` for `CFF` in `data/organizations.yaml` — every article using `{{< host-logo id="CFF" >}}` picks it up automatically.
 
 ---

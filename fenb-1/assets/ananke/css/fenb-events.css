@@ -615,7 +615,7 @@
 /* ── Dark mode ────────────────────────────────── */
 [data-theme="dark"] .fenb-event-card { border-color: var(--light-gray); }
 [data-theme="dark"] .fenb-event-details-link { color: var(--teal-light); }
-[data-theme="dark"] .fenb-event-register-link { color: var(--crimson-light); }
+[data-theme="dark"] .fenb-event-register-link { color: var(--crimson-text); }
 [data-theme="dark"] .fenb-event-results-link { color: var(--navy-light); }
 
 [data-theme="dark"] .fenb-tag--competition  { background: var(--teal);               color: #fff; }

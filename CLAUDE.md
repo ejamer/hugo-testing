@@ -10,7 +10,7 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - **`docs/PROJECT_LAYOUT.md`** — full directory tree with file-by-file descriptions. Read it when navigating an unfamiliar part of the repo.
 - **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, shared components, and page header band usage.
 - **`docs/TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
-- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, git submodules, editing a third-party PDF (flyer typos, email footers), or any JS-driven show/hide toggle (filters, dropdowns, modals) — CSS `display` set via a class selector silently defeats the `hidden` attribute; see the entry for the fix.
+- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, git submodules, editing a third-party PDF (flyer typos, email footers), browser-testing a scratch build (Playwright/headless — a bare `hugo` build loads the live site's scripts and real analytics), or any JS-driven show/hide toggle (filters, dropdowns, modals) — CSS `display` set via a class selector silently defeats the `hidden` attribute; see the entry for the fix.
 - **`plans/`** — detailed implementation plans for multi-session features. Read the relevant plan file before starting any TODO item that links to one.
 
 ## Outstanding TODOs
@@ -81,6 +81,7 @@ Scripts in `scripts/` never run `git add`/`commit`/`push` — they write files o
 See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colours.
 
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
+- **Places (events and clubs):** `city` ("City, Province") is shown on cards; the optional `address` holds only a mappable venue or street address — never just the city, never a club name alone — and drives the Google Maps link (no `address` = no link). See README.md.
 - **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see docs/STYLE_GUIDE.md)
 - **Recurring event slugs:** for tournaments that repeat annually, include the year in the slug — e.g. `east-coast-games-2026-registration`. This prevents cross-season collisions in the archive.
 - **News article images** — this is the standard way to add images to a news article; the legacy inline `figure` shortcode still works but is discouraged for new articles. Front matter fields (no shortcodes needed in the body):
