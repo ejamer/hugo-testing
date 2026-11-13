@@ -6,8 +6,10 @@ fenb-1/resources/_gen/
 fenb-1/.hugo_build.lock
 fenb-1/hugo_stats.json
 # Local Environment / Tooling
-fenb-1/.DS_Store
-fenb-1/Thumbs.db
+# OS folder clutter (macOS Finder / Windows Explorer) — any folder, so it can't be
+# committed into fenb-1/static/ and published with the site
+.DS_Store
+Thumbs.db
 fenb-1/dist/
 fenb-1/bin/
 # Editor temporary files (optional but recommended)

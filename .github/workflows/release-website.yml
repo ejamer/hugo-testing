@@ -56,9 +56,9 @@ jobs:
         run: npx --yes pagefind@1.6.0 --site public --root-selector "main"  # pinned — managed by scripts/check-pagefind-version.sh
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5  # v4+ runs on Node 24; skips dotfiles (the site has none)
         with:
           path: fenb-1/public
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5  # Node 24
