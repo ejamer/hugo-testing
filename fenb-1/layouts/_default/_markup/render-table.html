@@ -1,0 +1,48 @@
+{{- /* Markdown table render hook.
+
+  By default it reproduces Hugo's built-in table output exactly (same tags, attributes and
+  whitespace), so every existing table renders byte-for-byte as before.
+
+  Opt-in, per page: front matter `merge_note_rows: true`. A body row whose only text is in
+  its first cell (e.g. "After a maximum of 24 to 48 hours after injury, progress to step 2.")
+  becomes one full-width cell — <tr class="fenb-table-note-row"><td colspan="N"> — styled in
+  fenb-about.css. Markdown tables can't merge cells themselves. Used by the Concussion
+  Protocol's return-to-school/sport strategy tables. Never enabled on news results tables
+  (results-table.js expects every row to have all its cells). */ -}}
+{{- $mergeNotes := .Page.Params.merge_note_rows -}}
+{{- $o := "<table" -}}
+{{- range $k, $v := .Attributes }}{{ if $v }}{{ $o = print $o (printf " %s=%q" $k $v) }}{{ end }}{{ end -}}
+{{- $o = print $o ">\n\t<thead>" -}}
+{{- range .THead -}}
+  {{- $o = print $o "\n\t\t\t<tr>" -}}
+  {{- range . -}}
+    {{- $align := "" }}{{ with .Alignment }}{{ $align = printf " style=%q" (printf "text-align: %s" .) }}{{ end -}}
+    {{- $o = print $o "\n\t\t\t\t\t<th" $align ">" .Text "</th>" -}}
+  {{- end -}}
+  {{- $o = print $o "\n\t\t\t</tr>" -}}
+{{- end -}}
+{{- $o = print $o "\n\t</thead>\n\t<tbody>" -}}
+{{- range .TBody -}}
+  {{- $row := . -}}
+  {{- $isNote := false -}}
+  {{- if and $mergeNotes (gt (len $row) 1) -}}
+    {{- $rest := "" -}}
+    {{- range after 1 $row }}{{ $rest = print $rest (.Text | plainify | strings.TrimSpace) }}{{ end -}}
+    {{- $first := (index $row 0).Text | plainify | strings.TrimSpace -}}
+    {{- $isNote = and (ne $first "") (eq $rest "") -}}
+  {{- end -}}
+  {{- if $isNote -}}
+    {{- /* The inner span lets phones keep the note in view while the wide table scrolls
+           (position: sticky, fenb-responsive.css). */ -}}
+    {{- $o = print $o "\n\t\t\t<tr class=\"fenb-table-note-row\">\n\t\t\t\t\t<td colspan=\"" (len $row) "\"><span class=\"fenb-table-note\">" (index $row 0).Text "</span></td>" -}}
+  {{- else -}}
+    {{- $o = print $o "\n\t\t\t<tr>" -}}
+    {{- range $row -}}
+      {{- $align := "" }}{{ with .Alignment }}{{ $align = printf " style=%q" (printf "text-align: %s" .) }}{{ end -}}
+      {{- $o = print $o "\n\t\t\t\t\t<td" $align ">" .Text "</td>" -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $o = print $o "\n\t\t\t</tr>" -}}
+{{- end -}}
+{{- $o = print $o "\n\t</tbody>\n</table>\n" -}}
+{{- $o | safeHTML -}}

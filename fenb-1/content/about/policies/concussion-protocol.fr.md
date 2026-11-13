@@ -1,6 +1,7 @@
 ---
 title: "Protocole de commotion cérébrale"
 translationKey: "concussion-protocol"
+merge_note_rows: true  # merge "progress to step…" rows across the table (render-table.html)
 ---
 
 ## Protocole de Fencing-Escrime NB en cas de commotion cérébrale
@@ -188,21 +189,21 @@ Si l'athlète présente des symptômes de commotion cérébrale après avoir obt
 
  
 
-| Étape | Activité | Détails de l'activité | Objectif de chaque étape |  |
-| :---: | ----- | ----- | ----- | :---- |
-| **1** | Activités de la vie quotidienne et repos relatif (premières 24 à 48 heures) | o    Activités habituelles à domicile (par exemple, préparation des repas, interactions sociales, marche légère) qui n'entraînent qu'une aggravation légère et brève des symptômes o    Réduire au minimum le temps passé devant un écran | Reprise progressive des activités habituelles |  |
-| Au plus tard 24 à 48 heures après la blessure, passez à l'étape 2\. |  |  |  |  |
-| **2** | 2A : Exercices d'aérobie à faible intensité | o    Commencez par des exercices d'aérobie légers, tels que le vélo d'appartement et la marche à un rythme lent à modéré o    Vous pouvez commencer un entraînement de résistance léger qui n'entraîne qu'une aggravation légère et brève des symptômes o    Faites de l'exercice jusqu'à environ 55 % de votre fréquence cardiaque maximale o    Faites des pauses et adaptez vos activités si nécessaire |  | Augmenter la fréquence cardiaque |
-|  | 2B : Exercice aérobique d'intensité modérée | o    Augmenter progressivement la tolérance et l'intensité des activités aérobiques, telles que le vélo d'appartement et la marche à un rythme soutenu o    Faites de l'exercice jusqu'à environ 70 % de votre fréquence cardiaque maximale o    Faire des pauses et adapter les activités si nécessaire |  |  |
-| Si l'athlète supporte un exercice aérobique modéré, passez à l'étape 3\. |  |  |  |  |
-| **3** | Activités individuelles spécifiques au sport, sans risque de choc accidentel à la tête | o    Ajouter des activités spécifiques au sport (par exemple, course, changements de direction, exercices individuels) o    Effectuer les activités individuellement et sous la supervision d'un enseignant, d'un parent/tuteur ou d'un entraîneur  o    Passer à l'étape où l'athlète ne présente plus de symptômes liés à une commotion cérébrale, même pendant l'exercice | Augmenter l'intensité des activités aérobiques et introduire des mouvements spécifiques au sport à faible risque |  |
-| **Autorisation médicale** Si l'athlète a terminé son retour à l'école (le cas échéant) et a reçu l'autorisation médicale, passer à l'étape 4\. |  |  |  |  |
-| **4** | Exercices et activités d'entraînement sans contact | o    Passez à des exercices sans contact physique à haute intensité, y compris des exercices et des activités plus exigeants (par exemple, exercices de passes, entraînements et séances avec plusieurs athlètes) | Reprenez l'intensité habituelle des exercices, de la coordination et des aptitudes cognitives liées à l'activité |  |
-| Si l'athlète peut supporter l'intensité habituelle des activités sans réapparition des symptômes, passer à l'étape 5\. |  |  |  |  |
-| **5** | Reprise de toutes les activités non compétitives, des entraînements avec contact et des activités d'éducation physique | o    Passer à des activités à plus haut risque, y compris les activités d'entraînement habituelles, les entraînements de sport avec contact et les activités de cours d'éducation physique o    Ne pas participer à des matchs de compétition | Reprise des activités présentant un risque de chute ou de contact physique, rétablissement de la confiance et évaluation des capacités fonctionnelles par le personnel d'encadrement |  |
-| Si l'athlète supporte les activités non compétitives à haut risque, passer à l'étape 6\. |  |  |  |  |
-| **6** | Reprise du sport | Pratique sportive et activité physique sans restriction |   |  |
-| **Le retour au sport est terminé.** |  |  |  |  |
+| Étape | Activité | Détails de l'activité | Objectif de chaque étape |
+| :---: | ----- | ----- | ----- |
+| **1** | Activités de la vie quotidienne et repos relatif (premières 24 à 48 heures) | o    Activités habituelles à domicile (par exemple, préparation des repas, interactions sociales, marche légère) qui n'entraînent qu'une aggravation légère et brève des symptômes o    Réduire au minimum le temps passé devant un écran | Reprise progressive des activités habituelles |
+| Au plus tard 24 à 48 heures après la blessure, passez à l'étape 2\. |  |  |  |
+| **2** | 2A : Exercices d'aérobie à faible intensité | o    Commencez par des exercices d'aérobie légers, tels que le vélo d'appartement et la marche à un rythme lent à modéré o    Vous pouvez commencer un entraînement de résistance léger qui n'entraîne qu'une aggravation légère et brève des symptômes o    Faites de l'exercice jusqu'à environ 55 % de votre fréquence cardiaque maximale o    Faites des pauses et adaptez vos activités si nécessaire | Augmenter la fréquence cardiaque |
+|  | 2B : Exercice aérobique d'intensité modérée | o    Augmenter progressivement la tolérance et l'intensité des activités aérobiques, telles que le vélo d'appartement et la marche à un rythme soutenu o    Faites de l'exercice jusqu'à environ 70 % de votre fréquence cardiaque maximale o    Faire des pauses et adapter les activités si nécessaire |  |
+| Si l'athlète supporte un exercice aérobique modéré, passez à l'étape 3\. |  |  |  |
+| **3** | Activités individuelles spécifiques au sport, sans risque de choc accidentel à la tête | o    Ajouter des activités spécifiques au sport (par exemple, course, changements de direction, exercices individuels) o    Effectuer les activités individuellement et sous la supervision d'un enseignant, d'un parent/tuteur ou d'un entraîneur  o    Passer à l'étape où l'athlète ne présente plus de symptômes liés à une commotion cérébrale, même pendant l'exercice | Augmenter l'intensité des activités aérobiques et introduire des mouvements spécifiques au sport à faible risque |
+| **Autorisation médicale** Si l'athlète a terminé son retour à l'école (le cas échéant) et a reçu l'autorisation médicale, passer à l'étape 4\. |  |  |  |
+| **4** | Exercices et activités d'entraînement sans contact | o    Passez à des exercices sans contact physique à haute intensité, y compris des exercices et des activités plus exigeants (par exemple, exercices de passes, entraînements et séances avec plusieurs athlètes) | Reprenez l'intensité habituelle des exercices, de la coordination et des aptitudes cognitives liées à l'activité |
+| Si l'athlète peut supporter l'intensité habituelle des activités sans réapparition des symptômes, passer à l'étape 5\. |  |  |  |
+| **5** | Reprise de toutes les activités non compétitives, des entraînements avec contact et des activités d'éducation physique | o    Passer à des activités à plus haut risque, y compris les activités d'entraînement habituelles, les entraînements de sport avec contact et les activités de cours d'éducation physique o    Ne pas participer à des matchs de compétition | Reprise des activités présentant un risque de chute ou de contact physique, rétablissement de la confiance et évaluation des capacités fonctionnelles par le personnel d'encadrement |
+| Si l'athlète supporte les activités non compétitives à haut risque, passer à l'étape 6\. |  |  |  |
+| **6** | Reprise du sport | Pratique sportive et activité physique sans restriction |  |
+| **Le retour au sport est terminé.** |  |  |  |
 
 Tableau adapté de : Patricios, Schneider et al., 2023 ; Reed, Zemek et al., 2023
 
@@ -239,7 +240,7 @@ Les athlètes ayant reçu une lettre d’autorisation médicale peuvent passer a
 
  Si l’athlète subit une nouvelle commotion cérébrale présumée, le **protocole de Fencing-Escrime NB en matière de commotion cérébrale** doit être suivi comme indiqué ici.
 
- 
+![Diagramme des étapes à suivre en cas de commotion cérébrale, qui résume les étapes 1 à 7 du présent protocole, de la transmission d’informations avant le début de la saison et l’identification d’une blessure à la tête à l’examen médical, la gestion des commotions cérébrales et l’autorisation médicale pour le retour au sport](images/policies/concussion-pathway-fr.png)
 
 ### **Adopté : avril 2024**
 

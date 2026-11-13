@@ -327,6 +327,39 @@
   gap: 3rem;
   align-items: start;
 }
+/* Let the text column shrink to the screen. Without this, a grid column grows to fit its
+   widest content, so a wide table makes the whole page wider than a phone. Tables then
+   scroll inside their own box on phones (fenb-responsive.css, ≤600px). */
+.fenb-policy-doc { min-width: 0; }
+
+/* Policy tables — same look as news article tables (.fenb-article-body table). */
+.fenb-policy-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.5em;
+  font-size: 0.95em;
+}
+.fenb-policy-doc th,
+.fenb-policy-doc td {
+  padding: 0.6em 0.9em;
+  border-bottom: 1px solid var(--light-gray);
+  text-align: left;
+  vertical-align: top;
+}
+.fenb-policy-doc thead th {
+  background: var(--off-white);
+  color: var(--text-dark);
+  font-weight: 600;
+  text-align: center;
+}
+/* Full-width "progress to step N" rows between steps (front matter merge_note_rows,
+   layouts/_default/_markup/render-table.html). */
+.fenb-policy-doc .fenb-table-note-row td {
+  background: var(--teal-pale);
+  font-style: italic;
+  text-align: center;
+}
+.fenb-policy-doc .fenb-table-note-row strong { font-style: normal; }
 
 .fenb-policy-toc {
   list-style: none;

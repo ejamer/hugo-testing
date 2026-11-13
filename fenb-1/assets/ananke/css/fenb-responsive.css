@@ -176,6 +176,20 @@
   .fenb-about-contact-section { padding: 3.5rem 1rem; }
   .fenb-policy-section { padding: 3rem 1rem; }
   .fenb-policy-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  /* Wide policy tables (e.g. the Concussion Protocol's return-to-school/sport strategies)
+     scroll sideways inside their own box instead of widening the page. Phones only, so
+     desktop tables keep stretching to the full column width. */
+  .fenb-policy-doc table { display: block; max-width: 100%; overflow-x: auto; }
+  /* Merged "progress to step N" rows span the whole (wider-than-screen) table, so their
+     text would be centred off-screen. Pin it to the visible part and wrap it to the
+     screen width instead: 4rem = section padding + cell padding. */
+  .fenb-policy-doc .fenb-table-note-row td { text-align: left; }
+  .fenb-policy-doc .fenb-table-note {
+    display: block;
+    position: sticky;
+    left: 0;
+    max-width: calc(100vw - 4rem);
+  }
 }
 
 /* Phones: no room in the bar for the Facebook icon (360px leaves ~16px) — it moves to

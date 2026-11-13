@@ -78,8 +78,12 @@ hugo-testing/
     │   ├── _default/
     │   │   ├── sitemap.xml Custom sitemap with hreflang alternates
     │   │   └── _markup/
-    │   │       └── render-link.html  Markdown link render hook — opens external links (absolute
-    │   │                             http(s) URLs off-site) in a new tab; internal links unaffected
+    │   │       ├── render-image.html Markdown image render hook — site paths (no leading slash) via
+    │   │       │                     relURL, lazy loading, image links to its full-size file
+    │   │       ├── render-link.html  Markdown link render hook — opens external links (absolute
+    │   │       │                     http(s) URLs off-site) in a new tab; internal links unaffected
+    │   │       └── render-table.html Markdown table render hook — same output as Hugo's default; pages
+    │   │                             with `merge_note_rows: true` get full-width "note" rows
     │   ├── about/          list.html (About disambiguation), single.html (Policies & Reports),
     │   │                   policies/single.html (individual policy page),
     │   │                   hall-of-fame/list.html (inductee table), hall-of-fame/single.html (profile),

@@ -1,0 +1,9 @@
+{{- /* Markdown images: ![alt text](images/folder/file.png) — a path under static/ with NO
+       leading slash (CLAUDE.md URL rule), resolved with relURL so it works under any baseURL.
+       Full http(s) URLs pass through unchanged. No safeURL: Hugo's URL sanitiser must see the
+       destination. The image links to itself, so tapping a tall chart on a phone opens it
+       full size. Styles: .fenb-md-image in fenb-base.css. */ -}}
+{{- $src := .Destination -}}
+{{- if not (strings.HasPrefix $src "http") }}{{ $src = $src | relURL }}{{ end -}}
+<a href="{{ $src }}" class="fenb-md-image-link"><img src="{{ $src }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }} class="fenb-md-image" loading="lazy"></a>
+{{- /* trim the file's trailing newline — otherwise it renders as a space before following punctuation */ -}}

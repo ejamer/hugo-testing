@@ -55,7 +55,7 @@ We look forward to the 2026–2027 season!
 ### Final School Standings
 
 | Ranking | School | 
-|---|---|---|
+|---|---|
 | 🥇 1st | École Antonine-Maillet | 
 | 🥈 2nd | École Le Sommet | 
 | 🥉 3rd | École Carrefour de l'Acadie | 

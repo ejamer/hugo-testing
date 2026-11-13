@@ -450,3 +450,10 @@ main.pb7 { padding-bottom: 0 !important; }
 
 @media (max-width: 900px) { .fenb-landing-cards { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .fenb-landing-cards { grid-template-columns: 1fr; } }
+
+/* ── Markdown images (layouts/_default/_markup/render-image.html) ── */
+/* Centred, never wider than the text column; the link opens the full-size file. Charts
+   have white backgrounds, so dark mode gives them a white frame instead of a hard edge. */
+.fenb-md-image-link { display: block; margin: 1.5rem 0; }
+.fenb-md-image { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+[data-theme="dark"] .fenb-md-image { background: #fff; padding: 0.5rem; border-radius: var(--radius-sm); }
