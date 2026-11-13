@@ -30,7 +30,7 @@
           <h2 class="fenb-club-name">{{ .name }}</h2>
           <p class="fenb-club-city">
             {{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}
-            {{ .city }}
+            {{ partial "map-link.html" (dict "text" .city "query" (.address | default "")) }}
           </p>
         </div>
         <div class="fenb-club-actions">

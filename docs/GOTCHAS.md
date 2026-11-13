@@ -173,6 +173,14 @@ Before treating it as a layout bug, screenshot a known-good page (e.g. an older 
 
 ---
 
+## Local browser tests of a scratch build hit the live site
+
+A bare `hugo -d <dir>` build uses the **production** environment: `baseURL` is `https://www.fenb.ca/` and Google Analytics is on. Scripts loaded with `absURL` (e.g. `events-calendar.js`) then come from the live site, not your build, so a test silently checks the old code. Every page view also goes to FENB's real analytics.
+
+For a Playwright or headless test of a scratch build, build with `hugo --environment development -d <scratch> --baseURL http://127.0.0.1:<port>/hugo-testing/` and serve that folder on the same port. Also block analytics in the test (`page.route(/google-analytics|googletagmanager/, r => r.abort())`). Confirm the script URLs in the built HTML point at `127.0.0.1` before trusting a result.
+
+---
+
 ## Editing a third-party PDF in place
 
 Fixing a typo or stripping a footer from a host's flyer: edit the PDF's content stream rather than regenerating it, so fonts, layout and links stay intact (2026-10-28, Tri-Sword flyer). No PDF tools are installed system-wide (`pdftotext`, `qpdf`, `mutool`, `gs` are all missing), so make a scratch venv and install `pikepdf` (plus `pypdf` for text extraction, `pillow` for images). Run with `python -I`.

@@ -1,7 +1,7 @@
 ---
 description: Prepare and open a release PR from `dev` into `main` for the FencingNB Hugo site. Runs a production build check, bilingual parity check, and opens a PR.
 disable-model-invocation: true
-allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(scripts/compute-next-version.sh) Bash(scripts/check-hugo-version.sh) Bash(scripts/check-hugo-version.sh *) Bash(brew upgrade hugo) Bash(scripts/generate-version-json.sh *) Read AskUserQuestion
+allowed-tools: Bash(git *) Bash(make *) Bash(gh *) Bash(scripts/compute-next-version.sh) Bash(scripts/check-hugo-version.sh) Bash(scripts/check-hugo-version.sh *) Bash(scripts/check-pagefind-version.sh) Bash(brew upgrade hugo) Bash(scripts/generate-version-json.sh *) Read AskUserQuestion
 ---
 
 Run the checks, then ask **once** (Step 8) — that single popup is the release gate. This skill can only be started by the user (`disable-model-invocation`), so don't add an up-front "are you sure?" prompt. Report each step's result briefly as you go.
@@ -15,7 +15,7 @@ Run the checks, then ask **once** (Step 8) — that single popup is the release 
 2. **Branch and remote state** — run `git fetch origin`, `git branch --show-current`, and `git status`:
    - **Not on `dev`:** stop and tell the user.
    - **`dev` behind `origin/dev`:** run `git pull --ff-only`; if it fails, stop and report.
-   - **Uncommitted changes:** list them, then `AskUserQuestion` — one of only two other prompts this skill may show (the other is Step 3's Hugo update):
+   - **Uncommitted changes:** list them, then `AskUserQuestion` — one of only three other prompts this skill may show (the others are Step 3's Hugo update and Step 3b's Pagefind warning, each shown only when an update exists):
      - **Question:** "The working tree has uncommitted changes. How would you like to proceed?"
      - label `"Stash and release"` — description `"Stash changes, release what's committed, then restore the stash"` → `git stash push -m "fenb-git-release: pre-release stash"` and continue (see stash rule)
      - label `"Cancel release"` — description `"Stop — run /fenb-git-commit first, then re-run /fenb-git-release"` → stop
@@ -29,6 +29,12 @@ Run the checks, then ask **once** (Step 8) — that single popup is the release 
    - **`local_matches_pin=no`** (after any update): warn "Build check uses local Hugo <local>, but production is pinned to <pinned>" — not blocking.
    - If the release later stops or is cancelled after an update, tell the user the pin change in `.github/workflows/` is left uncommitted.
 
+3b. **Pagefind version check** — run `scripts/check-pagefind-version.sh` (read-only). It prints `pinned=` (the version pinned in both workflows and the Makefile), `latest=` (newest npm release, empty if npm couldn't be reached), `latest_published=` (its date), `latest_age_days=`, `latest_old_enough=` (`yes` if at least 5 days old) and `update_available=` (`yes`/`no`/`unknown`). If it exits non-zero (the three pins disagree), stop and report (stash rule applies). Report one line, e.g. "Pagefind: pinned 1.6.0 · newest 1.6.0 (released 2026-11-01)", or "Pagefind: pinned 1.6.0 · npm unreachable, not checked" when `update_available=unknown`.
+   - **`update_available=yes`:** `AskUserQuestion`, header `"Pagefind"`:
+     - **Question:** "Pagefind is out of date: pinned <pinned>, newest <latest> released <latest_published> (<latest_age_days> days ago). Continue this release with <pinned>? Release notes: https://github.com/Pagefind/pagefind/releases" — when `latest_old_enough=no`, add: "<latest> is under 5 days old — too new to adopt yet (5-day rule)."
+     - label `"Continue release"` — description `"Release with Pagefind <pinned> — you'll be reminded next release"` → continue
+     - label `"Stop release"` — description `"Stop now to update Pagefind first: scripts/check-pagefind-version.sh --set <version ≥ 5 days old>, commit, then re-run"` → stop (stash rule applies). Don't update the pin inside this skill.
+
 4. **Production build** — `make build-prod`. Report errors or warnings; a clean build is required to continue.
 
 5. **Bilingual parity** — `make check-parity`. Report any `MISSING FR:` / `MISSING EN:` lines (no output = all paired).
@@ -37,7 +43,7 @@ Run the checks, then ask **once** (Step 8) — that single popup is the release 
 
 7. **TODO.md review** — read `docs/TODO.md` and flag unchecked items the commits above appear to address.
 
-8. **Release decision (the only gate)** — present the results of Steps 3–7 compactly (include the Hugo line, noting any bump), then one `AskUserQuestion` call with **two questions**:
+8. **Release decision (the only gate)** — present the results of Steps 3–7 compactly (include the Hugo line, noting any bump, and the Pagefind line), then one `AskUserQuestion` call with **two questions**:
 
    **Question 1** — header `"Version"`, "Which version for this release?"
    - label `"Content update (→ <patch>)"` — description `"Content updates and fixes"`

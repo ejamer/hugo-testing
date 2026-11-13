@@ -54,6 +54,9 @@
   letter-spacing: 0.03em;
 }
 .fenb-event-register-link:hover { text-decoration: underline; }
+/* The schedule page hides stale Register links with `hidden` (events-schedule.js) —
+   the display rule above would otherwise override it (see GOTCHAS.md). */
+.fenb-event-register-link[hidden] { display: none; }
 .fenb-event-results-link {
   display: inline-block;
   margin-top: auto;
@@ -95,7 +98,9 @@
 .fenb-event-ics-btn:hover,
 .fenb-event-ics-btn:focus-visible { background: var(--teal-pale); color: var(--teal); }
 .fenb-event-ics-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-.fenb-event-ics-btn::after {
+/* Shared tooltip — also used by the footer privacy icon (.fenb-footer-icon, fenb-nav.css). */
+.fenb-event-ics-btn::after,
+.fenb-footer-icon::after {
   content: attr(data-tooltip);
   position: absolute;
   right: 0;
@@ -113,7 +118,9 @@
   transition: opacity var(--transition), transform var(--transition);
 }
 .fenb-event-ics-btn:hover::after,
-.fenb-event-ics-btn:focus-visible::after { opacity: 1; transform: translateY(0); }
+.fenb-event-ics-btn:focus-visible::after,
+.fenb-footer-icon:hover::after,
+.fenb-footer-icon:focus-visible::after { opacity: 1; transform: translateY(0); }
 /* Reserve a bottom strip for the icon so it never covers body text — long locations
    wrap across the full card width on phones, so checking for a links row isn't enough. */
 .fenb-event-card:has(.fenb-event-ics-btn) .fenb-event-body { padding-bottom: 2.9rem; }
@@ -608,7 +615,7 @@
 /* ── Dark mode ────────────────────────────────── */
 [data-theme="dark"] .fenb-event-card { border-color: var(--light-gray); }
 [data-theme="dark"] .fenb-event-details-link { color: var(--teal-light); }
-[data-theme="dark"] .fenb-event-register-link { color: var(--crimson-light); }
+[data-theme="dark"] .fenb-event-register-link { color: var(--crimson-text); }
 [data-theme="dark"] .fenb-event-results-link { color: var(--navy-light); }
 
 [data-theme="dark"] .fenb-tag--competition  { background: var(--teal);               color: #fff; }

@@ -9,28 +9,31 @@
   </div>
   <div class="fenb-event-body">
     <span class="fenb-tag fenb-tag--{{ .category }}">{{ i18n .category | default .category }}</span>
-    {{- $title := .title -}}
-    {{- if and (eq site.Language.Lang "fr") .title_fr -}}{{- $title = .title_fr -}}{{- end -}}
+    {{- $title := partial "localized.html" (dict "item" . "field" "title") -}}
     <h3 class="fenb-event-title">{{ $title }}</h3>
     <p class="fenb-event-date-range">{{ partial "event-date.html" . }}</p>
+    {{- /* Show city; link to the mappable address, if any (no address = no link).
+           Same as club cards. No city = no pin line at all. */}}
+    {{ if .city }}
     <p class="fenb-event-meta">
       {{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}
-      {{ .location }}
+      {{ partial "map-link.html" (dict "text" .city "query" (.address | default "")) }}
     </p>
+    {{ end }}
     {{- $detailsUrl := partial "event-details-url.html" . -}}
     {{ if $detailsUrl }}
-    <a class="fenb-event-details-link" href="{{ $detailsUrl }}"{{ if not (or (hasPrefix $detailsUrl "mailto:") (hasPrefix $detailsUrl "tel:")) }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_details" }} &rarr;</a>
+    {{- /* Only links to other sites open a new tab; site pages/files and mailto: don't.
+           Same rule in layouts/events/schedule.html and static/js/events-calendar.js. */}}
+    <a class="fenb-event-details-link" href="{{ $detailsUrl }}"{{ if hasPrefix $detailsUrl "http" }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_details" }} &rarr;</a>
     {{ end }}
     {{- $todayMidnight := time (now.Format "2006-01-02") -}}
-    {{- $registerUrl := .registration_url_en -}}
-    {{- if and (eq site.Language.Lang "fr") .registration_url_fr -}}{{- $registerUrl = .registration_url_fr -}}{{- end -}}
+    {{- $registerUrl := partial "localized.html" (dict "item" . "field" "registration_url") -}}
     {{ if and $registerUrl ($dateObj.After $todayMidnight) }}
-    <a class="fenb-event-register-link" href="{{ $registerUrl }}"{{ if not (or (hasPrefix $registerUrl "mailto:") (hasPrefix $registerUrl "tel:")) }} target="_blank" rel="noopener noreferrer"{{ end }} data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>
+    <a class="fenb-event-register-link" href="{{ $registerUrl }}"{{ if hasPrefix $registerUrl "http" }} target="_blank" rel="noopener noreferrer"{{ end }} data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>
     {{ end }}
-    {{- $resultsUrl := .results_url_en -}}
-    {{- if and (eq site.Language.Lang "fr") .results_url_fr -}}{{- $resultsUrl = .results_url_fr -}}{{- end -}}
+    {{- $resultsUrl := partial "localized.html" (dict "item" . "field" "results_url") -}}
     {{ if $resultsUrl }}
-    <a class="fenb-event-results-link" href="{{ $resultsUrl }}"{{ if not (or (hasPrefix $resultsUrl "mailto:") (hasPrefix $resultsUrl "tel:") (hasPrefix $resultsUrl "/")) }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>
+    <a class="fenb-event-results-link" href="{{ $resultsUrl }}"{{ if hasPrefix $resultsUrl "http" }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>
     {{ end }}
   </div>
   {{- /* Add to Calendar — icon pinned bottom-right; opens the calendar dialog

@@ -22,6 +22,13 @@ permissions:
   pages: write
   id-token: write
 
+# One deploy at a time. A new run cancels one that's still in progress — every run
+# builds the latest main, so the newest one is the one we want live. Pages swaps
+# deployments atomically, so a cancelled run leaves the previous version up.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -37,7 +44,7 @@ jobs:
           submodules: true
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78  # v3.2.1 — pinned to a commit (third-party action)
         with:
           hugo-version: '0.169.0'  # pinned — managed by scripts/check-hugo-version.sh
           extended: true
@@ -46,7 +53,7 @@ jobs:
         run: hugo --minify --environment production
 
       - name: Build search index
-        run: npx pagefind --site public --root-selector "main"
+        run: npx --yes pagefind@1.6.0 --site public --root-selector "main"  # pinned — managed by scripts/check-pagefind-version.sh
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

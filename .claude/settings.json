@@ -1,14 +1,8 @@
 {
   "permissions": {
-    "defaultMode": "bypassPermissions",
     "allow": [
-      "Bash(git *)",
       "Bash(make *)",
-      "Bash(npx pagefind *)",
-      "Bash(gh *)",
-      "Bash(curl -s *)",
-      "Bash(hugo *)",
-      "Bash(python3 scripts/fencingtimelive-results.py *)"
+      "Bash(hugo *)"
     ]
   }
 }

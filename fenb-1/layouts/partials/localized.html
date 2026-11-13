@@ -1,0 +1,19 @@
+{{- /*
+  Returns a bilingual data field in the current site language: the French value on the
+  French site when it's set (non-empty), otherwise the English value. This is the one
+  place the "_fr falls back to English" rule lives (see CLAUDE.md → Hugo data file naming).
+  Returns a string ("" when neither value is set); outputs nothing.
+
+  Handles both naming styles used in the data files:
+    "field" "title"            → title               / title_fr
+    "field" "registration_url" → registration_url_en / registration_url_fr
+  (<field>_en is the English value when it exists; otherwise plain <field> is.)
+
+  Call with: {{ partial "localized.html" (dict "item" . "field" "title") }}
+
+  static/js/events-calendar.js applies the same rule client-side (evTitle and the link
+  lookups) — keep them in step.
+*/ -}}
+{{- $en := index .item (printf "%s_en" .field) | default (index .item .field) -}}
+{{- $fr := index .item (printf "%s_fr" .field) -}}
+{{- return cond (and (eq site.Language.Lang "fr") $fr) $fr ($en | default "") -}}

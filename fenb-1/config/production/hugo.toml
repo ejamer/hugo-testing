@@ -4,3 +4,9 @@ baseURL = "https://www.fenb.ca/"
 [services]
   [services.googleAnalytics]
     id = "G-BKG2E2SKZF"
+
+# Visitors whose browser sends "Do Not Track" aren't tracked: Hugo's built-in GA snippet
+# still loads gtag.js but skips the tracking calls, so no data is sent and no cookies set. The website privacy page (content/about/policies/website-privacy.*.md) tells visitors so.
+[privacy]
+  [privacy.googleAnalytics]
+    respectDoNotTrack = true

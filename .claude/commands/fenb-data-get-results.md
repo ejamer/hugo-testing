@@ -82,7 +82,11 @@ Build URLs without visiting them:
 ```
 
 - **Podium:** every entry whose place, with any trailing `T` removed, is 3 or better. Keep place text as shown, such as `3T`. Both tied bronze medalists must be included.
-- **Pools only:** a finished event with `tableau_link: False` is a seeding pool whose ranking isn't a real result. Set `pools_only: true` and leave `podium` empty, but only when the page has a populated table.
+- **No elimination bracket** (a finished event with `tableau_link: False` and a populated table): by default this is a **pools-only competition** — small events often run pools only, and the final ranking is the real result. Report its podium like any other event, with ties as shown. Treat it as a **seeding pool** instead — set `pools_only: true` and leave `podium` empty — only if:
+  - its name contains "Pool" or "Pools", or
+  - a later event in the same tournament and weapon splits its field: by gender (a *Mixed* event, with *Men's*/*Women's* events at the same age), by division (*Div 1/2*, *Div no.1*), or by age (a combined *U11/U13* event, with separate *U11*/*U13* events).
+
+  Example: at the Fundy Open 2026, *U-13 Mixed Épée* (split into U-13 Men's and Women's) and *Senior Men's Épée* (split into Div no.1/no.2) were seeding pools. At the Hoplite Invitational 2026, *Senior Women's Épée* (2 fencers) and *Cadet Women's Épée* (4 fencers) had no bracket and no split events, so they were real results.
 - **Unfinished or missing:** set `podium` to `[]` and `pools_only` to false.
 
 ### Away — `scripts/output/{slug}-{today}.json`
@@ -116,7 +120,9 @@ Build URLs without visiting them:
 
 ### Hosted
 
-Report the podium for each event. For events with an empty `podium`, note that final results weren't available, except `pools_only` events, which go in a separate "pool round only (no podium)" list. List anything not checked from Step 3.
+Report the podium for each event. For events with an empty `podium`, note that final results weren't available, except `pools_only` events, which go in a separate "pool round only (no podium)" list.
+
+Then list **every event with no elimination bracket**, one line each, with its classification and the reason, so the user can confirm or correct it before the article is written — e.g. `U-13 Mixed Épée: seeding pool (split into U-13 Men's and U-13 Women's Épée)` or `Cadet Women's Épée: pools-only competition, podium kept (no split events)`. If the user corrects one, update its `pools_only` and `podium` in the JSON. List anything not checked from Step 3.
 
 ### Away
 

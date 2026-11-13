@@ -57,6 +57,9 @@ event_details:      "Learn More"
 event_register:     "Register Now"
 event_results:      "View Results"
 event_add_calendar: "Add to Calendar"
+# Location → Google Maps link (R10) on event cards, the schedule and club cards
+map_link_label:     "{{ .Place }} — open in Google Maps (new tab)"
+map_link_title:     "Open in Google Maps"
 # Calendar export (R9) — season feed name + subscribe menu on the Events page
 cal_feed_name:        "Events"
 cal_subscribe:        "Subscribe"
@@ -74,7 +77,8 @@ event_more_coming:  "More events coming soon"
 
 # ── Month abbreviations — used in event-card.html (server-side rendering) and
 #    as FENB_CAL.monthsShort in the calendar's JS (date badges, ranges).
-#    Distinct from the cal_month_* below, which are the full names for the menu.month_Jan: "Jan"
+#    Distinct from the cal_month_* below, which are the full names for the menu.
+month_Jan: "Jan"
 month_Feb: "Feb"
 month_Mar: "Mar"
 month_Apr: "Apr"
@@ -513,6 +517,8 @@ programs_armourer_resources_official_title: "Rules and provincial programs"
 programs_armourer_resources_study_title: "Extra study material"
 
 rss_feed_label: "News RSS feed"
+footer_privacy: "Website privacy"
+nav_facebook: "Fencing-Escrime NB on Facebook (opens in a new tab)"
 
 # ── Hall of Fame ────────────────────────────────────────────
 # ── About sub-section nav cards ────────────────────────────

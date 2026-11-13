@@ -1,0 +1,11 @@
+{{- /* Google Maps search URL for a place (R10). Context: the place as a string, e.g. an
+       event's or club's .address (never a club name alone). Returns "" when the place is empty or not
+       decided yet (TBA / TBD / "à définir"), so callers show plain text instead of a link.
+       A Maps search link needs no API key. Used by partials/map-link.html and the
+       calendar data in layouts/events/list.html. */ -}}
+{{- $place := trim (string .) " " -}}
+{{- $url := "" -}}
+{{- if and $place (not (findRE `(?i)\b(tba|tbd)\b|à définir` $place 1)) -}}
+  {{- $url = printf "https://www.google.com/maps/search/?api=1&query=%s" (urlquery $place) -}}
+{{- end -}}
+{{- return $url -}}

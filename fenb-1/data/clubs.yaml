@@ -1,11 +1,15 @@
 # Member clubs — used by layouts/clubs/list.html
 # Logos live in static/images/clubs/. website is optional; omit if none.
+# city is shown on the card; address (street address, optionally with a venue name) is
+# what its Google Maps link searches. Omit address if unknown: the city then shows with
+# no link. Never put the club name alone in address (Maps finds similar businesses).
 clubs:
   - id: BSE
     name: "Beaches Sabre Club East"
     logo: images/clubs/club-logo-BSE.png
     email: "beaches.east@gmail.com"
     website: "https://sabrebrain.com/"
+    address: "512 George St, Fredericton, NB"
     city: "Fredericton, NB"
 
   - id: CHA
@@ -13,6 +17,7 @@ clubs:
     logo: images/clubs/club-logo-CHA.jpg
     email: "chaleur.sabre@gmail.com"
     website: "https://www.facebook.com/chaleurfencing/"
+    address: "CCNB Gym, 75 Younghall Dr, Bathurst, NB"
     city: "Bathurst, NB"
 
   - id: DAM
@@ -20,12 +25,14 @@ clubs:
     logo: images/clubs/club-logo-DAM.avif
     email: "damoclesfencing@gmail.com"
     website: "https://www.damoclesfencing.ca/"
+    address: "800 St Marys St, Fredericton, NB"
     city: "Fredericton, NB"
 
   - id: EAM
     name: "École Antonine-Maillet"
     logo: images/clubs/club-logo-EAM.png
     email: "guy.l.gautreau@nbed.nb.ca"
+    address: "1630 boulevard Dieppe, Dieppe, NB"
     city: "Dieppe, NB"
 
   - id: FFC
@@ -33,6 +40,7 @@ clubs:
     logo: images/clubs/club-logo-FFC.avif
     email: "fundyfencingclubsj@gmail.com"
     website: "http://www.fundyfencingclubsj.com"
+    address: "99 Burpee Ave, Saint John, NB"
     city: "Saint John, NB"
 
   - id: KV
@@ -40,6 +48,7 @@ clubs:
     logo: images/clubs/club-logo-KV.jpg
     email: "diraiche@outlook.com"
     website: "https://www.facebook.com/FundyFencingFilmFun/"
+    address: "250 chemin Quispamsis, Quispamsis, NB"
     city: "Kennebecasis Valley, NB"
 
   - id: RST
@@ -47,6 +56,7 @@ clubs:
     logo: images/clubs/club-logo-RST.png
     email: "monctonfencing@gmail.com"
     website: "https://sites.google.com/view/escrimelaresistancefencing"
+    address: "123 Halifax St., Moncton, NB"
     city: "Moncton, NB"
 
   - id: UNB
@@ -54,4 +64,5 @@ clubs:
     logo: images/clubs/club-logo-UNB.png
     email: "fencing.unb@gmail.com"
     website: "http://unbfencing.com/"
+    address: "Richard J. Currie Center, Garland Ct, Fredericton, NB"
     city: "Fredericton, NB"

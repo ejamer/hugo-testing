@@ -196,6 +196,10 @@
 .fenb-theme-wrap {
   position: relative;
 }
+/* Hidden by nav.html when localStorage is blocked — see GOTCHAS.md on [hidden] */
+.fenb-theme-wrap[hidden] {
+  display: none;
+}
 
 /* Dark mode toggle */
 .fenb-theme-toggle {
@@ -264,8 +268,9 @@
 .fenb-theme-icon--moon   { display: none; }
 .fenb-theme-icon--system { display: block; }
 
-/* Search icon button */
-.fenb-search-btn {
+/* Search icon button — the Facebook link (.fenb-nav-social) shares its look */
+.fenb-search-btn,
+.fenb-nav-social {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -279,10 +284,15 @@
   flex-shrink: 0;
 }
 .fenb-search-btn:hover,
-.fenb-search-btn[aria-expanded="true"] {
+.fenb-search-btn[aria-expanded="true"],
+.fenb-nav-social:hover {
   background: var(--teal-pale);
   color: var(--teal);
 }
+
+/* Facebook link at the bottom of the mobile menu — shown on phones only
+   (fenb-responsive.css), where the bar has no room for the icon. */
+.fenb-nav-social-menu { display: none; }
 
 /* Search overlay */
 .fenb-search-overlay {
@@ -389,6 +399,7 @@
 [data-theme="dark"] .fenb-lang-btn:hover,
 [data-theme="dark"] .fenb-search-btn:hover,
 [data-theme="dark"] .fenb-search-btn[aria-expanded="true"],
+[data-theme="dark"] .fenb-nav-social:hover,
 [data-theme="dark"] .fenb-theme-toggle:hover,
 [data-theme="dark"] .fenb-theme-toggle[aria-expanded="true"],
 [data-theme="dark"] .fenb-search-close:hover { color: var(--teal-light); }
@@ -417,9 +428,6 @@
 /* ── Footer ──────────────────────────────────── */
 footer[role="contentinfo"] { padding: 0.4rem 1rem; }
 footer[role="contentinfo"] a.f4 { font-size: 1.1rem; }
-footer[role="contentinfo"] .ananke-socials { display: flex; align-items: center; }
-footer[role="contentinfo"] .ananke-socials a { display: inline-flex; align-items: center; padding-top: 0; }
-footer[role="contentinfo"] .ananke-socials a .icon svg { width: 20px; height: 20px; }
 
 /* ── Footer RSS link ─────────────────────────── */
 .fenb-footer-right {
@@ -437,3 +445,16 @@ footer[role="contentinfo"] .ananke-socials a .icon svg { width: 20px; height: 20
 }
 
 .fenb-footer-rss:hover { color: #fff; }
+
+/* Footer icon link (Website privacy) — matches the RSS icon; its label shows as a
+   tooltip (data-tooltip, styled with the Add to Calendar tooltip in fenb-events.css). */
+.fenb-footer-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255,255,255,0.7);
+  transition: color 0.15s;
+  padding: 0.5rem;
+}
+.fenb-footer-icon:hover,
+.fenb-footer-icon:focus-visible { color: #fff; }

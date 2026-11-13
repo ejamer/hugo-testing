@@ -1,0 +1,24 @@
+{{- /*
+  Returns a news article's date as display text in the current site language.
+  Returns a string; outputs nothing. Wrap it in <time datetime="…"> at the call site.
+
+  Call with: {{ partial "news-date.html" (dict "date" .Date "month" "long") }}
+    "long"  → November 12, 2026 / 12 novembre 2026   (article header, news cards)
+    "short" → Nov 12, 2026 / 12 nov. 2026          (sidebar lists)
+
+  Event dates have their own partial (event-date.html), which also handles ranges.
+*/ -}}
+{{- $d := .date -}}
+{{- $fr := eq site.Language.Lang "fr" -}}
+{{- $month := "" -}}
+{{- if eq .month "short" -}}
+  {{- $month = i18n (printf "month_%s" ($d.Format "Jan")) | default ($d.Format "Jan") -}}
+{{- else -}}
+  {{- $month = i18n (printf "cal_month_%s" ($d.Format "Jan" | lower)) | default ($d.Format "January") -}}
+  {{- /* French long months are lowercase in running text ("12 novembre 2026") */ -}}
+  {{- if $fr }}{{ $month = lower $month }}{{ end -}}
+{{- end -}}
+{{- $out := cond $fr
+      (printf "%s %s %s" ($d.Format "2") $month ($d.Format "2006"))
+      (printf "%s %s, %s" $month ($d.Format "2") ($d.Format "2006")) -}}
+{{- return $out -}}

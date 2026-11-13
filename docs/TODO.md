@@ -4,13 +4,20 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ---
 
+## Code audit follow-up (2026-11-12)
+
+- [ ] **Logo files in `static/images/fenb-logo/`** — only 4 SVGs there are used by the site (nav logos and the hero fallback); the rest (`.ai`/`.eps` masters, PDF/PNG/JPG exports, TeamEquipeNB set, brand guide) is published as-is. The owner will decide what to do with them later — leave the folder untouched until then. Note: the brand guide `FENB-Logo-Standards.html` is also indexed by Pagefind, so it shows up in English site search (seen 2026-11-13); deleting or moving it fixes that.
+- [ ] **Full docs review** — once the code-audit fixes are all made, review every project doc (`CLAUDE.md`, `README.md`, `docs/*.md`, `plans/*.md`, `.claude/commands/*.md`): remove content that's no longer needed, and confirm what remains is correct and current. The audit's code and security fixes are all done (2026-11-13), so this can start. Known stale spots: `plans/policy-pdf-download.md` still shows a bare `npx pagefind`, and the STYLE_GUIDE icon section claims icons have no `width`/`height` (30 of 31 do) and lists data files by the wrong names; `rss.svg` also lacks `aria-hidden`.
+
+---
+
 ## Events data — 2026–2027 season review (2026-09-15)
 
 `data/events.yaml` was populated for the full 2026–2027 season from the FENB tentative calendar (`~/Downloads/fenb_events/fenb 2026-2027 Calendar.pdf`), cross-referenced against the OFA and Quebec (FEQ) provisional calendars for out-of-province dates/locations. Needs a full review pass before publishing — in particular:
 
 - [ ] **Tentative status** — several FENB-listed events were marked "(Tentative)" or "(? - TBD)" in the source PDF. Masquerade (now "Mask-erade: Lights Out!", Oct 31) was confirmed 2026-10-27 from unbfencing.com. Confirm which entries are locked in before publishing.
 - [ ] **"UNB?" placeholders not added** — the FENB source calendar had three unconfirmed "UNB? - TBD" rows (Dec 5–6, 2026; Mar 13–14, 2027; Mar 20–21, 2027) with no title/category — these were intentionally left out of `events.yaml` rather than guessed. Add once the event name/details are confirmed.
-- [ ] **TBA/TBD locations** — Challenge Desjarlais, Coupe du Printemps, Quebec Youth Provincials, and Quebec Senior Provincials all have `location: "TBA, QC"` (Quebec's own provisional calendar also had these as "à définir") — update once venues are confirmed.
+- [ ] **TBA/TBD locations** — Challenge Desjarlais, Coupe du Printemps, Quebec Youth Provincials, and Quebec Senior Provincials all have `city: "TBA, QC"` and no `address` (Quebec's own provisional calendar also had these as "à définir") — set the real `city`, and add an `address` once the venue is confirmed.
 - [ ] **OFA Youth Circuit #2 — missing from OFA's own calendar** — Fencing Ontario's published calendar (as scraped, covering Aug 28, 2026 – Apr 24, 2027) jumps straight from "Ontario Youth Cadet Circuit #1" (Oct 17–18, 2026) to "Ontario Youth Circuit #3" (Jan 23–24, 2027) — no "#2" appears anywhere in that window. Not added to `events.yaml`. (`events.yaml` numbers the Jan 23–24 and Mar 20–21, 2027 circuits "#3" and "#4" to match OFA's calendar; the FENB and Quebec source calendars had called them "#2" and "#3".) Need confirmation: was there a Circuit #2 (maybe outside this window, cancelled, or a different age category not published to the public calendar) that NB fencers should know about?
 - [ ] **`details_url`/`registration_url` blank for most new entries** — the source PDFs didn't include per-event links (only a general OFA calendar page and FEQ contact emails), so these fields are empty for all newly added out-of-province events. Fill in as links become available.
 
@@ -25,12 +32,6 @@ Items that need follow-up — kept current as pages are built and content is add
 ## Non-technical content maintenance
 
 - [ ] **Editor tooling** — build shell scripts, editor guide, staging preview, and optionally Decap CMS to allow a non-technical administrator to maintain events, board members, news, and join URLs without developer involvement. See `plans/non-technical-maintenance.md` for the full plan and implementation order.
-
----
-
-## Google Analytics
-
-- [ ] **Analytics access management** — review who has access to the GA4 property and ensure an organizational account (e.g. a shared FENB admin email) is added as Administrator so access isn't tied solely to a personal Google account. See the Access Management section in `docs/DEVELOPMENT.md` for instructions.
 
 ---
 
@@ -85,23 +86,12 @@ Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
 
 ## FencingTimeLive results — follow-up (2026-11-06)
 
-- [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). A second international tournament (Dormagen, 2026-11-08) and an NB-hosted one with a Club/Division column (Hoplite Invitational, 2026-11-08) also worked and went all the way through `/fenb-content-add-results`. Still unseen: a genuine pools-only seeding event and a `/events/competitors/` page.
-- [ ] **Pools-only rule misfires on small events** — `/fenb-data-get-results` (hosted mode) marks any finished event with `tableau_link: False` as `pools_only` (no podium). At the Hoplite Invitational, Cadet Women's Épée (4 fencers, placings 1/2/3T/3T) and Senior Women's Épée (2 fencers) had no tableau link but were real standalone events; the user overrode the rule by hand. Refine the rule in `.claude/commands/fenb-data-get-results.md` — e.g. only treat it as a seeding pool when the name has "Pool(s)" or spans age groups, or when a separate DE event for the same group exists — and keep `/fenb-content-add-results` Step 5 in step with it.
-- [ ] **Decide what to remove** — `scripts/fencingtimelive-results.py` exits immediately and `scripts/check-ftl-deps.sh` only supports it. Delete them once the manual process is proven. `scripts/.browser-profile/` (49 MB, gitignored) can hold a saved FTL login and is no longer needed.
-
-## Google document links
-
-- [ ] **Confirm Google file sharing is view-only** — `/preview` links only change what visitors see. Anyone with a file's ID can still open its `/edit` URL, so each linked file should be set to Viewer for anyone with the link.
+- [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). A second international tournament (Dormagen, 2026-11-08) and an NB-hosted one with a Club/Division column (Hoplite Invitational, 2026-11-08) also worked and went all the way through `/fenb-content-add-results`. Still unseen: a `/events/competitors/` page, and a real run of the revised no-bracket rule (2026-11-13: an event with no DE bracket keeps its podium unless its name says "Pool(s)" or a later event splits its field), which so far has only been checked against the saved Fundy Open and Hoplite JSON.
 
 ## Dark mode
 
-- [ ] **Dark-mode crimson text contrast** — Register Now links (event cards + list view, `fenb-events.css` / `fenb-schedule.css`) use `--crimson-light` (`#943040`) on `#141f1d` in dark mode — ~2.2:1, fails WCAG AA (4.5:1). Same colour is used as dark-mode text for the "See all" hover (`fenb-base.css`) and the crimson news sidebar heading + link hovers (`fenb-news.css`). **Rejected so far (2026-10-15):** a pink `--crimson-text` token (`#ef8593`, too light/pink) and crimson pills with white text. **Still open:** a softer rose (e.g. `#e06b7a`, 5.3:1), light text with a crimson accent (underline/arrow), or teal in dark mode. Don't lighten `--crimson-light` itself — the About and Hall of Fame gradients use it as a background.
 
 ---
-
-## Policies
-
-- [ ] **Concussion Protocol — broken embedded image** — `content/about/policies/concussion-protocol.en.md` line ~242 has `![][image1]` with `[image1]` defined as a base64 `data:image/png` URI (Google Docs export leftover). Hugo's URL sanitiser blocks `data:` URIs, so the live page renders `<img src="#ZgotmplZ">` — a broken image. The FR file has no image at all. Fix: decode the PNG into `static/images/policies/`, reference it by path (no leading slash) in both EN and FR, and confirm what the image shows (likely a return-to-sport chart) so the FR page gets an equivalent. Found 2026-10-15 while building R9.
 
 ## Hall of Fame
 
@@ -109,10 +99,6 @@ Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
 - [ ] **Marc-André LeBlanc category** — his category is currently set to `"Athlete"` as a placeholder; confirm and correct in both language files.
 - [ ] **French bio review** — the French bios for Alfred Knappe, Rick Gosselin, and Kara Grant were machine-translated; have a French speaker review and correct `*.fr.md` files in `content/about/hall-of-fame/`.
 - [ ] **Inductee photos** — add individual photos to `static/images/hall-of-fame/` when available; set the `photo` front matter field in the corresponding `.en.md` and `.fr.md` files (the `"Builder"` class renders an initials avatar as a placeholder).
-
-## Search / Pagefind
-
-- [ ] **Pagefind language detection** — a `make build-prod` test run (2026-07-28) had Pagefind report 3 languages (`fr-ca`, `en-ca`, `en`) instead of the expected 2 (`en-ca`, `fr-ca`). Likely benign — probably an `en` fallback picked up alongside `en-ca` — but verify the search overlay still filters/ranks results correctly per language before relying on it further.
 
 ## Release workflow
 
@@ -132,8 +118,6 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 
 ## Events data
 
-- [ ] **FENB AGM (Dec 6, 2026) — details missing** — the entry in `data/events.yaml` was copied from last season's AGM and has a blank `location`, no start time, and no details link. All members are invited, so add the venue (or "Online"), the time (it can go in `description_en`/`description_fr`), and a details link (e.g. a meeting notice or agenda, via `details_url_en`/`details_url_fr`) once known.
-- [ ] **Interscholastic finals article — photo gallery** — 4 action photos at `static/images/news/2026/interscholastic-finals-2026-action-{1-4}.jpg`; add `photos:` front matter to `jun-16-interscholastic-finals-2026.{en,fr}.md` (photo gallery system now available — see README.md)
 - [ ] **Fencing Canada logo — replace with vector** — `static/images/organizations/fencing-canada.png` is a temporary raster (downloaded from 2mev.com, resized to 626×800). Replace with an official vector (SVG) version and update `logo:` for `CFF` in `data/organizations.yaml` — every article using `{{< host-logo id="CFF" >}}` picks it up automatically.
 
 ---
@@ -154,7 +138,6 @@ From the site comparison against judonb.org — read `docs/JUDO_NB_COMPARISON.ht
 - [ ] **R8 Task-led titles and descriptions** — section `_index` descriptions + homepage title, EN/FR
 
 ### Next up
-- [ ] **R10 "Get directions" links** — Google Maps search URL from `location` on event cards and clubs
 - [ ] **R11 JSON-LD** — `SportsOrganization` on home, `SportsEvent` per upcoming event
 - [ ] **R12 "Where do I start?" coaching tool** — small JS form on coach-training mapped to `coach_pathways.yaml`
 - [ ] **R13 Officials pathway ladder** — `data/referee_levels.yaml` → stepped visual; reuse for armourer/secretariat

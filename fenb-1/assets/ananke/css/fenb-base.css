@@ -13,6 +13,7 @@
   --crimson-dark:  #5e1c26;
   --crimson-light: #943040;
   --crimson-pale:  #f5e8ea;
+  --crimson-text:  #79242f;   /* crimson for text/links; lighter in dark mode (below) to meet 4.5:1 */
   --navy:          #1e3a5f;
   --navy-dark:     #152b47;
   --navy-light:    #274d7a;
@@ -66,6 +67,7 @@
   --teal-light:         #4dbfad;
   --navy-light:         #6aabdf;
   --crimson-pale:       #271214;
+  --crimson-text:       #cd6676;   /* 4.6:1 on --white (#141f1d); --crimson-light (2.2:1) stays for gradient backgrounds */
   --shadow-xs:          0 1px 4px rgba(0,0,0,0.4);
   --shadow-sm:          0 2px 10px rgba(0,0,0,0.4);
   --shadow-md:          0 6px 24px rgba(0,0,0,0.5);
@@ -284,6 +286,20 @@ main.pb7 { padding-bottom: 0 !important; }
 .fenb-back-link a:hover { text-decoration: underline; }
 [data-theme="dark"] .fenb-back-link a { color: var(--teal-light); }
 
+/* ── Map link (partials/map-link.html, events-calendar.js) ── */
+/* A place name (event location, club city) that opens Google Maps. Keeps the
+   surrounding text colour; the dotted underline marks it as a link without relying
+   on colour alone. */
+.fenb-map-link {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+.fenb-map-link:hover,
+.fenb-map-link:focus-visible { color: var(--teal); text-decoration-style: solid; }
+[data-theme="dark"] .fenb-map-link:hover,
+[data-theme="dark"] .fenb-map-link:focus-visible { color: var(--teal-light); }
+
 /* ── Callout / note block ──────────────────────── */
 .fenb-callout {
   background: var(--teal-pale);
@@ -450,3 +466,10 @@ main.pb7 { padding-bottom: 0 !important; }
 
 @media (max-width: 900px) { .fenb-landing-cards { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .fenb-landing-cards { grid-template-columns: 1fr; } }
+
+/* ── Markdown images (layouts/_default/_markup/render-image.html) ── */
+/* Centred, never wider than the text column; the link opens the full-size file. Charts
+   have white backgrounds, so dark mode gives them a white frame instead of a hard edge. */
+.fenb-md-image-link { display: block; margin: 1.5rem 0; }
+.fenb-md-image { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+[data-theme="dark"] .fenb-md-image { background: #fff; padding: 0.5rem; border-radius: var(--radius-sm); }

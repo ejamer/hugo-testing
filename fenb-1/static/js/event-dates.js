@@ -20,6 +20,12 @@
     return parseDate(dateStr) >= todayMidnight();
   }
 
+  // True only for dates after today — Register links close on the event day itself
+  // (matching the `.After $todayMidnight` check in the Hugo templates).
+  function isFuture(dateStr) {
+    return parseDate(dateStr) > todayMidnight();
+  }
+
   // Inclusive on both ends: fromStr may show today, toStr still shows through
   // the end of the day it names (the day after toStr is the first hidden day).
   function isWithinWindow(fromStr, toStr) {
@@ -33,6 +39,7 @@
     todayMidnight: todayMidnight,
     parseDate: parseDate,
     isUpcoming: isUpcoming,
+    isFuture: isFuture,
     isWithinWindow: isWithinWindow
   };
 }());

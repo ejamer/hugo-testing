@@ -7,7 +7,7 @@
   once per language even though the homepage, events page and schedule all link it:
     {{ partialCached "ics/event-url.html" . .start_date .title site.Language.Lang }}
 */ -}}
-{{- $name := printf "%s — %s" (cond (and (eq site.Language.Lang "fr") .title_fr) .title_fr .title) site.Title -}}
+{{- $name := printf "%s — %s" (partial "localized.html" (dict "item" . "field" "title")) site.Title -}}
 {{- $body := partial "ics/calendar.html" (dict "events" (slice .) "name" $name) -}}
 {{- /* Readable path (e.g. calendar/en/fenb_2026-10-17_epees-de-l-est.ics) so the file
        is well-named however it's saved — links don't use download="", which would stop

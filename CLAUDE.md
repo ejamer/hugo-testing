@@ -10,7 +10,7 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - **`docs/PROJECT_LAYOUT.md`** — full directory tree with file-by-file descriptions. Read it when navigating an unfamiliar part of the repo.
 - **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, shared components, and page header band usage.
 - **`docs/TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
-- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, git submodules, editing a third-party PDF (flyer typos, email footers), or any JS-driven show/hide toggle (filters, dropdowns, modals) — CSS `display` set via a class selector silently defeats the `hidden` attribute; see the entry for the fix.
+- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, git submodules, editing a third-party PDF (flyer typos, email footers), browser-testing a scratch build (Playwright/headless — a bare `hugo` build loads the live site's scripts and real analytics), or any JS-driven show/hide toggle (filters, dropdowns, modals) — CSS `display` set via a class selector silently defeats the `hidden` attribute; see the entry for the fix.
 - **`plans/`** — detailed implementation plans for multi-session features. Read the relevant plan file before starting any TODO item that links to one.
 
 ## Outstanding TODOs
@@ -29,7 +29,7 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 |---|---|
 | `/fenb-git-commit` | Stage, commit, and push after one confirmation popup (shows the drafted message); on a feature branch it can also PR-and-merge into `dev` |
 | `/fenb-docs-update` | Review current git changes and assess whether system docs (CLAUDE.md, README.md, docs/*.md) need updating |
-| `/fenb-git-release` | Hugo version check (offers to update the pinned CI version), production build + bilingual parity checks, then one popup (version + merge now/leave open) to open and optionally merge a PR from `dev` into `main` |
+| `/fenb-git-release` | Hugo version check (offers to update the pinned CI version), Pagefind version check (warns when the pin is behind npm, with the newest release's date, and asks whether to continue), production build + bilingual parity checks, then one popup (version + merge now/leave open) to open and optionally merge a PR from `dev` into `main` |
 | `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
@@ -40,6 +40,8 @@ Season rollover (archive the current season's events, start a fresh `events.yaml
 
 When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/commands/`. Types: `git` (branch/commit/PR workflows), `content` (creating new pages or articles), `data` (fetching or managing structured data files).
 
+**Claude Code permissions:** the committed `.claude/settings.json` holds only narrow, safe allows (`make`, `hugo`) that apply to everyone who clones the repo. Personal settings such as `defaultMode: bypassPermissions` or broad `git`/`gh` allows go in `.claude/settings.local.json` (per-user, gitignored) — never in the committed file. Skills declare the tools they need in their own `allowed-tools` frontmatter, so they don't depend on either file.
+
 ## version.json
 
 `fenb-1/static/version.json` is managed automatically by `/fenb-git-release` — do not edit it manually. See `docs/DEVELOPMENT.md` for the field schema.
@@ -47,6 +49,8 @@ When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/comma
 ## Hugo version pin
 
 The `hugo-version` in `.github/workflows/release-website.yml` and `pr-check.yml` is changed only via `scripts/check-hugo-version.sh --set X.Y.Z` (which `/fenb-git-release` offers when a newer Hugo is available) — don't hand-edit it or set it back to `latest`. The script keeps both workflows in step. See `docs/DEVELOPMENT.md` → Live site.
+
+**Pagefind is pinned the same way:** `pagefind@X.Y.Z` in both workflows and `PAGEFIND` in the `Makefile`, changed only via `scripts/check-pagefind-version.sh --set X.Y.Z`, which keeps all three in step. Only adopt a release at least 5 days old. `/fenb-git-release` warns when the pin is behind but never updates it. Never use a bare `npx pagefind` — without a version, npx runs whatever npm published last.
 
 ## Content creation — use skills, not `hugo new`
 
@@ -62,7 +66,7 @@ Key rules:
 - **Feature branches** — rarely used; only for multi-session work. Cut from `dev` via `/fenb-git-commit` ("Commit to new branch…"), and merge back with its "Commit, push & merge into dev" option.
 - **Release** — PR from `dev` into `main`.
 
-Dev server: `make serve` (needs network for the Pagefind search index) | Offline dev server, no search: `make serve-local` | Production build: `make build-prod` | Clean: `make clean`
+Dev server: `make serve` (with site search; still starts without search if the index can't be built, e.g. offline) | Production build: `make build-prod` | Clean: `make clean`
 
 All `make` commands run from the repo root.
 
@@ -77,6 +81,7 @@ Scripts in `scripts/` never run `git add`/`commit`/`push` — they write files o
 See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colours.
 
 - Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
+- **Places (events and clubs):** `city` ("City, Province") is shown on cards; the optional `address` holds only a mappable venue or street address — never just the city, never a club name alone — and drives the Google Maps link (no `address` = no link). See README.md.
 - **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see docs/STYLE_GUIDE.md)
 - **Recurring event slugs:** for tournaments that repeat annually, include the year in the slug — e.g. `east-coast-games-2026-registration`. This prevents cross-season collisions in the archive.
 - **News article images** — this is the standard way to add images to a news article; the legacy inline `figure` shortcode still works but is discouraged for new articles. Front matter fields (no shortcodes needed in the body):
@@ -145,7 +150,7 @@ Before implementing anything that touches the nav bar layout (adding/moving butt
 
 Match the top-level YAML key to the filename exactly. Only create data files for genuinely editable content — static structural elements belong directly in the template.
 
-**Bilingual data fields use an `_en` / `_fr` suffix pair, with `_fr` falling back to `_en` when empty or omitted** (e.g. `title_en`/`title_fr`, `url_en`/`url_fr`, `src_en`/`src_fr` in `hero_slides.yaml`, `image_en`/`image_fr` in `coach_pathways.yaml`). Apply this pattern to any new bilingual field on a data YAML file rather than inventing a different naming scheme.
+**Bilingual data fields use an `_en` / `_fr` suffix pair, with `_fr` falling back to `_en` when empty or omitted** (e.g. `title_en`/`title_fr`, `url_en`/`url_fr`, `src_en`/`src_fr` and `alt_en`/`alt_fr` in `hero_slides.yaml`, `image_en`/`image_fr` in `coach_pathways.yaml`). Apply this pattern to any new bilingual field on a data YAML file rather than inventing a different naming scheme. In templates, read these fields with `partial "localized.html" (dict "item" . "field" "title")` — it handles both `title`/`title_fr` and `x_en`/`x_fr` — and never write the fallback out inline, so the rule lives in one place.
 
 ## URL paths — the no-leading-slash rule
 
@@ -156,7 +161,7 @@ Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as host-root-relativ
 
 **Rule: never use a leading `/` with any Hugo URL function.** This applies to hardcoded strings in templates and to paths stored in data YAML files piped through URL functions.
 
-**Exception — `results_url_en`/`results_url_fr` in `events.yaml`:** these are rendered as a raw `href` in `layouts/partials/event-card.html` and `layouts/events/schedule.html`, never piped through `relLangURL`/`absURL`, so a leading `/` is correct there when the value is an internal news article (e.g. `/news/2026/.../` and `/fr/news/2026/.../`). The templates also key off that leading `/` to decide whether to skip `target="_blank"` for internal links — don't "fix" these paths to remove the leading slash.
+**Exception — `results_url_en`/`results_url_fr` in `events.yaml`:** these are rendered as a raw `href` in `layouts/partials/event-card.html` and `layouts/events/schedule.html`, never piped through `relLangURL`/`absURL`, so a leading `/` is correct there when the value is an internal news article (e.g. `/news/2026/.../` and `/fr/news/2026/.../`). Don't "fix" these paths to remove the leading slash. The templates open only `http(s)` links in a new tab, so internal paths (leading `/`) and `mailto:` links open in the same tab.
 
 **Same for `details_url_en`/`details_url_fr`:** also rendered raw (event card, schedule, calendar JSON, `.ics`). An internal page link keeps its leading and trailing `/` (e.g. `/news/2026/oct-30-slug/` + `/fr/news/2026/oct-30-slug/`) — `layouts/partials/event-details-url.html` keys off that shape to check the page exists and hides the Learn More link until it's published (so it can point to a future-dated article).
 

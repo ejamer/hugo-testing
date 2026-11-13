@@ -8,11 +8,10 @@
   Call with: {{ partial "ics/event-google-url.html" $event }}
 */ -}}
 {{- $e := . -}}
-{{- $fr := eq site.Language.Lang "fr" -}}
-{{- $title    := cond (and $fr $e.title_fr) $e.title_fr $e.title -}}
-{{- $desc     := cond (and $fr $e.description_fr) $e.description_fr $e.description_en -}}
+{{- $title    := partial "localized.html" (dict "item" $e "field" "title") -}}
+{{- $desc     := partial "localized.html" (dict "item" $e "field" "description") -}}
 {{- $details  := partial "event-details-url.html" $e -}}
-{{- $register := cond (and $fr $e.registration_url_fr) $e.registration_url_fr $e.registration_url_en -}}
+{{- $register := partial "localized.html" (dict "item" $e "field" "registration_url") -}}
 {{- $start := time $e.start_date -}}
 {{- $end := $start -}}
 {{- with $e.end_date }}{{ $end = time . }}{{ end -}}
@@ -26,7 +25,7 @@
       "action"   "TEMPLATE"
       "text"     $title
       "dates"    (printf "%s/%s" ($start.Format "20060102") (($end.AddDate 0 0 1).Format "20060102"))
-      "location" $e.location
+      "location" ($e.address | default $e.city | default "")
       "details"  (delimit $parts "\n\n")
 -}}
 {{- return printf "https://calendar.google.com/calendar/render?%s" $q -}}

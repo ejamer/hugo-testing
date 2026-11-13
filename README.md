@@ -64,7 +64,7 @@ title: "Post title"
 date: 2026-06-01
 category: national   # canonical ID — same IDs used by events; drives badge colour and label
 summary: "One-sentence summary shown on the homepage card."
-update: "<strong>Update:</strong> The deadline has been extended to August 15, 2026."  # optional — alert banner above the article body, HTML allowed
+update: "**Update:** The deadline has been extended to August 15, 2026."  # optional — alert banner above the article body, Markdown (no raw HTML)
 image: "images/event-logos/ecg.png"           # optional — centred logo above body (no leading slash)
 image_alt: "East Coast Games 2026"             # optional — alt text for image
 image_wide: true                               # optional — raises logo max-width 220px → 480px, for wide/banner-shaped images
@@ -107,7 +107,7 @@ Full post body here (Markdown).
 
 **`results_hide_placements: true`** — optional companion to `results_table`. When set, the last column (placement) is hidden by default with a "Show placements / Hide placements" toggle button. Use this for **away-tournament** articles where placement context varies across events. Omit it for **hosted-tournament** articles where placements should always be visible.
 
-**`update`** — optional alert banner rendered above the article body (`fenb-callout fenb-callout--alert`, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md)). Use for a short, urgent notice on an already-published article (e.g. an extended deadline). HTML is allowed and rendered via `safeHTML`, so wrap the lead-in with `<strong>` as shown above.
+**`update`** — optional alert banner rendered above the article body (`fenb-callout fenb-callout--alert`, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md)). Use for a short, urgent notice on an already-published article (e.g. an extended deadline). Write it in Markdown (rendered via `markdownify`): bold the lead-in with `**Update:**` (French: `**Mise à jour :**`) as shown above, and links work as usual. Raw HTML such as `<strong>` is stripped, not rendered, the same safety rule as article bodies.
 
 **`cta_heading`** (+ `cta_label`, `cta_text`, `cta_button_label`, `cta_button_url`, `cta_note`) — optional call-to-action banner (`fenb-cta-banner`, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md)) rendered below the article body. Use for a registration deadline or other action you want to visually separate from the body copy. `cta_heading` presence is what triggers the block — omit it (and the other `cta_*` fields) to skip the banner entirely. All values are literal strings, not i18n keys, so write them in the article's own language.
 
@@ -143,12 +143,13 @@ Add an entry to `data/events.yaml`.
 | `start_date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
 | `end_date` | — | ISO `YYYY-MM-DD`. Omit or leave blank for single-day events. If set, the displayed date shows as a range (`Sep 20–21` or `Nov 29 – Dec 1`) and the calendar draws bars across the full range. |
 | `category` | ✅ | See categories below — must be a canonical ID from `data/event_categories.yaml` |
-| `location` | ✅ | Display string shown on the card. Use `"City, Province"` when there is no specific venue, or `"Venue Name, City, Province"` when there is one. |
+| `city` | ✅ | `"City, Province"` (or `""` if not known yet), shown on event cards (home page, Events page, calendar view). Same pattern as club cards. |
+| `address` | — | Only a mappable place: `"Venue Name, Street Address, City, Province"` when the Learn More page or flyer gives an address (no postal code), or `"Venue Name, City, Province"` when it names only a venue. **Omit it when only the city is known — never repeat `city` here.** Cards link `city` to it in Google Maps, and the schedule list shows it in full (or `city` when it's missing). No `address` = no map link. Never use a club or business name alone, without an address: Maps finds similar businesses (fence builders). |
 | `description_en` | — | Optional English description. Shown on the schedule page; not shown on homepage cards |
 | `description_fr` | — | Optional French description. Falls back to `description_en` if blank |
 | `details_url_en` | — | English URL for the **Learn More →** badge. Used for both languages when `details_url_fr` is blank. Can point to a scheduled (future-dated) news article, e.g. `/news/2026/oct-30-slug/` + `/fr/news/2026/oct-30-slug/` — the badge stays hidden until the article is published (`layouts/partials/event-details-url.html`) |
 | `details_url_fr` | — | Optional French URL override for the **Learn More →** badge |
-| `registration_url_en` | — | English URL for the **Register Now →** badge. Used for both languages when `registration_url_fr` is blank. Hidden for past events (date < today). |
+| `registration_url_en` | — | English URL for the **Register Now →** badge. Used for both languages when `registration_url_fr` is blank. Hidden from the event day on (shown only while start_date > today). |
 | `registration_url_fr` | — | Optional French URL override for the **Register Now →** badge. Falls back to `registration_url_en` if blank. |
 | `results_url_en` | — | English URL for the **View Results →** badge. Offered by `/fenb-data-get-results` after it reads a tournament's saved pages (FTL links are language-agnostic, so `_fr` is left blank). `/fenb-content-add-results` will also offer to redirect an existing FTL link here to the internal article it just created, once one exists. |
 | `results_url_fr` | — | Optional French URL override for the **View Results →** badge (set when the results link is an internal bilingual news article). Falls back to `results_url_en` if blank. |
@@ -162,12 +163,13 @@ Add an entry to `data/events.yaml`.
   start_date: "2026-06-01"         # ISO YYYY-MM-DD
   end_date: "2026-06-02"           # optional; omit for single-day events
   category: competition            # see categories below
-  location: "Venue Name, City, NB" # or just "City, NB" if no specific venue
+  city: "City, NB"                 # shown on event cards
+  address: "Venue Name, 123 Street Name, City, NB" # optional: only a mappable venue/address; omit if only the city is known
   description_en: ""               # optional; shown on schedule page, not homepage
   description_fr: ""               # optional; falls back to description_en if blank
   details_url_en: ""               # optional Learn More link (used for both languages if _fr is blank)
   details_url_fr: ""               # optional French override for the Learn More link
-  registration_url_en: ""          # optional; hidden once event date has passed
+  registration_url_en: ""          # optional; hidden from the event day on
   registration_url_fr: ""          # optional French override; falls back to _en if blank
   results_url_en: ""               # optional; populated by /fenb-data-get-results
   results_url_fr: ""               # optional French override; falls back to _en if blank
@@ -365,7 +367,8 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
   logo: images/clubs/club-logo-XYZ.png
   email: "club@example.com"
   website: "https://example.com"   # omit if none
-  city: "City, NB"
+  address: "123 Street Name, City, NB"    # Google Maps search for the city link; omit if unknown (no link)
+  city: "City, NB"                 # shown on the card
 ```
 
 **Non-club organization logos** (e.g. Fencing Canada) that articles reuse go in `data/organizations.yaml`, with the logo in `static/images/organizations/`:
@@ -420,14 +423,16 @@ Drop replacement images into `static/images/hero/` and update `data/hero_slides.
 slides:
   - src_en: images/hero/hero1.jpg
     src_fr: ""                                    # optional — French-language variant of the image
-    alt: "Alt text for accessibility"
+    alt_en: "What the image shows"               # required — alt text for accessibility
+    alt_fr: "Ce que montre l'image"              # leave empty to fall back to alt_en
     link_en: "news/2026/jun-16-some-article/"   # optional — makes slide clickable
     link_fr: ""                                  # leave empty to fall back to link_en
     publish_from: ""                              # optional — hide until this date
     expires: ""                                   # optional — hide after this date
   - src_en: images/hero/hero2.jpg
     src_fr: ""
-    alt: ""
+    alt_en: "A fencer lunging at an opponent"
+    alt_fr: "Un escrimeur en fente contre son adversaire"
     link_en: ""
     link_fr: ""
     publish_from: ""

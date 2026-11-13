@@ -339,6 +339,19 @@
       .replace(/"/g, '&quot;');
   }
 
+  // Only these link kinds are allowed — matches what Hugo's own URL sanitiser accepts on the
+  // event cards and schedule. Anything else (javascript:, data:, tel:, …) gets no link. The
+  // check is on the raw string and requires the prefix at the very start, so whitespace or
+  // tab tricks (" javascript:", "java\tscript:") are rejected too.
+  function safeHref(url) {
+    return /^(https?:\/\/|mailto:|\/)/i.test(url || '') ? url : '';
+  }
+
+  // Only links to other sites open a new tab — same rule as partials/event-card.html.
+  function targetAttr(url) {
+    return /^https?:/i.test(url) ? ' target="_blank" rel="noopener noreferrer"' : '';
+  }
+
   function formatEventDate(e) {
     var sD   = new Date(e.start_date + 'T00:00:00');
     var eD   = (e.end_date && e.end_date > e.start_date) ? new Date(e.end_date + 'T00:00:00') : sD;
@@ -385,17 +398,17 @@
 
       var eventDate = new Date(e.start_date + 'T00:00:00');
       var linksHtml = '';
-      var detailsUrl = (fr && e.details_url_fr) ? e.details_url_fr : e.details_url_en;
+      var detailsUrl = safeHref((fr && e.details_url_fr) ? e.details_url_fr : e.details_url_en);
       if (detailsUrl) {
-        linksHtml += '<a href="' + esc(detailsUrl) + '" class="fenb-event-details-link" target="_blank" rel="noopener noreferrer">' + esc(cal.detailsLabel) + ' →</a>';
+        linksHtml += '<a href="' + esc(detailsUrl) + '" class="fenb-event-details-link"' + targetAttr(detailsUrl) + '>' + esc(cal.detailsLabel) + ' →</a>';
       }
-      var registerUrl = (fr && e.registration_url_fr) ? e.registration_url_fr : e.registration_url_en;
-      if (registerUrl && eventDate >= today) {
-        linksHtml += '<a href="' + esc(registerUrl) + '" class="fenb-event-register-link" target="_blank" rel="noopener noreferrer">' + esc(cal.registerLabel) + ' →</a>';
+      var registerUrl = safeHref((fr && e.registration_url_fr) ? e.registration_url_fr : e.registration_url_en);
+      if (registerUrl && eventDate > today) {   // closes on the event day itself
+        linksHtml += '<a href="' + esc(registerUrl) + '" class="fenb-event-register-link"' + targetAttr(registerUrl) + '>' + esc(cal.registerLabel) + ' →</a>';
       }
-      var resultsUrl = (fr && e.results_url_fr) ? e.results_url_fr : e.results_url_en;
+      var resultsUrl = safeHref((fr && e.results_url_fr) ? e.results_url_fr : e.results_url_en);
       if (resultsUrl) {
-        linksHtml += '<a href="' + esc(resultsUrl) + '" class="fenb-event-results-link" target="_blank" rel="noopener noreferrer">' + esc(cal.resultsLabel) + ' →</a>';
+        linksHtml += '<a href="' + esc(resultsUrl) + '" class="fenb-event-results-link"' + targetAttr(resultsUrl) + '>' + esc(cal.resultsLabel) + ' →</a>';
       }
       // Add to Calendar — icon pinned bottom-right of the card that opens the shared
       // calendar dialog (js/calendar-dialog.js). Mirrors the "icon" style of
@@ -407,7 +420,7 @@
         icsHtml =
           '<button type="button" class="fenb-event-ics-btn" data-cal-dialog="event"' +
             ' data-cal-title="' + esc(evTitle(e)) + '"' +
-            ' data-cal-meta="' + esc(formatEventDate(e) + ' · ' + e.location) + '"' +
+            ' data-cal-meta="' + esc(formatEventDate(e) + ((e.address || e.city) ? ' · ' + (e.address || e.city) : '')) + '"' +
             ' data-cal-ics="' + esc(e.ics_url) + '" data-cal-google="' + esc(e.google_url) + '"' +
             ' aria-label="' + esc(cal.icsLabel) + '" data-tooltip="' + esc(cal.icsLabel) + '">' +
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -431,13 +444,20 @@
           '<span class="fenb-tag fenb-tag--' + e.category + '">' + esc(categoryLabels[e.category] || e.category) + '</span>' +
           '<h3 class="fenb-event-title">' + esc(evTitle(e)) + '</h3>' +
           '<p class="fenb-event-date-range">' + esc(formatEventDate(e)) + '</p>' +
-          '<p class="fenb-event-meta">' +
-            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-              '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>' +
-              '<circle cx="12" cy="10" r="3"></circle>' +
-            '</svg>' +
-            esc(e.location) +
-          '</p>' +
+          // Pin line: shows e.city; opens e.address in Google Maps — same markup as
+          // partials/map-link.html via partials/event-card.html. No city = no pin line.
+          (e.city
+            ? '<p class="fenb-event-meta">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                  '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>' +
+                  '<circle cx="12" cy="10" r="3"></circle>' +
+                '</svg>' +
+                (e.map_url
+                  ? '<a class="fenb-map-link" href="' + esc(e.map_url) + '" target="_blank" rel="noopener noreferrer"' +
+                      ' aria-label="' + esc(e.map_label) + '" title="' + esc(cal.mapTitle) + '">' + esc(e.city) + '</a>'
+                  : esc(e.city)) +
+              '</p>'
+            : '') +
           linksHtml +
         '</div>' +
         icsHtml;

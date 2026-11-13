@@ -19,7 +19,7 @@ hugo-testing/
 │   └── TODO.md            Outstanding items — keep current
 ├── .claude/               Project skills and settings (see CLAUDE.md for skill descriptions)
 ├── plans/                 Detailed plans for multi-session features (referenced from docs/TODO.md)
-├── scripts/               Utility scripts: fencingtimelive-results.py (retired: exits with a terms-of-service message), ftl-read-saved-pages.py (reads hand-saved FTL pages for /fenb-data-get-results), season-rollover.sh (events.yaml archive + fresh season file), check-ftl-deps.sh (prerequisite check for the results scraper), compute-next-version.sh (latest tag + next version candidates), generate-version-json.sh (writes static/version.json for a release), check-hugo-version.sh (CI Hugo pin vs. local/latest; --set updates the pin)
+├── scripts/               Utility scripts: fencingtimelive-results.py (retired: exits with a terms-of-service message), ftl-read-saved-pages.py (reads hand-saved FTL pages for /fenb-data-get-results), season-rollover.sh (events.yaml archive + fresh season file), check-ftl-deps.sh (prerequisite check for the results scraper), compute-next-version.sh (latest tag + next version candidates), generate-version-json.sh (writes static/version.json for a release), check-hugo-version.sh (CI Hugo pin vs. local/latest; --set updates the pin), check-pagefind-version.sh (Pagefind pin in both workflows + Makefile vs. newest npm release and its age; --set updates all three)
 ├── design-sources/        Editable source for generated graphics (e.g. typographic hero slides) — not served by Hugo; re-export to static/images/ when reused or edited. Two source formats: HTML/CSS (re-render with headless Chrome), and Inkscape SVG templates (e.g. hero/fenb-hero-template.svg — export panels directly to JPG/PNG)
 └── fenb-1/                Hugo site root
     ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)
@@ -78,8 +78,12 @@ hugo-testing/
     │   ├── _default/
     │   │   ├── sitemap.xml Custom sitemap with hreflang alternates
     │   │   └── _markup/
-    │   │       └── render-link.html  Markdown link render hook — opens external links (absolute
-    │   │                             http(s) URLs off-site) in a new tab; internal links unaffected
+    │   │       ├── render-image.html Markdown image render hook — site paths (no leading slash) via
+    │   │       │                     relURL, lazy loading, image links to its full-size file
+    │   │       ├── render-link.html  Markdown link render hook — opens external links (absolute
+    │   │       │                     http(s) URLs off-site) in a new tab; internal links unaffected
+    │   │       └── render-table.html Markdown table render hook — same output as Hugo's default; pages
+    │   │                             with `merge_note_rows: true` get full-width "note" rows
     │   ├── about/          list.html (About disambiguation), single.html (Policies & Reports),
     │   │                   policies/single.html (individual policy page),
     │   │                   hall-of-fame/list.html (inductee table), hall-of-fame/single.html (profile),
@@ -100,11 +104,15 @@ hugo-testing/
     │                         event-details-url.html Return-value partial — an event's Learn More URL in the current language; blank when it points to a page that isn't published yet (e.g. a future-dated article)
     │                         calendar-dialog.html  Shared Add to Calendar / Subscribe modal (<dialog>) — once per page with triggers
     │                         events-viewbar.html   Calendar | List toggle + Print/Subscribe bar, shared by both events views
-    │                         head-additions.html   Custom <head> additions (Analytics, etc.)
+    │                         head-additions.html   Early theme script — applies the saved light/dark choice before first paint
     │                         icon.html             Inline SVG renderer
+    │                         localized.html        Return-value partial — a bilingual data field in the current language (_fr falls back to English); the one place that rule lives
     │                         ics/                  iCalendar building blocks — escape, line (RFC 5545 folding), vevent, calendar, event-url (publishes per-event .ics at a readable path), event-filename (readable file name), event-google-url (pre-filled Google Calendar link), add-button (Add to Calendar trigger → calendar dialog)
-    │                         nav.html              Sticky nav, language switcher, search, theme toggle
+    │                         map-link.html         Place text that opens Google Maps in a new tab (cards show city, link searches the optional address); plain text when there is no address
+    │                         map-url.html          Return-value partial — Google Maps search URL for a place; blank for empty/TBA places
+    │                         nav.html              Sticky nav, language switcher, search, Facebook link, theme toggle
     │                         news-card.html        Single news card — data-category/data-season attrs for news-filter.js
+    │                         news-date.html        Return-value partial — a news article's date, EN/FR, long or short month
     │                         news-season.html      Return-value partial — derives fencing-season label (Sept–Aug) from a date
     │                         page-header.html      Coloured band below the nav (title + subtitle)
     │                         program-contact-cta.html  Contact banner for officials program pages (referee, armourer)
@@ -114,7 +122,7 @@ hugo-testing/
     │                         section-header.html   Section label + h2 + "see all" link
     │                         site-announcement.html  Site-wide banner (controlled via hugo.toml)
     │                         site-favicon.html     SVG + PNG favicon link tags
-                        site-footer.html      Site footer
+    │                         site-footer.html      Site footer — copyright, Website privacy icon, RSS
     │                         site-header.html      Entry point — delegates to nav.html + page-header.html
     └── static/
         ├── documents/      PDFs served at /documents/ — subfolders: about/agm-minutes/,

@@ -11,12 +11,11 @@
   Call with: {{ partial "ics/vevent.html" $event }}
 */ -}}
 {{- $e := . -}}
-{{- $fr := eq site.Language.Lang "fr" -}}
 {{- $pick := dict
-      "title"    (cond (and $fr $e.title_fr) $e.title_fr $e.title)
-      "desc"     (cond (and $fr $e.description_fr) $e.description_fr $e.description_en)
+      "title"    (partial "localized.html" (dict "item" $e "field" "title"))
+      "desc"     (partial "localized.html" (dict "item" $e "field" "description"))
       "details"  (partial "event-details-url.html" $e)
-      "register" (cond (and $fr $e.registration_url_fr) $e.registration_url_fr $e.registration_url_en)
+      "register" (partial "localized.html" (dict "item" $e "field" "registration_url"))
 -}}
 {{- $start := time $e.start_date -}}
 {{- $end := $start -}}
@@ -38,7 +37,7 @@
       (printf "DTSTART;VALUE=DATE:%s" ($start.Format "20060102"))
       (printf "DTEND;VALUE=DATE:%s" (($end.AddDate 0 0 1).Format "20060102"))
       (printf "SUMMARY:%s" (partial "ics/escape.html" $pick.title))
-      (printf "LOCATION:%s" (partial "ics/escape.html" $e.location))
+      (printf "LOCATION:%s" (partial "ics/escape.html" ($e.address | default $e.city | default "")))
       (printf "CATEGORIES:%s" (partial "ics/escape.html" (i18n $e.category | default $e.category)))
 -}}
 {{- with $descParts }}

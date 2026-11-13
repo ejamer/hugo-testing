@@ -5,13 +5,14 @@
 ### Colours
 - **Primary:** `#006156` (deep teal) — CSS var `--teal` — nav, headings, buttons, section accents
 - **Accent:** `#79242f` (crimson) — CSS var `--crimson` — CTA buttons, hero badge, event category badges
+- **Crimson as text:** use `--crimson-text` for crimson text and links. It equals `--crimson` in light mode and is `#cd6676` in dark mode (4.6:1 on the dark card background, meeting WCAG AA). Never use `--crimson-light` as dark-mode text (2.2:1); it is kept for gradient backgrounds.
 
 ### Logos
 - `static/images/fenb-logo` — folder contains the FENB-Logo-Standards.html guidelines, and subfolders with different official logo files
 - `FENB-Logo-Landscape-FullColour` — full landscape logo for light backgrounds; used in desktop nav (`fenb-nav-logo--color`)
 - `FENB-Logo-Landscape-White` — full landscape logo for dark/teal backgrounds; used in desktop dark-mode nav (`fenb-nav-logo--white`)
-- `FENB-Logo-Small-FullColor` — compact mark for light backgrounds; used in mobile nav at ≤860px (`fenb-nav-logo--small-color`)
-- `FENB-Logo-Small-White` — compact mark for dark mode; used in mobile dark-mode nav at ≤860px (`fenb-nav-logo--small-white`)
+- `FENB-Logo-Small-FullColor` — compact mark for light backgrounds; in the nav markup (`fenb-nav-logo--small-color`) but hidden by CSS at every width — phones show the landscape logo
+- `FENB-Logo-Small-White` — compact mark for dark backgrounds; in the nav markup (`fenb-nav-logo--small-white`) but hidden there too; used by the homepage hero's fallback slide
  
 
 ### Fonts
@@ -131,7 +132,8 @@ The template renders the chevron, dropdown panel, and hover/focus behaviour auto
 **CSS rules to keep in mind:**
 - `.fenb-nav-links > ul` and `.fenb-nav-links > ul > li:last-child` use direct-child selectors deliberately — this prevents the crimson Join pill and the flex layout from bleeding into nested dropdown `<ul>` elements. Any new nav list rules must also use `> ul` rather than the bare descendant selector `ul`.
 - The dropdown `min-width` is currently `260px` — increase it if you add items with long translated labels.
-- On mobile (≤ 860px), dropdown items are always visible as indented sub-items inside the open hamburger menu.
+- The nav collapses to the hamburger menu at **≤ 1000px** (below that, the desktop menu plus the action icons no longer fit beside the logo). Page layouts switch separately, at ≤ 860px — both in `fenb-responsive.css`. In the hamburger menu, dropdown items show as indented sub-items.
+- **Action icons** (`.fenb-nav-actions`), in order: search, Facebook, theme, language. The Facebook link comes from `hugo.toml` → `params.ananke.social.facebook.profilelink` and shares the search button's look (`.fenb-nav-social`). At ≤ 480px there's no room in the bar, so it's hidden there and shown instead at the bottom of the open menu (`.fenb-nav-social-menu`). That block sits after the menu's `<ul>`, not inside it, because the last `<li>` is styled as the Join pill.
 
 ---
 
@@ -175,7 +177,7 @@ Modifier `--quote` for pull-quotes and mission statements:
 <blockquote class="fenb-callout fenb-callout--quote">…</blockquote>
 ```
 
-Modifier `--alert` for an urgent notice on an already-published news article (e.g. an extended deadline) — crimson border/text, bold. Set via the `update` front matter field on a news article rather than writing the markup directly; see [README.md](../README.md) news front matter docs.
+Modifier `--alert` for an urgent notice on an already-published news article (e.g. an extended deadline) — crimson border/text, bold. Set via the `update` front matter field on a news article rather than writing the markup directly. The field is Markdown (`**Update:** …`), so the `<strong>` below comes from `markdownify`; raw HTML in the field is stripped. See [README.md](../README.md) news front matter docs.
 ```html
 <div class="fenb-callout fenb-callout--alert"><strong>Update:</strong> …</div>
 ```
@@ -361,6 +363,18 @@ Shared by `/events/` (`list.html`) and `/events/schedule/` (`schedule.html`): a 
 
 Render it as the **first child of the same `.fenb-container--narrow`** on both pages — that, plus the schedule page's `page_header_uses_section: true`, is what keeps the toggle at an identical position when switching views. Don't give either page a different container width or its own header.
 
+### `map-link.html` partial — place name that opens Google Maps (`.fenb-map-link`)
+
+Turns a place name into a Google Maps search link that opens in a new tab: the city on event and club cards, and the address on the printable schedule. Maps search links need no API key.
+
+```go-html-template
+{{ partial "map-link.html" (dict "text" (.address | default .city) "query" (.address | default "")) }}  {{/* schedule list: full address */}}
+{{ partial "map-link.html" (dict "text" .city "query" (.address | default "")) }}  {{/* event cards: show city */}}
+{{ partial "map-link.html" (dict "text" .city "query" (.address | default "")) }}  {{/* club cards: same as event cards */}}
+```
+
+Events and clubs both use the same two fields: `city` ("City, Province") is shown on cards, and the optional `address` (a mappable venue or address, never just the city) is what the link searches, so no `address` means no link. An event with a blank `city` gets no pin line on its card at all. The printable schedule shows the full `address` (or `city` when there isn't one), with the description on its own line below it. Pass `query` to search something other than what's shown. If `query` is passed but empty, there's no link, so a card without an `address` shows its city as plain text. Search only a location (an address, or a venue with an address), never a club name alone. Club names give false hits for similar businesses (fence builders), and some clubs aren't on Google Maps at all. `partials/map-url.html` builds the URL and holds the one rule: an empty place, or one containing TBA, TBD or "à définir", gets no link and stays plain text. The link isn't labelled "directions" because many locations are only a city. It keeps the surrounding text colour with a dotted underline (solid and teal on hover). The calendar view builds the same markup in `static/js/events-calendar.js` from `map_url`/`map_label`, which `layouts/events/list.html` adds to each event, so keep the two in step.
+
 ### Icon button with tooltip — `.fenb-event-ics-btn`
 
 Icon-only `<button>` (currently: Add to Calendar, rendered by `partials/ics/add-button.html`) — pinned to a card's bottom-right corner on event cards, and in-flow at the right end of the links row on the printable schedule (`fenb-schedule.css` resets the absolute positioning). The visible label is a CSS tooltip from `data-tooltip` via `::after`, shown on `:hover` and `:focus-visible`; the same text goes in `aria-label` for screen readers.
@@ -370,6 +384,8 @@ Icon-only `<button>` (currently: Add to Calendar, rendered by `partials/ics/add-
 ```
 
 The tooltip opens **upward and right-aligned** so it stays inside the card (`.fenb-event-card` has `overflow: hidden`), and the card body reserves a bottom strip (`padding-bottom: 2.9rem`) so the icon never covers wrapped text on phones. Reuse the pattern for other icon-only card actions rather than adding a new tooltip style.
+
+The footer's Website privacy icon (`.fenb-footer-icon`, `partials/site-footer.html`) uses the same tooltip — its selectors are listed alongside `.fenb-event-ics-btn` in the `::after` rules in `fenb-events.css`. Add new tooltip icons there the same way.
 
 ### `calendar-dialog.html` partial — shared modal (`.fenb-cal-dialog`)
 
@@ -410,13 +426,21 @@ Three link types appear on event cards and schedule rows. Each has a specific CS
 | Register Now → | `fenb-event-register-link` | `--crimson` | `--text-body` |
 | View Results → | `fenb-event-results-link` | `--navy` | `--navy-light` |
 
-`Register Now` is suppressed for past events (date < today). `View Results` shows regardless of date when `results_url_en` is set.
+`Register Now` is suppressed from the event day on (shown only while start_date > today). `View Results` shows regardless of date when `results_url_en` is set.
 
 `View Results` opens in the same tab when it points at an internal news article (root-relative, e.g. `/news/2026/.../`) and in a new tab for external hosts (e.g. fencingtimelive.com) — the templates decide this by checking for a leading `/`, so internal results links must keep it.
 
 Any layout that renders event links (card partial, schedule list, future widgets) must use these classes — **not** a plain `<a>` with a local colour rule — so that print and dark-mode overrides apply automatically.
 
 **Markdown links in article/page bodies** (e.g. a results table heading like `### [Event Name](https://fencingtimelive.com/...)`) follow the same same-tab/new-tab split automatically via a Hugo render hook at `layouts/_default/_markup/render-link.html`. It opens a link in a new tab (`target="_blank" rel="noopener noreferrer"`) whenever the destination is an absolute `http(s)` URL that doesn't match the current environment's `Site.BaseURL`; anything else (relative paths, root-relative internal paths, anchors) stays same-tab. This applies site-wide to all Markdown content — no per-article markup needed.
+
+**Markdown images in page bodies** (e.g. the concussion pathway chart on the Concussion Protocol policy) are rendered by `layouts/_default/_markup/render-image.html`. Put the file under `static/images/<folder>/` and reference it **without a leading slash**: `![Alt text describing the image](images/policies/concussion-pathway-en.png)`. The hook resolves it with `relURL`, so it works on the `/hugo-testing/` preview and in production. It also adds lazy loading and wraps the image in a link to its full-size file, which helps on phones. The alt text is required: write what the image shows or summarises. Styles are `.fenb-md-image` in `fenb-base.css` (centred, never wider than the column, white frame in dark mode). News articles still use `image`/`photos` front matter instead (see CLAUDE.md).
+
+**Markdown tables** go through `layouts/_default/_markup/render-table.html`, which reproduces Hugo's default table HTML exactly. So news results tables (and `results-table.js`) see no difference. Markdown can't merge cells, so for "step N → note → step N+1" tables a page can opt in with front matter `merge_note_rows: true`. Every body row whose **only** text is in its first cell is then output as one full-width row (`<tr class="fenb-table-note-row"><td colspan="N"><span class="fenb-table-note">…`), styled as a shaded, italic note. Write those rows with the other cells empty: `| If the athlete can tolerate …, progress to step 3. |  |  |  |`. On phones (≤600px) wide policy tables scroll inside their own box, and the note text stays pinned to the visible part (`fenb-responsive.css`). Currently used only by the Concussion Protocol (EN/FR). Don't turn it on for results articles, because a placement row with only a name filled in would be merged by mistake.
+
+**Policy tables** (`.fenb-policy-doc table`, `fenb-about.css`) use the same look as news article tables: full width, light row borders, and a shaded header.
+
+The two concussion pathway charts (`static/images/policies/concussion-pathway-{en,fr}.png`) are cropped from Parachute's *Canadian Harmonized Sport Concussion Protocol Template*, 2024 edition: the EN template's page 13 and the FR template's page 15. The Word files are linked from parachute.ca (`/en/resource/canadian-harmonized-sport-concussion-protocol-template/` and `/fr/resource/canadian-harmonized-sport-concussion-protocol-template-fr/`). Each was converted to PDF, rendered at 2×, and cropped to 900px wide, leaving out the title, which contains an "[organization name]" placeholder. When Parachute updates the protocol, replace both charts from the same source.
 
 **Google Docs and Sheets links:** always link to the `/preview` URL (`https://docs.google.com/document/d/{id}/preview`, or `spreadsheets/d/{id}/preview`). Never link to `/edit` or the bare document URL, because both open the editor view. Google Forms links (`/viewform`) are fine.
 
@@ -600,18 +624,16 @@ For data-file-driven loops where the icon filename comes from YAML, pass the siz
 {{ end }}
 ```
 
-For simple one-off uses where no size or class override is needed, `readFile` is fine:
+Even with no size or class override, use the partial — `{{ partial "icon.html" (dict "name" .icon) }}` — rather than `readFile … | safeHTML`. The partial is the one place SVG files are read, and it fails the build with a clear error if the file is missing.
 
-```html
-{{ readFile (printf "static/images/svg/%s" .icon) | safeHTML }}
-```
+**Brand logos:** `facebook.svg` is the Facebook mark copied from the Ananke theme (`themes/ananke/assets/ananke/socials/facebook.svg`; the 24×24 path matches the Simple Icons set, which is public domain). It's a brand mark, so keep it unmodified apart from `fill="currentColor"`.
 
 ### Adding a new icon
 
 1. Drop the `.svg` file in `fenb-1/static/images/svg/`.
 2. Strip any `width`/`height` attributes — keep `viewBox` only.
 3. Add `aria-hidden="true"` to the `<svg>` tag.
-4. Reference it by filename via the partial or `readFile`.
+4. Reference it by filename via the `icon.html` partial.
 
 ### Data files that reference icons
 
@@ -651,7 +673,11 @@ When display text must be computed from data (e.g. a bilingual date from `start_
 
 Called as: `{{ partial "event-date.html" . }}`
 
-This keeps the logic in one file regardless of how many templates render the same thing. `layouts/partials/event-date.html` is the established example.
+This keeps the logic in one file regardless of how many templates render the same thing. Examples:
+
+- `event-date.html` — an event's date or date range, EN/FR
+- `news-date.html` — a news article's date, long or short month (`(dict "date" .Date "month" "long")`)
+- `localized.html` — a bilingual data field in the current language, with `_fr` falling back to English (`(dict "item" . "field" "title")`). This is the only place that fallback rule is written; don't inline it.
 
 ### Filterable list pages — SSR + JS visibility pattern
 

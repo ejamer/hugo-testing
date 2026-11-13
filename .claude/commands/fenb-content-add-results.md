@@ -120,8 +120,10 @@ When more than one template plausibly fits, offer 2–3 candidates via `AskUserQ
 No top-performers block. Go directly to per-event sections.
 
 **Combined pool/seeding rounds (hosted format only):** Some tournaments run combined pool rounds used only to seed separate DE brackets — by age (e.g. "U11/U13 Mixed Sabre Pools") or by division/gender (e.g. a "Senior Men's Épée" pool split into Div. 1/Div. 2). These are not standalone competitions — do not include them as per-event podium sections, and do not count them in the intro's "N events contested" total. Instead, reference them by name with a hyperlink to their `results_url` in the intro paragraph (e.g. "Pool rounds for [U11/U13 Mixed Sabre](...) and [Senior Men's Épée](...) were held as combined groups to seed the direct elimination brackets below."). Treat an event as a combined pool round if **either**:
-- it has `pools_only: true` in the JSON — the scraper sets this when the event's results page has no DE bracket, and has already emptied its `podium`. This is the authoritative signal; or
-- its name contains "Pool" or "Pools" and its age group spans multiple categories (e.g. "U11/U13", "U13/U15") — a fallback for older JSON files that predate the `pools_only` field.
+- it has `pools_only: true` in the JSON — `/fenb-data-get-results` sets this for an event with no DE bracket whose name says "Pool(s)" or whose field a later event splits (by gender, division, or age), and the user confirmed it in that skill's report. This is the authoritative signal; or
+- for older JSON files that predate the `pools_only` field: its name contains "Pool" or "Pools", or a later event in the same weapon splits its field by gender (*Mixed* → *Men's*/*Women's*), division (*Div 1/2*), or age (*U11/U13* → *U11*, *U13*).
+
+An event with no DE bracket that doesn't meet either condition is a **pools-only competition**, not a seeding round: give it a normal per-event podium section.
 
 If there are no combined pool rounds, omit the pool-round sentence entirely.
 

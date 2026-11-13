@@ -10,8 +10,16 @@ Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/relea
 
 - **Rebuilds `main` twice daily** (`schedule`, 09:53 UTC = 6:53 am ADT / 5:53 am AST, and 15:47 UTC = 12:47 pm ADT / 11:47 am AST — cron is UTC, so the Atlantic time shifts an hour with daylight saving) — so future-dated news articles appear on their date without a release, and build-time dates (homepage upcoming events, Register links, hero slide expiry, footer year) stay current. A post dated `YYYY-MM-DD` goes live with the first scheduled build on or after that date. GitHub may start scheduled runs late (up to ~an hour at busy times) or drop them entirely — the midday run is the backup, and the off-the-hour minutes make drops less likely — and disables them after 60 days without repo activity (it emails a warning first).
 - **Can be run manually** (`workflow_dispatch`) — Actions tab → *Deploy Hugo site to Pages* → *Run workflow* rebuilds `main` immediately, no commit needed.
+- **Deploys one at a time** (`concurrency: pages`, `cancel-in-progress: true`) — if a run starts while another is still going (e.g. a release merged just as the scheduled build begins), the older run is cancelled. Every run builds the latest `main`, and Pages swaps deployments atomically, so a cancelled run leaves the previous version live until the new one finishes. Cancelled runs show grey in the Actions tab; that's expected.
 
 **Hugo version is pinned** (`hugo-version` in both `release-website.yml` and `pr-check.yml`) so a new Hugo release can't change the live site on a day nobody released. `scripts/check-hugo-version.sh` reports the pin vs. local vs. latest, and `--set X.Y.Z` updates both workflows; `/fenb-git-release` runs it as Step 3 and offers an update (upgrading local Hugo via Homebrew so the release build check tests the same version).
+
+**Pagefind and the Hugo setup Action are pinned too.** Pagefind, which builds the search index and whose JavaScript is served on every page, is pinned to an exact version (`pagefind@X.Y.Z`) in both workflows and in the `Makefile` (`PAGEFIND`). npm never lets a published version change, so the same code runs on every build until someone deliberately bumps it. The third-party `peaceiris/actions-hugo` Action is pinned to a commit SHA, with its version in a comment. GitHub's own `actions/*` stay on tags.
+
+- `scripts/check-pagefind-version.sh` reports the pin vs. the newest npm release and its publish date, and exits non-zero if the three pins disagree. `--set X.Y.Z` updates all three.
+- `/fenb-git-release` runs it as Step 3b. When the pin is behind, it shows the newest version and release date and asks whether to continue the release. It never updates the pin itself.
+- **5-day rule:** only bump to a release at least 5 days old (the script's `latest_old_enough=`). Compromised or broken npm releases are usually caught and pulled within days. Check the [release notes](https://github.com/Pagefind/pagefind/releases), run `--set`, test search locally with `make serve`, then commit.
+- To bump the Action, take the new tag's commit SHA from `gh api repos/peaceiris/actions-hugo/tags` and update both workflows.
 
 ---
 
@@ -36,8 +44,7 @@ Skipping this causes every build to fail with `partial "site-style.html" not fou
 Run all commands from the **repo root** unless noted.
 
 ```bash
-make serve        # dev server with search (preferred)
-make serve-local  # offline dev server — no search, no network calls
+make serve        # dev server with search
 make build        # quick local build — no minification, no pagefind
 make build-prod   # production build — minified + pagefind index
 ```
@@ -45,8 +52,8 @@ make build-prod   # production build — minified + pagefind index
 > [!TIP]
 > `make serve` runs three steps in order: builds the site, generates the search index with Pagefind, then starts the dev server. Using just `hugo server` inside the `fenb-1` folder skips the Pagefind step, so the search overlay will silently fail to load — always use `make serve` when you need a full-featured test.
 
-> [!WARNING]
-> `make serve`'s Pagefind step runs via `npx pagefind`. There's no `package.json`/`node_modules` pinning Pagefind locally, so `npx` resolves it from the npm registry **every time** — with no internet connection, that call fails and, because the Makefile steps are chained with `&&`, `hugo server` never starts. If you're offline, use `make serve-local` instead: it calls `hugo server` directly with no Pagefind step, so it never touches the network. Trade-off: the search overlay won't work under `serve-local` since no Pagefind index is generated.
+> [!NOTE]
+> **Offline:** `make serve`'s search step runs the pinned Pagefind via `npx`, which downloads that version once and reuses its cached copy after that. If it can't (offline on a new machine, or right after a version bump), `make serve` prints "Search index not built (offline?) — serving without search" and starts the dev server anyway. Everything works except the search overlay.
 
 **Browser-driven verification (Playwright):** the repo root has a `package.json`/`package-lock.json` pinning the Node `playwright` package as a devDependency — used for browser-driven verification of local builds (e.g. screenshotting a page to confirm a visual change), not part of the Hugo build itself. Run `npm install` once to use it; the installed packages under `node_modules/` are gitignored, but `package.json`/`package-lock.json` are committed so the version stays pinned. This is separate from the Python `playwright` package documented under [fencingtimelive-results.py](#fencingtimelive-resultspy) — same underlying tool, different language binding, different purpose.
 
@@ -72,6 +79,10 @@ Hugo defaults to `production` for the bare `hugo` command and `development` for 
 The site uses **Google Analytics 4 (GA4)**, tag `G-BKG2E2SKZF`. The tag ID is stored in `fenb-1/config/production/hugo.toml` under `[services.googleAnalytics]`. Hugo's built-in template emits the gtag.js snippet automatically; it is wired into the Ananke base layout behind a `{{ if hugo.IsProduction }}` guard.
 
 **Analytics only fires on production builds** (`make build-prod`). Local dev (`make serve`, `make build`) never sends tracking data. To change the tag ID, edit `config/production/hugo.toml` only.
+
+**Do Not Track is respected:** `[privacy.googleAnalytics] respectDoNotTrack = true` (same file) makes Hugo's GA snippet skip tracking for visitors whose browser sends Do Not Track. The browser still downloads `gtag.js`, but no data is sent and no `_ga` cookies are set (checked 2026-11-12 in headless Chrome). The privacy page states exactly this, so keep the two in step.
+
+**Keep the Website Privacy page in step.** `content/about/policies/website-privacy.{en,fr}.md` (linked from the footer's shield icon) tells visitors what the site collects: Google Analytics, the Google Maps embed on the Clubs page, the theme choice in `localStorage`, browser-only search, and the `mailto:` contact form. Update both languages, and its "Last updated" line, whenever any of those change or a new tracker or third-party embed is added. The page is a public statement for FENB, so the site owner approves its wording.
 
 To view reports, open [analytics.google.com](https://analytics.google.com) and select the Fencing NB property.
 
@@ -101,7 +112,7 @@ The GA4 property was created under a personal Google account. For long-term main
 - Add individual volunteers or board members through that account as needed.
 - Keep the personal account as a backup admin until the organizational account is confirmed working.
 
-This ensures future volunteers can access analytics without needing the personal account holder's credentials. See the [Google Analytics TODO item](TODO.md) for the outstanding action on this.
+This ensures future volunteers can access analytics without needing the personal account holder's credentials.
 
 ---
 
@@ -124,7 +135,7 @@ Utility scripts live in `scripts/`. They are independent of the Hugo build — r
 
 ### FencingTimeLive results
 
-FencingTimeLive's terms of service prevent scripted access. `scripts/fencingtimelive-results.py` now prints a message and exits with an error as its first action; the rest of its code is unused, and `scripts/check-ftl-deps.sh` only supports it.
+FencingTimeLive's terms of service prevent scripted access. `scripts/fencingtimelive-results.py` now prints a message and exits with an error as its first action; the rest of its code is unused, and `scripts/check-ftl-deps.sh` only supports it. Both files are kept on purpose (decided 2026-11-12) to preserve the scraper's code. Don't delete them, and don't remove the early exit, which stops the scraper from being run by mistake.
 
 Save the event schedule and each event's final results page by hand into a folder, then run `/fenb-data-get-results`. It gives saving instructions and uses `scripts/ftl-read-saved-pages.py`, which reads local files only:
 
@@ -316,4 +327,4 @@ Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the
 
 Pagefind runs as a post-build step and writes its index to `public/pagefind/`. This directory is **not tracked in git** — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before serving.
 
-Pagefind is invoked via `npx pagefind`, not a local devDependency, so it requires network access to resolve from the npm registry — see the offline note under [Local development](#local-development) and use `make serve-local` when you have no connection.
+Pagefind is invoked via `npx --yes pagefind@X.Y.Z` (pinned — see [Live site](#live-site)), not a local devDependency. npx downloads the pinned version once and reuses its cache, so only the first run after a version bump needs network access. Without it, `make serve` still starts, without search (see the offline note under [Local development](#local-development)).

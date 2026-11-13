@@ -57,6 +57,9 @@ event_details:      "En savoir plus"
 event_register:     "S'inscrire"
 event_results:      "Voir les résultats"
 event_add_calendar: "Ajouter au calendrier"
+# Lien lieu → Google Maps (R10) sur les cartes d'événements, l'horaire et les cartes de clubs
+map_link_label:     "{{ .Place }} — ouvrir dans Google Maps (nouvel onglet)"
+map_link_title:     "Ouvrir dans Google Maps"
 # Export de calendrier (R9) — nom du flux et menu d'abonnement de la page Événements
 cal_feed_name:        "Événements"
 cal_subscribe:        "S'abonner"
@@ -514,6 +517,8 @@ programs_armourer_resources_official_title: "Règlements et programmes provincia
 programs_armourer_resources_study_title: "Matériel d'étude supplémentaire"
 
 rss_feed_label: "Fil RSS des nouvelles"
+footer_privacy: "Confidentialité du site"
+nav_facebook: "Fencing-Escrime NB sur Facebook (s'ouvre dans un nouvel onglet)"
 
 # ── Temple de la renommée ───────────────────────────────────
 # ── Cartes de navigation des sous-sections À propos ────────

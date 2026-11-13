@@ -1,6 +1,9 @@
 <script>
   (function () {
-    var saved = localStorage.getItem('fenb-theme') || 'system';
+    // localStorage throws (SecurityError) when the visitor blocks site data —
+    // fall back to following the OS light/dark setting.
+    var saved = 'system';
+    try { saved = localStorage.getItem('fenb-theme') || 'system'; } catch (e) {}
     var dark = saved === 'dark' || (saved === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
     if (dark) document.documentElement.setAttribute('data-theme', 'dark');
   })();

@@ -34,10 +34,10 @@
       placeholder.style.display = i < neededPlaceholders ? 'flex' : 'none';
     });
 
-    // Register links only make sense while the event hasn't started yet; the
-    // server-rendered default can go stale the same way the card list does.
+    // Register links close on the event day itself (the card still shows that day);
+    // the server-rendered default can go stale the same way the card list does.
     container.querySelectorAll('.fenb-event-register-link[data-event-date]').forEach(function (link) {
-      link.style.display = window.FenbEventDates.isUpcoming(link.dataset.eventDate) ? '' : 'none';
+      link.style.display = window.FenbEventDates.isFuture(link.dataset.eventDate) ? '' : 'none';
     });
   });
 }());

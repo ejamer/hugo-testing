@@ -48,10 +48,8 @@
                   {{- range $seasonEvents -}}
                     {{- if eq ((time .start_date).Format "2006-01") $mk -}}
                     {{- $detailsUrl := partial "event-details-url.html" . -}}
-                    {{- $desc := .description_en -}}
-                    {{- if and (eq site.Language.Lang "fr") .description_fr -}}{{- $desc = .description_fr -}}{{- end -}}
-                    {{- $title := .title -}}
-                    {{- if and (eq site.Language.Lang "fr") .title_fr -}}{{- $title = .title_fr -}}{{- end -}}
+                    {{- $desc := partial "localized.html" (dict "item" . "field" "description") -}}
+                    {{- $title := partial "localized.html" (dict "item" . "field" "title") -}}
                     <li class="fenb-schedule-item" data-category="{{ .category }}">
                       <div class="fenb-schedule-row fenb-schedule-row--primary">
                         <span class="fenb-schedule-date">{{ partial "event-date.html" . }}</span>
@@ -59,24 +57,23 @@
                         <span class="fenb-schedule-category fenb-cal-bar--{{ .category }}">{{ i18n .category | default .category }}</span>
                       </div>
                       <div class="fenb-schedule-row fenb-schedule-row--secondary">
-                        <span class="fenb-schedule-location">{{ .location }}</span>
+                        <span class="fenb-schedule-location">{{ partial "map-link.html" (dict "text" (.address | default .city) "query" (.address | default "")) }}</span>
                         {{ with $desc }}<span class="fenb-schedule-description">{{ . }}</span>{{ end }}
                       </div>
                       {{- $evDate := time .start_date -}}
                       {{- $todayMidnight := time (now.Format "2006-01-02") -}}
-                      {{- $registerUrl := .registration_url_en -}}
-                      {{- if and (eq site.Language.Lang "fr") .registration_url_fr -}}{{- $registerUrl = .registration_url_fr -}}{{- end -}}
+                      {{- $registerUrl := partial "localized.html" (dict "item" . "field" "registration_url") -}}
                       {{- $showRegister := and $registerUrl ($evDate.After $todayMidnight) -}}
-                      {{- $resultsUrl := .results_url_en -}}
-                      {{- if and (eq site.Language.Lang "fr") .results_url_fr -}}{{- $resultsUrl = .results_url_fr -}}{{- end -}}
+                      {{- $resultsUrl := partial "localized.html" (dict "item" . "field" "results_url") -}}
                       {{- $evEnd := $evDate -}}
                       {{- with .end_date }}{{ $evEnd = time . }}{{ end -}}
                       {{- $showIcs := not ($evEnd.Before $todayMidnight) -}}
                       {{ if or $detailsUrl $showRegister $resultsUrl $showIcs }}
                       <div class="fenb-schedule-links">
-                        {{ with $detailsUrl }}<a class="fenb-event-details-link" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "event_details" }} &rarr;</a>{{ end }}
-                        {{ if $showRegister }}<a class="fenb-event-register-link" href="{{ $registerUrl }}" target="_blank" rel="noopener noreferrer" data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>{{ end }}
-                        {{ with $resultsUrl }}<a class="fenb-event-results-link" href="{{ . }}"{{ if not (hasPrefix . "/") }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>{{ end }}
+                        {{- /* Only links to other sites open a new tab — same rule as partials/event-card.html. */}}
+                        {{ with $detailsUrl }}<a class="fenb-event-details-link" href="{{ . }}"{{ if hasPrefix . "http" }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_details" }} &rarr;</a>{{ end }}
+                        {{ if $showRegister }}<a class="fenb-event-register-link" href="{{ $registerUrl }}"{{ if hasPrefix $registerUrl "http" }} target="_blank" rel="noopener noreferrer"{{ end }} data-event-date="{{ .start_date }}">{{ i18n "event_register" }} &rarr;</a>{{ end }}
+                        {{ with $resultsUrl }}<a class="fenb-event-results-link" href="{{ . }}"{{ if hasPrefix . "http" }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ i18n "event_results" }} &rarr;</a>{{ end }}
                         {{ if $showIcs }}{{ partial "ics/add-button.html" . }}{{ end }}
                       </div>
                       {{ end }}
