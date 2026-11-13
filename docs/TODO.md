@@ -151,7 +151,6 @@ From the site comparison against judonb.org — read `docs/JUDO_NB_COMPARISON.ht
 - [ ] **R8 Task-led titles and descriptions** — section `_index` descriptions + homepage title, EN/FR
 
 ### Next up
-- [ ] **R10 "Get directions" links** — Google Maps search URL from `location` on event cards and clubs
 - [ ] **R11 JSON-LD** — `SportsOrganization` on home, `SportsEvent` per upcoming event
 - [ ] **R12 "Where do I start?" coaching tool** — small JS form on coach-training mapped to `coach_pathways.yaml`
 - [ ] **R13 Officials pathway ladder** — `data/referee_levels.yaml` → stepped visual; reuse for armourer/secretariat

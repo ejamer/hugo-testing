@@ -1,0 +1,13 @@
+{{- /* Place text that opens Google Maps in a new tab (R10), or plain text when the place
+       has no usable map search (empty or TBA — see partials/map-url.html).
+       Param: text — the place, shown and searched as-is. Search only a location (address
+       or city), never a club or business name: names give false hits (e.g. fence builders)
+       and some clubs aren't on Google Maps at all.
+       The calendar view builds the same markup in static/js/events-calendar.js — keep in sync. */ -}}
+{{- $text := .text -}}
+{{- $url := partial "map-url.html" $text -}}
+{{- if $url -}}
+<a class="fenb-map-link" href="{{ $url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ i18n "map_link_label" (dict "Place" $text) }}" title="{{ i18n "map_link_title" }}">{{ $text }}</a>
+{{- else -}}
+{{ $text }}
+{{- end -}}

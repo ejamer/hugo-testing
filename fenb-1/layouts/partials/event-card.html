@@ -14,7 +14,7 @@
     <p class="fenb-event-date-range">{{ partial "event-date.html" . }}</p>
     <p class="fenb-event-meta">
       {{ partial "icon.html" (dict "name" "map-pin.svg" "w" 13 "h" 13) }}
-      {{ .location }}
+      {{ partial "map-link.html" (dict "text" .location) }}
     </p>
     {{- $detailsUrl := partial "event-details-url.html" . -}}
     {{ if $detailsUrl }}

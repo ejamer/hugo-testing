@@ -284,6 +284,20 @@ main.pb7 { padding-bottom: 0 !important; }
 .fenb-back-link a:hover { text-decoration: underline; }
 [data-theme="dark"] .fenb-back-link a { color: var(--teal-light); }
 
+/* ── Map link (partials/map-link.html, events-calendar.js) ── */
+/* A place name (event location, club city) that opens Google Maps. Keeps the
+   surrounding text colour; the dotted underline marks it as a link without relying
+   on colour alone. */
+.fenb-map-link {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+.fenb-map-link:hover,
+.fenb-map-link:focus-visible { color: var(--teal); text-decoration-style: solid; }
+[data-theme="dark"] .fenb-map-link:hover,
+[data-theme="dark"] .fenb-map-link:focus-visible { color: var(--teal-light); }
+
 /* ── Callout / note block ──────────────────────── */
 .fenb-callout {
   background: var(--teal-pale);

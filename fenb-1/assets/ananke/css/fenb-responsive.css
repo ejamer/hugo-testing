@@ -242,6 +242,7 @@
 
   .fenb-schedule-date,
   .fenb-schedule-location { color: #444 !important; }
+  .fenb-schedule-location .fenb-map-link { text-decoration: none; } /* no use on paper */
 
   .fenb-schedule-links {
     print-color-adjust: exact;

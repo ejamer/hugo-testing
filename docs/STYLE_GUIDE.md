@@ -362,6 +362,16 @@ Shared by `/events/` (`list.html`) and `/events/schedule/` (`schedule.html`): a 
 
 Render it as the **first child of the same `.fenb-container--narrow`** on both pages — that, plus the schedule page's `page_header_uses_section: true`, is what keeps the toggle at an identical position when switching views. Don't give either page a different container width or its own header.
 
+### `map-link.html` partial — place name that opens Google Maps (`.fenb-map-link`)
+
+Turns a place name into a Google Maps search link that opens in a new tab: event locations on event cards and the printable schedule, and the city on club cards. Maps search links need no API key.
+
+```go-html-template
+{{ partial "map-link.html" (dict "text" .location) }}   {{/* club cards: .city */}}
+```
+
+Search only a location (an address or a city), never a club name. Club names give false hits for similar businesses (fence builders), and some clubs aren't on Google Maps at all. `partials/map-url.html` builds the URL and holds the one rule: an empty place, or one containing TBA, TBD or "à définir", gets no link and stays plain text. The link isn't labelled "directions" because many locations are only a city. It keeps the surrounding text colour with a dotted underline (solid and teal on hover). The calendar view builds the same markup in `static/js/events-calendar.js` from `map_url`/`map_label`, which `layouts/events/list.html` adds to each event, so keep the two in step.
+
 ### Icon button with tooltip — `.fenb-event-ics-btn`
 
 Icon-only `<button>` (currently: Add to Calendar, rendered by `partials/ics/add-button.html`) — pinned to a card's bottom-right corner on event cards, and in-flow at the right end of the links row on the printable schedule (`fenb-schedule.css` resets the absolute positioning). The visible label is a CSS tooltip from `data-tooltip` via `::after`, shown on `:hover` and `:focus-visible`; the same text goes in `aria-label` for screen readers.

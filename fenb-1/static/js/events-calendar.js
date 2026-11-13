@@ -449,7 +449,11 @@
               '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>' +
               '<circle cx="12" cy="10" r="3"></circle>' +
             '</svg>' +
-            esc(e.location) +
+            // Location opens Google Maps — same markup as partials/map-link.html
+            (e.map_url
+              ? '<a class="fenb-map-link" href="' + esc(e.map_url) + '" target="_blank" rel="noopener noreferrer"' +
+                  ' aria-label="' + esc(e.map_label) + '" title="' + esc(cal.mapTitle) + '">' + esc(e.location) + '</a>'
+              : esc(e.location)) +
           '</p>' +
           linksHtml +
         '</div>' +

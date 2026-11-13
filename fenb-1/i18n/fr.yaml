@@ -57,6 +57,9 @@ event_details:      "En savoir plus"
 event_register:     "S'inscrire"
 event_results:      "Voir les résultats"
 event_add_calendar: "Ajouter au calendrier"
+# Lien lieu → Google Maps (R10) sur les cartes d'événements, l'horaire et les cartes de clubs
+map_link_label:     "{{ .Place }} — ouvrir dans Google Maps (nouvel onglet)"
+map_link_title:     "Ouvrir dans Google Maps"
 # Export de calendrier (R9) — nom du flux et menu d'abonnement de la page Événements
 cal_feed_name:        "Événements"
 cal_subscribe:        "S'abonner"
