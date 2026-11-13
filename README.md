@@ -90,18 +90,7 @@ Full post body here (Markdown).
 
 **Host logo beside a section:** in multi-event articles, add `{{< host-logo id="DAM" >}}` on its own line under an event's `##` heading to float the host's logo beside that section's text. In a single-event article it can replace the top `image` — put it on its own line after the greeting so the logo sits beside the intro. `id` is a club id from `data/clubs.yaml` or an organization id from `data/organizations.yaml` (e.g. `CFF` for Fencing Canada); `src="images/..." alt="..."` works for one-offs. See [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md).
 
-**Category values:** news articles share the same category IDs as events, plus the news-only `results` (see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full colour table and typical mapping guidance).
-
-| `category` | Badge label (EN) | Badge label (FR) | Colour |
-|---|---|---|---|
-| `competition` | Competition | Compétition | Plum (news only — competition events stay teal) |
-| `results` | Results | Résultats | Teal (news only) |
-| `national` | National Event | Événement national | Crimson |
-| `provincial` | NB Provincial | Provincial NB | Crimson |
-| `training` | Training Camp | Camp d'entraînement | Yellow |
-| `clinic` | Clinic | Clinique | Dark orange |
-| `announcement` | Announcement | Annonce | Blue |
-| `meeting` | FENB Meeting | Réunion FENB | Grey |
+**Category values:** news articles share the same category IDs as events, plus the news-only `results`. See [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md#news-category-colours) for IDs, badge labels, colours, and which category to pick.
 
 **`results_table: true`** — add this field to any article that contains markdown tables of placements; it loads `results-table.js` which makes the tables sortable. It is independent of category.
 
@@ -176,23 +165,7 @@ Add an entry to `data/events.yaml`.
   hide_card: true                  # optional; calendar grid + schedule only (e.g. board meetings) — omit otherwise
 ```
 
-**Category colours:**
-
-Each category drives three visual elements: the date badge on the event card, the tag pill, and the calendar bar on the month grid.
-
-| `category` | Display label (via i18n) | Colour |
-|---|---|---|
-| `competition` | Competition / Compétition | Teal |
-| `training` | Training Camp / Camp d'entraînement | Dark green |
-| `national` | National Event / Événement national | Navy |
-| `provincial` | NB Provincial / Provincial NB | Crimson |
-| `clinic` | Clinic / Clinique | Dark orange |
-| `meeting` | FENB Meeting / Réunion FENB | Grey |
-| `announcement` | Announcement / Annonce | Teal |
-
-`category` is the canonical ID — must match exactly (lowercase, no spaces) and must exist in `data/event_categories.yaml`. The display label is looked up from `i18n/en.yaml` and `i18n/fr.yaml` automatically.
-
-**Adding a new category:** add the ID to `data/event_categories.yaml`, add i18n keys to both `i18n/en.yaml` and `i18n/fr.yaml`, and add the corresponding CSS colour rules to `fenb-events.css`.
+**Category:** must be a canonical ID from `data/event_categories.yaml`. For each category's colour and how to add a new one, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md#event-category-colours).
 
 The homepage always shows 4 event cards: the next 4 upcoming events (date ≥ today). This pulls from `partials/all-events.html` — current season + every archived season merged — so an event archived mid-season (e.g. a rollover run before the outgoing season's last event has happened) doesn't disappear from the homepage or the `/events/` calendar just because it moved to `events_archive/`. When there's a genuine gap in scheduled events (off-season), add a placeholder entry (category `announcement`) so the section stays populated instead of showing "more coming soon" placeholders.
 
@@ -230,7 +203,7 @@ There's no skill for this — it's a fully mechanical set of steps (verify a lab
 3. Creates a fresh `data/events.yaml` with `season: "YYYY–YYYY"` (en-dash label) and an empty `events:` list.
 4. Updates the `description:` subtitle in `content/events/_index.md` and `content/events/_index.fr.md`.
 
-Archiving events that are still current/upcoming (a rollover doesn't necessarily land after the outgoing season's very last event) is safe — the homepage and `/events/` calendar merge current + archived seasons at render time, so nothing disappears. See `plans/events-data-archive.md`.
+Archiving events that are still current/upcoming (a rollover doesn't necessarily land after the outgoing season's very last event) is safe — the homepage and `/events/` calendar merge current + archived seasons at render time, so nothing disappears (`partials/all-events.html`). Archives are split by season (Sept–Aug), not calendar year — a Jan 1 split would land mid-season — and kept in a separate folder so `hugo.Data.events.events` stays a plain list.
 
 The season schedule page at `/events/schedule/` automatically adds a dropdown entry for the archived season on the next build — no layout or template changes needed there.
 
@@ -455,7 +428,12 @@ slides:
 
 Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; click the prev/next arrows or the dot indicators to navigate manually; use the pause/play button (top-right corner) to stop or resume auto-advance.
 
-**Creating a new announcement-style slide (event date, location, title, CTA text):** start from the reusable Inkscape template at `design-sources/hero/fenb-hero-template.svg` rather than designing from scratch, then export the edited panel to EN/FR JPGs in `static/images/hero/`.
+**Creating a new slide:** start from a template in `design-sources/hero/` rather than designing from scratch:
+- `fenb-hero-template.svg` — FENB event slide (CTA, title, subtitle, date / location / audience row, photo on the right). Inkscape.
+- `damocles-hero-template.svg` — the same layout in Damocles club colours and logo. Inkscape.
+- `announcement-hero-template.html` — text-only bilingual announcement (e.g. a hiring notice); screenshot at 2000×800 (instructions in the file's header comment).
+
+Copy the template to `resources/hero-sources/` (local, not committed) and edit the copy — `design-sources/` holds only the blank templates. Export EN/FR images to `static/images/hero/`.
 
 </details>
 
@@ -465,23 +443,10 @@ Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advan
 > **Skill available:** run `/fenb-content-add-page` in Claude Code — it prompts for section, slug, titles, and an optional subtitle, then creates both language files with correct front matter.
 
 1. Create `layouts/{section}/list.html` defining the `main` block
-2. Create `content/{section}/_index.md` and `content/{section}/_index.fr.md`
-   - Set `description:` in both files for a subtitle in the page header band (the partial renders it automatically)
-   - Only add `hide_page_header: true` if the layout needs to render a **dynamic** subtitle itself (e.g. one computed from live data)
+2. Create `content/{section}/_index.md` and `content/{section}/_index.fr.md` (set `description:` for a subtitle in the page header band)
 3. Add i18n keys for any new UI strings to both `en.yaml` and `fr.yaml`
 
-If the section has single-page posts and you want the page header band to show the **section title** rather than each page's own title, add to the section `_index.md`:
-
-```yaml
-cascade:
-  - target:
-      kind: page
-    page_header_uses_section: true
-```
-
-Then create `layouts/{section}/single.html` defining only `title` and `main` — the band is rendered by `site-header.html` automatically.
-
-If pages within the section need **fundamentally different HTML structure** (not just different data), use `layout: {name}` in the page's front matter instead of a shared `single.html`. Hugo looks for `layouts/{section}/{name}.html`. The join section uses this pattern — each sub-page has its own layout file (`membership.html`, `clubs.html`, `volunteer.html`).
+To show the section title on single pages, suppress the header band, or give sub-pages different HTML structures, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) → "Page header band" and "Per-page layouts within a section".
 
 </details>
 
@@ -501,8 +466,8 @@ Two URLs in `data/join.yaml` need updating at the start of each season:
 
 | File | Covers |
 |------|--------|
-| [CLAUDE.md](CLAUDE.md) | Instructions and conventions for Claude Code; lists available `/fenb-*` skills |
+| [CLAUDE.md](CLAUDE.md) | Lean instructions for Claude Code (rules + pointers); skills live in `.claude/commands/` |
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
 | [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
-| [docs/PROJECT_LAYOUT.md](docs/PROJECT_LAYOUT.md) | Full directory tree with file-by-file descriptions |
+| [docs/PROJECT_LAYOUT.md](docs/PROJECT_LAYOUT.md) | Folder tree, plus tables of data files, layouts, partials, JS and scripts |
 | [docs/TODO.md](docs/TODO.md) | Outstanding items |

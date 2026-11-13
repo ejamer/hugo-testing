@@ -184,7 +184,7 @@
          style="font-style:italic;font-variant:normal;font-weight:900;font-stretch:condensed;font-size:5.64444px;font-family:'Proxima Nova Condensed';-inkscape-font-specification:'Proxima Nova Condensed, Heavy Italic Condensed';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.308612"
          x="50.456245"
          y="170.63399"
-         id="tspan4-8">Beginner &amp; Advanced</tspan></text><text
+         id="tspan4-8">Subtitle</tspan></text><text
        xml:space="preserve"
        style="font-size:5.64444px;writing-mode:lr-tb;direction:ltr;fill:#79242f;fill-opacity:1;stroke-width:0.308613"
        x="50.456245"
@@ -195,7 +195,7 @@
          x="50.456245"
          y="164.67746"
          dx="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
-         id="tspan4-3">FENB Coaching Workshops</tspan></text><rect
+         id="tspan4-3">Event Title</tspan></text><rect
        style="fill:#808080;fill-opacity:1;stroke-width:0.205075"
        id="rect5"
        width="30.7372"
@@ -243,7 +243,7 @@
          id="tspan9-0-6"
          style="font-weight:bold;fill:#000000;fill-opacity:1;stroke-width:0.111505"
          x="84.65596"
-         y="190.02635">Moncton, NB</tspan></text><g
+         y="190.02635">City, NB</tspan></text><g
        id="g9"
        transform="translate(2.611463,-0.296298)"><circle
          style="fill:#006156;fill-opacity:1;stroke-width:0.138497"
@@ -263,7 +263,7 @@
          id="tspan9-0-8"
          style="font-weight:bold;fill:#006156;fill-opacity:1;stroke-width:0.111505"
          x="112.47633"
-         y="187.2195">Learn, Shape,</tspan></text><text
+         y="187.2195">Audience</tspan></text><text
        xml:space="preserve"
        style="font-size:2.03941px;writing-mode:lr-tb;direction:ltr;fill:#79242f;fill-opacity:1;stroke-width:0.111506"
        x="112.47633"
@@ -273,7 +273,7 @@
          id="tspan9-0-6-9"
          style="font-weight:bold;fill:#79242f;fill-opacity:1;stroke-width:0.111505"
          x="112.47633"
-         y="189.81931">Inspire</tspan></text><rect
+         y="189.81931">Line 2</tspan></text><rect
        style="fill:#808080;fill-opacity:1;stroke-width:0.0686255"
        id="rect5-3"
        width="0.35003021"
@@ -298,7 +298,7 @@
          id="tspan9"
          style="font-weight:bold;fill:#006156;fill-opacity:1;stroke-width:0.111505"
          x="56.967316"
-         y="187.51579">Event Date</tspan></text><text
+         y="187.51579">Date</tspan></text><text
        xml:space="preserve"
        style="font-size:2.03941px;writing-mode:lr-tb;direction:ltr;fill:#000000;fill-opacity:1;stroke-width:0.111506"
        x="56.967316"
@@ -308,4 +308,4 @@
          id="tspan9-0-6-7"
          style="font-weight:bold;fill:#000000;fill-opacity:1;stroke-width:0.111505"
          x="56.967316"
-         y="189.79585">Oct 8-9, 2026</tspan></text></g></svg>
+         y="189.79585">Mon DD, YYYY</tspan></text></g></svg>

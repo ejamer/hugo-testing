@@ -37,7 +37,7 @@ The site has no way to browse tournament/event photos in bulk, tag them, or sort
 
 ### 3. Gallery metadata (this repo)
 
-`fenb-1/data/gallery/{event-slug}.yaml`, one file per event — mirrors the `events_archive` map-of-files pattern in `plans/events-data-archive.md`:
+`fenb-1/data/gallery/{event-slug}.yaml`, one file per event — mirrors the `data/events_archive/` map-of-files pattern:
 
 ```yaml
 event_en: "2026 Provincial Championships"

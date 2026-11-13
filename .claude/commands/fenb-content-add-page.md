@@ -44,7 +44,7 @@ Then:
 
    - **`README.md`** — does the content tree, layouts tree, or data file list need a new entry for this section or page?
    - **`docs/STYLE_GUIDE.md`** — does the new section introduce any CSS files, layout patterns, or conventions not yet documented?
-   - **`CLAUDE.md`** — do the project conventions, data schemas, or skill descriptions need updating?
+   - **`CLAUDE.md`** — only if a new project-wide rule arises (keep it lean; detail goes in README/docs).
    - **`docs/DEVELOPMENT.md`** — does the release checklist or any build step need updating?
    - **Other skills** (`fenb-git-release`, etc.) — does the new section introduce any seasonal maintenance steps or release checks that should be added to an existing skill?
 

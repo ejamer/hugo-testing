@@ -125,7 +125,7 @@ Fix: add a `[hidden]` companion rule:
 }
 ```
 
-Caught on `.fenb-hof-filter-badge` (used `display: inline-flex`, stayed visible despite JS setting `hidden`). **Recurred** on `.fenb-news-card` (2026-08-17, `display: flex`) when the news filter bar was built — this doc wasn't consulted first because CLAUDE.md's "read GOTCHAS.md before working on X" list didn't name "JS-driven show/hide filters" as a trigger. Any new element that gets shown/hidden via JS toggling `.hidden` needs this checked, not just XML/sitemap/data-file work.
+Caught on `.fenb-hof-filter-badge` (used `display: inline-flex`, stayed visible despite JS setting `hidden`). Recurred on `.fenb-news-card` (2026-08-17, `display: flex`). Check this for any element JS shows/hides via `hidden`.
 
 ---
 
@@ -133,20 +133,6 @@ Caught on `.fenb-hof-filter-badge` (used `display: inline-flex`, stayed visible 
 
 - **`_build:`** front matter key was removed in Hugo 0.145.0 — use **`build:`** instead.
 - **`.Language.LanguageName`** was deprecated in Hugo 0.158.0 — use **`.Language.Label`** instead.
-
----
-
-## FTL browser login — `connect.sid` appears before authentication
-
-`fencingtimelive.com` sets a `connect.sid` session cookie on the very first unauthenticated page load. Detecting the cookie alone is therefore not a reliable signal that the user has logged in — the check fires immediately and closes Chrome before the Google OAuth flow can complete.
-
-`get_cookie_via_browser()` in `scripts/fencingtimelive-results.py` handles this correctly: it polls `context.cookies()` until `connect.sid` appears **and** a live `fetch_tournaments()` API call succeeds. Do not simplify this to a cookie-presence check — that will close the browser the moment the page loads, before the user can authenticate.
-
----
-
-## Page header band — content vs. style confusion
-
-When a user says "use the same header as page X", confirm whether they mean the *content* of the band (which title is shown) or just the *style* (height, colours). They look similar in words but require completely different fixes — the former is a front matter/cascade change, the latter is a CSS change.
 
 ---
 

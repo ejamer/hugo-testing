@@ -15,7 +15,7 @@ Review the current git state and assess each system documentation file for neede
 
 2. **Assess each system file** — read each file below if needed to understand its current scope, then make a definitive call: **needs update** or **no update needed**. Give a one-line reason drawn from the actual diff. Do not hedge.
 
-   - **`CLAUDE.md`** — project conventions, data schemas, template rules, Hugo gotchas, CSS patterns, git rules, skill descriptions. Needs updating if the diff introduces a new convention, changes a data schema, adds a discovered gotcha (a Hugo API change, template pitfall, or CSS pattern), or adds/removes a project rule.
+   - **`CLAUDE.md`** — kept deliberately lean (re-sent every turn): hard rules and one-line pointers only. Needs updating only if the diff adds/removes a project-wide rule or a new reference doc. Put schemas, gotchas, CSS patterns and skill details in README.md, docs/GOTCHAS.md, docs/STYLE_GUIDE.md or docs/DEVELOPMENT.md instead.
 
    - **`README.md`** — how to add/update each content type, layouts tree, data files, and skill list. Needs updating if the diff adds a new content type, changes a data file name or schema, adds/removes a skill, or changes the way content is authored.
 
@@ -25,7 +25,7 @@ Review the current git state and assess each system documentation file for neede
 
    - **`docs/TODO.md`** — outstanding items. Needs updating if the diff resolves an open item (delete it — fold any context a pending item still needs into that item) or if new deferred decisions or known-missing pages were introduced.
 
-   - **`docs/PROJECT_LAYOUT.md`** — directory tree. Needs updating if the diff adds or removes files that are explicitly called out in the tree: CSS files, layout templates, partials, JS files, or data YAML files.
+   - **`docs/PROJECT_LAYOUT.md`** — folder tree plus reference tables. Needs updating if the diff adds, removes, renames or repurposes a top-level folder, a data YAML file, a layout template, a partial, a JS file, or a script (CSS files are listed in STYLE_GUIDE instead).
 
 3. **Report findings** — present a table:
 

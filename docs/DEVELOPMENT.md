@@ -1,6 +1,6 @@
 # Development Guide
 
-See [PROJECT_LAYOUT.md](PROJECT_LAYOUT.md) for the full directory tree.
+See [PROJECT_LAYOUT.md](PROJECT_LAYOUT.md) for the folder tree and file tables.
 
 ## Live site
 
@@ -33,13 +33,7 @@ Requires **Hugo** (extended) and **Node** (for the Pagefind search index) on you
 
 All of these add themselves to `PATH`, so the Makefile's `HUGO` variable defaults to the bare `hugo` command and resolves the same way on macOS, Linux, and Windows. Override only if Hugo isn't on `PATH` or you need a specific binary: `make serve HUGO=/usr/local/bin/hugo`.
 
-**First time on a new machine:** after cloning, initialize the Ananke theme submodule before running any `make` command:
-
-```bash
-git submodule update --init --recursive
-```
-
-Skipping this causes every build to fail with `partial "site-style.html" not found` — see [Ananke theme submodule](#ananke-theme-submodule) below.
+**First time on a new machine:** initialize the Ananke theme submodule before any `make` command — see [Ananke theme submodule](#ananke-theme-submodule). Skipping it fails every build with `partial "site-style.html" not found`.
 
 Run all commands from the **repo root** unless noted.
 
@@ -55,9 +49,14 @@ make build-prod   # production build — minified + pagefind index
 > [!NOTE]
 > **Offline:** `make serve`'s search step runs the pinned Pagefind via `npx`, which downloads that version once and reuses its cached copy after that. If it can't (offline on a new machine, or right after a version bump), `make serve` prints "Search index not built (offline?) — serving without search" and starts the dev server anyway. Everything works except the search overlay.
 
-**Browser-driven verification (Playwright):** the repo root has a `package.json`/`package-lock.json` pinning the Node `playwright` package as a devDependency — used for browser-driven verification of local builds (e.g. screenshotting a page to confirm a visual change), not part of the Hugo build itself. Run `npm install` once to use it; the installed packages under `node_modules/` are gitignored, but `package.json`/`package-lock.json` are committed so the version stays pinned. This is separate from the Python `playwright` package documented under [fencingtimelive-results.py](#fencingtimelive-resultspy) — same underlying tool, different language binding, different purpose.
-
+**Browser-driven verification (Playwright):** the repo root has a `package.json`/`package-lock.json` pinning the Node `playwright` package as a devDependency — used for browser-driven verification of local builds (e.g. screenshotting a page to confirm a visual change), not part of the Hugo build itself. Run `npm install` once to use it; the installed packages under `node_modules/` are gitignored, but `package.json`/`package-lock.json` are committed so the version stays pinned.
 The site builds in ~100 ms. Open `http://localhost:1313/` in your browser.
+
+### Search index
+
+Pagefind runs as a post-build step and writes its index to `public/pagefind/`. This directory is **not tracked in git** — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before serving.
+
+Pagefind is invoked via `npx --yes pagefind@X.Y.Z` (pinned — see [Live site](#live-site)), not a local devDependency. npx downloads the pinned version once and reuses its cache, so only the first run after a version bump needs network access. Without it, `make serve` still starts, without search (see the offline note under [Local development](#local-development)).
 
 ### Environment configuration
 
@@ -88,21 +87,7 @@ To view reports, open [analytics.google.com](https://analytics.google.com) and s
 
 ### Access management
 
-GA4 access is granted at the **account** or **property** level — not per data stream. To add or review users:
-
-1. Open [analytics.google.com](https://analytics.google.com) and select the correct property.
-2. Click **Admin** (gear icon, bottom left).
-3. Under **Account** or **Property**, choose **Access Management**.
-4. Click **+** → **Add users**, enter the person's Google account email, and assign a role:
-
-   | Role | Can do |
-   |---|---|
-   | **Viewer** | View reports only |
-   | **Analyst** | Create explorations and custom analyses |
-   | **Editor** | Modify settings and configurations |
-   | **Administrator** | Full control, including managing other users |
-
-   For most collaborators, **Viewer** or **Analyst** is sufficient.
+In GA4: **Admin → Access Management** (account or property level) → **+ Add users**. **Viewer** or **Analyst** is enough for most collaborators.
 
 ### Organizational ownership
 
@@ -118,14 +103,11 @@ This ensures future volunteers can access analytics without needing the personal
 
 ## Claude Code skills
 
-Git and release workflows are automated as Claude Code skills (invoked with `/fenb-*` in the CLI):
+Git, content and data workflows are Claude Code skills in `.claude/commands/` (invoked as `/fenb-*`); each file's `description` says what it does. The naming convention is in `CLAUDE.md`.
 
-| Skill | What it does |
-|---|---|
-| `/fenb-git-commit` | Inspect changes, draft a message, then one popup: commit & push (or new branch / cancel). On a feature branch it also offers "Commit, push & merge into dev" |
-| `/fenb-git-release` | Hugo version check (optional pin update), production build + parity checks, then one popup choosing the version tag and whether to merge now; opens the PR, commits `version.json` (plus the Hugo pin if updated), merges and tags |
+### Claude Code permissions
 
-For content and data skills (`/fenb-content-add-news`, `/fenb-content-add-page`, `/fenb-data-get-results`), see `README.md`. See `CLAUDE.md` for the full skill list and naming convention. 
+The committed `.claude/settings.json` holds only narrow, safe allows (`make`, `hugo`) that apply to everyone who clones the repo. Personal settings such as `defaultMode: bypassPermissions` or broad `git`/`gh` allows go in `.claude/settings.local.json` (per-user, gitignored) — never in the committed file. Skills declare the tools they need in their own `allowed-tools` frontmatter, so they don't depend on either file.
 
 ---
 
@@ -135,7 +117,7 @@ Utility scripts live in `scripts/`. They are independent of the Hugo build — r
 
 ### FencingTimeLive results
 
-FencingTimeLive's terms of service prevent scripted access. `scripts/fencingtimelive-results.py` now prints a message and exits with an error as its first action; the rest of its code is unused, and `scripts/check-ftl-deps.sh` only supports it. Both files are kept on purpose (decided 2026-11-12) to preserve the scraper's code. Don't delete them, and don't remove the early exit, which stops the scraper from being run by mistake.
+FencingTimeLive's terms of service prevent scripted access, so the site has no scraper. The old one (`scripts/fencingtimelive-results.py`, plus its `check-ftl-deps.sh` prerequisite check) was deleted on 2026-11-13; its code is in git history up to commit `4bd7b26`.
 
 Save the event schedule and each event's final results page by hand into a folder, then run `/fenb-data-get-results`. It gives saving instructions and uses `scripts/ftl-read-saved-pages.py`, which reads local files only:
 
@@ -149,7 +131,7 @@ python3 scripts/ftl-read-saved-pages.py path/to/folder > scripts/output/saved-pa
 |-------|--------|
 | Static site generator | [Hugo](https://gohugo.io) extended — CI version pinned in `.github/workflows/` (see [Live site](#live-site)) |
 | Theme | [Ananke](https://github.com/gohugo-ananke/ananke) (git submodule — pinned at a specific commit) |
-| CSS | Ten scoped files in `fenb-1/assets/ananke/css/fenb-*.css`, merged by Ananke's `resources.Concat` pipeline |
+| CSS | One file per concern in `fenb-1/assets/ananke/css/fenb-*.css` (list in STYLE_GUIDE), merged by Ananke's `resources.Concat` pipeline |
 | i18n | Hugo built-in — English (`en-CA`) · French (`fr-CA`) |
 | Content | Markdown in `fenb-1/content/` |
 | Structured data | YAML in `fenb-1/data/` (events, clubs, board, programs, policies, hero slides, join URLs) |
@@ -300,7 +282,7 @@ curl https://www.fenb.ca/version.json
 
 ### Run `gh` directly
 
-Run `gh` commands directly — plain output and `--json` both work. An earlier workaround wrapped them in `script -q -c "..." /dev/null`; don't use it: macOS's BSD `script` has no `-c` flag, so it fails with `illegal option -- c` and the wrapped command never runs (verified 2026-10-28 — a wrapped `gh pr merge` would silently not merge).
+Run `gh` commands directly — plain output and `--json` both work. Don't wrap them in `script -q -c "..." /dev/null`: macOS's `script` has no `-c` flag, so the wrapped command silently never runs.
 
 ```bash
 gh pr list --base main --head dev --state open --json url,number
@@ -320,11 +302,3 @@ gh pr merge $PR_NUMBER --merge --delete-branch
 ```
 
 Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the end).
-
----
-
-### Search index
-
-Pagefind runs as a post-build step and writes its index to `public/pagefind/`. This directory is **not tracked in git** — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before serving.
-
-Pagefind is invoked via `npx --yes pagefind@X.Y.Z` (pinned — see [Live site](#live-site)), not a local devDependency. npx downloads the pinned version once and reuses its cache, so only the first run after a version bump needs network access. Without it, `make serve` still starts, without search (see the offline note under [Local development](#local-development)).

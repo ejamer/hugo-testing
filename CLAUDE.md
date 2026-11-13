@@ -1,179 +1,49 @@
 # Claude Code Instructions
 
+Keep this file lean — it is re-sent on every turn. Put detail in `README.md` / `docs/*.md` and leave a one-line pointer here.
+
 ## Project overview
 
 Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (English + French). See `fenb-1/hugo.toml` for site config.
 
 ## Reference files
 
-- **`README.md`** — how to add/update each content type (news, events, clubs). Read it when starting work on a new section or when unsure about data schemas.
-- **`docs/PROJECT_LAYOUT.md`** — full directory tree with file-by-file descriptions. Read it when navigating an unfamiliar part of the repo.
-- **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, category colours, shared components, and page header band usage.
-- **`docs/TODO.md`** — outstanding items that need follow-up. Update when pages are built or new placeholders are created.
-- **`docs/GOTCHAS.md`** — past build/template gotchas and their fixes. Read before working on XML templates, sitemaps, Hugo data files, git submodules, editing a third-party PDF (flyer typos, email footers), browser-testing a scratch build (Playwright/headless — a bare `hugo` build loads the live site's scripts and real analytics), or any JS-driven show/hide toggle (filters, dropdowns, modals) — CSS `display` set via a class selector silently defeats the `hidden` attribute; see the entry for the fix.
-- **`plans/`** — detailed implementation plans for multi-session features. Read the relevant plan file before starting any TODO item that links to one.
+- **`README.md`** — how to add/update each content type (news, events, clubs), data schemas, news image front matter, season rollover.
+- **`docs/PROJECT_LAYOUT.md`** — folder tree, plus tables of data files, layouts, partials, JS and scripts.
+- **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n/bilingual rules, naming, shared components, URL path rules, nav CSS.
+- **`docs/DEVELOPMENT.md`** — branches, builds, Hugo/Pagefind pins, `gh` quirks, Claude Code permissions.
+- **`docs/GOTCHAS.md`** — read before working on XML templates, sitemaps, data files, submodules, third-party PDFs, headless/Playwright testing, or JS show/hide toggles.
+- **`docs/TODO.md`** — outstanding items. **Don't read it unless the user asks.**
+- **`plans/`** — implementation plans for multi-session features.
 
-## Outstanding TODOs
+When creating or modifying content that leaves a placeholder link, missing page, or deferred decision, add a `- [ ]` entry to `docs/TODO.md`. Resolved items are deleted, not ticked.
 
-**At the start of every session, read `docs/TODO.md`**. Review each open item and flag to the user if any work in the session addresses or alters an item.
+## Skills
 
-**When creating or modifying content**, check whether any new placeholder links, missing pages, or deferred decisions arise. If so, add a `- [ ]` entry to `docs/TODO.md` under the relevant section before finishing. When an item is resolved, **delete it** rather than ticking it `- [x]` — unless it holds context a still-pending item needs, in which case fold that context into the pending item first.
+Project skills live in `.claude/commands/`, all prefixed `fenb-`, named `fenb-{type}-{name}.md` (types: `git`, `content`, `data`).
 
-## Claude Code skills
+## Git — skills only
 
-Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the Claude Code CLI.
+- **`main`** — production; never commit directly. **`dev`** — all work lands here; never delete. Release = PR from `dev` into `main`.
+- `git commit` / `git push` run **only** inside `/fenb-git-commit` or `/fenb-git-release`, behind their single confirmation popup. No exceptions. Don't add extra prompts inside those skills.
+- Scripts in `scripts/` write files only — never `git add`/`commit`/`push`.
+- `gh pr merge` always takes an explicit PR number (without one, on `dev`, it can delete `dev`).
 
-**All project-specific skills must use the `fenb-` prefix.** This keeps them distinct from global Claude Code skills when browsing with tab-completion or searching by name.
+Dev server: `make serve` | Production build: `make build-prod` | Clean: `make clean` (all from repo root).
 
-| Skill | What it does |
-|---|---|
-| `/fenb-git-commit` | Stage, commit, and push after one confirmation popup (shows the drafted message); on a feature branch it can also PR-and-merge into `dev` |
-| `/fenb-docs-update` | Review current git changes and assess whether system docs (CLAUDE.md, README.md, docs/*.md) need updating |
-| `/fenb-git-release` | Hugo version check (offers to update the pinned CI version), Pagefind version check (warns when the pin is behind npm, with the newest release's date, and asks whether to continue), production build + bilingual parity checks, then one popup (version + merge now/leave open) to open and optionally merge a PR from `dev` into `main` |
-| `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
-| `/fenb-content-add-page` | Create a new bilingual content page pair |
-| `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
-| `/fenb-content-social-summary` | Generate a short bilingual Facebook post summarizing an existing news article — offered automatically after `/fenb-content-add-news` and `/fenb-content-add-results` |
-| `/fenb-data-get-results` | Read tournament results from FencingTimeLive pages you saved by hand (terms of service prevent scripted access) — hosted-tournament mode reports full podiums (all medalists, any province); away-tournament mode reports NB fencer placements |
+## Don't hand-edit
 
-Season rollover (archive the current season's events, start a fresh `events.yaml`) is no longer a skill — it's fully mechanical, so it's `scripts/season-rollover.sh <outgoing> <new-label>` directly. See README.md's "Season rollover" section.
-
-When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/commands/`. Types: `git` (branch/commit/PR workflows), `content` (creating new pages or articles), `data` (fetching or managing structured data files).
-
-**Claude Code permissions:** the committed `.claude/settings.json` holds only narrow, safe allows (`make`, `hugo`) that apply to everyone who clones the repo. Personal settings such as `defaultMode: bypassPermissions` or broad `git`/`gh` allows go in `.claude/settings.local.json` (per-user, gitignored) — never in the committed file. Skills declare the tools they need in their own `allowed-tools` frontmatter, so they don't depend on either file.
-
-## version.json
-
-`fenb-1/static/version.json` is managed automatically by `/fenb-git-release` — do not edit it manually. See `docs/DEVELOPMENT.md` for the field schema.
-
-## Hugo version pin
-
-The `hugo-version` in `.github/workflows/release-website.yml` and `pr-check.yml` is changed only via `scripts/check-hugo-version.sh --set X.Y.Z` (which `/fenb-git-release` offers when a newer Hugo is available) — don't hand-edit it or set it back to `latest`. The script keeps both workflows in step. See `docs/DEVELOPMENT.md` → Live site.
-
-**Pagefind is pinned the same way:** `pagefind@X.Y.Z` in both workflows and `PAGEFIND` in the `Makefile`, changed only via `scripts/check-pagefind-version.sh --set X.Y.Z`, which keeps all three in step. Only adopt a release at least 5 days old. `/fenb-git-release` warns when the pin is behind but never updates it. Never use a bare `npx pagefind` — without a version, npx runs whatever npm published last.
-
-## Content creation — use skills, not `hugo new`
-
-`/fenb-content-add-news` and `/fenb-content-add-results` are the correct entry points for news articles. They enforce bilingual pair creation, correct filename format (`{mon}-{dd}-{slug}.{lang}.md`), year subfolder existence, and required front matter fields. Never use `hugo new` directly for news content.
-
-## Development workflow
-
-See **`docs/DEVELOPMENT.md`** for the full branch strategy and build commands.
-
-Key rules:
-- **`main`** — production; pushing here triggers a GitHub Pages deploy. **Never commit directly.**
-- **`dev`** — permanent development branch; all work lands here first. **Never delete.**
-- **Feature branches** — rarely used; only for multi-session work. Cut from `dev` via `/fenb-git-commit` ("Commit to new branch…"), and merge back with its "Commit, push & merge into dev" option.
-- **Release** — PR from `dev` into `main`.
-
-Dev server: `make serve` (with site search; still starts without search if the index can't be built, e.g. offline) | Production build: `make build-prod` | Clean: `make clean`
-
-All `make` commands run from the repo root.
-
-## Git commit and push — skills only
-
-`git commit`, `git push`, and `git push -u` are **never run autonomously**. They may only execute inside the `/fenb-git-commit` or `/fenb-git-release` skills, each of which asks for confirmation in a single popup before any git write. Don't add extra confirmation prompts inside those skills — one gate per run. There are no exceptions: not for "small fixes", not for updating version files, not for anything.
-
-Scripts in `scripts/` never run `git add`/`commit`/`push` — they write files only, and the calling skill does the git work (e.g. `generate-version-json.sh` writes `version.json`; `/fenb-git-release` commits it). This keeps every commit behind a skill's confirmation gate.
+- `fenb-1/static/version.json` — managed by `/fenb-git-release`.
+- Hugo / Pagefind version pins — change only via `scripts/check-hugo-version.sh --set` / `scripts/check-pagefind-version.sh --set`. Never a bare `npx pagefind`.
 
 ## Key conventions
 
-See **`docs/STYLE_GUIDE.md`** for brand colours, CSS conventions, i18n rules, bilingual file rules, naming conventions, and category colours.
-
-- Structured content (events, clubs) lives in `fenb-1/data/` as YAML; layouts read it via `hugo.Data`
-- **Places (events and clubs):** `city` ("City, Province") is shown on cards; the optional `address` holds only a mappable venue or street address — never just the city, never a club name alone — and drives the Google Maps link (no `address` = no link). See README.md.
-- **News article filenames:** `{mon}-{dd}-{title}.{lang}.md` in the year subfolder — the dot before `{lang}` is required; a dash breaks Hugo's translation linking (see docs/STYLE_GUIDE.md)
-- **Recurring event slugs:** for tournaments that repeat annually, include the year in the slug — e.g. `east-coast-games-2026-registration`. This prevents cross-season collisions in the archive.
-- **News article images** — this is the standard way to add images to a news article; the legacy inline `figure` shortcode still works but is discouraged for new articles. Front matter fields (no shortcodes needed in the body):
-  - `image` + `image_alt` — renders a centred logo/image above the article body (`.fenb-article-event-logo` styling)
-  - `image_dark` (optional) — a light-on-dark variant of `image`, swapped in automatically under `[data-theme="dark"]`. Only add it if the default `image` doesn't read well on a dark background.
-  - `image_wide: true` (optional) — raises the logo's max-width from 220px to 480px. Use for wide/banner-shaped images (e.g. a flyer banner, aspect ratio wider than ~3:1) where the default 220px cap would crush the height; don't use it for ordinary square-ish club/event logos.
-  - `photos` — list of `{src, alt, caption}` objects; rendered as a responsive grid below the article body. `caption` is optional per item. Example:
-    ```yaml
-    image: "images/canada-games/qc2027-logo-horizontal.png"
-    image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
-    image_alt: "Canada Winter Games 2027 — Quebec City"
-    photos:
-      - src: "images/news/2026/cwg-2027-team-staff-jim-stevens.jpeg"
-        alt: "Jim Stevens, Team Coach"
-        caption: "Jim Stevens — Team Coach"
-    ```
-    Paths must not have a leading slash (see URL paths rule above).
-  - **Host logo beside a section** — for multi-event articles, put `{{< host-logo id="DAM" >}}` on its own line under each event's `##` heading. In a single-event article it can replace the top `image`: put it on its own line after the greeting so the logo floats beside the intro. `id` is a club id (`data/clubs.yaml`) or organization id (`data/organizations.yaml`, e.g. `CFF`). This is a shortcode, not front matter — see docs/STYLE_GUIDE.md.
-  - **Social share image** — every page uses the site default (`images/og-default.png`); `image` and `photos` are never used automatically (flyers, logos, headshots and `.avif` render badly or not at all). Hand-pick one with `images: ["path"]` in front matter (≥600×315, ideally 1200×630 JPEG/PNG). See README.md.
-
-## Pattern reuse — check before creating
-
-Before adding any new visual element (card, banner, callout, heading style), **first check `docs/STYLE_GUIDE.md`** (Shared UI components) and shared partials in `layouts/partials/`. If an existing component almost fits, add a CSS modifier class (e.g. `fenb-callout--quote`) rather than a new component.
+- News articles: create via `/fenb-content-add-news` or `/fenb-content-add-results`, never `hugo new`. Filenames are `{mon}-{dd}-{slug}.{lang}.md` — the **dot** before `{lang}` is required.
+- Structured content lives in `fenb-1/data/` as YAML. **Data filenames use underscores, never hyphens** (a hyphenated key renders silently empty). Bilingual fields are `x_en`/`x_fr` with `_fr` falling back to `_en`; read them via `partial "localized.html"`.
+- **Never use a leading `/` with Hugo URL functions** (`relLangURL`, `absURL`, etc.) — it drops the `/hugo-testing/` base path. Exceptions (`results_url_*`, `details_url_*`) are in STYLE_GUIDE.
+- Before adding a new visual element, check STYLE_GUIDE's shared components and `layouts/partials/`; prefer a modifier class over a new component.
+- Nav bar changes: confirm placement with the user first, and verify in the browser before reporting done.
 
 ## Post-mortem
 
-After completing a feature, ask the user whether a post-mortem is needed. A post-mortem covers:
-
-1. **What worked** — approaches that were right first time and worth repeating
-2. **What didn't** — missteps, reversals, or wasted implementation rounds, and why they happened
-3. **Docs** — whether `README.md`, `docs/STYLE_GUIDE.md`, or `CLAUDE.md` need updating to reflect new conventions or schema changes
-
-Always get user approval on the proposed changes before editing any docs.
-
-## `gh` CLI — run it directly, never via `script`
-
-Run `gh` commands directly — plain output and `--json` both come back fine. **Don't wrap them in `script -q -c "..." /dev/null`** (an old workaround): macOS's BSD `script` has no `-c` flag, so it fails with `illegal option -- c` and the wrapped command never runs — a wrapped `gh pr merge` silently doesn't merge. For machine-readable output use `--json` (add `-q <jq expr>` to extract a field):
-
-```bash
-gh pr list --base main --head dev --state open --json url,number
-```
-
-Use `--input` for complex `gh api` payloads that contain special characters.
-
-## `gh pr merge` requires an explicit PR number
-
-Never run `gh pr merge` without specifying a PR number. Without one, `gh` resolves to the current branch's PR — if you're on `dev`, it can delete `dev`.
-
-Always capture the PR number from `gh pr create` output and pass it explicitly:
-
-```bash
-gh pr merge $PR_NUMBER --merge --delete-branch
-```
-
-## Nav chrome changes
-
-Before implementing anything that touches the nav bar layout (adding/moving buttons, icons, or controls), confirm placement and behaviour with the user first. After any nav change, verify the result in the browser before reporting done.
-
-**Direct-child selectors in nav CSS:** whenever you add a nested `<ul>` or `<li>` inside `.fenb-nav-links`, use direct-child selectors (`> ul`, `> ul > li`, `> ul > li:last-child`) to prevent bleed-through into dropdowns. `fenb-nav.css` already uses this pattern.
-
-**`--nav-height` is the single source of truth for nav bar height.** It is defined in `fenb-base.css` (`:root`) and referenced via `var(--nav-height)` in both `.fenb-nav-inner` (height) and `.fenb-nav-links.is-open` (top offset in the mobile menu). If the nav height ever changes, update only `--nav-height` — never hardcode the pixel value in CSS or templates.
-
-## Hugo data file naming
-
-**Never use hyphens in data filenames. Use underscores** (e.g. `board_members.yaml`, `join_paths.yaml`). Hugo stores the data key as the literal filename, so `program-cards.yaml` produces key `program-cards` — a syntax error in Go template dot notation. The page renders silently empty with no build error.
-
-Match the top-level YAML key to the filename exactly. Only create data files for genuinely editable content — static structural elements belong directly in the template.
-
-**Bilingual data fields use an `_en` / `_fr` suffix pair, with `_fr` falling back to `_en` when empty or omitted** (e.g. `title_en`/`title_fr`, `url_en`/`url_fr`, `src_en`/`src_fr` and `alt_en`/`alt_fr` in `hero_slides.yaml`, `image_en`/`image_fr` in `coach_pathways.yaml`). Apply this pattern to any new bilingual field on a data YAML file rather than inventing a different naming scheme. In templates, read these fields with `partial "localized.html" (dict "item" . "field" "title")` — it handles both `title`/`title_fr` and `x_en`/`x_fr` — and never write the fallback out inline, so the rule lives in one place.
-
-## URL paths — the no-leading-slash rule
-
-Both `absURL` and `relLangURL`/`relURL` treat a leading `/` as host-root-relative, stripping the base URL's path component. With the GitHub Pages `baseURL` (`/hugo-testing/`):
-
-- `"/events/" | relLangURL` → `/events/` ❌ (base path lost)
-- `"events/" | relLangURL` → `/hugo-testing/events/` ✓
-
-**Rule: never use a leading `/` with any Hugo URL function.** This applies to hardcoded strings in templates and to paths stored in data YAML files piped through URL functions.
-
-**Exception — `results_url_en`/`results_url_fr` in `events.yaml`:** these are rendered as a raw `href` in `layouts/partials/event-card.html` and `layouts/events/schedule.html`, never piped through `relLangURL`/`absURL`, so a leading `/` is correct there when the value is an internal news article (e.g. `/news/2026/.../` and `/fr/news/2026/.../`). Don't "fix" these paths to remove the leading slash. The templates open only `http(s)` links in a new tab, so internal paths (leading `/`) and `mailto:` links open in the same tab.
-
-**Same for `details_url_en`/`details_url_fr`:** also rendered raw (event card, schedule, calendar JSON, `.ics`). An internal page link keeps its leading and trailing `/` (e.g. `/news/2026/oct-30-slug/` + `/fr/news/2026/oct-30-slug/`) — `layouts/partials/event-details-url.html` keys off that shape to check the page exists and hides the Learn More link until it's published (so it can point to a future-dated article).
-
-## Sweep rule — before any structural git or template change
-
-Before renaming a field, moving a file, or restoring a submodule, grep for related references first:
-
-```bash
-grep -rn 'field_name' fenb-1/layouts/ fenb-1/static/js/ .claude/commands/
-git ls-files | grep -i 'relevant_name'
-```
-
-## Verify output content, not just output existence
-
-After generating any file output (RSS feed, sitemap, JSON endpoint), inspect the actual content before declaring done. An empty feed, missing field, or leading whitespace character are silent failures that only surface when a user opens the output.
+After completing a feature, ask whether a post-mortem is wanted (what worked, what didn't, doc updates). Get approval before editing any docs.

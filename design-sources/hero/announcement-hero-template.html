@@ -1,4 +1,33 @@
 <!DOCTYPE html>
+<!--
+  FENB announcement hero — generic HTML template (bilingual, text-only, no photo).
+  Based on the 2026 Executive Director hiring slide.
+
+  Use: copy this file to resources/hero-sources/hero-NAME.html and replace the
+  placeholder text (kicker, "Headline lead-in", "Key phrase", "Detail one"...).
+
+  Generating the PNG: the page is a fixed 2000x800 canvas (2.5:1), so it must
+  be screenshotted, not printed. File > Print paginates it to Letter and drops
+  the background colours; a normal screenshot crops to the window and doubles
+  in size on Retina. Headless Chrome renders exactly 2000x800 at 1x. From the
+  repo root:
+
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless \
+      --hide-scrollbars --window-size=2000,800 \
+      --screenshot="$PWD/resources/hero-sources/hero-NAME.png" \
+      "file://$PWD/resources/hero-sources/hero-NAME.html"
+
+  Then convert it to a JPG for the site:
+
+    sips -s format jpeg -s formatOptions 85 resources/hero-sources/hero-NAME.png \
+      --out fenb-1/static/images/hero/hero-NAME-en.jpg
+
+  The logo path below (../../fenb-1/...) resolves from any folder two levels
+  below the repo root (design-sources/hero/, resources/hero-sources/) — fix it
+  if the copy lives elsewhere. Fonts are embedded, so no network is needed.
+  Order the two languages to suit the audience (FR first was used for the
+  ED hiring slide); .second adds the gap above the second language block.
+-->
 <html>
 <head>
 <meta charset="utf-8">
@@ -73,12 +102,12 @@
       -1px  1px 0 rgba(0,0,0,0.4), 1px  1px 0 rgba(0,0,0,0.4),
       0 6px 20px rgba(0,0,0,0.45);
   }
-  h1.fr { margin-top: 26px; }
+  h1.second { margin-top: 26px; }
   .tagline { margin-top: 30px; }
   .tagline p {
     font-size: 27px; font-weight:600; color: rgba(255,255,255,0.9); line-height:1.5;
   }
-  .tagline p.fr { margin-top: 6px; }
+  .tagline p.second { margin-top: 6px; }
   .tagline .dot { color: #e3798c; margin: 0 14px; font-weight:700; }
 </style>
 </head>
@@ -86,20 +115,22 @@
   <div class="bgpattern"></div>
   <div class="edge"></div>
   <div class="panel-right">
-    <img src="file:///Users/edwardjamer/Documents/GitHub/hugo-testing/fenb-1/static/images/fenb-logo/FENB-Logo-Small-White/FencingNB-Logo-Small-OneColour-White.svg">
+    <img src="../../fenb-1/static/images/fenb-logo/FENB-Logo-Small-White/FencingNB-Logo-Small-OneColour-White.svg">
   </div>
   <div class="row">
     <div>
       <span class="kicker">Fencing&#8209;Escrime NB</span>
 
-      <h1>Nous embauchons notre prochain<span class="title">directeur g&eacute;n&eacute;ral</span></h1>
+      <!-- Language 1 -->
+      <h1>Headline lead-in<span class="title">Key phrase</span></h1>
       <div class="tagline">
-        <p>Contrat &agrave; temps partiel<span class="dot">&middot;</span>Nouveau&#8209;Brunswick<span class="dot">&middot;</span>Date limite : 15 ao&ucirc;t 2026</p>
+        <p>Detail one<span class="dot">&middot;</span>Detail two<span class="dot">&middot;</span>Deadline or date</p>
       </div>
 
-      <h1 class="fr">We're hiring our next<span class="title">Executive Director</span></h1>
+      <!-- Language 2 -->
+      <h1 class="second">Headline lead-in<span class="title">Key phrase</span></h1>
       <div class="tagline">
-        <p class="fr">Part&#8209;time contract<span class="dot">&middot;</span>New Brunswick<span class="dot">&middot;</span>Apply by August 15, 2026</p>
+        <p class="second">Detail one<span class="dot">&middot;</span>Detail two<span class="dot">&middot;</span>Deadline or date</p>
       </div>
     </div>
   </div>

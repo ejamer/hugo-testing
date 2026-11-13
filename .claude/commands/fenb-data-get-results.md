@@ -1,6 +1,6 @@
 ---
 description: Read tournament results from FencingTimeLive pages the user saved by hand and report podiums or NB fencer placements.
-allowed-tools: Bash(python3 scripts/ftl-read-saved-pages.py *) AskUserQuestion Read Write Grep
+allowed-tools: Bash(mkdir -p scripts/output) Bash(python3 scripts/ftl-read-saved-pages.py *) AskUserQuestion Read Write Grep
 ---
 
 Build a results JSON file from FencingTimeLive (FTL) pages the user saved by hand. Two modes:
@@ -8,7 +8,7 @@ Build a results JSON file from FencingTimeLive (FTL) pages the user saved by han
 - **Away** — NB athletes competed out of province. Report only events where NB athletes appear.
 - **Hosted** — tournament was held in New Brunswick. Report the full podium (all medalists, any province) for every event.
 
-**Never access fencingtimelive.com.** FTL's terms of service prevent scripted access, so don't use WebFetch, curl, a browser tool, or `scripts/fencingtimelive-results.py` (which now exits with an error). FTL URLs are only written into the output as links.
+**Never access fencingtimelive.com.** FTL's terms of service prevent scripted access, so don't use WebFetch, curl, or a browser tool. FTL URLs are only written into the output as links.
 
 ---
 
@@ -31,8 +31,10 @@ If the pages aren't saved yet, show these steps and stop until the user returns 
 
 ## Step 2 — Read the saved pages
 
+The output folder is gitignored, so create it first in case it's missing (fresh clone):
+
 ```bash
-python3 scripts/ftl-read-saved-pages.py "{FOLDER}" > scripts/output/saved-pages.txt
+mkdir -p scripts/output && python3 scripts/ftl-read-saved-pages.py "{FOLDER}" > scripts/output/saved-pages.txt
 ```
 
 The output has one `=== FILE:` block per page, with `EV` lines for schedule rows (`EV`, event ID, day, then the row's cells) and `ROW` lines for table rows. Read it in parts or search it with Grep if it's long. `scripts/output/` is gitignored.

@@ -22,7 +22,7 @@ Avenir, Nunito Sans, system-ui
 
 ## CSS
 
-Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped to one concern. Ananke's `resources.Concat` pipeline merges and minifies them into a single output at build time — no extra HTTP requests.
+Styles are split across files in `fenb-1/assets/ananke/css/`, one per concern (this table is the canonical list). Ananke's `resources.Concat` pipeline merges and minifies them into a single output at build time — no extra HTTP requests.
 
 | File | Scope |
 |---|---|
@@ -36,6 +36,7 @@ Styles are split across nine files in `fenb-1/assets/ananke/css/`, each scoped t
 | `fenb-hof.css` | Hall of Fame landing table and inductee profile pages |
 | `fenb-schedule.css` | Season schedule page |
 | `fenb-join.css` | Join & Register section (landing page, membership, club registration, volunteer) |
+| `fenb-programs.css` | Programs & Development section, including the coach pathway modal |
 | `fenb-responsive.css` | All `@media` breakpoints and print query — loaded last |
 
 The load order is declared in `hugo.toml` under `params.ananke.custom_css`. Files must live in `fenb-1/assets/ananke/css/` — **not** `fenb-1/static/css/` — so Ananke's pipeline picks them up for concatenation, minification, and (in production) fingerprinting. A file placed in `static/` would be served separately, uncached, and unminified.
@@ -131,6 +132,7 @@ The template renders the chevron, dropdown panel, and hover/focus behaviour auto
 
 **CSS rules to keep in mind:**
 - `.fenb-nav-links > ul` and `.fenb-nav-links > ul > li:last-child` use direct-child selectors deliberately — this prevents the crimson Join pill and the flex layout from bleeding into nested dropdown `<ul>` elements. Any new nav list rules must also use `> ul` rather than the bare descendant selector `ul`.
+- `--nav-height` (in `fenb-base.css` `:root`) is the single source of truth for the nav bar height — used by `.fenb-nav-inner` and the mobile menu's `top` offset. Never hardcode the pixel value.
 - The dropdown `min-width` is currently `260px` — increase it if you add items with long translated labels.
 - The nav collapses to the hamburger menu at **≤ 1000px** (below that, the desktop menu plus the action icons no longer fit beside the logo). Page layouts switch separately, at ≤ 860px — both in `fenb-responsive.css`. In the hamburger menu, dropdown items show as indented sub-items.
 - **Action icons** (`.fenb-nav-actions`), in order: search, Facebook, theme, language. The Facebook link comes from `hugo.toml` → `params.ananke.social.facebook.profilelink` and shares the search button's look (`.fenb-nav-social`). At ≤ 480px there's no room in the bar, so it's hidden there and shown instead at the bottom of the open menu (`.fenb-nav-social-menu`). That block sits after the menu's `<ul>`, not inside it, because the last `<li>` is styled as the Join pill.
@@ -244,40 +246,11 @@ The site has no global link colour. A link in a new section falls back to browse
 
 ### `fenb-article-event-logo` — event logo in a news article
 
-Displays a centred logo/image above the article body — 220 px max-width by default, rounded corners, dark-mode drop shadow.
+A centred logo/image above the article body — 220px max-width, rounded corners, dark-mode drop shadow. Rendered automatically from the `image` / `image_alt` / `image_dark` / `image_wide` front matter (field reference in [README.md](../README.md) → New news post). This is the required style for new articles; the legacy `figure` shortcode in the body still works but is discouraged and can't do the dark-mode swap.
 
-**Standard:** set `image` and `image_alt` in front matter; the layout renders this automatically (no shortcode needed in the body). This is the required style for all new articles — inline images should always go through front matter, not the article body.
+**Before making an `image_dark` variant:** composite the logo onto the dark-mode background (`#141f1d`) and look at it first. Line-art logos with **opaque white fills** (e.g. the Halifax Enguardians wings/shield) already read well on dark and need no variant. Don't recolour every pixel white — on a filled logo that produces a solid white blob — and a plain colour inversion turns the fills black, which reads worse. A recolour-to-white variant only suits logos that are purely dark strokes on a transparent background.
 
-```yaml
-image: "images/event-logos/ecg.png"
-image_alt: "East Coast Games 2026"
-```
-
-**Optional dark-mode variant:** if the logo doesn't read well on a dark background (e.g. dark text/outlines with no background fill), add `image_dark` with a light-on-dark version of the same asset. The layout swaps between the two automatically based on the site's `data-theme` attribute — no JS or extra markup needed in the article itself.
-
-```yaml
-image: "images/canada-games/qc2027-logo-horizontal.png"
-image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
-image_alt: "Canada Winter Games 2027 — Québec City"
-```
-
-If only one image exists, omit `image_dark` — the single `image` is used in both themes.
-
-**Test before making a dark variant:** composite the logo onto the dark-mode background (`#141f1d`) and look at it first. Line-art logos with **opaque white fills** (e.g. the Halifax Enguardians wings/shield) already read well on dark and need no `image_dark`. Don't auto-generate one by recolouring every pixel white — on a filled logo that produces a solid white blob — and a plain colour inversion turns the fills black, which reads worse. A recolour-to-white variant only suits logos that are purely dark strokes on a transparent background.
-
-**Wide/banner-shaped logos:** the default 220px max-width assumes a roughly square-ish logo. A wide banner image (e.g. a flyer graphic, aspect ratio wider than ~3:1) gets crushed to a sliver at that width. Add `image_wide: true` to raise the max-width to 480px via the `fenb-article-event-logo--wide` modifier class:
-
-```yaml
-image: "images/event-logos/fundy-open.png"
-image_alt: "2026 Fundy Open"
-image_wide: true
-```
-
-**Alternative (legacy, discouraged):** using the Hugo `figure` shortcode directly in the article body still works, but new articles should use the front-matter fields above instead — it keeps image handling consistent and is the only way to get the dark-mode swap.
-
-```markdown
-{{</* figure src="/images/event-logos/ecg.png" alt="East Coast Games 2026" class="fenb-article-event-logo" */>}}
-```
+**`image_wide: true`** adds the `fenb-article-event-logo--wide` modifier (max-width 480px) — for banner-shaped images wider than ~3:1, which the 220px cap would crush.
 
 CSS targets `.fenb-article-event-logo img`; the light/dark swap uses `.fenb-article-event-logo-img--light` / `--dark` toggled by `[data-theme="dark"]`.
 
@@ -321,7 +294,9 @@ CSS lives in `fenb-news.css` (`.fenb-lightbox`, `.fenb-lightbox--open`, `.fenb-l
 
 ### Pathway diagram modal — `/programs/coach-training/` only
 
-A centred modal dialog showing a full-size CFF pathway diagram with a title and close button, opened by a trigger button on the page. Defined in `fenb-programs.css` and `static/js/coach-pathways.js`, scoped exclusively to `/programs/coach-training/`. **This is not the general image lightbox** — for zooming article images use the article image lightbox above.
+A centred modal dialog showing a full-size CFF pathway diagram with a title and close button, opened by a trigger button on the page. Defined in `fenb-programs.css` and `static/js/coach-pathways.js`, currently used only on `/programs/coach-training/`. **This is not the general image lightbox** — for zooming article images use the article image lightbox above.
+
+**Reusing it on another page** (referee, armourer, or any other pathway): don't copy the modal markup below. First move it into a shared partial (e.g. `partials/pathway-modal.html`, following the `calendar-dialog.html` pattern: one include plus its script tag per page), rename the script to a non-coach name, and then rewrite this section to document the partial instead of the raw HTML.
 
 **Trigger button** — anywhere on the page:
 ```html
@@ -416,6 +391,17 @@ The toggle sets `data-theme="dark"` on `<html>`; a `[data-theme="dark"]` block i
 
 ---
 
+## URL paths — no leading slash
+
+`absURL`, `relURL` and `relLangURL` treat a leading `/` as host-root-relative and drop the base path. With the GitHub Pages `baseURL` (`/hugo-testing/`):
+
+- `"/events/" | relLangURL` → `/events/` ❌
+- `"events/" | relLangURL` → `/hugo-testing/events/` ✓
+
+**Never use a leading `/` with a Hugo URL function** — in templates or in data YAML values piped through one.
+
+**Exceptions — `results_url_en`/`_fr` and `details_url_en`/`_fr` in `events.yaml`:** rendered as a raw `href` (event card, schedule, calendar JSON, `.ics`), never through a URL function, so internal links keep their leading and trailing `/` (e.g. `/news/2026/oct-30-slug/` + `/fr/news/2026/oct-30-slug/`). The templates open only `http(s)` links in a new tab, and `layouts/partials/event-details-url.html` keys off that shape to hide Learn More until a future-dated article is published. Don't "fix" these.
+
 ## Event link types
 
 Three link types appear on event cards and schedule rows. Each has a specific CSS class — always use it so colours stay consistent across card, schedule, and print contexts:
@@ -434,7 +420,7 @@ Any layout that renders event links (card partial, schedule list, future widgets
 
 **Markdown links in article/page bodies** (e.g. a results table heading like `### [Event Name](https://fencingtimelive.com/...)`) follow the same same-tab/new-tab split automatically via a Hugo render hook at `layouts/_default/_markup/render-link.html`. It opens a link in a new tab (`target="_blank" rel="noopener noreferrer"`) whenever the destination is an absolute `http(s)` URL that doesn't match the current environment's `Site.BaseURL`; anything else (relative paths, root-relative internal paths, anchors) stays same-tab. This applies site-wide to all Markdown content — no per-article markup needed.
 
-**Markdown images in page bodies** (e.g. the concussion pathway chart on the Concussion Protocol policy) are rendered by `layouts/_default/_markup/render-image.html`. Put the file under `static/images/<folder>/` and reference it **without a leading slash**: `![Alt text describing the image](images/policies/concussion-pathway-en.png)`. The hook resolves it with `relURL`, so it works on the `/hugo-testing/` preview and in production. It also adds lazy loading and wraps the image in a link to its full-size file, which helps on phones. The alt text is required: write what the image shows or summarises. Styles are `.fenb-md-image` in `fenb-base.css` (centred, never wider than the column, white frame in dark mode). News articles still use `image`/`photos` front matter instead (see CLAUDE.md).
+**Markdown images in page bodies** (e.g. the concussion pathway chart on the Concussion Protocol policy) are rendered by `layouts/_default/_markup/render-image.html`. Put the file under `static/images/<folder>/` and reference it **without a leading slash**: `![Alt text describing the image](images/policies/concussion-pathway-en.png)`. The hook resolves it with `relURL`, so it works on the `/hugo-testing/` preview and in production. It also adds lazy loading and wraps the image in a link to its full-size file, which helps on phones. The alt text is required: write what the image shows or summarises. Styles are `.fenb-md-image` in `fenb-base.css` (centred, never wider than the column, white frame in dark mode). News articles still use `image`/`photos` front matter instead (see README.md).
 
 **Markdown tables** go through `layouts/_default/_markup/render-table.html`, which reproduces Hugo's default table HTML exactly. So news results tables (and `results-table.js`) see no difference. Markdown can't merge cells, so for "step N → note → step N+1" tables a page can opt in with front matter `merge_note_rows: true`. Every body row whose **only** text is in its first cell is then output as one full-width row (`<tr class="fenb-table-note-row"><td colspan="N"><span class="fenb-table-note">…`), styled as a shaded, italic note. Write those rows with the other cells empty: `| If the athlete can tolerate …, progress to step 3. |  |  |  |`. On phones (≤600px) wide policy tables scroll inside their own box, and the note text stays pinned to the visible part (`fenb-responsive.css`). Currently used only by the Concussion Protocol (EN/FR). Don't turn it on for results articles, because a placement row with only a name filled in would be merged by mistake.
 
@@ -488,7 +474,7 @@ Every content page needs both an English and French file so the language switche
 - Section index files: `_index.md` (EN) + `_index.fr.md` (FR)
 - Article files: `{name}.en.md` (EN) + `{name}.fr.md` (FR)
 
-To show a subtitle in the page header band, set `description:` in the front matter — the partial reads it automatically. Use `hide_page_header: true` only when the layout renders its own header with dynamic content (e.g. the clubs page, which computes a live club count).
+For subtitles and the header band, see [Page header band](#page-header-band).
 
 ---
 
@@ -561,7 +547,7 @@ To add a new category: add the ID to `data/event_categories.yaml`, add i18n keys
 
 ## Results tables (news articles)
 
-Results news articles (`category: results`) use an enhanced table pattern driven by `static/js/results-table.js`, which is loaded automatically by `layouts/news/single.html` when `category` equals `results`.
+Results news articles use an enhanced table pattern driven by `static/js/results-table.js`, which `layouts/news/single.html` loads when the front matter sets `results_table: true` (any category).
 
 **Column order:** always `Name | Club | Place` — Place must be the last column so the JS can target it by index.
 
@@ -570,7 +556,7 @@ Results news articles (`category: results`) use an enhanced table pattern driven
 **In-progress rows:** use `—` in the Place cell when results are not yet posted.
 
 **JS behaviour (automatic — no extra markup needed):**
-- Hides the Place column by default and inserts a "Show placements" / "Afficher les positions" toggle button above each table.
+- With `results_hide_placements: true`, hides the Place column and inserts a "Show placements" / "Afficher les positions" toggle button above each table.
 - Default sort is ascending by Place (best results first) so the table is meaningful without placements visible.
 - All visible column headers are clickable to re-sort; `aria-sort` is updated for accessibility.
 - Button labels are bilingual, detected from `html[lang]`.
@@ -639,9 +625,9 @@ Even with no size or class override, use the partial — `{{ partial "icon.html"
 
 | Data file | Used by | Icon field |
 |---|---|---|
-| `data/quicklinks.yaml` | `layouts/index.html` | `icon` |
-| `data/joinpaths.yaml` | `layouts/join/list.html` | `icon` |
-| `data/programcards.yaml` | `layouts/programs/list.html` | `icon` (SVG) or `img` (raster) |
+| `data/quick_links.yaml` | `layouts/index.html` | `icon` |
+| `data/join_paths.yaml` | `layouts/join/list.html` | `icon` |
+| `data/program_cards.yaml` | `layouts/programs/list.html` | `icon` (SVG) or `img` (raster) |
 
 ---
 
