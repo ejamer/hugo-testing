@@ -15,8 +15,9 @@ hugo-testing/
 ├── docs/                  Reference docs — see README → Related docs
 ├── plans/                 Plans for multi-session features (referenced from docs/TODO.md)
 ├── scripts/               Helper scripts — see Scripts table
-├── design-sources/        Editable sources for generated graphics (HTML/CSS and Inkscape SVG);
-│                          not served — re-export to static/images/
+├── design-sources/        Blank templates only (hero/: FENB + Damocles Inkscape SVGs, HTML
+│                          announcement); not served. Finished designs go in resources/ (local)
+├── resources/             Gitignored, local only: source docs, flyers, finished design files
 └── fenb-1/                Hugo site root
     ├── hugo.toml          Site config, languages, nav menus (no baseURL)
     ├── config/            Per-environment baseURL: development/ (GitHub Pages), production/ (fenb.ca)
@@ -161,11 +162,9 @@ Check here before building a new component. Partials marked † have a full writ
 
 | File | Does |
 |------|------|
-| `check-ftl-deps.sh` | Prerequisite check for the results tooling |
 | `check-hugo-version.sh` | Compares the CI Hugo pin with local/latest; `--set` updates the pin |
 | `check-pagefind-version.sh` | Compares the Pagefind pin (both workflows + Makefile) with npm; `--set` updates all three |
 | `compute-next-version.sh` | Latest tag + next version candidates |
-| `fencingtimelive-results.py` | Retired — exits with a terms-of-service message |
 | `ftl-read-saved-pages.py` | Reads hand-saved FencingTimeLive pages for /fenb-data-get-results |
 | `generate-version-json.sh` | Writes `static/version.json` for a release |
 | `season-rollover.sh` | Archives `events.yaml` and starts a fresh season file |

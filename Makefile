@@ -32,6 +32,7 @@ build-prod: clean
 # Delete build output and caches.
 clean:
 	rm -rf fenb-1/public fenb-1/resources/_gen fenb-1/.hugo_build.lock fenb-1/hugo_stats.json
+	rm -rf scripts/output && mkdir -p scripts/output
 
 # List content files missing their EN/FR pair. Informational: always exits 0.
 check-parity:

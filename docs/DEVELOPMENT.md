@@ -49,8 +49,7 @@ make build-prod   # production build — minified + pagefind index
 > [!NOTE]
 > **Offline:** `make serve`'s search step runs the pinned Pagefind via `npx`, which downloads that version once and reuses its cached copy after that. If it can't (offline on a new machine, or right after a version bump), `make serve` prints "Search index not built (offline?) — serving without search" and starts the dev server anyway. Everything works except the search overlay.
 
-**Browser-driven verification (Playwright):** the repo root has a `package.json`/`package-lock.json` pinning the Node `playwright` package as a devDependency — used for browser-driven verification of local builds (e.g. screenshotting a page to confirm a visual change), not part of the Hugo build itself. Run `npm install` once to use it; the installed packages under `node_modules/` are gitignored, but `package.json`/`package-lock.json` are committed so the version stays pinned. This is separate from the Python `playwright` package documented under [fencingtimelive-results.py](#fencingtimelive-results) — same underlying tool, different language binding, different purpose.
-
+**Browser-driven verification (Playwright):** the repo root has a `package.json`/`package-lock.json` pinning the Node `playwright` package as a devDependency — used for browser-driven verification of local builds (e.g. screenshotting a page to confirm a visual change), not part of the Hugo build itself. Run `npm install` once to use it; the installed packages under `node_modules/` are gitignored, but `package.json`/`package-lock.json` are committed so the version stays pinned.
 The site builds in ~100 ms. Open `http://localhost:1313/` in your browser.
 
 ### Search index
@@ -118,7 +117,7 @@ Utility scripts live in `scripts/`. They are independent of the Hugo build — r
 
 ### FencingTimeLive results
 
-FencingTimeLive's terms of service prevent scripted access. `scripts/fencingtimelive-results.py` now prints a message and exits with an error as its first action; the rest of its code is unused, and `scripts/check-ftl-deps.sh` only supports it. Both files are kept on purpose (decided 2026-11-12) to preserve the scraper's code. Don't delete them, and don't remove the early exit, which stops the scraper from being run by mistake.
+FencingTimeLive's terms of service prevent scripted access, so the site has no scraper. The old one (`scripts/fencingtimelive-results.py`, plus its `check-ftl-deps.sh` prerequisite check) was deleted on 2026-11-13; its code is in git history up to commit `4bd7b26`.
 
 Save the event schedule and each event's final results page by hand into a folder, then run `/fenb-data-get-results`. It gives saving instructions and uses `scripts/ftl-read-saved-pages.py`, which reads local files only:
 

@@ -17,9 +17,8 @@ fenb-1/bin/
 *~
 # ^^^^^^^ FENB-1 ^^^^^^^
 
-# Script output and browser session data (generated, not committed)
+# Script output (generated, not committed)
 scripts/output/
-scripts/.browser-profile/
 __pycache__/
 
 # Editor/IDE
