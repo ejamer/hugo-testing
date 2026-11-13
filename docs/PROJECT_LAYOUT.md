@@ -1,148 +1,171 @@
 # Project layout
 
-The repo root holds documentation and scripts; all Hugo source lives under `fenb-1/`. Content is split into EN/FR file pairs throughout, and structured data (events, clubs, board members) lives in `fenb-1/data/` as YAML rather than in content files.
+The repo root holds documentation, tooling and scripts; all Hugo source lives under `fenb-1/`. Content is split into EN/FR file pairs, and structured data (events, clubs, board members) lives in `fenb-1/data/` as YAML.
 
-**Scope:** This file is a navigation aid, not a file manifest. Folders are described at a summary level unless knowing the specific filename is necessary to make edits. Individual files are called out only where the file-to-page mapping is non-obvious — primarily `data/` YAML files, CSS files, layout templates, partials, and JS files. Deliberately omitted: individual content articles, static assets (images, PDFs), skill files, and gitignored paths. When updating this file, maintain that abstraction level — don't list files that can be found with a directory listing.
+**How to maintain this file:** the tree shows folders, not files. Name a file in the tree only when it's a one-off whose purpose isn't obvious from its location. Files that come in families (data, layouts, partials, JS, scripts) go in the tables below, one short line each, in alphabetical order. Don't list anything `ls` would show just as well (content articles, images, PDFs, subfolders of `static/`), or anything gitignored. CSS files are listed in [STYLE_GUIDE.md → CSS](STYLE_GUIDE.md#css).
 
 ```
 hugo-testing/
-├── CLAUDE.md              Process instructions for Claude
-├── README.md              How to add/update each content type
-├── package.json           Node devDependency pin: playwright (browser-driven verification, not part of the Hugo build)
-├── package-lock.json      Lockfile for package.json — node_modules/ itself is gitignored
-├── docs/
-│   ├── DEVELOPMENT.md     Branch strategy and build commands
-│   ├── GOTCHAS.md         Past build/template gotchas and their fixes
-│   ├── PROJECT_LAYOUT.md  This file — full directory tree
-│   ├── REFEREE_PROGRAM_COMPARISON.md  Internal report: FENB referee program vs. CFF manual, FIE rules, and other provinces
-│   ├── STYLE_GUIDE.md     Brand, CSS, and content conventions
-│   └── TODO.md            Outstanding items — keep current
-├── .claude/               Project skills and settings (see CLAUDE.md for skill descriptions)
-├── plans/                 Detailed plans for multi-session features (referenced from docs/TODO.md)
-├── scripts/               Utility scripts: fencingtimelive-results.py (retired: exits with a terms-of-service message), ftl-read-saved-pages.py (reads hand-saved FTL pages for /fenb-data-get-results), season-rollover.sh (events.yaml archive + fresh season file), check-ftl-deps.sh (prerequisite check for the results scraper), compute-next-version.sh (latest tag + next version candidates), generate-version-json.sh (writes static/version.json for a release), check-hugo-version.sh (CI Hugo pin vs. local/latest; --set updates the pin), check-pagefind-version.sh (Pagefind pin in both workflows + Makefile vs. newest npm release and its age; --set updates all three)
-├── design-sources/        Editable source for generated graphics (e.g. typographic hero slides) — not served by Hugo; re-export to static/images/ when reused or edited. Two source formats: HTML/CSS (re-render with headless Chrome), and Inkscape SVG templates (e.g. hero/fenb-hero-template.svg — export panels directly to JPG/PNG)
+├── CLAUDE.md, README.md   Claude instructions; how to add/update content
+├── Makefile               serve / build / build-prod / clean — run from the repo root
+├── package.json           Playwright pin for browser-driven checks (not part of the Hugo build)
+├── .github/workflows/     pr-check (PR builds), release-website (deploy), delete-branches (cleanup after merge)
+├── .gitmodules            Ananke theme submodule → fenb-1/themes/ananke
+├── .claude/               Project skills (commands/fenb-*.md) and shared settings
+├── docs/                  Reference docs — see README → Related docs
+├── plans/                 Plans for multi-session features (referenced from docs/TODO.md)
+├── scripts/               Helper scripts — see Scripts table
+├── design-sources/        Editable sources for generated graphics (HTML/CSS and Inkscape SVG);
+│                          not served — re-export to static/images/
 └── fenb-1/                Hugo site root
-    ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)
-    ├── archetypes/         Front matter templates (default.md, news.md)
-    ├── assets/ananke/css/  All site CSS — one file per section:
-    │                         fenb-base.css       Variables, reset, shared utilities, buttons, callout, cta-banner, landing-cards
-    │                         fenb-nav.css         Nav, search overlay, page header band
-    │                         fenb-hero.css        Hero section and animations
-    │                         fenb-events.css      Event cards, tags, calendar page
-    │                         fenb-news.css        News cards, article layout, 404 page
-    │                         fenb-clubs.css       Clubs page, programs quick-links
-    │                         fenb-about.css       About page, policies page
-    │                         fenb-hof.css         Hall of Fame landing table + inductee profile
-    │                         fenb-schedule.css    Season schedule page
-    │                         fenb-join.css        Join & Register section
-    │                         fenb-programs.css    Programs & Development section
-    │                         fenb-responsive.css  All breakpoints and print styles (loaded last)
-    ├── config/
-    │   ├── development/hugo.toml   baseURL for local dev (ejamer.github.io/hugo-testing)
-    │   └── production/hugo.toml    baseURL for production (fenb.ca)
-    ├── content/            Bilingual content files: _index.md + _index.fr.md per section,
-    │   │                   slug.en.md + slug.fr.md per article/page
-    │   ├── _index.md / _index.fr.md    Homepage
-    │   ├── about/          About landing (disambiguation), policies-and-reports page, policies/ sub-pages,
-    │   │                   hall-of-fame/ (inductee bilingual pairs), organization/ (Mission & Leadership)
-    │   ├── clubs/          Clubs list page (content from data/clubs.yaml)
-    │   ├── events/         Events section index + schedule.en.md / schedule.fr.md
-    │   ├── join/           Join landing page + membership, clubs, volunteer sub-pages
-    │   ├── news/           News section index + year subfolders (news/2026/, etc.)
-    │   ├── contact/        Contact Us page (_index.md + _index.fr.md)
-    │   └── programs/       Programs landing + armourer, athlete, canada-games-2027,
-    │                         coach, referee, secretariat sub-pages
-    ├── data/               YAML files that drive page content — each maps to a specific page or feature:
-    │   ├── board_members.yaml      Board of directors grid on /about/organization/ — `members` is the current fixed-size roster (vacant seats included); departures move to `previous_members`, a historical record not displayed anywhere yet
-    │   ├── hof_categories.yaml     Canonical Hall of Fame category IDs (drives filter dropdown + CSS badge classes)
-    │   ├── clubs.yaml              Member club cards on /clubs/
-    │   ├── coach_pathways.yaml     CFF coach certification pathway cards on /programs/coach-training/
-    │   ├── referee_resources.yaml  Study resource cards on /programs/referee-development/
-    │   ├── armourer_resources.yaml  Study resource cards on /programs/armourer-development/
-    │   ├── event_categories.yaml   Canonical category IDs for calendar legend and schedule filters
-    │   ├── events.yaml             Current season event list (homepage + /events/)
-    │   ├── events_archive/         Past seasons (picked up automatically by /events/schedule/)
-    │   ├── hero_slides.yaml        Homepage hero carousel images
-    │   ├── join.yaml               Seasonal portal URLs for the Join section (2MEV, club form)
-    │   ├── join_paths.yaml         Path cards on the Join landing page
-    │   ├── organizations.yaml      Non-club organization logos (e.g. Fencing Canada) for the host-logo shortcode
-    │   ├── policies.yaml           Policy and report documents on /about/policies-and-reports/
-    │   ├── program_cards.yaml      Path cards on the Programs landing page
-    │   └── quick_links.yaml        Quick-link cards on the homepage
-    ├── i18n/
-    │   ├── en.yaml         English UI strings
-    │   └── fr.yaml         French UI strings
-    ├── layouts/
-    │   ├── 404.html        Custom 404 page
-    │   ├── index.html      Homepage (hero, events, news, programs)
-    │   ├── _default/
-    │   │   ├── sitemap.xml Custom sitemap with hreflang alternates
-    │   │   └── _markup/
-    │   │       ├── render-image.html Markdown image render hook — site paths (no leading slash) via
-    │   │       │                     relURL, lazy loading, image links to its full-size file
-    │   │       ├── render-link.html  Markdown link render hook — opens external links (absolute
-    │   │       │                     http(s) URLs off-site) in a new tab; internal links unaffected
-    │   │       └── render-table.html Markdown table render hook — same output as Hugo's default; pages
-    │   │                             with `merge_note_rows: true` get full-width "note" rows
-    │   ├── about/          list.html (About disambiguation), single.html (Policies & Reports),
-    │   │                   policies/single.html (individual policy page),
-    │   │                   hall-of-fame/list.html (inductee table), hall-of-fame/single.html (profile),
-    │   │                   organization/list.html (Mission & Leadership)
-    │   ├── contact/        list.html (Contact Us form)
-    │   ├── clubs/          list.html (club grid + map)
-    │   ├── events/         list.html (JS calendar), schedule.html (filterable list), list.calendar.ics (season .ics feed)
-    │   ├── join/           list.html, membership.html, clubs.html, volunteer.html
-    │   ├── news/           list.html, single.html, rss.xml
-    │   ├── programs/       list.html + one layout per sub-page
-    │   ├── shortcodes/     Custom Hugo shortcodes — host-logo.html (club/organization logo floated beside an article section)
-    │   └── partials/       Shared template components:
-    │                         all-events.html       Return-value partial — flat slice of current + all archived seasons' events, sorted by start_date (used by homepage + calendar so archived-but-current events stay visible)
-    │                         back-link.html        Back-navigation link
-    │                         clubs-benefits.html   Three-card benefits grid (clubs + join/clubs)
-    │                         event-card.html       Single event card (YAML event object as context)
-    │                         event-date.html       Return-value partial — bilingual date display
-    │                         event-details-url.html Return-value partial — an event's Learn More URL in the current language; blank when it points to a page that isn't published yet (e.g. a future-dated article)
-    │                         calendar-dialog.html  Shared Add to Calendar / Subscribe modal (<dialog>) — once per page with triggers
-    │                         events-viewbar.html   Calendar | List toggle + Print/Subscribe bar, shared by both events views
-    │                         head-additions.html   Early theme script — applies the saved light/dark choice before first paint
-    │                         icon.html             Inline SVG renderer
-    │                         localized.html        Return-value partial — a bilingual data field in the current language (_fr falls back to English); the one place that rule lives
-    │                         ics/                  iCalendar building blocks — escape, line (RFC 5545 folding), vevent, calendar, event-url (publishes per-event .ics at a readable path), event-filename (readable file name), event-google-url (pre-filled Google Calendar link), add-button (Add to Calendar trigger → calendar dialog)
-    │                         map-link.html         Place text that opens Google Maps in a new tab (cards show city, link searches the optional address); plain text when there is no address
-    │                         map-url.html          Return-value partial — Google Maps search URL for a place; blank for empty/TBA places
-    │                         nav.html              Sticky nav, language switcher, search, Facebook link, theme toggle
-    │                         news-card.html        Single news card — data-category/data-season attrs for news-filter.js
-    │                         news-date.html        Return-value partial — a news article's date, EN/FR, long or short month
-    │                         news-season.html      Return-value partial — derives fencing-season label (Sept–Aug) from a date
-    │                         page-header.html      Coloured band below the nav (title + subtitle)
-    │                         program-contact-cta.html  Contact banner for officials program pages (referee, armourer)
-    │                         program-pay-section.html  Officials pay scale section; links to the source document only
-    │                         program-quote.html    Pull quote for officials program pages, with optional attribution
-    │                         program-resource-cards.html  Resource cards from data/referee_resources.yaml or armourer_resources.yaml
-    │                         section-header.html   Section label + h2 + "see all" link
-    │                         site-announcement.html  Site-wide banner (controlled via hugo.toml)
-    │                         site-favicon.html     SVG + PNG favicon link tags
-    │                         site-footer.html      Site footer — copyright, Website privacy icon, RSS
-    │                         site-header.html      Entry point — delegates to nav.html + page-header.html
+    ├── hugo.toml          Site config, languages, nav menus (no baseURL)
+    ├── config/            Per-environment baseURL: development/ (GitHub Pages), production/ (fenb.ca)
+    ├── archetypes/        Front matter templates
+    ├── assets/ananke/css/ Site CSS, one fenb-*.css per concern — see STYLE_GUIDE → CSS
+    ├── content/           Bilingual pages: _index.md + _index.fr.md per section,
+    │                      slug.en.md + slug.fr.md per page; news/ has a folder per year
+    ├── data/              YAML that drives page content — see Data files table
+    ├── i18n/              UI strings (en.yaml, fr.yaml)
+    ├── layouts/           Templates — see Layouts and Partials tables
+    ├── themes/ananke/     Base theme (git submodule — don't edit; override in layouts/)
     └── static/
-        ├── documents/      PDFs served at /documents/ — subfolders: about/agm-minutes/,
-        │                   about/governance/, canada-games/, programs/coach-training/ (CFF pathway PDFs),
-        │                   programs/referee-development/ and programs/armourer-development/ (hosted study documents)
-        ├── images/         Site images — subfolders: canada-games/, clubs/, coach-pathways/ (CFF pathway
-        │                   diagram PNGs, EN/FR), hall-of-fame/, hero/, organizations/, svg/
-        ├── js/             Client-side scripts:
-        │                     coach-pathways.js    Pathway diagram modal on /programs/coach-training/
-        │                     event-dates.js       Shared window.FenbEventDates helpers (todayMidnight/parseDate/isUpcoming/isWithinWindow)
-        │                     calendar-dialog.js   Opens/fills the shared Add to Calendar / Subscribe dialog
-        │                     events-calendar.js   JS month grid for the events calendar
-        │                     events-schedule.js   Season toggle + category filters + #YYYY-YYYY season deep links for schedule page
-        │                     hero-slider.js       Homepage hero carousel; hides slides outside their publish_from/expires window and shows a fallback logo slate if none are live
-        │                     upcoming-events.js   Narrows homepage event grid to true first 4 using visitor's clock
-        │                     hof-table.js         Sort + category-filter dropdown for the Hall of Fame table
-        │                     lightbox.js          Zoom-in image lightbox — loaded globally by baseof.html; activates on any element with data-lightbox-zone
-        │                     news-filter.js       Category toggle + season dropdown filter on /news/ (no pagination — all cards render, JS shows/hides)
-        │                     results-table.js     Sortable results table in news articles
-        ├── sitemap.xsl     XSLT stylesheet for language sitemaps — makes /en/ and /fr/ sitemaps
-        │                   render as styled HTML in browsers (referenced via PI in sitemap.xml)
-        └── version.json    Build version metadata — managed by /fenb-git-release, do not edit
+        ├── documents/     PDFs served at /documents/, organized by section
+        ├── images/        Site images, organized by section
+        ├── js/            Client-side scripts — see JavaScript table
+        ├── sitemap.xsl    Styles the language sitemaps as HTML in browsers
+        └── version.json   Build version — managed by /fenb-git-release, don't edit
 ```
+
+## Data files — `fenb-1/data/`
+
+Schemas and how-tos are in [README → Adding content](../README.md#adding-content).
+
+| File | Drives |
+|------|--------|
+| `armourer_resources.yaml` | Study resource cards on /programs/armourer-development/ |
+| `board_members.yaml` | Board grid on /about/organization/ (`members` = current roster incl. vacant seats; `previous_members` = history, not displayed) |
+| `clubs.yaml` | Club cards and map on /clubs/; `host-logo` shortcode lookups |
+| `coach_pathways.yaml` | CFF certification pathway cards on /programs/coach-training/ |
+| `event_categories.yaml` | Category IDs for the calendar legend and schedule filters |
+| `events.yaml` | Current-season events (homepage, /events/, .ics feeds) |
+| `events_archive/` | Past seasons, one file each; picked up automatically |
+| `hero_slides.yaml` | Homepage hero carousel |
+| `hof_categories.yaml` | Hall of Fame category IDs (filter dropdown + badge classes) |
+| `join.yaml` | Seasonal portal URLs for the Join section |
+| `join_paths.yaml` | Path cards on the Join landing page |
+| `organizations.yaml` | Non-club logos (e.g. Fencing Canada) for the `host-logo` shortcode |
+| `policies.yaml` | Documents on /about/policies-and-reports/ |
+| `program_cards.yaml` | Path cards on the Programs landing page |
+| `quick_links.yaml` | Quick-link cards on the homepage |
+| `referee_resources.yaml` | Study resource cards on /programs/referee-development/ |
+
+## Layouts — `fenb-1/layouts/`
+
+Sections follow Hugo's usual pattern: `list.html` for the section page, `single.html` or a named layout for its sub-pages (see [STYLE_GUIDE → Per-page layouts](STYLE_GUIDE.md#per-page-layouts-within-a-section)).
+
+| Path | Renders |
+|------|---------|
+| `_default/baseof.html` | Base page shell; loads `lightbox.js` on every page |
+| `_default/sitemap.xml` | Sitemap with hreflang alternates |
+| `_default/_markup/render-image.html` | Markdown images: site paths, lazy loading, link to the full-size file |
+| `_default/_markup/render-link.html` | Markdown links: external links open in a new tab |
+| `_default/_markup/render-table.html` | Markdown tables: full-width note rows when `merge_note_rows: true` |
+| `404.html` | Not-found page |
+| `index.html` | Homepage |
+| `robots.txt` | Overrides Ananke's (avoids a leading-slash `absURL`); blocks crawling outside production |
+| `about/` | About landing, Policies & Reports, policy pages, Hall of Fame table + profiles, Mission & Leadership |
+| `clubs/list.html` | Club grid + map |
+| `contact/list.html` | Contact form |
+| `events/list.html` | JS month calendar |
+| `events/schedule.html` | Filterable printable season list |
+| `events/list.calendar.ics` | Season .ics feed |
+| `join/` | Join landing + membership, clubs, volunteer |
+| `news/` | News list, article, RSS |
+| `programs/` | Programs landing + one layout per program page |
+| `shortcodes/host-logo.html` | Club/organization logo floated beside an article section |
+
+## Partials — `fenb-1/layouts/partials/`
+
+Check here before building a new component. Partials marked † have a full write-up in [STYLE_GUIDE → Shared UI components](STYLE_GUIDE.md#shared-ui-components); return-value partials are explained in [STYLE_GUIDE → Template patterns](STYLE_GUIDE.md#template-patterns).
+
+**Page chrome**
+
+| Partial | Purpose |
+|---------|---------|
+| `head-additions.html` | Applies the saved light/dark theme before first paint |
+| `nav.html` | Sticky nav, language switcher, search, Facebook link, theme toggle |
+| `page-header.html` | Coloured title band below the nav |
+| `site-announcement.html` | Site-wide banner (set in hugo.toml) |
+| `site-favicon.html` | Favicon link tags |
+| `site-footer.html` | Footer: copyright, privacy icon, RSS |
+| `site-header.html` | Entry point; includes nav + page header |
+
+**Shared components**
+
+| Partial | Purpose |
+|---------|---------|
+| `back-link.html` † | Back-navigation link |
+| `clubs-benefits.html` | Three-card benefits grid (clubs + join/clubs) |
+| `icon.html` | Inline SVG icon |
+| `map-link.html` † | Place text that opens Google Maps |
+| `section-header.html` | Section label + h2 + "see all" link |
+
+**Events and news**
+
+| Partial | Purpose |
+|---------|---------|
+| `calendar-dialog.html` † | Add to Calendar / Subscribe modal, once per page |
+| `event-card.html` | One event card |
+| `events-viewbar.html` † | Calendar / List toggle + Print / Subscribe bar |
+| `ics/` | iCalendar building blocks: escaping, line folding, VEVENT/VCALENDAR, per-event .ics URL and filename, Google Calendar link, Add to Calendar button |
+| `news-card.html` | One news card (data attributes for `news-filter.js`) |
+
+**Programs** (officials pages) †
+
+| Partial | Purpose |
+|---------|---------|
+| `program-contact-cta.html` | Contact banner |
+| `program-pay-section.html` | Pay scale section |
+| `program-quote.html` | Pull quote |
+| `program-resource-cards.html` | Resource cards from `referee_resources` / `armourer_resources` |
+
+**Return-value helpers** (return a value, render nothing)
+
+| Partial | Returns |
+|---------|---------|
+| `all-events.html` | Current + archived events, sorted by start date |
+| `event-date.html` | Bilingual event date |
+| `event-details-url.html` | Learn More URL in the current language; blank until the target page is published |
+| `localized.html` | A bilingual data field in the current language (`_fr` falls back to `_en`) |
+| `map-url.html` | Google Maps search URL; blank for empty/TBA places |
+| `news-date.html` | Article date, EN/FR, long or short month |
+| `news-season.html` | Fencing-season label (Sept–Aug) for a date |
+
+## JavaScript — `fenb-1/static/js/`
+
+| File | Page | Does |
+|------|------|------|
+| `calendar-dialog.js` | Events, homepage | Opens and fills the Add to Calendar / Subscribe dialog |
+| `coach-pathways.js` | /programs/coach-training/ | Pathway diagram modal |
+| `event-dates.js` | Events, homepage | Shared date helpers (`window.FenbEventDates`) |
+| `events-calendar.js` | /events/ | Month grid calendar |
+| `events-schedule.js` | /events/schedule/ | Season toggle, category filters, `#YYYY-YYYY` deep links |
+| `hero-slider.js` | Homepage | Hero carousel; hides slides outside their date window |
+| `hof-table.js` | Hall of Fame | Sort + category filter |
+| `lightbox.js` | All (via baseof) | Image zoom for elements with `data-lightbox-zone` |
+| `news-filter.js` | /news/ | Category + season filter (no pagination — JS shows/hides) |
+| `results-table.js` | News articles | Sortable results tables |
+| `upcoming-events.js` | Homepage | Trims the event grid to the next 4 using the visitor's clock |
+
+## Scripts — `scripts/`
+
+| File | Does |
+|------|------|
+| `check-ftl-deps.sh` | Prerequisite check for the results tooling |
+| `check-hugo-version.sh` | Compares the CI Hugo pin with local/latest; `--set` updates the pin |
+| `check-pagefind-version.sh` | Compares the Pagefind pin (both workflows + Makefile) with npm; `--set` updates all three |
+| `compute-next-version.sh` | Latest tag + next version candidates |
+| `fencingtimelive-results.py` | Retired — exits with a terms-of-service message |
+| `ftl-read-saved-pages.py` | Reads hand-saved FencingTimeLive pages for /fenb-data-get-results |
+| `generate-version-json.sh` | Writes `static/version.json` for a release |
+| `season-rollover.sh` | Archives `events.yaml` and starts a fresh season file |

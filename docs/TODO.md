@@ -67,7 +67,7 @@ The pages below need a full review pass for both style and content quality befor
 
 ## Referee development — follow-up (2026-11-06)
 
-Details and sources are in `docs/REFEREE_PROGRAM_COMPARISON.md`.
+Details and sources are in `plans/REFEREE_PROGRAM_COMPARISON.md`.
 
 - [ ] **Check for an updated CFF Referee Manual** — copies of the 2005 EN/FR manual are hosted in `static/documents/programs/referee-development/`. Check `https://fencing.ca/officials/` at least each season and replace both PDFs if a new edition appears. The CFF Officials Committee terms (approved 2026-02-08) call for a national training and certification program, so a replacement may be coming. Ask the CFF whether the 2005 requirements still apply, and where to find its Study Guide. Also tell them the English edition is wrong on hits scored while covering target (the report has the details).
 - [ ] **FENB program vs. CFF manual** — needs a board decision: written pass mark (75% vs. 80%), provincial practical score and setting, renewal rules, and the out-of-province evaluator. The published program text was deliberately left unchanged. The page has no note explaining these differences, so candidates can see the manual's 80% beside FENB's 75% with no explanation.
@@ -130,7 +130,7 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 
 ## Judo NB comparison — recommendations (2026-10-15)
 
-From the site comparison against judonb.org — read `docs/JUDO_NB_COMPARISON.html` first, especially its **Implementation notes** section (owner constraints: no platform change, no paid services, low maintenance; pre-flight checks per item). IDs match the report's roadmap. Not yet approved — confirm with the site owner which items to build. Items marked ⏸ are blocked on a human decision.
+From the site comparison against judonb.org — read `plans/JUDO_NB_COMPARISON.html` first, especially its **Implementation notes** section (owner constraints: no platform change, no paid services, low maintenance; pre-flight checks per item). IDs match the report's roadmap. Not yet approved — confirm with the site owner which items to build. Items marked ⏸ are blocked on a human decision.
 
 ### Quick wins
 - [ ] **R6 Partner / funder logo strip** — homepage or footer partial. Affiliations already appear on `/about/organization/` (sidebar, from `board_members.yaml` → `affiliations`). Move that list to a new `data/partners.yaml` (partners aren't board data), add a `logo` field, and repoint `layouts/about/organization/list.html` so the strip and the sidebar share one source. Also update README.md (~line 230), which documents `affiliations` under `board_members.yaml`. Any partner change must also update the Organization page.
