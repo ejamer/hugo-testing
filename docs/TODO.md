@@ -17,7 +17,7 @@ Items that need follow-up — kept current as pages are built and content is add
 
 - [ ] **Tentative status** — several FENB-listed events were marked "(Tentative)" or "(? - TBD)" in the source PDF. Masquerade (now "Mask-erade: Lights Out!", Oct 31) was confirmed 2026-10-27 from unbfencing.com. Confirm which entries are locked in before publishing.
 - [ ] **"UNB?" placeholders not added** — the FENB source calendar had three unconfirmed "UNB? - TBD" rows (Dec 5–6, 2026; Mar 13–14, 2027; Mar 20–21, 2027) with no title/category — these were intentionally left out of `events.yaml` rather than guessed. Add once the event name/details are confirmed.
-- [ ] **TBA/TBD locations** — Challenge Desjarlais, Coupe du Printemps, Quebec Youth Provincials, and Quebec Senior Provincials all have `location: "TBA, QC"` (Quebec's own provisional calendar also had these as "à définir") — update once venues are confirmed.
+- [ ] **TBA/TBD locations** — Challenge Desjarlais, Coupe du Printemps, Quebec Youth Provincials, and Quebec Senior Provincials all have `city: "TBA, QC"` and no `address` (Quebec's own provisional calendar also had these as "à définir") — set the real `city`, and add an `address` once the venue is confirmed.
 - [ ] **OFA Youth Circuit #2 — missing from OFA's own calendar** — Fencing Ontario's published calendar (as scraped, covering Aug 28, 2026 – Apr 24, 2027) jumps straight from "Ontario Youth Cadet Circuit #1" (Oct 17–18, 2026) to "Ontario Youth Circuit #3" (Jan 23–24, 2027) — no "#2" appears anywhere in that window. Not added to `events.yaml`. (`events.yaml` numbers the Jan 23–24 and Mar 20–21, 2027 circuits "#3" and "#4" to match OFA's calendar; the FENB and Quebec source calendars had called them "#2" and "#3".) Need confirmation: was there a Circuit #2 (maybe outside this window, cancelled, or a different age category not published to the public calendar) that NB fencers should know about?
 - [ ] **`details_url`/`registration_url` blank for most new entries** — the source PDFs didn't include per-event links (only a general OFA calendar page and FEQ contact emails), so these fields are empty for all newly added out-of-province events. Fill in as links become available.
 
@@ -130,7 +130,7 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 
 ## Events data
 
-- [ ] **FENB AGM (Dec 6, 2026) — details missing** — the entry in `data/events.yaml` was copied from last season's AGM and has a blank `location`, no start time, and no details link. All members are invited, so add the venue (or "Online"), the time (it can go in `description_en`/`description_fr`), and a details link (e.g. a meeting notice or agenda, via `details_url_en`/`details_url_fr`) once known.
+- [ ] **FENB AGM (Dec 6, 2026) — details missing** — the entry in `data/events.yaml` was copied from last season's AGM and has a blank `city`, no `address`, no start time, and no details link. All members are invited, so add the city and venue `address` (or `city: "Online"` with no address), the time (it can go in `description_en`/`description_fr`), and a details link (e.g. a meeting notice or agenda, via `details_url_en`/`details_url_fr`) once known.
 - [ ] **Fencing Canada logo — replace with vector** — `static/images/organizations/fencing-canada.png` is a temporary raster (downloaded from 2mev.com, resized to 626×800). Replace with an official vector (SVG) version and update `logo:` for `CFF` in `data/organizations.yaml` — every article using `{{< host-logo id="CFF" >}}` picks it up automatically.
 
 ---

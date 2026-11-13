@@ -25,7 +25,7 @@
       "action"   "TEMPLATE"
       "text"     $title
       "dates"    (printf "%s/%s" ($start.Format "20060102") (($end.AddDate 0 0 1).Format "20060102"))
-      "location" $e.location
+      "location" ($e.address | default $e.city | default "")
       "details"  (delimit $parts "\n\n")
 -}}
 {{- return printf "https://calendar.google.com/calendar/render?%s" $q -}}

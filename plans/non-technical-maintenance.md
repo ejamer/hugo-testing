@@ -38,7 +38,7 @@ Interactive shell scripts handle the most frequent data tasks. The editor runs a
 
 #### `scripts/add-event.sh`
 
-Prompts: title, date (validated as YYYY-MM-DD), optional end_date, category (numbered menu from `event_categories.yaml`), venue, location, optional details/registration/results URLs.
+Prompts: title, date (validated as YYYY-MM-DD), optional end_date, category (numbered menu from `event_categories.yaml`), city ("City, Province"), optional address (mappable venue/street address only — never just the city; see README), optional details/registration/results URLs.
 
 Validates:
 - Date format (reject non-ISO input immediately)

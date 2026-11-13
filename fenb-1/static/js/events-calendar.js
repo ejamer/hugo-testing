@@ -420,7 +420,7 @@
         icsHtml =
           '<button type="button" class="fenb-event-ics-btn" data-cal-dialog="event"' +
             ' data-cal-title="' + esc(evTitle(e)) + '"' +
-            ' data-cal-meta="' + esc(formatEventDate(e) + ' · ' + e.location) + '"' +
+            ' data-cal-meta="' + esc(formatEventDate(e) + ((e.address || e.city) ? ' · ' + (e.address || e.city) : '')) + '"' +
             ' data-cal-ics="' + esc(e.ics_url) + '" data-cal-google="' + esc(e.google_url) + '"' +
             ' aria-label="' + esc(cal.icsLabel) + '" data-tooltip="' + esc(cal.icsLabel) + '">' +
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -444,17 +444,20 @@
           '<span class="fenb-tag fenb-tag--' + e.category + '">' + esc(categoryLabels[e.category] || e.category) + '</span>' +
           '<h3 class="fenb-event-title">' + esc(evTitle(e)) + '</h3>' +
           '<p class="fenb-event-date-range">' + esc(formatEventDate(e)) + '</p>' +
-          '<p class="fenb-event-meta">' +
-            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-              '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>' +
-              '<circle cx="12" cy="10" r="3"></circle>' +
-            '</svg>' +
-            // Location opens Google Maps — same markup as partials/map-link.html
-            (e.map_url
-              ? '<a class="fenb-map-link" href="' + esc(e.map_url) + '" target="_blank" rel="noopener noreferrer"' +
-                  ' aria-label="' + esc(e.map_label) + '" title="' + esc(cal.mapTitle) + '">' + esc(e.location) + '</a>'
-              : esc(e.location)) +
-          '</p>' +
+          // Pin line: shows e.city; opens e.address in Google Maps — same markup as
+          // partials/map-link.html via partials/event-card.html. No city = no pin line.
+          (e.city
+            ? '<p class="fenb-event-meta">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                  '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>' +
+                  '<circle cx="12" cy="10" r="3"></circle>' +
+                '</svg>' +
+                (e.map_url
+                  ? '<a class="fenb-map-link" href="' + esc(e.map_url) + '" target="_blank" rel="noopener noreferrer"' +
+                      ' aria-label="' + esc(e.map_label) + '" title="' + esc(cal.mapTitle) + '">' + esc(e.city) + '</a>'
+                  : esc(e.city)) +
+              '</p>'
+            : '') +
           linksHtml +
         '</div>' +
         icsHtml;

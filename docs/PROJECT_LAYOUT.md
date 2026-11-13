@@ -108,6 +108,8 @@ hugo-testing/
     │                         icon.html             Inline SVG renderer
     │                         localized.html        Return-value partial — a bilingual data field in the current language (_fr falls back to English); the one place that rule lives
     │                         ics/                  iCalendar building blocks — escape, line (RFC 5545 folding), vevent, calendar, event-url (publishes per-event .ics at a readable path), event-filename (readable file name), event-google-url (pre-filled Google Calendar link), add-button (Add to Calendar trigger → calendar dialog)
+    │                         map-link.html         Place text that opens Google Maps in a new tab (cards show city, link searches the optional address); plain text when there is no address
+    │                         map-url.html          Return-value partial — Google Maps search URL for a place; blank for empty/TBA places
     │                         nav.html              Sticky nav, language switcher, search, Facebook link, theme toggle
     │                         news-card.html        Single news card — data-category/data-season attrs for news-filter.js
     │                         news-date.html        Return-value partial — a news article's date, EN/FR, long or short month

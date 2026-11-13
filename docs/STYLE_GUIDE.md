@@ -364,13 +364,15 @@ Render it as the **first child of the same `.fenb-container--narrow`** on both p
 
 ### `map-link.html` partial — place name that opens Google Maps (`.fenb-map-link`)
 
-Turns a place name into a Google Maps search link that opens in a new tab: event locations on event cards and the printable schedule, and the city on club cards. Maps search links need no API key.
+Turns a place name into a Google Maps search link that opens in a new tab: the city on event and club cards, and the address on the printable schedule. Maps search links need no API key.
 
 ```go-html-template
-{{ partial "map-link.html" (dict "text" .location) }}   {{/* club cards: .city */}}
+{{ partial "map-link.html" (dict "text" (.address | default .city) "query" (.address | default "")) }}  {{/* schedule list: full address */}}
+{{ partial "map-link.html" (dict "text" .city "query" (.address | default "")) }}  {{/* event cards: show city */}}
+{{ partial "map-link.html" (dict "text" .city "query" (.address | default "")) }}  {{/* club cards: same as event cards */}}
 ```
 
-Search only a location (an address or a city), never a club name. Club names give false hits for similar businesses (fence builders), and some clubs aren't on Google Maps at all. `partials/map-url.html` builds the URL and holds the one rule: an empty place, or one containing TBA, TBD or "à définir", gets no link and stays plain text. The link isn't labelled "directions" because many locations are only a city. It keeps the surrounding text colour with a dotted underline (solid and teal on hover). The calendar view builds the same markup in `static/js/events-calendar.js` from `map_url`/`map_label`, which `layouts/events/list.html` adds to each event, so keep the two in step.
+Events and clubs both use the same two fields: `city` ("City, Province") is shown on cards, and the optional `address` (a mappable venue or address, never just the city) is what the link searches, so no `address` means no link. An event with a blank `city` gets no pin line on its card at all. The printable schedule shows the full `address` (or `city` when there isn't one), with the description on its own line below it. Pass `query` to search something other than what's shown. If `query` is passed but empty, there's no link, so a card without an `address` shows its city as plain text. Search only a location (an address, or a venue with an address), never a club name alone. Club names give false hits for similar businesses (fence builders), and some clubs aren't on Google Maps at all. `partials/map-url.html` builds the URL and holds the one rule: an empty place, or one containing TBA, TBD or "à définir", gets no link and stays plain text. The link isn't labelled "directions" because many locations are only a city. It keeps the surrounding text colour with a dotted underline (solid and teal on hover). The calendar view builds the same markup in `static/js/events-calendar.js` from `map_url`/`map_label`, which `layouts/events/list.html` adds to each event, so keep the two in step.
 
 ### Icon button with tooltip — `.fenb-event-ics-btn`
 

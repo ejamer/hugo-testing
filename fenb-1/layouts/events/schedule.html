@@ -57,7 +57,7 @@
                         <span class="fenb-schedule-category fenb-cal-bar--{{ .category }}">{{ i18n .category | default .category }}</span>
                       </div>
                       <div class="fenb-schedule-row fenb-schedule-row--secondary">
-                        <span class="fenb-schedule-location">{{ partial "map-link.html" (dict "text" .location) }}</span>
+                        <span class="fenb-schedule-location">{{ partial "map-link.html" (dict "text" (.address | default .city) "query" (.address | default "")) }}</span>
                         {{ with $desc }}<span class="fenb-schedule-description">{{ . }}</span>{{ end }}
                       </div>
                       {{- $evDate := time .start_date -}}

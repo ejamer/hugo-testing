@@ -1,5 +1,5 @@
 {{- /* Google Maps search URL for a place (R10). Context: the place as a string, e.g. an
-       event's .location or "Club name, City". Returns "" when the place is empty or not
+       event's or club's .address (never a club name alone). Returns "" when the place is empty or not
        decided yet (TBA / TBD / "à définir"), so callers show plain text instead of a link.
        A Maps search link needs no API key. Used by partials/map-link.html and the
        calendar data in layouts/events/list.html. */ -}}

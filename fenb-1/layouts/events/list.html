@@ -66,13 +66,13 @@
 
 {{/* ── Embed data and i18n strings for the calendar JS ── */}}
 {{/* Each event gets ics_url + google_url — its Add to Calendar dialog options (see partials/ics/add-button.html) —
-     and map_url + map_label for its location link (blank map_url = plain text; see partials/map-url.html).
+     and map_url + map_label for its city link to .address (no address = no link; see partials/map-url.html).
      details_url_en/fr are replaced with this language's resolved Learn More URL, blank when it
      links to an article that isn't published yet (see partials/event-details-url.html). */}}
 {{- $calEvents := slice -}}
 {{- range $allEvents -}}
   {{- $details := partial "event-details-url.html" . -}}
-  {{- $calEvents = $calEvents | append (merge . (dict "ics_url" (partialCached "ics/event-url.html" . .start_date .title site.Language.Lang) "google_url" (partial "ics/event-google-url.html" .) "details_url_en" $details "details_url_fr" $details "map_url" (partial "map-url.html" .location) "map_label" (i18n "map_link_label" (dict "Place" .location)))) -}}
+  {{- $calEvents = $calEvents | append (merge . (dict "ics_url" (partialCached "ics/event-url.html" . .start_date .title site.Language.Lang) "google_url" (partial "ics/event-google-url.html" .) "details_url_en" $details "details_url_fr" $details "map_url" (partial "map-url.html" (.address | default "")) "map_label" (cond (isset . "address") (i18n "map_link_label" (dict "Place" .address)) ""))) -}}
 {{- end -}}
 <script>
 window.FENB_CAL = {

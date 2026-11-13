@@ -143,7 +143,8 @@ Add an entry to `data/events.yaml`.
 | `start_date` | ✅ | ISO `YYYY-MM-DD` — used for sort/filter and to compute the displayed date |
 | `end_date` | — | ISO `YYYY-MM-DD`. Omit or leave blank for single-day events. If set, the displayed date shows as a range (`Sep 20–21` or `Nov 29 – Dec 1`) and the calendar draws bars across the full range. |
 | `category` | ✅ | See categories below — must be a canonical ID from `data/event_categories.yaml` |
-| `location` | ✅ | Display string shown on the card. Use `"City, Province"` when there is no specific venue, or `"Venue Name, City, Province"` when there is one. |
+| `city` | ✅ | `"City, Province"` (or `""` if not known yet), shown on event cards (home page, Events page, calendar view). Same pattern as club cards. |
+| `address` | — | Only a mappable place: `"Venue Name, Street Address, City, Province"` when the Learn More page or flyer gives an address (no postal code), or `"Venue Name, City, Province"` when it names only a venue. **Omit it when only the city is known — never repeat `city` here.** Cards link `city` to it in Google Maps, and the schedule list shows it in full (or `city` when it's missing). No `address` = no map link. Never use a club or business name alone, without an address: Maps finds similar businesses (fence builders). |
 | `description_en` | — | Optional English description. Shown on the schedule page; not shown on homepage cards |
 | `description_fr` | — | Optional French description. Falls back to `description_en` if blank |
 | `details_url_en` | — | English URL for the **Learn More →** badge. Used for both languages when `details_url_fr` is blank. Can point to a scheduled (future-dated) news article, e.g. `/news/2026/oct-30-slug/` + `/fr/news/2026/oct-30-slug/` — the badge stays hidden until the article is published (`layouts/partials/event-details-url.html`) |
@@ -162,7 +163,8 @@ Add an entry to `data/events.yaml`.
   start_date: "2026-06-01"         # ISO YYYY-MM-DD
   end_date: "2026-06-02"           # optional; omit for single-day events
   category: competition            # see categories below
-  location: "Venue Name, City, NB" # or just "City, NB" if no specific venue
+  city: "City, NB"                 # shown on event cards
+  address: "Venue Name, 123 Street Name, City, NB" # optional: only a mappable venue/address; omit if only the city is known
   description_en: ""               # optional; shown on schedule page, not homepage
   description_fr: ""               # optional; falls back to description_en if blank
   details_url_en: ""               # optional Learn More link (used for both languages if _fr is blank)
@@ -365,7 +367,8 @@ Add an entry to `data/clubs.yaml` and drop the logo in `static/images/clubs/`:
   logo: images/clubs/club-logo-XYZ.png
   email: "club@example.com"
   website: "https://example.com"   # omit if none
-  city: "City, NB"
+  address: "123 Street Name, City, NB"    # Google Maps search for the city link; omit if unknown (no link)
+  city: "City, NB"                 # shown on the card
 ```
 
 **Non-club organization logos** (e.g. Fencing Canada) that articles reuse go in `data/organizations.yaml`, with the logo in `static/images/organizations/`:

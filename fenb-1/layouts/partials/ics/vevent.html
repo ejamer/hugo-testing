@@ -37,7 +37,7 @@
       (printf "DTSTART;VALUE=DATE:%s" ($start.Format "20060102"))
       (printf "DTEND;VALUE=DATE:%s" (($end.AddDate 0 0 1).Format "20060102"))
       (printf "SUMMARY:%s" (partial "ics/escape.html" $pick.title))
-      (printf "LOCATION:%s" (partial "ics/escape.html" $e.location))
+      (printf "LOCATION:%s" (partial "ics/escape.html" ($e.address | default $e.city | default "")))
       (printf "CATEGORIES:%s" (partial "ics/escape.html" (i18n $e.category | default $e.category)))
 -}}
 {{- with $descParts }}
