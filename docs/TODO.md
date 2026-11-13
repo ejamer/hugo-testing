@@ -6,10 +6,8 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ## Code audit follow-up (2026-11-12)
 
-- [ ] **Security review — 7 open items** — see `docs/SECURITY_REVIEW.md` (problem, location, proposed fix and test for each). Three are Medium: Markdown links skipping Hugo's URL check, the calendar JS not checking link schemes, and unpinned Pagefind/third-party action in CI. Two need a decision first (#5 results-report email recipient, #7 whether the bypass-permissions Claude settings stay committed). Plan and approve each fix before changing anything; delete items from that file as they're done.
-
 - [ ] **Logo files in `static/images/fenb-logo/`** — only 4 SVGs there are used by the site (nav logos and the hero fallback); the rest (`.ai`/`.eps` masters, PDF/PNG/JPG exports, TeamEquipeNB set, brand guide) is published as-is. The owner will decide what to do with them later — leave the folder untouched until then.
-- [ ] **Full docs review** — once the code-audit fixes are all made, review every project doc (`CLAUDE.md`, `README.md`, `docs/*.md`, `plans/*.md`, `.claude/commands/*.md`): remove content that's no longer needed, and confirm what remains is correct and current. Wait until all audit edits are done.
+- [ ] **Full docs review** — once the code-audit fixes are all made, review every project doc (`CLAUDE.md`, `README.md`, `docs/*.md`, `plans/*.md`, `.claude/commands/*.md`): remove content that's no longer needed, and confirm what remains is correct and current. The audit's code and security fixes are all done (2026-11-13), so this can start. Known stale spots: `plans/policy-pdf-download.md` still shows a bare `npx pagefind`, and the STYLE_GUIDE icon section claims icons have no `width`/`height` (30 of 31 do) and lists data files by the wrong names; `rss.svg` also lacks `aria-hidden`.
 
 ---
 

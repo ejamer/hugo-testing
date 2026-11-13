@@ -64,7 +64,7 @@ title: "Post title"
 date: 2026-06-01
 category: national   # canonical ID — same IDs used by events; drives badge colour and label
 summary: "One-sentence summary shown on the homepage card."
-update: "<strong>Update:</strong> The deadline has been extended to August 15, 2026."  # optional — alert banner above the article body, HTML allowed
+update: "**Update:** The deadline has been extended to August 15, 2026."  # optional — alert banner above the article body, Markdown (no raw HTML)
 image: "images/event-logos/ecg.png"           # optional — centred logo above body (no leading slash)
 image_alt: "East Coast Games 2026"             # optional — alt text for image
 image_wide: true                               # optional — raises logo max-width 220px → 480px, for wide/banner-shaped images
@@ -107,7 +107,7 @@ Full post body here (Markdown).
 
 **`results_hide_placements: true`** — optional companion to `results_table`. When set, the last column (placement) is hidden by default with a "Show placements / Hide placements" toggle button. Use this for **away-tournament** articles where placement context varies across events. Omit it for **hosted-tournament** articles where placements should always be visible.
 
-**`update`** — optional alert banner rendered above the article body (`fenb-callout fenb-callout--alert`, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md)). Use for a short, urgent notice on an already-published article (e.g. an extended deadline). HTML is allowed and rendered via `safeHTML`, so wrap the lead-in with `<strong>` as shown above.
+**`update`** — optional alert banner rendered above the article body (`fenb-callout fenb-callout--alert`, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md)). Use for a short, urgent notice on an already-published article (e.g. an extended deadline). Write it in Markdown (rendered via `markdownify`): bold the lead-in with `**Update:**` (French: `**Mise à jour :**`) as shown above, and links work as usual. Raw HTML such as `<strong>` is stripped, not rendered, the same safety rule as article bodies.
 
 **`cta_heading`** (+ `cta_label`, `cta_text`, `cta_button_label`, `cta_button_url`, `cta_note`) — optional call-to-action banner (`fenb-cta-banner`, see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md)) rendered below the article body. Use for a registration deadline or other action you want to visually separate from the body copy. `cta_heading` presence is what triggers the block — omit it (and the other `cta_*` fields) to skip the banner entirely. All values are literal strings, not i18n keys, so write them in the article's own language.
 

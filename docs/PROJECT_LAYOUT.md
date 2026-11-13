@@ -15,12 +15,11 @@ hugo-testing/
 │   ├── GOTCHAS.md         Past build/template gotchas and their fixes
 │   ├── PROJECT_LAYOUT.md  This file — full directory tree
 │   ├── REFEREE_PROGRAM_COMPARISON.md  Internal report: FENB referee program vs. CFF manual, FIE rules, and other provinces
-│   ├── SECURITY_REVIEW.md Open security findings from the 2026-11-12 audit — problem, fix and test for each (TODO.md links it)
 │   ├── STYLE_GUIDE.md     Brand, CSS, and content conventions
 │   └── TODO.md            Outstanding items — keep current
 ├── .claude/               Project skills and settings (see CLAUDE.md for skill descriptions)
 ├── plans/                 Detailed plans for multi-session features (referenced from docs/TODO.md)
-├── scripts/               Utility scripts: fencingtimelive-results.py (retired: exits with a terms-of-service message), ftl-read-saved-pages.py (reads hand-saved FTL pages for /fenb-data-get-results), season-rollover.sh (events.yaml archive + fresh season file), check-ftl-deps.sh (prerequisite check for the results scraper), compute-next-version.sh (latest tag + next version candidates), generate-version-json.sh (writes static/version.json for a release), check-hugo-version.sh (CI Hugo pin vs. local/latest; --set updates the pin)
+├── scripts/               Utility scripts: fencingtimelive-results.py (retired: exits with a terms-of-service message), ftl-read-saved-pages.py (reads hand-saved FTL pages for /fenb-data-get-results), season-rollover.sh (events.yaml archive + fresh season file), check-ftl-deps.sh (prerequisite check for the results scraper), compute-next-version.sh (latest tag + next version candidates), generate-version-json.sh (writes static/version.json for a release), check-hugo-version.sh (CI Hugo pin vs. local/latest; --set updates the pin), check-pagefind-version.sh (Pagefind pin in both workflows + Makefile vs. newest npm release and its age; --set updates all three)
 ├── design-sources/        Editable source for generated graphics (e.g. typographic hero slides) — not served by Hugo; re-export to static/images/ when reused or edited. Two source formats: HTML/CSS (re-render with headless Chrome), and Inkscape SVG templates (e.g. hero/fenb-hero-template.svg — export panels directly to JPG/PNG)
 └── fenb-1/                Hugo site root
     ├── hugo.toml           Site config, languages, nav menus (no baseURL — set per environment)

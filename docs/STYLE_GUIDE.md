@@ -176,7 +176,7 @@ Modifier `--quote` for pull-quotes and mission statements:
 <blockquote class="fenb-callout fenb-callout--quote">…</blockquote>
 ```
 
-Modifier `--alert` for an urgent notice on an already-published news article (e.g. an extended deadline) — crimson border/text, bold. Set via the `update` front matter field on a news article rather than writing the markup directly; see [README.md](../README.md) news front matter docs.
+Modifier `--alert` for an urgent notice on an already-published news article (e.g. an extended deadline) — crimson border/text, bold. Set via the `update` front matter field on a news article rather than writing the markup directly. The field is Markdown (`**Update:** …`), so the `<strong>` below comes from `markdownify`; raw HTML in the field is stripped. See [README.md](../README.md) news front matter docs.
 ```html
 <div class="fenb-callout fenb-callout--alert"><strong>Update:</strong> …</div>
 ```

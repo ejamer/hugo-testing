@@ -339,6 +339,14 @@
       .replace(/"/g, '&quot;');
   }
 
+  // Only these link kinds are allowed — matches what Hugo's own URL sanitiser accepts on the
+  // event cards and schedule. Anything else (javascript:, data:, tel:, …) gets no link. The
+  // check is on the raw string and requires the prefix at the very start, so whitespace or
+  // tab tricks (" javascript:", "java\tscript:") are rejected too.
+  function safeHref(url) {
+    return /^(https?:\/\/|mailto:|\/)/i.test(url || '') ? url : '';
+  }
+
   // Only links to other sites open a new tab — same rule as partials/event-card.html.
   function targetAttr(url) {
     return /^https?:/i.test(url) ? ' target="_blank" rel="noopener noreferrer"' : '';
@@ -390,15 +398,15 @@
 
       var eventDate = new Date(e.start_date + 'T00:00:00');
       var linksHtml = '';
-      var detailsUrl = (fr && e.details_url_fr) ? e.details_url_fr : e.details_url_en;
+      var detailsUrl = safeHref((fr && e.details_url_fr) ? e.details_url_fr : e.details_url_en);
       if (detailsUrl) {
         linksHtml += '<a href="' + esc(detailsUrl) + '" class="fenb-event-details-link"' + targetAttr(detailsUrl) + '>' + esc(cal.detailsLabel) + ' →</a>';
       }
-      var registerUrl = (fr && e.registration_url_fr) ? e.registration_url_fr : e.registration_url_en;
+      var registerUrl = safeHref((fr && e.registration_url_fr) ? e.registration_url_fr : e.registration_url_en);
       if (registerUrl && eventDate > today) {   // closes on the event day itself
         linksHtml += '<a href="' + esc(registerUrl) + '" class="fenb-event-register-link"' + targetAttr(registerUrl) + '>' + esc(cal.registerLabel) + ' →</a>';
       }
-      var resultsUrl = (fr && e.results_url_fr) ? e.results_url_fr : e.results_url_en;
+      var resultsUrl = safeHref((fr && e.results_url_fr) ? e.results_url_fr : e.results_url_en);
       if (resultsUrl) {
         linksHtml += '<a href="' + esc(resultsUrl) + '" class="fenb-event-results-link"' + targetAttr(resultsUrl) + '>' + esc(cal.resultsLabel) + ' →</a>';
       }

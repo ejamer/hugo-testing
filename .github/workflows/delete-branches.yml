@@ -9,17 +9,22 @@ permissions:
 
 jobs:
   delete-branch:
+    # head.repo check: a fork's branch never lives in this repo, so skip fork PRs.
     if: >
       github.event.pull_request.merged == true &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.head.ref != 'dev' &&
       github.event.pull_request.head.ref != 'main'
 
     runs-on: ubuntu-latest
 
     steps:
+      # The branch name comes in through env:, never pasted into the script with ${{ }} —
+      # a crafted name like x$(cmd) would otherwise run as a shell command.
       - name: Delete branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          REPO: ${{ github.repository }}
         run: |
-          gh api repos/${{ github.repository }}/git/refs/heads/${{ github.event.pull_request.head.ref }} \
-            --method DELETE || true
+          gh api "repos/$REPO/git/refs/heads/$HEAD_REF" --method DELETE || true

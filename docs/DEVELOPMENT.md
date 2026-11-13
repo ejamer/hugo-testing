@@ -14,6 +14,13 @@ Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/relea
 
 **Hugo version is pinned** (`hugo-version` in both `release-website.yml` and `pr-check.yml`) so a new Hugo release can't change the live site on a day nobody released. `scripts/check-hugo-version.sh` reports the pin vs. local vs. latest, and `--set X.Y.Z` updates both workflows; `/fenb-git-release` runs it as Step 3 and offers an update (upgrading local Hugo via Homebrew so the release build check tests the same version).
 
+**Pagefind and the Hugo setup Action are pinned too.** Pagefind, which builds the search index and whose JavaScript is served on every page, is pinned to an exact version (`pagefind@X.Y.Z`) in both workflows and in the `Makefile` (`PAGEFIND`). npm never lets a published version change, so the same code runs on every build until someone deliberately bumps it. The third-party `peaceiris/actions-hugo` Action is pinned to a commit SHA, with its version in a comment. GitHub's own `actions/*` stay on tags.
+
+- `scripts/check-pagefind-version.sh` reports the pin vs. the newest npm release and its publish date, and exits non-zero if the three pins disagree. `--set X.Y.Z` updates all three.
+- `/fenb-git-release` runs it as Step 3b. When the pin is behind, it shows the newest version and release date and asks whether to continue the release. It never updates the pin itself.
+- **5-day rule:** only bump to a release at least 5 days old (the script's `latest_old_enough=`). Compromised or broken npm releases are usually caught and pulled within days. Check the [release notes](https://github.com/Pagefind/pagefind/releases), run `--set`, test search locally with `make serve`, then commit.
+- To bump the Action, take the new tag's commit SHA from `gh api repos/peaceiris/actions-hugo/tags` and update both workflows.
+
 ---
 
 ## Local development
@@ -37,8 +44,7 @@ Skipping this causes every build to fail with `partial "site-style.html" not fou
 Run all commands from the **repo root** unless noted.
 
 ```bash
-make serve        # dev server with search (preferred)
-make serve-local  # offline dev server — no search, no network calls
+make serve        # dev server with search
 make build        # quick local build — no minification, no pagefind
 make build-prod   # production build — minified + pagefind index
 ```
@@ -46,8 +52,8 @@ make build-prod   # production build — minified + pagefind index
 > [!TIP]
 > `make serve` runs three steps in order: builds the site, generates the search index with Pagefind, then starts the dev server. Using just `hugo server` inside the `fenb-1` folder skips the Pagefind step, so the search overlay will silently fail to load — always use `make serve` when you need a full-featured test.
 
-> [!WARNING]
-> `make serve`'s Pagefind step runs via `npx pagefind`. There's no `package.json`/`node_modules` pinning Pagefind locally, so `npx` resolves it from the npm registry **every time** — with no internet connection, that call fails and, because the Makefile steps are chained with `&&`, `hugo server` never starts. If you're offline, use `make serve-local` instead: it calls `hugo server` directly with no Pagefind step, so it never touches the network. Trade-off: the search overlay won't work under `serve-local` since no Pagefind index is generated.
+> [!NOTE]
+> **Offline:** `make serve`'s search step runs the pinned Pagefind via `npx`, which downloads that version once and reuses its cached copy after that. If it can't (offline on a new machine, or right after a version bump), `make serve` prints "Search index not built (offline?) — serving without search" and starts the dev server anyway. Everything works except the search overlay.
 
 **Browser-driven verification (Playwright):** the repo root has a `package.json`/`package-lock.json` pinning the Node `playwright` package as a devDependency — used for browser-driven verification of local builds (e.g. screenshotting a page to confirm a visual change), not part of the Hugo build itself. Run `npm install` once to use it; the installed packages under `node_modules/` are gitignored, but `package.json`/`package-lock.json` are committed so the version stays pinned. This is separate from the Python `playwright` package documented under [fencingtimelive-results.py](#fencingtimelive-resultspy) — same underlying tool, different language binding, different purpose.
 
@@ -321,4 +327,4 @@ Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the
 
 Pagefind runs as a post-build step and writes its index to `public/pagefind/`. This directory is **not tracked in git** — regenerate it after every build. The search overlay lazy-loads Pagefind's JS/CSS on first use, so `/pagefind/` must exist before serving.
 
-Pagefind is invoked via `npx pagefind`, not a local devDependency, so it requires network access to resolve from the npm registry — see the offline note under [Local development](#local-development) and use `make serve-local` when you have no connection.
+Pagefind is invoked via `npx --yes pagefind@X.Y.Z` (pinned — see [Live site](#live-site)), not a local devDependency. npx downloads the pinned version once and reuses its cache, so only the first run after a version bump needs network access. Without it, `make serve` still starts, without search (see the offline note under [Local development](#local-development)).

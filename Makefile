@@ -1,47 +1,41 @@
-# All commands run from repo root. Hugo site lives in fenb-1/.
-# Hugo must be on PATH — standard installs add it there regardless of OS. If it's
-# not found, the shell fails immediately with "command not found" (exit 127), which
-# means Hugo isn't installed or isn't on PATH. Override only if you need a specific
-# binary:
-#   make serve HUGO=/usr/local/bin/hugo
+# Run from the repo root; the Hugo site lives in fenb-1/.
+# Tools can be overridden, e.g. `make serve HUGO=/usr/local/bin/hugo`.
 HUGO ?= hugo
 
-# Dev server: pre-builds pagefind search index, then serves with live reload.
-# --baseURL must match on both the index-build and the server step — relURL bakes the
-# baseURL's path into asset links (e.g. club logos), and a mismatch leaves the search
-# index pointing at "/hugo-testing/..." paths that 404 against the localhost server.
-# --renderStaticToDisk + --disableFastRender ensures pagefind files are on disk so the
-# search UI works locally. --noHTTPCache prevents stale assets during development.
+# Pagefind (site search) is pinned — see docs/DEVELOPMENT.md. Change it only with
+# `scripts/check-pagefind-version.sh --set X.Y.Z`, which also updates both workflows.
+# Try a candidate first with `make serve PAGEFIND=pagefind@<new version>` (no real version
+# number in this comment — the check script reads every one it finds in this file).
+PAGEFIND ?= pagefind@1.6.0
+
+DEV_URL := http://localhost:1313/
+
+# Dev server with live reload and site search. The search index is built once at
+# startup; if that fails (offline before Pagefind is cached), the server still starts,
+# without search. Both steps need the same --baseURL or search results link to the
+# wrong paths, and pages are written to disk so Pagefind's files can be served.
 serve:
-	cd fenb-1 && $(HUGO) --environment development --baseURL http://localhost:1313/ && npx pagefind --site public --root-selector "main" && $(HUGO) server --renderStaticToDisk --disableFastRender --noHTTPCache --watch --baseURL http://localhost:1313/
+	cd fenb-1 && $(HUGO) --environment development --baseURL $(DEV_URL) \
+	  && { npx --yes $(PAGEFIND) --site public --root-selector "main" \
+	       || echo "==> Search index not built (offline?) — serving without search."; } \
+	  && $(HUGO) server --renderStaticToDisk --disableFastRender --noHTTPCache --watch --baseURL $(DEV_URL)
 
-# Offline dev server: skips the `npx pagefind` step entirely, so it never touches the
-# network (npx resolves pagefind from the npm registry on every invocation since it
-# isn't a local devDependency — with no connection, that call fails and `make serve`
-# never reaches `hugo server`). Search overlay will not work locally under this target;
-# use `make serve` whenever you have a connection and need to test search.
-serve-local:
-	@echo "==> serve-local: skipping 'npx pagefind' (needs network) — the search overlay will not work in this session. Use 'make serve' when you have a connection."
-	cd fenb-1 && $(HUGO) server --environment development --watch --noHTTPCache --baseURL http://localhost:1313/
-
-# Quick local build (no minification, no pagefind). Useful for checking output.
+# Quick development build to check for errors (no minify, no search index).
 build: clean
 	cd fenb-1 && $(HUGO) --environment development
 
-# Production build: minifies output and generates the pagefind search index.
-# Used by /fenb-release before opening a dev→main PR.
+# Production build with search index, as deployed. Run by /fenb-git-release.
 build-prod: clean
-	cd fenb-1 && $(HUGO) --environment production --minify && npx pagefind --site public --root-selector "main"
+	cd fenb-1 && $(HUGO) --environment production --minify \
+	  && npx --yes $(PAGEFIND) --site public --root-selector "main"
 
-# Remove Hugo's output and cache directories so the next build starts clean.
+# Delete build output and caches.
 clean:
-	rm -rf fenb-1/public fenb-1/resources/_gen
-	rm -f fenb-1/.hugo_build.lock fenb-1/hugo_stats.json
+	rm -rf fenb-1/public fenb-1/resources/_gen fenb-1/.hugo_build.lock fenb-1/hugo_stats.json
 
-# Bilingual parity check: report any content file that is missing its translation pair.
-# Exits 0 even when mismatches are found so CI doesn't hard-fail — output is informational.
+# List content files missing their EN/FR pair. Informational: always exits 0.
 check-parity:
 	@bash -c 'find fenb-1/content -name "*.en.md" | while read f; do fr="$${f%.en.md}.fr.md"; [ ! -f "$$fr" ] && echo "MISSING FR: $$f"; done; true'
 	@bash -c 'find fenb-1/content -name "*.fr.md" | while read f; do base="$${f%.fr.md}"; [ ! -f "$${base}.en.md" ] && [ ! -f "$${base}.md" ] && echo "MISSING EN: $$f"; done; true'
 
-.PHONY: serve serve-local build build-prod clean check-parity
+.PHONY: serve build build-prod clean check-parity

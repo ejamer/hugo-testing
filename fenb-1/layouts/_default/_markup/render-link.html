@@ -1,3 +1,6 @@
 {{- $isExternal := and (strings.HasPrefix .Destination "http") (not (strings.HasPrefix .Destination .Page.Site.BaseURL)) -}}
-<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $isExternal }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- /* No safeURL: Hugo's URL sanitiser must see .Destination. It allows http(s), mailto,
+       relative paths and #anchors, and turns any other scheme (javascript:, data:, tel:, …)
+       into a dead "#ZgotmplZ" link. Don't add safeURL back. */ -}}
+<a href="{{ .Destination }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $isExternal }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>
 {{- /* trim the file's trailing newline — otherwise it renders as a space before following punctuation */ -}}

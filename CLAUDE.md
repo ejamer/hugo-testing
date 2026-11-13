@@ -29,7 +29,7 @@ Project skills live in `.claude/commands/` and are invoked with `/fenb-*` in the
 |---|---|
 | `/fenb-git-commit` | Stage, commit, and push after one confirmation popup (shows the drafted message); on a feature branch it can also PR-and-merge into `dev` |
 | `/fenb-docs-update` | Review current git changes and assess whether system docs (CLAUDE.md, README.md, docs/*.md) need updating |
-| `/fenb-git-release` | Hugo version check (offers to update the pinned CI version), production build + bilingual parity checks, then one popup (version + merge now/leave open) to open and optionally merge a PR from `dev` into `main` |
+| `/fenb-git-release` | Hugo version check (offers to update the pinned CI version), Pagefind version check (warns when the pin is behind npm, with the newest release's date, and asks whether to continue), production build + bilingual parity checks, then one popup (version + merge now/leave open) to open and optionally merge a PR from `dev` into `main` |
 | `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
@@ -40,6 +40,8 @@ Season rollover (archive the current season's events, start a fresh `events.yaml
 
 When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/commands/`. Types: `git` (branch/commit/PR workflows), `content` (creating new pages or articles), `data` (fetching or managing structured data files).
 
+**Claude Code permissions:** the committed `.claude/settings.json` holds only narrow, safe allows (`make`, `hugo`) that apply to everyone who clones the repo. Personal settings such as `defaultMode: bypassPermissions` or broad `git`/`gh` allows go in `.claude/settings.local.json` (per-user, gitignored) — never in the committed file. Skills declare the tools they need in their own `allowed-tools` frontmatter, so they don't depend on either file.
+
 ## version.json
 
 `fenb-1/static/version.json` is managed automatically by `/fenb-git-release` — do not edit it manually. See `docs/DEVELOPMENT.md` for the field schema.
@@ -47,6 +49,8 @@ When adding a new skill, name the file `fenb-{type}-{name}.md` in `.claude/comma
 ## Hugo version pin
 
 The `hugo-version` in `.github/workflows/release-website.yml` and `pr-check.yml` is changed only via `scripts/check-hugo-version.sh --set X.Y.Z` (which `/fenb-git-release` offers when a newer Hugo is available) — don't hand-edit it or set it back to `latest`. The script keeps both workflows in step. See `docs/DEVELOPMENT.md` → Live site.
+
+**Pagefind is pinned the same way:** `pagefind@X.Y.Z` in both workflows and `PAGEFIND` in the `Makefile`, changed only via `scripts/check-pagefind-version.sh --set X.Y.Z`, which keeps all three in step. Only adopt a release at least 5 days old. `/fenb-git-release` warns when the pin is behind but never updates it. Never use a bare `npx pagefind` — without a version, npx runs whatever npm published last.
 
 ## Content creation — use skills, not `hugo new`
 
@@ -62,7 +66,7 @@ Key rules:
 - **Feature branches** — rarely used; only for multi-session work. Cut from `dev` via `/fenb-git-commit` ("Commit to new branch…"), and merge back with its "Commit, push & merge into dev" option.
 - **Release** — PR from `dev` into `main`.
 
-Dev server: `make serve` (needs network for the Pagefind search index) | Offline dev server, no search: `make serve-local` | Production build: `make build-prod` | Clean: `make clean`
+Dev server: `make serve` (with site search; still starts without search if the index can't be built, e.g. offline) | Production build: `make build-prod` | Clean: `make clean`
 
 All `make` commands run from the repo root.
 
