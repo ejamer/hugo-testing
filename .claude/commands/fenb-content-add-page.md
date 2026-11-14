@@ -30,7 +30,7 @@ Then:
 
    a. **Nav menu** — check `fenb-1/hugo.toml` for an existing `[[languages.*.menus.main]]` entry pointing to `/{section}/` or `/{section}/{slug}/`. If one exists, confirm it's already wired up. If not, remind the user to add one if the page should appear in the nav.
 
-   b. **`data/programs.yaml`** — check whether the new URL appears in the homepage quick-link cards. If it does, confirm it's already wired up.
+   b. **Card data** — check whether the new URL appears in `fenb-1/data/quick_links.yaml` (homepage quick links), `program_cards.yaml` (Programs landing) or `join_paths.yaml` (Join landing). If it does, confirm it's already wired up.
 
    c. **Existing links to the new URL** — grep `fenb-1/layouts/` and `fenb-1/data/` for the new page's URL. Report any matches so the user knows what was already pointing here (and can confirm those links are intentional).
 
@@ -42,7 +42,8 @@ Then:
 
 6. **Review project docs and skills for needed updates** — check each of the following and report whether it needs updating:
 
-   - **`README.md`** — does the content tree, layouts tree, or data file list need a new entry for this section or page?
+   - **`README.md`** — does the section need a how-to (new content type or data schema)?
+   - **`docs/PROJECT_LAYOUT.md`** — does the folder tree, or the layouts, partials, data or JS table, need a new entry?
    - **`docs/STYLE_GUIDE.md`** — does the new section introduce any CSS files, layout patterns, or conventions not yet documented?
    - **`CLAUDE.md`** — only if a new project-wide rule arises (keep it lean; detail goes in README/docs).
    - **`docs/DEVELOPMENT.md`** — does the release checklist or any build step need updating?

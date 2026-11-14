@@ -20,7 +20,7 @@ When creating or modifying content that leaves a placeholder link, missing page,
 
 ## Skills
 
-Project skills live in `.claude/commands/`, all prefixed `fenb-`, named `fenb-{type}-{name}.md` (types: `git`, `content`, `data`).
+Project skills live in `.claude/commands/`, all prefixed `fenb-`, named `fenb-{type}-{name}.md` (types: `git`, `content`, `data`, `docs`).
 
 ## Git — skills only
 

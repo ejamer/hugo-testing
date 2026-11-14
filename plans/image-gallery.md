@@ -80,17 +80,13 @@ New `/fenb-content-add-gallery-photos` (type `content`, per the `fenb-{type}-{na
 
 ~30 photos/event × ~10 events/season × ~400KB post-resize ≈ 120MB/season landing in the *gallery repo's* history — entirely separate from this repo's clone time or GitHub Pages deployment size. At that rate the gallery repo would take years to approach GitHub's repo-size comfort zone, and can be split into per-season repos later without touching this repo.
 
-## Migrating the one existing pending case
-
-`plans/TODO.md` already has an open item for the interscholastic finals article's `photos:` (4 local action shots, not yet added). Once the gallery repo/skill exist, add those 4 files there instead of `static/images/news/2026/`, get their CDN URLs, and use that as the first real test of the new pipeline before backfilling anything else.
-
 ## Documentation updates (once built)
 
 - `README.md` — new "Photo gallery" section describing the `data/gallery/` schema, alongside the existing `photos:` front matter docs.
 - `docs/STYLE_GUIDE.md` — add the gallery page/tag-filter UI to the shared components section.
 - `docs/PROJECT_LAYOUT.md` — add `data/gallery/`, `layouts/gallery/`, and the new submodule.
 - `.gitmodules` — new entry for the gallery repo.
-- `plans/TODO.md` — mark this item done and record any deferred pieces.
+- `plans/TODO.md` — delete this item and add any deferred pieces as new items.
 
 ## Explicitly out of scope for this phase
 

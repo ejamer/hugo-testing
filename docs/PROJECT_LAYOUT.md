@@ -20,7 +20,7 @@ hugo-testing/
 ├── resources/             Gitignored, local only: source docs, flyers, finished design files
 └── fenb-1/                Hugo site root
     ├── hugo.toml          Site config, languages, nav menus (no baseURL)
-    ├── config/            Per-environment baseURL: development/ (GitHub Pages), production/ (fenb.ca)
+    ├── config/            Per-environment baseURL: development/ (/hugo-testing/ subpath), production/ (fenb.ca, deployed)
     ├── archetypes/        Front matter templates
     ├── assets/ananke/css/ Site CSS, one fenb-*.css per concern — see STYLE_GUIDE → CSS
     ├── content/           Bilingual pages: _index.md + _index.fr.md per section,

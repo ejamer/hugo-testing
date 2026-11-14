@@ -4,7 +4,7 @@ See [PROJECT_LAYOUT.md](PROJECT_LAYOUT.md) for the folder tree and file tables.
 
 ## Live site
 
-Hosted on **GitHub Pages**: <https://ejamer.github.io/hugo-testing/>
+Live at <https://www.fenb.ca/>, hosted on **GitHub Pages**. The deploy builds with the `production` environment (`baseURL` `https://www.fenb.ca/`); the old `https://ejamer.github.io/hugo-testing/` address redirects there. The `/hugo-testing/` subpath now only appears in local `development` builds (see [Environment configuration](#environment-configuration)).
 
 Pushing to `main` triggers the GitHub Actions workflow (`.github/workflows/release-website.yml`), which builds with Hugo and deploys automatically. The same workflow also:
 
@@ -43,6 +43,8 @@ make build        # quick local build — no minification, no pagefind
 make build-prod   # production build — minified + pagefind index
 ```
 
+The site builds in ~100 ms. Open `http://localhost:1313/` in your browser.
+
 > [!TIP]
 > `make serve` runs three steps in order: builds the site, generates the search index with Pagefind, then starts the dev server. Using just `hugo server` inside the `fenb-1` folder skips the Pagefind step, so the search overlay will silently fail to load — always use `make serve` when you need a full-featured test.
 
@@ -50,7 +52,6 @@ make build-prod   # production build — minified + pagefind index
 > **Offline:** `make serve`'s search step runs the pinned Pagefind via `npx`, which downloads that version once and reuses its cached copy after that. If it can't (offline on a new machine, or right after a version bump), `make serve` prints "Search index not built (offline?) — serving without search" and starts the dev server anyway. Everything works except the search overlay.
 
 **Browser-driven verification (Playwright):** the repo root has a `package.json`/`package-lock.json` pinning the Node `playwright` package as a devDependency — used for browser-driven verification of local builds (e.g. screenshotting a page to confirm a visual change), not part of the Hugo build itself. Run `npm install` once to use it; the installed packages under `node_modules/` are gitignored, but `package.json`/`package-lock.json` are committed so the version stays pinned.
-The site builds in ~100 ms. Open `http://localhost:1313/` in your browser.
 
 ### Search index
 
@@ -69,13 +70,13 @@ Pagefind is invoked via `npx --yes pagefind@X.Y.Z` (pinned — see [Live site](#
 
 Hugo defaults to `production` for the bare `hugo` command and `development` for `hugo server`. `make build` and `make serve` explicitly pass `--environment development` so local builds always use the test URL. Never put `baseURL` in the root `hugo.toml` — it belongs only in these environment files.
 
-`make serve` also passes `--baseURL http://localhost:1313/` to override the GitHub Pages subpath (`/hugo-testing/`) at runtime. Without this, root-relative static file links (e.g. `/documents/events/…`) would 404 locally because the path would resolve without the subpath prefix. This flag has no effect on production builds.
+`make serve` also passes `--baseURL http://localhost:1313/` to override the development subpath (`/hugo-testing/`) at runtime. Without this, root-relative static file links (e.g. `/documents/events/…`) would 404 locally because the path would resolve without the subpath prefix. This flag has no effect on production builds.
 
 ---
 
 ## Google Analytics
 
-The site uses **Google Analytics 4 (GA4)**, tag `G-BKG2E2SKZF`. The tag ID is stored in `fenb-1/config/production/hugo.toml` under `[services.googleAnalytics]`. Hugo's built-in template emits the gtag.js snippet automatically; it is wired into the Ananke base layout behind a `{{ if hugo.IsProduction }}` guard.
+The site uses **Google Analytics 4 (GA4)**, tag `G-BKG2E2SKZF`. The tag ID is stored in `fenb-1/config/production/hugo.toml` under `[services.googleAnalytics]`. Hugo's built-in template emits the gtag.js snippet automatically; it is wired into the site's base layout override (`fenb-1/layouts/_default/baseof.html`) behind a `{{ if hugo.IsProduction }}` guard.
 
 **Analytics only fires on production builds** (`make build-prod`). Local dev (`make serve`, `make build`) never sends tracking data. To change the tag ID, edit `config/production/hugo.toml` only.
 
@@ -229,7 +230,7 @@ Before opening a PR from `dev` into `main`, verify:
 - [ ] **Remote in sync** — `git fetch origin && git status` shows `dev` is not behind `origin/dev`
 - [ ] **Hugo pin current** — `scripts/check-hugo-version.sh`; if `update_available=yes`, `brew upgrade hugo` then `scripts/check-hugo-version.sh --set <new local version>`
 - [ ] **Production build passes** — `make build-prod` completes with no errors or warnings
-- [ ] **Bilingual parity** — every `.en.md` in `fenb-1/content/` has a matching `.fr.md` (and vice versa)
+- [ ] **Bilingual parity** — `make check-parity` prints nothing (every `.en.md` in `fenb-1/content/` has a matching `.fr.md`, and vice versa)
 - [ ] **TODO.md reviewed** — no unchecked items are left addressed but unmarked
 - [ ] **No orphan placeholder links** — any new links introduced this cycle point to real pages
 
@@ -298,7 +299,8 @@ Never run `gh pr merge` without specifying a PR number. Without one, `gh` resolv
 Always capture the PR number from `gh pr create` output and pass it explicitly:
 
 ```bash
-gh pr merge $PR_NUMBER --merge --delete-branch
+gh pr merge $PR_NUMBER --merge                    # dev → main release PR: never --delete-branch
+gh pr merge $PR_NUMBER --merge --delete-branch    # feature → dev PR only
 ```
 
 Extract `$PR_NUMBER` from the URL returned by `gh pr create` (the integer at the end).

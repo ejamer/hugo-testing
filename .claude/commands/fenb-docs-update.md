@@ -17,11 +17,13 @@ Review the current git state and assess each system documentation file for neede
 
    - **`CLAUDE.md`** — kept deliberately lean (re-sent every turn): hard rules and one-line pointers only. Needs updating only if the diff adds/removes a project-wide rule or a new reference doc. Put schemas, gotchas, CSS patterns and skill details in README.md, docs/GOTCHAS.md, docs/STYLE_GUIDE.md or docs/DEVELOPMENT.md instead.
 
-   - **`README.md`** — how to add/update each content type, layouts tree, data files, and skill list. Needs updating if the diff adds a new content type, changes a data file name or schema, adds/removes a skill, or changes the way content is authored.
+   - **`README.md`** — how to add/update each content type, data schemas, and the skill list. Needs updating if the diff adds a new content type, changes a data file name or schema, adds/removes a skill, or changes the way content is authored.
 
    - **`docs/STYLE_GUIDE.md`** — brand colours, CSS class names and conventions, i18n/bilingual rules, naming conventions, shared UI components, category colour reference. Needs updating if the diff adds a new CSS class that should be reused, modifies a shared component, or introduces a new naming pattern.
 
    - **`docs/DEVELOPMENT.md`** — branch strategy, local build commands, GitHub Pages deployment, release checklist. Needs updating if the diff changes a build command, adds a Makefile target, changes deployment config, or introduces a new release step.
+
+   - **`docs/GOTCHAS.md`** — past build/template traps and their fixes. Needs updating if the diff fixes a non-obvious bug that could be re-introduced (silent wrong output, tool quirk), or changes code a listed gotcha describes.
 
    - **`plans/TODO.md`** — outstanding items. Needs updating if the diff resolves an open item (delete it — fold any context a pending item still needs into that item) or if new deferred decisions or known-missing pages were introduced.
 
@@ -34,6 +36,7 @@ Review the current git state and assess each system documentation file for neede
    README.md              — ...
    docs/STYLE_GUIDE.md    — ...
    docs/DEVELOPMENT.md    — ...
+   docs/GOTCHAS.md        — ...
    plans/TODO.md          — ...
    docs/PROJECT_LAYOUT.md — ...
    ```
