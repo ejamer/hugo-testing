@@ -1,7 +1,7 @@
 ---
 description: Create a new bilingual news article for the FencingNB Hugo site.
 disable-model-invocation: true
-allowed-tools: Read Write AskUserQuestion Skill
+allowed-tools: Read Edit Bash(scripts/create-news-stub.sh *) AskUserQuestion Skill
 ---
 
 Ask the user for:
@@ -24,32 +24,11 @@ Ask the user for:
 7. French summary
 
 Then:
-1. Derive `{mon}` (3-letter lowercase month, e.g. `apr`) and `{dd}` (zero-padded day) from the date.
-2. Set `{year}` to the 4-digit year from the date.
-3. Check whether `fenb-1/content/news/{year}/_index.md` and `_index.fr.md` exist. If not, create them by copying the front matter from the previous year's folder (title, description, cascade block).
-4. Create `fenb-1/content/news/{year}/{mon}-{dd}-{slug}.en.md`:
-   ```yaml
-   ---
-   title: "{English title}"
-   date: {YYYY-MM-DD}
-   category: {category-id}
-   summary: "{English summary}"
-   ---
-   ```
-5. Create `fenb-1/content/news/{year}/{mon}-{dd}-{slug}.fr.md`:
-   ```yaml
-   ---
-   title: "{French title}"
-   date: {YYYY-MM-DD}
-   category: {category-id}
-   summary: "{French summary}"
-   ---
-   ```
+1. From the repo root, run `scripts/create-news-stub.sh {YYYY-MM-DD} {slug} {category-id}`. It validates the inputs, creates the year folder's `_index` files if this is the first article of a new year, and writes both `fenb-1/content/news/{year}/{mon}-{dd}-{slug}.{en,fr}.md` with empty `title`/`summary`. It prints the paths it created. If it exits with an error (e.g. the article already exists), report it and stop.
+2. Read each new file and fill in `title` and `summary` (English in `.en.md`, French in `.fr.md`), plus any optional front matter or body the user asked for.
 
 Both files get the same `category` value — it's a canonical ID, not a display string. The badge label is derived from i18n at render time.
 
 **Multi-event articles** (e.g. a registration roundup covering several tournaments): give each event its own `##` section and put `{{< host-logo id="..." >}}` on its own line directly under each heading, instead of `image` or `photos` — `id` is the host's club id from `fenb-1/data/clubs.yaml` or an organization id from `fenb-1/data/organizations.yaml` (e.g. `CFF`). Use the same line in both language files; the shortcode picks the localized name. If the host isn't in either file, add it to `organizations.yaml` (see README.md for sourcing logos) rather than using a one-off `src`. See `docs/STYLE_GUIDE.md` → `host-logo` shortcode.
-
-**Critical:** the language code is separated by a **dot** (`.en.md`, `.fr.md`), never a dash (`-en.md`). A dash breaks Hugo's translation linking between the two files.
 
 After both files are written, ask the user via `AskUserQuestion` whether they'd also like a sample Facebook post for this article. If yes, invoke `/fenb-content-social-summary` against the two files just created.

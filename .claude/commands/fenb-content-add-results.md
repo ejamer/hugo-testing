@@ -1,6 +1,6 @@
 ---
 description: Generate a bilingual EN/FR news article from a results JSON file saved by /fenb-data-get-results.
-allowed-tools: AskUserQuestion Read Write Skill Bash(ls *) Bash(find *)
+allowed-tools: AskUserQuestion Read Write Skill Bash(ls *) Bash(find *) Bash(scripts/create-news-stub.sh *)
 ---
 
 Create a bilingual news article summarising results from a saved results JSON file.
@@ -141,41 +141,25 @@ If there are no combined pool rounds, omit the pool-round sentence entirely.
 
 ## Step 6 — Write FR article body
 
-Translate the full article into French using the same structure (away or hosted, matching whatever was used for EN). Standard French fencing terminology:
+Translate the full article into French using the same structure (away or hosted, matching whatever was used for EN). Use standard French fencing terminology; these are the mappings that aren't obvious:
 
 | English         | French       |
 |-----------------|--------------|
-| Women's         | féminin      |
-| Men's           | masculin     |
-| Foil            | Fleuret      |
-| Épée            | Épée         |
-| Sabre           | Sabre        |
-| Senior          | Senior       |
-| Junior          | Junior       |
-| Cadet           | Cadet        |
-| U-15            | U-15         |
-| U-13            | U-13         |
 | Veteran         | Vétéran      |
-| Vet-50          | Vét-50       |
-| Vet-60          | Vét-60       |
-| Place           | Position     |
-| Name            | Nom          |
-| Club            | Club         |
-| Mixed           | mixte        |
+| Vet-50 / Vet-60 | Vét-50 / Vét-60 |
+| Place (column)  | Position     |
+| Name (column)   | Nom          |
 | Pool round(s)   | ronde(s) de poules |
-| Direct elimination | élimination directe |
 
-Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée senior féminin"). The FR table header for the name column is `Nom`, for place is `Position`. Translate all prose. Keep fencer names and club names unchanged. Medal emoji and backslash line-breaks carry over unchanged.
+Translate event name headings fully, with the weapon first and the category and gender adjectives after it (e.g. "Senior Women's Épée" → "Épée senior féminin", "Cadet Men's Sabre" → "Sabre cadet masculin"). The FR table header for the name column is `Nom`, for place is `Position`. Translate all prose. Keep fencer names and club names unchanged. Medal emoji and backslash line-breaks carry over unchanged.
 
 ---
 
 ## Step 7 — Write files
 
-1. Derive `{mon}` (3-letter lowercase month, e.g. `may`) and `{dd}` (zero-padded day) from the **publication date**.
-2. Set `{year}` to the 4-digit year of the publication date.
-3. Full slug: `{tournament-start-date}-{suffix}` (e.g. `2026-05-15-may-nationals`).
-4. Check whether `fenb-1/content/news/{year}/_index.md` and `_index.fr.md` exist. If not, create them by copying front matter from the previous year's folder.
-5. Write `fenb-1/content/news/{year}/{mon}-{dd}-{slug}.en.md`:
+1. Full slug: `{tournament-start-date}-{suffix}` (e.g. `2026-05-15-may-nationals`).
+2. From the repo root, run `scripts/create-news-stub.sh {publication-date} {slug} results`. It creates the year folder's `_index` files if needed and writes empty stubs at `fenb-1/content/news/{year}/{mon}-{dd}-{slug}.{en,fr}.md` (`{year}`, `{mon}`, `{dd}` come from the **publication date**), printing the paths. If it exits with an error (e.g. the article already exists), report it and stop.
+3. Read the EN stub, then overwrite it with:
    ```yaml
    ---
    title: "{English title}"
@@ -190,7 +174,7 @@ Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée se
    For **away tournaments** (NB athletes competed out of province), also add `results_hide_placements: true` below `results_table: true`. This hides the Place column in the rendered table since placement context differs across events.
    For **hosted tournaments**, `results_table: true` is sufficient — placements are shown.
 
-6. Write `fenb-1/content/news/{year}/{mon}-{dd}-{slug}.fr.md`:
+4. Read the FR stub, then overwrite it with:
    ```yaml
    ---
    title: "{French title}"
@@ -203,8 +187,6 @@ Translate event name headings fully (e.g. "Senior Women's Épée" → "Épée se
    {FR article body}
    ```
    Apply the same `results_hide_placements: true` rule as the EN file.
-
-**Critical:** language code uses a **dot** separator (`.en.md`, `.fr.md`), never a dash.
 
 Report the two file paths created and tell the user to review them before committing.
 

@@ -1,6 +1,6 @@
 ---
 description: Generate a short bilingual Facebook post summarizing a FencingNB news article.
-allowed-tools: Read AskUserQuestion Bash(find *) Bash(ls *)
+allowed-tools: Read AskUserQuestion Bash(find *) Bash(ls *) Bash(python3 scripts/fb-bold.py *)
 ---
 
 Generate a short, copyable bilingual Facebook post for an existing news article.
@@ -52,25 +52,17 @@ Rules:
 
 ### Bold titles
 
-Facebook's post composer doesn't render Markdown or HTML, so `**title**` would paste as literal asterisks. Instead, convert the title line (both EN and FR) to Unicode "Mathematical Sans-Serif Bold" characters — these are distinct codepoints that display bold in any plain-text field, including Facebook. Apply this to the title line only, not the body sentences.
+Facebook's post composer doesn't render Markdown or HTML, so `**title**` would paste as literal asterisks. Instead, convert the title line (both EN and FR, title line only) to Unicode "Mathematical Sans-Serif Bold" characters, which display bold in any plain-text field:
 
-Substitute each plain ASCII letter/digit using this table; leave everything else (spaces, punctuation, accented letters like é/è/à/ç, emoji) unchanged:
+```bash
+python3 scripts/fb-bold.py <<'EOF'
+{EN title} / {FR title}
+EOF
+```
 
-| A B C D E F G H I J K L M N O P Q R S T U V W X Y Z |
-|---|
-| 𝗔 𝗕 𝗖 𝗗 𝗘 𝗙 𝗚 𝗛 𝗜 𝗝 𝗞 𝗟 𝗠 𝗡 𝗢 𝗣 𝗤 𝗥 𝗦 𝗧 𝗨 𝗩 𝗪 𝗫 𝗬 𝗭 |
+(Pass the title on stdin like this, not as a quoted argument, since titles often contain apostrophes or quotes.)
 
-| a b c d e f g h i j k l m n o p q r s t u v w x y z |
-|---|
-| 𝗮 𝗯 𝗰 𝗱 𝗲 𝗳 𝗴 𝗵 𝗶 𝗷 𝗸 𝗹 𝗺 𝗻 𝗼 𝗽 𝗾 𝗿 𝘀 𝘁 𝘂 𝘃 𝘄 𝘅 𝘆 𝘇 |
-
-| 0 1 2 3 4 5 6 7 8 9 |
-|---|
-| 𝟬 𝟭 𝟮 𝟯 𝟰 𝟱 𝟲 𝟳 𝟴 𝟵 |
-
-**Known limitation:** accented Latin letters (é, è, à, ç, œ, …) have no bold equivalent in this Unicode block and stay regular weight — e.g. "néo-brunswickois" bolds to "𝗻é𝗼-𝗯𝗿𝘂𝗻𝘀𝘄𝗶𝗰𝗸𝗼𝗶𝘀". This is an accepted, unavoidable gap — apply the bolding anyway; do not skip bolding a title because it contains accents.
-
-Example: "NB Fencers at the Trick or Retreat ROC/RJCC" → "𝗡𝗕 𝗙𝗲𝗻𝗰𝗲𝗿𝘀 𝗮𝘁 𝘁𝗵𝗲 𝗧𝗿𝗶𝗰𝗸 𝗼𝗿 𝗥𝗲𝘁𝗿𝗲𝗮𝘁 𝗥𝗢𝗖/𝗥𝗝𝗖𝗖"
+Use its output verbatim as the title line. It converts ASCII letters and digits only; accented letters (é, à, ç, …) have no bold form and stay regular weight. That gap is accepted, so bold the title anyway.
 
 ## Step 5 — Output
 

@@ -34,13 +34,11 @@ Then:
 
    c. **Existing links to the new URL** — grep `fenb-1/layouts/` and `fenb-1/data/` for the new page's URL. Report any matches so the user knows what was already pointing here (and can confirm those links are intentional).
 
-   d. **Placeholder links in related layouts** — grep `fenb-1/layouts/{section}/` for placeholder hrefs (`mailto:`, `href="#"`, `href=""`) that might now be intended to point to the new page. Report any found.
-
-   e. **TODO.md** — grep `plans/TODO.md` for the section name or slug. Report any open items that reference this area so the user can decide if any are now addressed.
+   d. **TODO.md** — grep `plans/TODO.md` for the section name or slug. Report any open items that reference this area so the user can decide if any are now addressed.
 
    Report all findings clearly. Don't silently skip any check — if nothing is found, say so briefly.
 
-6. **Review project docs and skills for needed updates** — check each of the following and report whether it needs updating:
+6. **Review project docs and skills for needed updates** — only if this work added or changed files under `fenb-1/layouts/` (a new layout, partial or template change). If it only added content files, skip this step and say so in one line. Otherwise check each of the following and report whether it needs updating:
 
    - **`README.md`** — does the section need a how-to (new content type or data schema)?
    - **`docs/PROJECT_LAYOUT.md`** — does the folder tree, or the layouts, partials, data or JS table, need a new entry?
