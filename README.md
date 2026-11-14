@@ -1,8 +1,8 @@
 # Fencing-Escrime NB — Website
 
-This repo is testing a replacement tech stack for [fencingnb.ca](https://fencingnb.ca), generating a static site built with Hugo.
+Source for the Fencing-Escrime NB website, a bilingual static site built with Hugo that replaces the old [fencingnb.ca](https://fencingnb.ca).
 
-**[► View live site](https://ejamer.github.io/hugo-testing/)**
+**[► View live site](https://www.fenb.ca/)**
 
 ### Claude Code skills
 
@@ -13,9 +13,11 @@ Content and data workflows are available as Claude Code skills (invoked with `/f
 | `/fenb-content-add-news` | Create a bilingual news article with correct filenames and front matter |
 | `/fenb-content-add-page` | Create a new bilingual content page pair |
 | `/fenb-content-add-results` | Generate a bilingual EN/FR news article from a saved results JSON file |
+| `/fenb-content-social-summary` | Write a short bilingual Facebook post for an existing news article |
 | `/fenb-data-get-results` | Read tournament results from FencingTimeLive pages you saved by hand and report podiums or NB fencer placements |
+| `/fenb-docs-update` | Check whether the current changes need updates to CLAUDE.md, README.md or `docs/` |
 
-For git and release workflow skills (`/fenb-git-commit`, `/fenb-git-release`), see `docs/DEVELOPMENT.md`.
+Git and release skills (`/fenb-git-commit`, `/fenb-git-release`) are in `.claude/commands/` too; the branch strategy they follow is in `docs/DEVELOPMENT.md`.
 
 ---
 
@@ -54,7 +56,7 @@ The banner is rendered by `layouts/partials/site-announcement.html` and hidden f
 
 Example: `content/news/2026/jun-01-provincial-team-announced.en.md` + `.fr.md`
 
-**Scheduling a post:** give it a future `date:` and release it as normal — Hugo leaves future-dated pages out of the build, and the scheduled rebuild (just before 7 am Atlantic, with a backup run around noon) publishes it on that date. To preview it locally before then, temporarily set `date:` to today (the dev server also hides future posts).
+**Scheduling a post:** give it a future `date:` and release it as normal — Hugo leaves future-dated pages out of the build, and the scheduled rebuild (6:53 am ADT / 5:53 am AST, with a backup run around noon) publishes it on that date. To preview it locally before then, temporarily set `date:` to today (the dev server also hides future posts).
 
 **Front matter:**
 
@@ -67,6 +69,7 @@ summary: "One-sentence summary shown on the homepage card."
 update: "**Update:** The deadline has been extended to August 15, 2026."  # optional — alert banner above the article body, Markdown (no raw HTML)
 image: "images/event-logos/ecg.png"           # optional — centred logo above body (no leading slash)
 image_alt: "East Coast Games 2026"             # optional — alt text for image
+image_dark: "images/event-logos/ecg-dark.png"  # optional — dark-mode variant of image (see STYLE_GUIDE before making one)
 image_wide: true                               # optional — raises logo max-width 220px → 480px, for wide/banner-shaped images
 results_table: true  # optional — add to load the interactive sortable table on articles with result tables
 photos:              # optional — photo gallery rendered below the article body
@@ -238,7 +241,7 @@ Edit `data/board_members.yaml`. Top-level keys:
 
   **Keep this list at exactly the board's bylaws-defined seat count at all times.** A departure should never change how many entries are here — see "When someone leaves" below.
 
-- `previous_members` — past board members, not displayed anywhere yet (a future "Board History" page — see `docs/TODO.md`). Each entry adds `end_date` to the `members` schema:
+- `previous_members` — past board members, not displayed anywhere yet (a future "Board History" page — see `plans/TODO.md`). Each entry adds `end_date` to the `members` schema:
   ```yaml
   - name: "Full Name"
     role_en: "Director"
@@ -308,7 +311,7 @@ category:              # YAML array — one or more canonical IDs from data/hof_
   - "Coach"
 posthumous: false      # true if the award was given posthumously
 award_recipient: ""    # name of person who accepted on the inductee's behalf (if posthumous)
-links: []              # optional array of related links
+links:                 # optional related links; use links: [] for none
   - label: "Link label"
     url: "https://…"
 ---
@@ -424,7 +427,7 @@ slides:
 - `expires`: slide is hidden starting the day *after* this date (it stays visible through the date itself); omit/empty = never expires.
 - If every slide is currently outside its window, the carousel shows a default FENB logo slate instead of going empty.
 - A slide that has already expired by the last site build is dropped from the page entirely (never shipped in the HTML); a slide with a future `publish_from` can be added ahead of time and will just wait for its date.
-- A slide whose link is a site page (e.g. `news/2026/nov-03-slug/`) is also dropped until that page is in the build. A future-dated article only goes live at the first build after its date (the scheduled rebuild runs at ~5:53 AM Atlantic), so this keeps the slide from linking to a 404 in between — no need to line `publish_from` up with the build. Slides with no link, an external link, or a file (PDF) link aren't checked.
+- A slide whose link is a site page (e.g. `news/2026/nov-03-slug/`) is also dropped until that page is in the build. A future-dated article only goes live at the first build after its date (the scheduled rebuild runs at 6:53 am ADT / 5:53 am AST), so this keeps the slide from linking to a 404 in between — no need to line `publish_from` up with the build. Slides with no link, an external link, or a file (PDF) link aren't checked.
 
 Images should be 2.5:1 aspect ratio (e.g. 1250×500 px). The carousel auto-advances every 5 seconds; click the prev/next arrows or the dot indicators to navigate manually; use the pause/play button (top-right corner) to stop or resume auto-advance.
 
@@ -470,4 +473,5 @@ Two URLs in `data/join.yaml` need updating at the start of each season:
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
 | [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
 | [docs/PROJECT_LAYOUT.md](docs/PROJECT_LAYOUT.md) | Folder tree, plus tables of data files, layouts, partials, JS and scripts |
-| [docs/TODO.md](docs/TODO.md) | Outstanding items |
+| [docs/GOTCHAS.md](docs/GOTCHAS.md) | Past build/template traps and their fixes — read before touching the areas it covers |
+| [plans/TODO.md](plans/TODO.md) | Outstanding items |

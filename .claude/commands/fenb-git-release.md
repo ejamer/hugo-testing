@@ -41,7 +41,7 @@ Run the checks, then ask **once** (Step 8) — that single popup is the release 
 
 6. **Commit summary** — `git log main..dev --oneline`. If empty and there's no `hugo_bump`, report "Nothing to release" and stop. (A Hugo bump alone is a valid release.)
 
-7. **TODO.md review** — read `docs/TODO.md` and flag unchecked items the commits above appear to address.
+7. **TODO.md review** — read `plans/TODO.md` and flag unchecked items the commits above appear to address.
 
 8. **Release decision (the only gate)** — present the results of Steps 3–7 compactly (include the Hugo line, noting any bump, and the Pagefind line), then one `AskUserQuestion` call with **two questions**:
 

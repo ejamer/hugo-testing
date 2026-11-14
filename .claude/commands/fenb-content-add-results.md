@@ -135,7 +135,7 @@ If there are no combined pool rounds, omit the pool-round sentence entirely.
 - If an event's `podium` is empty (results not in system) and it is not `pools_only`, note this under the heading instead of a table
 - One blank line between the table and the next heading
 
-The JS in `static/js/results-table.js` automatically hides the Place column and makes headers sortable — the markdown table format is all that is needed.
+`static/js/results-table.js` makes the headers sortable (and hides the Place column only when `results_hide_placements: true`, i.e. away articles) — the markdown table format is all that is needed.
 
 ---
 

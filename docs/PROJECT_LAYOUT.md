@@ -13,14 +13,14 @@ hugo-testing/
 ├── .gitmodules            Ananke theme submodule → fenb-1/themes/ananke
 ├── .claude/               Project skills (commands/fenb-*.md) and shared settings
 ├── docs/                  Reference docs — see README → Related docs
-├── plans/                 Plans for multi-session features (referenced from docs/TODO.md)
+├── plans/                 Plans for multi-session features, plus TODO.md (outstanding items)
 ├── scripts/               Helper scripts — see Scripts table
 ├── design-sources/        Blank templates only (hero/: FENB + Damocles Inkscape SVGs, HTML
 │                          announcement); not served. Finished designs go in resources/ (local)
 ├── resources/             Gitignored, local only: source docs, flyers, finished design files
 └── fenb-1/                Hugo site root
     ├── hugo.toml          Site config, languages, nav menus (no baseURL)
-    ├── config/            Per-environment baseURL: development/ (GitHub Pages), production/ (fenb.ca)
+    ├── config/            Per-environment baseURL: development/ (/hugo-testing/ subpath), production/ (fenb.ca, deployed)
     ├── archetypes/        Front matter templates
     ├── assets/ananke/css/ Site CSS, one fenb-*.css per concern — see STYLE_GUIDE → CSS
     ├── content/           Bilingual pages: _index.md + _index.fr.md per section,

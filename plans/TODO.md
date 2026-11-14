@@ -4,13 +4,6 @@ Items that need follow-up — kept current as pages are built and content is add
 
 ---
 
-## Code audit follow-up (2026-11-12)
-
-- [ ] **Logo files in `static/images/fenb-logo/`** — only 4 SVGs there are used by the site (nav logos and the hero fallback); the rest (`.ai`/`.eps` masters, PDF/PNG/JPG exports, TeamEquipeNB set, brand guide) is published as-is. The owner will decide what to do with them later — leave the folder untouched until then. Note: the brand guide `FENB-Logo-Standards.html` is also indexed by Pagefind, so it shows up in English site search (seen 2026-11-13); deleting or moving it fixes that.
-- [ ] **Full docs review** — once the code-audit fixes are all made, review every project doc (`CLAUDE.md`, `README.md`, `docs/*.md`, `plans/*.md`, `.claude/commands/*.md`): remove content that's no longer needed, and confirm what remains is correct and current. The audit's code and security fixes are all done (2026-11-13), so this can start. Known stale spots: `plans/policy-pdf-download.md` still shows a bare `npx pagefind`, and the STYLE_GUIDE icon section claims icons have no `width`/`height` (30 of 31 do) and lists data files by the wrong names; `rss.svg` also lacks `aria-hidden`.
-
----
-
 ## Events data — 2026–2027 season review (2026-09-15)
 
 `data/events.yaml` was populated for the full 2026–2027 season from the FENB tentative calendar (`~/Downloads/fenb_events/fenb 2026-2027 Calendar.pdf`), cross-referenced against the OFA and Quebec (FEQ) provisional calendars for out-of-province dates/locations. Needs a full review pass before publishing — in particular:
@@ -88,9 +81,6 @@ Details and sources are in `plans/REFEREE_PROGRAM_COMPARISON.md`.
 
 - [ ] **Test `/fenb-data-get-results` on real saved pages** — `scripts/ftl-read-saved-pages.py` was tested on one international tournament's saved pages (schedule, Final Results with Place/Name/Country, unfinished event's pool page). A second international tournament (Dormagen, 2026-11-08) and an NB-hosted one with a Club/Division column (Hoplite Invitational, 2026-11-08) also worked and went all the way through `/fenb-content-add-results`. Still unseen: a `/events/competitors/` page, and a real run of the revised no-bracket rule (2026-11-13: an event with no DE bracket keeps its podium unless its name says "Pool(s)" or a later event splits its field), which so far has only been checked against the saved Fundy Open and Hoplite JSON.
 
-## Dark mode
-
-
 ---
 
 ## Hall of Fame
@@ -106,7 +96,13 @@ Details and sources are in `plans/REFEREE_PROGRAM_COMPARISON.md`.
 
 ## Project skills
 
-- [ ] **Skill automation and non-AI tooling** — `plans/skill-assessment.md` proposes shell scripts to reduce AI dependency and make common updates executable without Claude. Remaining: `create-news-stub.sh` (file creation + year-folder logic shared by `/fenb-content-add-news` and `/fenb-content-add-results`), then optionally `page-audit.sh`. **Don't build** the plan's `git-preflight.sh` or `list-feature-branches.sh` — `/fenb-git-commit` was simplified and `/fenb-git-merge` removed (2026-09-27), so they're obsolete. Per CLAUDE.md, scripts never run git commit/push. Ties into the **Editor tooling** item under Non-technical content maintenance.
+- [ ] **`create-news-stub.sh`** — script for the news file creation and year-folder logic (create `content/news/{year}/_index*.md` from the previous year) currently duplicated in `/fenb-content-add-news` and `/fenb-content-add-results`. Writes both `.en.md`/`.fr.md` stubs; the skill fills title/summary/body. Reduces AI dependency and lets an editor create an article without Claude — ties into the **Editor tooling** item under Non-technical content maintenance. Per CLAUDE.md, scripts never run git commit/push.
+- [ ] **`/fenb-content-add-page` trimming** — make Step 6 (review six docs) conditional on new/changed `layouts/` files, and drop Step 5d (placeholder-href grep; low signal). Optionally fold the Step 5 greps into a `scripts/page-audit.sh <section> <slug>` report (one call instead of five).
+- [ ] **`/fenb-content-add-results` FR table** — trim the Step 6 terminology table to non-obvious mappings (Vétéran, Vét-50/60, Position, Nom, ronde(s) de poules, gender adjective placement); standard terms like Fleuret/Épée/Sabre don't need listing.
+- [ ] **`/fenb-content-add-news`** — drop the closing dot-separator warning; CLAUDE.md already states it.
+- [ ] **`/fenb-git-release` Step 7** — the TODO.md review overlaps `/fenb-docs-update`; consider replacing it with a one-line reminder to run that skill first.
+- [ ] **`/fenb-data-get-results` helper** — the skill has the AI map columns, extract podiums, match NB clubs and build the JSON from `ftl-read-saved-pages.py` output. Consider moving podium extraction / club matching into the helper. Trade-off: the helper deliberately doesn't interpret columns so an FTL layout change can't silently corrupt results — any move must keep failing loudly.
+- [ ] **`/fenb-content-social-summary` review** — never assessed for token burn or script candidates (e.g. the Unicode bold-title conversion is mechanical and could be a script).
 
 Skills still needing an end-to-end test run — remove a row once its skill passes a real run.
 
@@ -116,8 +112,11 @@ Skills still needing an end-to-end test run — remove a row once its skill pass
 | `/fenb-git-commit` | Partly tested | Restructured 2026-09-27 to a single confirmation popup (shows drafted message); absorbed the removed `/fenb-git-merge` as "Commit, push & merge into dev" on feature branches. "Commit & push" on `dev` passed a real run (2026-09-27, `9d5e0c8`); still untested: "Commit to new branch…" and "Commit, push & merge into dev" |
 | `/fenb-git-release` | Partly tested | Restructured 2026-09-27 (single two-question popup). Full "Merge now" + tag path passed a real run 2026-10-28 (v0.6.4, PR #118). Still untested: Step 3 Hugo update (added 2026-10-28), "Leave open", "No tag", and the stash path |
 
-## Events data
+---
 
+## Logos
+
+- [ ] **Logo files in `static/images/fenb-logo/`** — only 4 SVGs there are used by the site (nav logos and the hero fallback); the rest (`.ai`/`.eps` masters, PDF/PNG/JPG exports, TeamEquipeNB set, brand guide) is published as-is. The owner will decide what to do with them later — leave the folder untouched until then. Note: the brand guide `FENB-Logo-Standards.html` is also indexed by Pagefind, so it shows up in English site search (seen 2026-11-13); deleting or moving it fixes that.
 - [ ] **Fencing Canada logo — replace with vector** — `static/images/organizations/fencing-canada.png` is a temporary raster (downloaded from 2mev.com, resized to 626×800). Replace with an official vector (SVG) version and update `logo:` for `CFF` in `data/organizations.yaml` — every article using `{{< host-logo id="CFF" >}}` picks it up automatically.
 
 ---

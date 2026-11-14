@@ -48,9 +48,9 @@ The load order is declared in `hugo.toml` under `params.ananke.custom_css`. File
 
 `.fenb-container` defaults to `max-width: 1200px`. Use these modifier classes when a section needs a narrower width — add them directly to the `<div class="fenb-container …">` element rather than writing a new descendant selector override.
 
-| Class | Max-width | Used by |
+| Class | Max-width | Used by (e.g.) |
 |---|---|---|
-| `.fenb-container--narrow` | 1100px | Events calendar + list views (must match — see `partials/events-viewbar.html`), board, about overview, policies |
+| `.fenb-container--narrow` | 1100px | Events calendar + list views (must match — see `partials/events-viewbar.html`), About, Join and policy pages |
 | `.fenb-container--tight` | 900px | Contact page |
 
 ### Hero breakout
@@ -393,7 +393,7 @@ The toggle sets `data-theme="dark"` on `<html>`; a `[data-theme="dark"]` block i
 
 ## URL paths — no leading slash
 
-`absURL`, `relURL` and `relLangURL` treat a leading `/` as host-root-relative and drop the base path. With the GitHub Pages `baseURL` (`/hugo-testing/`):
+`absURL`, `relURL` and `relLangURL` treat a leading `/` as host-root-relative and drop the base path. With the development `baseURL` (`/hugo-testing/` subpath):
 
 - `"/events/" | relLangURL` → `/events/` ❌
 - `"events/" | relLangURL` → `/hugo-testing/events/` ✓
@@ -591,7 +591,7 @@ cascade:
 
 ## Icon system
 
-All decorative SVG icons live in `fenb-1/static/images/svg/` as individual files. Icons use `viewBox` only — no `width` or `height` attributes — and include `aria-hidden="true"`. Size is always set at the callsite.
+All decorative SVG icons live in `fenb-1/static/images/svg/` as individual files, each with a `viewBox` and `aria-hidden="true"`. Most files also carry `width`/`height` attributes, which act as the default size when the callsite passes none. When the callsite passes `w`/`h`, `icon.html` inserts its own `width`/`height` straight after `<svg`. Browsers use the first copy of a duplicated attribute, so the callsite size always wins.
 
 ### Rendering icons in templates
 
@@ -605,8 +605,8 @@ Use the `icon.html` partial when you need to control size or inject a CSS class:
 For data-file-driven loops where the icon filename comes from YAML, pass the size in the template (the template knows its own layout context):
 
 ```html
-{{ range hugo.Data.club_benefits.club_benefits }}
-  {{ partial "icon.html" (dict "name" .icon "w" 28 "h" 28) }}
+{{ range hugo.Data.join_paths.join_paths }}
+  {{ partial "icon.html" (dict "name" .icon "w" 40 "h" 40) }}
 {{ end }}
 ```
 
@@ -617,7 +617,7 @@ Even with no size or class override, use the partial — `{{ partial "icon.html"
 ### Adding a new icon
 
 1. Drop the `.svg` file in `fenb-1/static/images/svg/`.
-2. Strip any `width`/`height` attributes — keep `viewBox` only.
+2. Keep the `viewBox`. `width`/`height` are optional: they only set the default size for callsites that pass no `w`/`h`.
 3. Add `aria-hidden="true"` to the `<svg>` tag.
 4. Reference it by filename via the `icon.html` partial.
 
@@ -671,7 +671,7 @@ For filterable lists (e.g. `/events/schedule/`), prefer SSR + JS visibility togg
 
 ### Build-time date staleness — client-side recompute pattern
 
-Hugo's `now` is frozen at build time, and this site only rebuilds on release, so "is this event still upcoming" checks computed from it can drift stale between deploys. `static/js/event-dates.js` exposes `window.FenbEventDates` (`todayMidnight()`, `parseDate()`, `isUpcoming()`, `isWithinWindow(fromStr, toStr)`) so pages recompute against the visitor's real clock instead.
+Hugo's `now` is frozen at build time, and the site only rebuilds on release and twice a day on a schedule (docs/DEVELOPMENT.md → Live site), so "is this event still upcoming" checks computed from it can drift stale between deploys. `static/js/event-dates.js` exposes `window.FenbEventDates` (`todayMidnight()`, `parseDate()`, `isUpcoming()`, `isWithinWindow(fromStr, toStr)`) so pages recompute against the visitor's real clock instead.
 
 Templates render a safe superset server-side (e.g. every event still upcoming as of the build, not just the first 4) tagged with a `data-event-date` attribute, and JS narrows it down client-side on load: `static/js/upcoming-events.js` trims the homepage grid to the true first 4, and `events-calendar.js`/`events-schedule.js` re-check register-link visibility the same way. Use this pattern for any date-sensitive "is this still current" check rather than trusting Hugo's build-time `now`.
 

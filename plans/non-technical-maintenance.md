@@ -26,7 +26,7 @@ The site's current editing workflow assumes a developer: git branch management, 
 5. **Missing year subfolder `_index.md`** — first article of a new year breaks the news listing
 6. **Forgetting `translationKey`** in policy files — language switcher broken on that policy
 7. **Direct commit to `main`** — bypasses the review gate and immediately deploys to production
-8. **Data file named with hyphens** — `new-file.yaml` produces a TOML-inaccessible key (see CLAUDE.md)
+8. **Data file named with hyphens** — `new-file.yaml` produces a key templates can't read, so the page renders silently empty (see CLAUDE.md)
 
 ## Chosen approach: three phases
 
@@ -139,7 +139,7 @@ Editors commit directly to `dev`. Feature branches add complexity with no benefi
 ## Implementation order
 
 1. `scripts/add-event.sh` — highest-frequency task, biggest error surface
-2. `scripts/add-board-member.sh` — annual but easy to get wrong
+2. `scripts/board-member-change.sh` — annual but easy to get wrong
 3. `EDITOR_GUIDE.md` — needed before handing off to anyone
 4. `.github/workflows/deploy-staging.yml` + `main` branch protection
 5. `scripts/update-join-urls.sh` — annual, low urgency
@@ -150,7 +150,7 @@ Editors commit directly to `dev`. Feature branches add complexity with no benefi
 | File | Action | Phase |
 |---|---|---|
 | `scripts/add-event.sh` | Create | 1 |
-| `scripts/add-board-member.sh` | Create | 1 |
+| `scripts/board-member-change.sh` | Create | 1 |
 | `scripts/update-join-urls.sh` | Create | 1 |
 | `EDITOR_GUIDE.md` | Create | 1 |
 | `.github/workflows/deploy-staging.yml` | Create | 2 |

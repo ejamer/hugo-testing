@@ -9,15 +9,17 @@ Ask the user for:
 2. Article slug — short kebab-case, no year (e.g. `provincial-results`)
 3. English title
 4. French title
-5. Category ID — one of (see `docs/STYLE_GUIDE.md` "News category colours" for the authoritative table):
-   - `competition` — teal; registration/announcement/results for a competition (non-NB or open); also the typical choice for tournament registration or announcement posts
-   - `national` — crimson; results from a national championship
-   - `provincial` — crimson; results from the NB Provincial Championship
-   - `training` — yellow; registration/announcement for a training camp / summer camp
-   - `clinic` — dark orange; registration/announcement for a skills clinic (armoury, referee, etc.)
-   - `announcement` — blue; general announcements
-   - `meeting` — grey; FENB meeting notices
-   - `results` — teal; also loads the interactive results table (`results_table: true` front matter) — use only when the article itself contains a sortable results table, not for competition results in prose
+5. Category ID — one of (`docs/STYLE_GUIDE.md` "News category colours" is the authoritative table):
+   - `competition` — registration or announcement for a competition
+   - `results` — results from any competition other than nationals or the NB Provincials (results articles usually come from `/fenb-content-add-results` instead)
+   - `national` — results from a national championship
+   - `provincial` — results from the NB Provincial Championship
+   - `training` — registration/announcement for a training camp / summer camp
+   - `clinic` — registration/announcement for a skills clinic (armoury, referee, etc.)
+   - `announcement` — general announcements
+   - `meeting` — FENB meeting notices
+
+   `results_table: true` (sortable results tables) is separate from the category. Add it only when the body contains Markdown tables of placements.
 6. English summary — one sentence shown on the homepage card
 7. French summary
 
