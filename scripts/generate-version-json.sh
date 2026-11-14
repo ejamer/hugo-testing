@@ -2,7 +2,7 @@
 #
 # Write fenb-1/static/version.json for a release.
 #
-# Used by /fenb-git-release (Step 11). Computes every field and writes the
+# Used by /fenb-git-release (Step 10). Computes every field and writes the
 # file — nothing else. It deliberately does NOT git add/commit/push: commits
 # only happen inside the /fenb-git-* skills (see CLAUDE.md), which run the git
 # commands themselves after calling this script. Run from the repo root.

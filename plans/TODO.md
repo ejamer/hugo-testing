@@ -106,7 +106,13 @@ Details and sources are in `plans/REFEREE_PROGRAM_COMPARISON.md`.
 
 ## Project skills
 
-- [ ] **Skill automation and non-AI tooling** — `plans/skill-assessment.md` proposes shell scripts to reduce AI dependency and make common updates executable without Claude. Remaining: `create-news-stub.sh` (file creation + year-folder logic shared by `/fenb-content-add-news` and `/fenb-content-add-results`), then optionally `page-audit.sh`. **Don't build** the plan's `git-preflight.sh` or `list-feature-branches.sh` — `/fenb-git-commit` was simplified and `/fenb-git-merge` removed (2026-09-27), so they're obsolete. Per CLAUDE.md, scripts never run git commit/push. Ties into the **Editor tooling** item under Non-technical content maintenance.
+- [ ] **`create-news-stub.sh`** — script for the news file creation and year-folder logic (create `content/news/{year}/_index*.md` from the previous year) currently duplicated in `/fenb-content-add-news` and `/fenb-content-add-results`. Writes both `.en.md`/`.fr.md` stubs; the skill fills title/summary/body. Reduces AI dependency and lets an editor create an article without Claude — ties into the **Editor tooling** item under Non-technical content maintenance. Per CLAUDE.md, scripts never run git commit/push.
+- [ ] **`/fenb-content-add-page` trimming** — make Step 6 (review five docs) conditional on new/changed `layouts/` files, and drop Step 5d (placeholder-href grep; low signal). Optionally fold the Step 5 greps into a `scripts/page-audit.sh <section> <slug>` report (one call instead of five).
+- [ ] **`/fenb-content-add-results` FR table** — trim the Step 6 terminology table to non-obvious mappings (Vétéran, Vét-50/60, Position, Nom, ronde(s) de poules, gender adjective placement); standard terms like Fleuret/Épée/Sabre don't need listing.
+- [ ] **`/fenb-content-add-news`** — drop the closing dot-separator warning; CLAUDE.md already states it.
+- [ ] **`/fenb-git-release` Step 7** — the TODO.md review overlaps `/fenb-docs-update`; consider replacing it with a one-line reminder to run that skill first.
+- [ ] **`/fenb-data-get-results` helper** — the skill has the AI map columns, extract podiums, match NB clubs and build the JSON from `ftl-read-saved-pages.py` output. Consider moving podium extraction / club matching into the helper. Trade-off: the helper deliberately doesn't interpret columns so an FTL layout change can't silently corrupt results — any move must keep failing loudly.
+- [ ] **`/fenb-content-social-summary` review** — never assessed for token burn or script candidates (e.g. the Unicode bold-title conversion is mechanical and could be a script).
 
 Skills still needing an end-to-end test run — remove a row once its skill passes a real run.
 

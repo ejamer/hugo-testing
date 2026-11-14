@@ -238,7 +238,7 @@ Edit `data/board_members.yaml`. Top-level keys:
 
   **Keep this list at exactly the board's bylaws-defined seat count at all times.** A departure should never change how many entries are here — see "When someone leaves" below.
 
-- `previous_members` — past board members, not displayed anywhere yet (a future "Board History" page — see `docs/TODO.md`). Each entry adds `end_date` to the `members` schema:
+- `previous_members` — past board members, not displayed anywhere yet (a future "Board History" page — see `plans/TODO.md`). Each entry adds `end_date` to the `members` schema:
   ```yaml
   - name: "Full Name"
     role_en: "Director"
@@ -470,4 +470,4 @@ Two URLs in `data/join.yaml` need updating at the start of each season:
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Branch strategy, local build commands, GitHub Pages deployment |
 | [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) | Brand, CSS, i18n, bilingual rules, naming conventions, category colours |
 | [docs/PROJECT_LAYOUT.md](docs/PROJECT_LAYOUT.md) | Folder tree, plus tables of data files, layouts, partials, JS and scripts |
-| [docs/TODO.md](docs/TODO.md) | Outstanding items |
+| [plans/TODO.md](plans/TODO.md) | Outstanding items |

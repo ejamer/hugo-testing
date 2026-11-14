@@ -291,6 +291,22 @@ events:
 
   # ── December 2026 ─────────────────────────────────────────
 
+  - title: "OFA Youth Circuit #2"
+    title_fr: "OFA Youth Circuit #2"
+    start_date: "2026-12-05"
+    end_date: "2026-12-06"
+    address: "Campus Recreation & Wellness Centre, 21 Avenue of Champions, Oshawa, ON"
+    city: "Oshawa, ON"
+    category: "competition"
+    description_en: "U13, U15, Cadet. Registration closes Nov 29, 2026."
+    description_fr: "U13, U15, Cadet. Inscriptions jusqu'au 29 novembre 2026."
+    details_url_en: "https://fencingontario.ca/event/ontario-youth-circuit-2/"
+    details_url_fr: ""
+    registration_url_en: "https://www.askfred.net/tournaments/3f4fe1ba-14aa-4565-a045-ad390655706a"
+    registration_url_fr: "https://www.askfred.net/tournaments/3f4fe1ba-14aa-4565-a045-ad390655706a"
+    results_url_en: ""
+    results_url_fr: ""
+
   - title: "FENB Annual General Meeting"
     title_fr: "Assemblée générale annuelle de la FENB"
     start_date: "2026-12-06"
@@ -348,10 +364,10 @@ events:
     category: "competition"
     description_en: "U9, U11, U13, U15, Cadet."
     description_fr: "U9, U11, U13, U15, Cadet."
-    details_url_en: ""
+    details_url_en: "https://fencingontario.ca/event/ontario-youth-circuit-3/"
     details_url_fr: ""
-    registration_url_en: ""
-    registration_url_fr: ""
+    registration_url_en: "https://www.askfred.net/tournaments/51b3025b-8278-48f4-a438-4053b2fd9c3c"
+    registration_url_fr: "https://www.askfred.net/tournaments/51b3025b-8278-48f4-a438-4053b2fd9c3c"
     results_url_en: ""
     results_url_fr: ""
 

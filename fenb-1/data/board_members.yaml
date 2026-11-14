@@ -17,7 +17,7 @@
 #   - `previous_members` entries: both start_date and end_date expected.
 #
 # `previous_members` isn't displayed anywhere yet — it's a historical record for a
-# future "Board History" page. See docs/TODO.md.
+# future "Board History" page. See plans/TODO.md.
 
 contact: "fencingnb@gmail.com"
 

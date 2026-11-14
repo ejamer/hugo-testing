@@ -13,7 +13,7 @@ hugo-testing/
 ├── .gitmodules            Ananke theme submodule → fenb-1/themes/ananke
 ├── .claude/               Project skills (commands/fenb-*.md) and shared settings
 ├── docs/                  Reference docs — see README → Related docs
-├── plans/                 Plans for multi-session features (referenced from docs/TODO.md)
+├── plans/                 Plans for multi-session features, plus TODO.md (outstanding items)
 ├── scripts/               Helper scripts — see Scripts table
 ├── design-sources/        Blank templates only (hero/: FENB + Damocles Inkscape SVGs, HTML
 │                          announcement); not served. Finished designs go in resources/ (local)

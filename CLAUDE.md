@@ -13,10 +13,10 @@ Hugo static site replacing www.fencingnb.ca, located in `fenb-1/`. Bilingual (En
 - **`docs/STYLE_GUIDE.md`** — brand colours, CSS conventions, i18n/bilingual rules, naming, shared components, URL path rules, nav CSS.
 - **`docs/DEVELOPMENT.md`** — branches, builds, Hugo/Pagefind pins, `gh` quirks, Claude Code permissions.
 - **`docs/GOTCHAS.md`** — read before working on XML templates, sitemaps, data files, submodules, third-party PDFs, headless/Playwright testing, or JS show/hide toggles.
-- **`docs/TODO.md`** — outstanding items. **Don't read it unless the user asks.**
+- **`plans/TODO.md`** — outstanding items. **Don't read it unless the user asks.**
 - **`plans/`** — implementation plans for multi-session features.
 
-When creating or modifying content that leaves a placeholder link, missing page, or deferred decision, add a `- [ ]` entry to `docs/TODO.md`. Resolved items are deleted, not ticked.
+When creating or modifying content that leaves a placeholder link, missing page, or deferred decision, add a `- [ ]` entry to `plans/TODO.md`. Resolved items are deleted, not ticked.
 
 ## Skills
 

@@ -36,7 +36,7 @@ Then:
 
    d. **Placeholder links in related layouts** — grep `fenb-1/layouts/{section}/` for placeholder hrefs (`mailto:`, `href="#"`, `href=""`) that might now be intended to point to the new page. Report any found.
 
-   e. **TODO.md** — grep `docs/TODO.md` for the section name or slug. Report any open items that reference this area so the user can decide if any are now addressed.
+   e. **TODO.md** — grep `plans/TODO.md` for the section name or slug. Report any open items that reference this area so the user can decide if any are now addressed.
 
    Report all findings clearly. Don't silently skip any check — if nothing is found, say so briefly.
 
