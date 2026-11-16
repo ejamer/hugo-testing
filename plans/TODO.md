@@ -144,3 +144,4 @@ From the site comparison against judonb.org — read `plans/JUDO_NB_COMPARISON.h
 - [ ] ⏸ **R19 "Support FENB" page** — Sport NB Gold Rush; **blocked:** confirm FENB eligibility with Sport NB
 - [ ] **R20 Per-event pages for NB-hosted events** — content adapter (`_content.gotmpl`) over the events data
 - [ ] ⏸ **R21 Role-based contacts on board page** — `role_email` in `board_members.yaml`; **blocked:** does FENB control fenb.ca mail forwarding?
+- [ ] Board info document for prospective directors: the AGM 2026 email mentions "the board has prepared this document" for people wanting to know more about joining. Get the file and link it from `content/news/2026/nov-15-board-director-positions-2026.{en,fr}.md`.
