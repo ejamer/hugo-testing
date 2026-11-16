@@ -51,6 +51,8 @@ The banner is rendered by `layouts/partials/site-announcement.html` and hidden f
 <summary><strong>New news post</strong></summary>
 
 > **Skill available:** run `/fenb-content-add-news` in Claude Code — it prompts for date, slug, titles, category, and summaries, then creates both language files with correct front matter and filenames.
+>
+> **Without Claude:** `scripts/create-news-stub.sh 2026-06-01 provincial-team-announced announcement` creates the correctly named EN/FR pair (and the year folder's `_index` files for a new year); then fill in `title`, `summary` and the body.
 
 **File naming:** `{mon}-{dd}-{title}.{lang}.md` inside the year subfolder — see [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for the full naming convention. For recurring annual events (same tournament each season), include the year in the slug to prevent cross-season collisions: e.g. `east-coast-games-2026-registration`.
 
@@ -107,7 +109,7 @@ Full post body here (Markdown).
 
 The article page header band shows "News & Results" (the section title) rather than the article title — controlled by `page_header_uses_section: true` in the news `_index.md` cascade. The article title appears in the scrolling body below the band.
 
-**New year folder:** when the first article of a new calendar year is created, add a year subfolder with `_index.md` and `_index.fr.md` (copy from the previous year folder).
+**New year folder:** the first article of a new calendar year needs a year subfolder with `_index.md` and `_index.fr.md`, copied from the previous year folder. `scripts/create-news-stub.sh` (and both news skills, which call it) does this automatically.
 
 **Internal links in article body:** use Hugo's `relref` shortcode rather than hardcoded paths. `relref` resolves to the correct URL at build time (including language prefix) and produces a build error if the target page doesn't exist.
 

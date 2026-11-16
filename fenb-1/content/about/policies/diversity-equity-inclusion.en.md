@@ -6,7 +6,7 @@ translationKey: "diversity-equity-inclusion"
 **2.3 Diversity, Equity, and Inclusion Policy**
 
 **Purpose**  
-The purpose of this policy is to foster an equitable, diverse, and inclusive environment within Fencing-Escrime New Brunswick (FENB) by ensuring that all individuals have equal access to participation and leadership opportunities in the sport of fencing.
+The purpose of this policy is to foster an equitable, diverse, and inclusive environment within Fencing-Escrime NB (FENB) by ensuring that all individuals have equal access to participation and leadership opportunities in the sport of fencing.
 
 This policy reflects FENB’s commitment to removing barriers, preventing discrimination, and promoting representation across all levels of the organization in alignment with Sport Canada’s national framework for equity, diversity, and inclusion in sport.
 

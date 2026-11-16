@@ -7,7 +7,7 @@ translationKey: "crisis-emergency-management"
 
 **Objectif**
 
-La présente politique a pour objectif de veiller à ce que Fencing-Escrime New Brunswick (FENB) soit prête à intervenir de manière efficace et sécuritaire en cas d’urgence, de crise ou d’incident critique susceptible d’avoir une incidence sur la santé, la sécurité ou la réputation des participants, du personnel ou de l’organisation.
+La présente politique a pour objectif de veiller à ce que Fencing-Escrime NB (FENB) soit prête à intervenir de manière efficace et sécuritaire en cas d’urgence, de crise ou d’incident critique susceptible d’avoir une incidence sur la santé, la sécurité ou la réputation des participants, du personnel ou de l’organisation.
 
 Cette politique fournit un cadre de gouvernance pour la gestion des crises et demande aux membres de suivre les procédures détaillées énoncées dans le *Protocole de gestion des crises de FENB*.
 

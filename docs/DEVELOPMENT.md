@@ -84,7 +84,7 @@ The site uses **Google Analytics 4 (GA4)**, tag `G-BKG2E2SKZF`. The tag ID is st
 
 **Keep the Website Privacy page in step.** `content/about/policies/website-privacy.{en,fr}.md` (linked from the footer's shield icon) tells visitors what the site collects: Google Analytics, the Google Maps embed on the Clubs page, the theme choice in `localStorage`, browser-only search, and the `mailto:` contact form. Update both languages, and its "Last updated" line, whenever any of those change or a new tracker or third-party embed is added. The page is a public statement for FENB, so the site owner approves its wording.
 
-To view reports, open [analytics.google.com](https://analytics.google.com) and select the Fencing NB property.
+To view reports, open [analytics.google.com](https://analytics.google.com) and select the fenb-1 property.
 
 ### Access management
 

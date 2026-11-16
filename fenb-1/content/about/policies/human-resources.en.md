@@ -9,7 +9,7 @@ translationKey: "human-resources"
 
 **Purpose**
 
-The purpose of this policy is to ensure that Fencing-Escrime New Brunswick (FENB) recruits, develops, supports, and manages staff, contractors, coaches, officials, and volunteers in a fair, consistent, and professional manner aligned with the organization’s mission, values, and Safe Sport commitments.  
+The purpose of this policy is to ensure that Fencing-Escrime NB (FENB) recruits, develops, supports, and manages staff, contractors, coaches, officials, and volunteers in a fair, consistent, and professional manner aligned with the organization’s mission, values, and Safe Sport commitments.  
 This policy establishes clear expectations for hiring, conduct, supervision, workplace practices, performance management, compensation, and conflict resolution in accordance with Sport NB standards and Government of New Brunswick employment requirements.
 
 ---

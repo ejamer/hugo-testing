@@ -165,6 +165,8 @@ Check here before building a new component. Partials marked † have a full writ
 | `check-hugo-version.sh` | Compares the CI Hugo pin with local/latest; `--set` updates the pin |
 | `check-pagefind-version.sh` | Compares the Pagefind pin (both workflows + Makefile) with npm; `--set` updates all three |
 | `compute-next-version.sh` | Latest tag + next version candidates |
+| `create-news-stub.sh` | Creates a news article's EN/FR stub pair (and a new year folder's `_index` files) |
+| `fb-bold.py` | Converts a Facebook post title to Unicode bold for /fenb-content-social-summary |
 | `ftl-read-saved-pages.py` | Reads hand-saved FencingTimeLive pages for /fenb-data-get-results |
 | `generate-version-json.sh` | Writes `static/version.json` for a release |
 | `season-rollover.sh` | Archives `events.yaml` and starts a fresh season file |

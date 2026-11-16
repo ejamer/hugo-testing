@@ -7,7 +7,7 @@ translationKey: "official-language"
 
 **Purpose**
 
-The purpose of this policy is to ensure that Fencing-Escrime New Brunswick (FENB) operates in both official languages of New Brunswick, recognizing the equal status of English and French in all communications, programs, and services.
+The purpose of this policy is to ensure that Fencing-Escrime NB (FENB) operates in both official languages of New Brunswick, recognizing the equal status of English and French in all communications, programs, and services.
 
 This policy promotes inclusivity and accessibility by respecting the linguistic rights of all members, volunteers, and the public in accordance with the provincial ***Official Languages Act***.
 

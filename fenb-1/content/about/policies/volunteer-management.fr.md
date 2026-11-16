@@ -7,7 +7,7 @@ translationKey: "volunteer-management"
 
 **Objectif**
 
-L'objectif de cette politique est d'établir des normes claires et cohérentes pour le recrutement, la sélection, l'orientation, le soutien et la reconnaissance des bénévoles qui contribuent à Fencing-Escrime New Brunswick (FENB). Les bénévoles jouent un rôle central dans la mise en œuvre des programmes d'escrime à travers la province, et cette politique garantit que leur implication est sûre, équitable et conforme à la mission, aux valeurs et aux obligations de FENB dans le cadre de Safe Sport.
+L'objectif de cette politique est d'établir des normes claires et cohérentes pour le recrutement, la sélection, l'orientation, le soutien et la reconnaissance des bénévoles qui contribuent à Fencing-Escrime NB (FENB). Les bénévoles jouent un rôle central dans la mise en œuvre des programmes d'escrime à travers la province, et cette politique garantit que leur implication est sûre, équitable et conforme à la mission, aux valeurs et aux obligations de FENB dans le cadre de Safe Sport.
 
 Cette politique garantit également la conformité avec les attentes provinciales, notamment le Mécanisme de plainte Safe Sport du Nouveau-Brunswick (NBSSCM), le Code de conduite universel pour prévenir et traiter les mauvais traitements dans le sport (UCCMS) et les principes d’impartialité, d’équité, de respect, de rapidité et de transparence promus par Sport NB.
 

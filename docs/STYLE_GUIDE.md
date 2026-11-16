@@ -493,7 +493,7 @@ content/news/2026/apr-05-provincial-results.en.md
 content/news/2026/apr-05-provincial-results.fr.md
 ```
 
-When the first article of a new calendar year arrives, create the year subfolder with `_index.md` + `_index.fr.md` (copy from the previous year folder).
+When the first article of a new calendar year arrives, create the year subfolder with `_index.md` + `_index.fr.md` (copy from the previous year folder). `scripts/create-news-stub.sh` does this automatically, and writes the EN/FR pair with correct filenames; both news skills call it.
 
 ---
 

@@ -7,7 +7,7 @@ translationKey: "risk-management"
 
 **Objectif**
 
-L'objectif de cette politique est de veiller à ce que Fencing-Escrime New Brunswick (FENB) identifie, évalue et gère les risques potentiels susceptibles d'affecter les activités, la réputation, l'intégrité financière et la sécurité des participants de l'organisation.
+L'objectif de cette politique est de veiller à ce que Fencing-Escrime NB (FENB) identifie, évalue et gère les risques potentiels susceptibles d'affecter les activités, la réputation, l'intégrité financière et la sécurité des participants de l'organisation.
 
 La gestion des risques favorise une prise de décision éclairée et protège le personnel, les actifs et les programmes de FENB, tout en encourageant la responsabilisation et l’amélioration continue.
 

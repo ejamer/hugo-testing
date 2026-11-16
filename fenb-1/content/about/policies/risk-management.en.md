@@ -7,7 +7,7 @@ translationKey: "risk-management"
 
 **Purpose**
 
-The purpose of this policy is to ensure that Fencing-Escrime New Brunswick (FENB) identifies, assesses, and manages potential risks that could affect the organization’s operations, reputation, financial integrity, and the safety of participants.
+The purpose of this policy is to ensure that Fencing-Escrime NB (FENB) identifies, assesses, and manages potential risks that could affect the organization’s operations, reputation, financial integrity, and the safety of participants.
 
 Risk management supports sound decision-making and safeguards FENB’s people, assets, and programs while promoting accountability and continuous improvement.
 

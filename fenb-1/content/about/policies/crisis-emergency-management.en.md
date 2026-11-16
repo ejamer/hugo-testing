@@ -6,7 +6,7 @@ translationKey: "crisis-emergency-management"
 **2.17 Crisis and Emergency Management Policy**
 
 **Purpose**  
-The purpose of this policy is to ensure that Fencing-Escrime New Brunswick (FENB) is prepared to respond effectively and safely to emergencies, crises, or critical incidents that could impact the health, safety, or reputation of participants, staff, or the organization.
+The purpose of this policy is to ensure that Fencing-Escrime NB (FENB) is prepared to respond effectively and safely to emergencies, crises, or critical incidents that could impact the health, safety, or reputation of participants, staff, or the organization.
 
 This policy provides a governance framework for crisis management and directs members to follow the detailed procedures set out in the ***FENB Crisis Management Protocol***.
 

@@ -9,7 +9,7 @@ Annexe : Fencing-Escrime NB : Formulaire de réception et de tri des plaintes
 
 **1\. Objectif**
 
-L'objectif de cette politique est de mettre en place un processus équitable, transparent et rapide pour résoudre les litiges internes au sein de Fencing-Escrime New Brunswick (FENB) qui ne relèvent pas de la compétence du Code de conduite universel pour prévenir et traiter les mauvais traitements dans le sport (UCCMS).
+L'objectif de cette politique est de mettre en place un processus équitable, transparent et rapide pour résoudre les litiges internes au sein de Fencing-Escrime NB (FENB) qui ne relèvent pas de la compétence du Code de conduite universel pour prévenir et traiter les mauvais traitements dans le sport (UCCMS).
 
 **2\. Champ d'application et compétence**
 
@@ -96,7 +96,7 @@ La présente politique sera révisée tous les deux ans, conjointement avec la *
 
  
 
- **Annexe : Fencing NB : Formulaire de réception et de triage des plaintes**
+ **Annexe : Fencing-Escrime NB : Formulaire de réception et de triage des plaintes**
 
 Instructions : Ce formulaire doit être rempli par toute personne (le « plaignant ») souhaitant engager une procédure formelle en vertu des politiques de la FENB.
 
