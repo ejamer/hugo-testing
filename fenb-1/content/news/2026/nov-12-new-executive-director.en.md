@@ -2,12 +2,12 @@
 title: "Welcoming Jean-Marc Sinnasse, Our New Executive Director"
 date: 2026-11-12
 category: announcement
-summary: "Fencing NB is pleased to welcome Jean-Marc Sinnasse as our new Executive Director, and to thank Kathryn Howe for her years of dedicated service in the role."
+summary: "Fencing-Escrime NB is pleased to welcome Jean-Marc Sinnasse as our new Executive Director, and to thank Kathryn Howe for her years of dedicated service in the role."
 image: "images/news/2026/executive-director-jean-marc-sinnasse.jpeg"
-image_alt: "Jean-Marc Sinnasse, Executive Director of Fencing NB"
+image_alt: "Jean-Marc Sinnasse, Executive Director of Fencing-Escrime NB"
 ---
 
-Fencing NB is delighted to announce that **Jean-Marc Sinnasse** joined us as our new Executive Director in October 2026. We're excited about the skills and experience he brings to the role. His background in budgeting, funding, and building strong organizations is exactly what we need as we keep supporting our clubs and growing our sport across the province.
+Fencing-Escrime NB is delighted to announce that **Jean-Marc Sinnasse** joined us as our new Executive Director in October 2026. We're excited about the skills and experience he brings to the role. His background in budgeting, funding, and building strong organizations is exactly what we need as we keep supporting our clubs and growing our sport across the province.
 
 Jean-Marc first discovered fencing as a child, and more recently he has coached badminton and started introductory sessions for adult beginners. In his own words:
 

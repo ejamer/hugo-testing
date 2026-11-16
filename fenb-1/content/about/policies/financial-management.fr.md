@@ -7,7 +7,7 @@ translationKey: "financial-management"
 
 **Objectif**
 
-L'objectif de cette politique est de promouvoir une saine gestion financière, la responsabilité et la transparence au sein de Fencing-Escrime New Brunswick (FENB). Elle établit des contrôles visant à garantir que les fonds sont gérés de manière responsable, que les budgets sont alignés sur les objectifs de l'organisation et que les rapports respectent les normes applicables.
+L'objectif de cette politique est de promouvoir une saine gestion financière, la responsabilité et la transparence au sein de Fencing-Escrime NB (FENB). Elle établit des contrôles visant à garantir que les fonds sont gérés de manière responsable, que les budgets sont alignés sur les objectifs de l'organisation et que les rapports respectent les normes applicables.
 
 Cette politique garantit que les ressources financières de l’organisation sont utilisées efficacement pour soutenir le développement de l’escrime, les programmes destinés aux athlètes et la pérennité des activités.
 

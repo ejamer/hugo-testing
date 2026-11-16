@@ -6,7 +6,7 @@ translationKey: "financial-management"
 **2.6 Financial Management Policy**
 
 **Purpose**  
-The purpose of this policy is to promote sound financial stewardship, accountability, and transparency within Fencing-Escrime New Brunswick (FENB). It establishes controls to ensure that funds are managed responsibly, budgets are aligned with organizational goals, and reporting meets applicable standards.
+The purpose of this policy is to promote sound financial stewardship, accountability, and transparency within Fencing-Escrime NB (FENB). It establishes controls to ensure that funds are managed responsibly, budgets are aligned with organizational goals, and reporting meets applicable standards.
 
 This policy ensures that the organization’s financial resources are used efficiently to support fencing development, athlete programs, and sustainable operations.
 

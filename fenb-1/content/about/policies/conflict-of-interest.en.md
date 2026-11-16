@@ -6,7 +6,7 @@ translationKey: "conflict-of-interest"
 **2.14 Conflict of Interest and Ethics Policy**
 
 **Purpose**  
-The purpose of this policy is to ensure that decisions and actions taken by Fencing-Escrime New Brunswick (FENB) representatives are made with integrity, objectivity, and transparency, free from any conflict between personal interests and organizational responsibilities.
+The purpose of this policy is to ensure that decisions and actions taken by Fencing-Escrime NB (FENB) representatives are made with integrity, objectivity, and transparency, free from any conflict between personal interests and organizational responsibilities.
 
 This policy promotes ethical behaviour, accountability, and public trust in FENB’s governance and operations.
 

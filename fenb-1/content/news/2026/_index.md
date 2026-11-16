@@ -1,6 +1,6 @@
 ---
 title: "News & Results"
-description: "Latest competition results, announcements, and updates from Fencing New Brunswick."
+description: "Latest competition results, announcements, and updates from Fencing-Escrime NB."
 ---
 
 <!-- Organizational year folder. Page content is not read from this file.

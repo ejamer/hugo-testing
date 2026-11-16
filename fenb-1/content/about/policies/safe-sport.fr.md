@@ -7,7 +7,7 @@ translationKey: "safe-sport"
 
 **Objectif**
 
-La présente politique relative à la sécurité dans le sport, à la conduite, à la communication et à la protection des athlètes a pour objectif de garantir que toutes les activités régies par Fencing-Escrime New Brunswick (FENB) se déroulent dans un environnement sûr, respectueux, inclusif et éthique, exempt de tout abus, harcèlement, maltraitance, discrimination, intimidation et représailles.
+La présente politique relative à la sécurité dans le sport, à la conduite, à la communication et à la protection des athlètes a pour objectif de garantir que toutes les activités régies par Fencing-Escrime NB (FENB) se déroulent dans un environnement sûr, respectueux, inclusif et éthique, exempt de tout abus, harcèlement, maltraitance, discrimination, intimidation et représailles.
 
 Cette politique établit un cadre unique et intégré de sport sécuritaire pour FENB en consolidant et en régissant les normes précédemment énoncées dans les politiques de FENB relatives à :
 

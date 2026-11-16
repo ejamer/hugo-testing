@@ -12,7 +12,7 @@
       <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>Sitemap — Fencing NB</title>
+        <title>Sitemap — Fencing-Escrime NB</title>
         <style>
           :root { --teal: #006156; --crimson: #79242f; }
           body { margin: 0; font-family: Avenir, 'Nunito Sans', system-ui, sans-serif; color: #222; background: #f4f8f7; }
@@ -32,7 +32,7 @@
       </head>
       <body>
         <header>
-          <h1>Fencing NB — Sitemap</h1>
+          <h1>Fencing-Escrime NB — Sitemap</h1>
           <p><xsl:value-of select="count(sm:urlset/sm:url)"/> URLs</p>
         </header>
         <main>

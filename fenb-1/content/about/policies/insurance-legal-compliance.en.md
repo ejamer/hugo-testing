@@ -6,7 +6,7 @@ translationKey: "insurance-legal-compliance"
 **2.12 Insurance and Legal Compliance Policy**
 
 **Purpose**  
-The purpose of this policy is to ensure that Fencing-Escrime New Brunswick (FENB) maintains adequate insurance coverage and complies with all applicable legal and regulatory requirements. This protects the organization, its members, and stakeholders from financial and legal risks.
+The purpose of this policy is to ensure that Fencing-Escrime NB (FENB) maintains adequate insurance coverage and complies with all applicable legal and regulatory requirements. This protects the organization, its members, and stakeholders from financial and legal risks.
 
 This policy supports responsible governance and aligns with the organization’s commitment to effective risk management, accountability, and safe participation.
 

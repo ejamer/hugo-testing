@@ -2,12 +2,12 @@
 title: "Bienvenue à Jean-Marc Sinnasse, notre nouveau directeur général"
 date: 2026-11-12
 category: announcement
-summary: "Escrime NB est heureux d'accueillir Jean-Marc Sinnasse à titre de nouveau directeur général, et remercie Kathryn Howe pour ses années de service dévoué dans ce rôle."
+summary: "Fencing-Escrime NB est heureux d'accueillir Jean-Marc Sinnasse à titre de nouveau directeur général, et remercie Kathryn Howe pour ses années de service dévoué dans ce rôle."
 image: "images/news/2026/executive-director-jean-marc-sinnasse.jpeg"
-image_alt: "Jean-Marc Sinnasse, directeur général d'Escrime NB"
+image_alt: "Jean-Marc Sinnasse, directeur général de Fencing-Escrime NB"
 ---
 
-Escrime NB est ravi d'annoncer que **Jean-Marc Sinnasse** s'est joint à nous à titre de nouveau directeur général en octobre 2026. Nous sommes enthousiastes face aux compétences et à l'expérience qu'il apporte à ce poste. Son expertise en budgétisation, en financement et en développement organisationnel est exactement ce dont nous avons besoin pour continuer à soutenir nos clubs et à faire grandir notre sport partout dans la province.
+Fencing-Escrime NB est ravi d'annoncer que **Jean-Marc Sinnasse** s'est joint à nous à titre de nouveau directeur général en octobre 2026. Nous sommes enthousiastes face aux compétences et à l'expérience qu'il apporte à ce poste. Son expertise en budgétisation, en financement et en développement organisationnel est exactement ce dont nous avons besoin pour continuer à soutenir nos clubs et à faire grandir notre sport partout dans la province.
 
 Jean-Marc a découvert l'escrime enfant et, plus récemment, il a encadré des activités de badminton et mis sur pied des séances d'initiation pour adultes débutants. Dans ses propres mots :
 

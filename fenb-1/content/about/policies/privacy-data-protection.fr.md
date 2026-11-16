@@ -7,7 +7,7 @@ translationKey: "privacy-data-protection"
 
 **Objectif**
 
-L'objectif de cette politique est de protéger les renseignements personnels des membres, des employés et des partenaires de Fencing-Escrime New Brunswick (FENB) conformément à la législation applicable en matière de protection de la vie privée. Elle garantit que les données personnelles sont collectées, stockées, utilisées et partagées de manière responsable et uniquement à des fins organisationnelles légitimes.
+L'objectif de cette politique est de protéger les renseignements personnels des membres, des employés et des partenaires de Fencing-Escrime NB (FENB) conformément à la législation applicable en matière de protection de la vie privée. Elle garantit que les données personnelles sont collectées, stockées, utilisées et partagées de manière responsable et uniquement à des fins organisationnelles légitimes.
 
 Cette politique favorise la transparence et la responsabilité dans la manière dont FENB gère les informations sensibles et les protège contre tout accès non autorisé ou toute utilisation abusive.
 

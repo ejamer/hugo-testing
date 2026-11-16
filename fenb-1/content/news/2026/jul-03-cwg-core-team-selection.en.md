@@ -2,7 +2,7 @@
 title: "Canada Winter Games 2027 — Core Team Athlete Selections"
 date: 2026-07-03
 category: announcement
-summary: "Fencing NB has announced its Core Team athlete selections for the 2027 Canada Winter Games."
+summary: "Fencing-Escrime NB has announced its Core Team athlete selections for the 2027 Canada Winter Games."
 image: "images/canada-games/qc2027-logo-horizontal.png"
 image_dark: "images/canada-games/qc2027-logo-horizontal-dark.png"
 image_alt: "Canada Winter Games 2027 — Québec"

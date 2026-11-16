@@ -7,7 +7,7 @@ translationKey: "official-language"
 
 **Objectif**
 
-L'objectif de cette politique est de veiller à ce que Fencing-Escrime New Brunswick (FENB) fonctionne dans les deux langues officielles du Nouveau-Brunswick, en reconnaissant l'égalité de statut du français et de l'anglais dans toutes les communications, tous les programmes et tous les services.
+L'objectif de cette politique est de veiller à ce que Fencing-Escrime NB (FENB) fonctionne dans les deux langues officielles du Nouveau-Brunswick, en reconnaissant l'égalité de statut du français et de l'anglais dans toutes les communications, tous les programmes et tous les services.
 
 Cette politique favorise l'inclusion et l'accessibilité en respectant les droits linguistiques de tous les membres, bénévoles et du public, conformément à la ***Loi sur les langues officielles*** de la province.
 

@@ -7,7 +7,7 @@ translationKey: "diversity-equity-inclusion"
 
 **Objectif**
 
-L'objectif de cette politique est de favoriser un environnement équitable, diversifié et inclusif au sein de Fencing-Escrime New Brunswick (FENB) en veillant à ce que toutes les personnes aient un accès égal aux possibilités de participation et de leadership dans le sport de l'escrime.
+L'objectif de cette politique est de favoriser un environnement équitable, diversifié et inclusif au sein de Fencing-Escrime NB (FENB) en veillant à ce que toutes les personnes aient un accès égal aux possibilités de participation et de leadership dans le sport de l'escrime.
 
 Cette politique reflète l’engagement de FENB à éliminer les obstacles, à prévenir la discrimination et à promouvoir la représentation à tous les niveaux de l’organisation, conformément au cadre national de Sport Canada en matière d’équité, de diversité et d’inclusion dans le sport.
 

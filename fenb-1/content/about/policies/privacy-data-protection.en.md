@@ -6,7 +6,7 @@ translationKey: "privacy-data-protection"
 **2.11 Privacy and Data Protection Policy**
 
 **Purpose**  
-The purpose of this policy is to protect the personal information of Fencing-Escrime New Brunswick (FENB) members, employees, and partners in compliance with applicable privacy legislation. It ensures that personal data is collected, stored, used, and shared responsibly and only for legitimate organizational purposes.
+The purpose of this policy is to protect the personal information of Fencing-Escrime NB (FENB) members, employees, and partners in compliance with applicable privacy legislation. It ensures that personal data is collected, stored, used, and shared responsibly and only for legitimate organizational purposes.
 
 This policy promotes transparency and accountability in how FENB manages sensitive information and safeguards against unauthorized access or misuse.
 

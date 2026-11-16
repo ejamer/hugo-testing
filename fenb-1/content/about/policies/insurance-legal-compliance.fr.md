@@ -7,7 +7,7 @@ translationKey: "insurance-legal-compliance"
 
 **Objectif**
 
-L'objectif de cette politique est de garantir que Fencing-Escrime New Brunswick (FENB) dispose d'une couverture d'assurance adéquate et se conforme à toutes les exigences légales et réglementaires applicables. Cela permet de protéger l'organisation, ses membres et ses parties prenantes contre les risques financiers et juridiques.
+L'objectif de cette politique est de garantir que Fencing-Escrime NB (FENB) dispose d'une couverture d'assurance adéquate et se conforme à toutes les exigences légales et réglementaires applicables. Cela permet de protéger l'organisation, ses membres et ses parties prenantes contre les risques financiers et juridiques.
 
 Cette politique favorise une gouvernance responsable et s'inscrit dans l'engagement de l'organisation en faveur d'une gestion efficace des risques, de la responsabilité et d'une participation en toute sécurité.
 

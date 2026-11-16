@@ -7,7 +7,7 @@ translationKey: "volunteer-management"
 
 **Purpose**
 
-The purpose of this policy is to establish clear and consistent standards for the recruitment, screening, orientation, support, and recognition of volunteers who contribute to Fencing-Escrime New Brunswick (FENB). Volunteers play a central role in the delivery of fencing programs across the province, and this policy ensures that their involvement is safe, equitable, and aligned with FENB’s mission, values, and obligations under Safe Sport.
+The purpose of this policy is to establish clear and consistent standards for the recruitment, screening, orientation, support, and recognition of volunteers who contribute to Fencing-Escrime NB (FENB). Volunteers play a central role in the delivery of fencing programs across the province, and this policy ensures that their involvement is safe, equitable, and aligned with FENB’s mission, values, and obligations under Safe Sport.
 
 This policy also ensures alignment with provincial expectations, including the **NB Safe Sport Complaint Mechanism (NBSSCM)**, the **Universal Code of Conduct to Prevent and Address Maltreatment in Sport (UCCMS)**, and the principles of impartiality, fairness, respect, timeliness, and transparency promoted by Sport NB.
 

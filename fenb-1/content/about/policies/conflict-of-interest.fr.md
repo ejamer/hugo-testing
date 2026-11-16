@@ -7,7 +7,7 @@ translationKey: "conflict-of-interest"
 
 **Objectif**
 
-L'objectif de cette politique est de garantir que les décisions et les mesures prises par les représentants de Fencing-Escrime New Brunswick (FENB) soient prises avec intégrité, objectivité et transparence, sans aucun conflit entre les intérêts personnels et les responsabilités organisationnelles.
+L'objectif de cette politique est de garantir que les décisions et les mesures prises par les représentants de Fencing-Escrime NB (FENB) soient prises avec intégrité, objectivité et transparence, sans aucun conflit entre les intérêts personnels et les responsabilités organisationnelles.
 
 Cette politique favorise un comportement éthique, la responsabilisation et la confiance du public dans la gouvernance et les activités de FENB.
 

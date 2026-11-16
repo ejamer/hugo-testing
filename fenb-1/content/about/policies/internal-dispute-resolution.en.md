@@ -9,7 +9,7 @@ translationKey: "internal-dispute-resolution"
 
 **1\. Purpose**
 
-The purpose of this policy is to provide a fair, transparent, and timely process for resolving internal disputes within Fencing-Escrime New Brunswick (FENB) that fall **outside** the jurisdiction of the Universal Code of Conduct to Prevent and Address Maltreatment in Sport (UCCMS).
+The purpose of this policy is to provide a fair, transparent, and timely process for resolving internal disputes within Fencing-Escrime NB (FENB) that fall **outside** the jurisdiction of the Universal Code of Conduct to Prevent and Address Maltreatment in Sport (UCCMS).
 
 **2\. Scope and Jurisdiction**
 
@@ -108,7 +108,7 @@ Decisions made under this policy may be appealed only if there is evidence of:
 
 This policy shall be reviewed every two years in conjunction with the *Volunteer Management Policy* to ensure continued alignment with the **UCCMS v. 6.0** (or current version).
 
-Annex: **Fencing NB: Complaint Intake & Triage Form**
+Annex: **Fencing-Escrime NB: Complaint Intake & Triage Form**
 
 **Instructions:** This form must be completed by any individual (the "Complainant") wishing to initiate a formal process under FENB policies.
 

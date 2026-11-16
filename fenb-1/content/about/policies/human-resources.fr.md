@@ -9,7 +9,7 @@ translationKey: "human-resources"
 
 **Objectif**
 
-L'objectif de cette politique est de veiller à ce que Fencing-Escrime New Brunswick (FENB) recrute, forme, soutienne et gère son personnel, ses prestataires, ses entraîneurs, ses officiels et ses bénévoles de manière équitable, cohérente et professionnelle, conformément à la mission, aux valeurs et aux engagements de l'organisation en matière de sport sécuritaire.  
+L'objectif de cette politique est de veiller à ce que Fencing-Escrime NB (FENB) recrute, forme, soutienne et gère son personnel, ses prestataires, ses entraîneurs, ses officiels et ses bénévoles de manière équitable, cohérente et professionnelle, conformément à la mission, aux valeurs et aux engagements de l'organisation en matière de sport sécuritaire.  
  Cette politique établit des attentes claires en matière d’embauche, de conduite, de supervision, de pratiques en milieu de travail, de gestion du rendement, de rémunération et de résolution des conflits, conformément aux normes de Sport NB et aux exigences en matière d’emploi du gouvernement du Nouveau-Brunswick.
 
 ---

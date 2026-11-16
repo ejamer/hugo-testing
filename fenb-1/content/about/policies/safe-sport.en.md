@@ -7,7 +7,7 @@ translationKey: "safe-sport"
 
 **Purpose**
 
-The purpose of this Safe Sport, Conduct, Communications, and Athlete Protection Policy is to ensure that all activities governed by Fencing-Escrime New Brunswick (FENB) are conducted in a **safe, respectful, inclusive, and ethical environment**, free from abuse, harassment, maltreatment, discrimination, intimidation, and retaliation.
+The purpose of this Safe Sport, Conduct, Communications, and Athlete Protection Policy is to ensure that all activities governed by Fencing-Escrime NB (FENB) are conducted in a **safe, respectful, inclusive, and ethical environment**, free from abuse, harassment, maltreatment, discrimination, intimidation, and retaliation.
 
 This policy establishes a **single, integrated Safe Sport framework** for FENB by consolidating and governing the standards previously set out in FENB policies relating to:
 
